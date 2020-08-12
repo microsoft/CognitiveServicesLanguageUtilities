@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CliTool
 {
-    class Orchestrator : IOrchestrator
+    class Orchestrator
     {
         IConfigurationService _configurationService;
         IStorageFactory _storageFactory;
@@ -22,7 +22,7 @@ namespace CliTool
             _parserService = parserService;
         }
 
-        public void Run() {
+        public async Task Run() {
             // load configs
             StorageConfigModel sourceStorageConfigModel = _configurationService.GetSourceStorageConfigModel();
             StorageConfigModel destinationStorageConfigModel = _configurationService.GetDestinationStorageConfigModel();
@@ -32,13 +32,13 @@ namespace CliTool
             // read files from source storage
             var fileNames = sourceStorageService.ListFiles();
             // parse files
-            Parallel.ForEach(fileNames, async (fileName) =>
+            foreach (string fileName in fileNames)
             {
                 Stream file = await sourceStorageService.ReadFile(fileName);
                 string text = await _parserService.ExtractText(file);
                 //string text = (new StreamReader(file)).ReadToEnd();
                 destinationStorageService.StoreData(text, Path.ChangeExtension(fileName, "txt"));
-            });
+            }
         }
     }
 }

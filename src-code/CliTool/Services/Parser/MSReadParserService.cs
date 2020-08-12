@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+﻿using CliTool.Services.Configuration;
+using CliTool.Services.Configuration.Models;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.IO;
@@ -9,7 +11,7 @@ namespace CliTool.Services.Parser
 {
     class MSReadParserService : IParserService
     {
-        static ComputerVisionClient _client;
+        ComputerVisionClient _client;
 
         public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey) {
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
@@ -18,8 +20,7 @@ namespace CliTool.Services.Parser
 
         public async Task<string> ExtractText(Stream file)
         {
-            FileStream fs = File.OpenRead("C:\\Users\\a-noyass\\Documents\\CrackingDocs\\loremipsum\\loremipsum-2.pdf");
-            var response = await _client.BatchReadFileInStreamAsync(fs);
+            var response = await _client.BatchReadFileInStreamAsync(file);
             const int numberOfCharsInOperationId = 36;
             string operationId = response.OperationLocation.Substring(response.OperationLocation.Length - numberOfCharsInOperationId);
 

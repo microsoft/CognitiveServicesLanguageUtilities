@@ -5,6 +5,8 @@ using CliTool.Services.Logger;
 using CliTool.Services.Parser;
 using CliTool.Services.Storage;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CliTool
 {
@@ -12,7 +14,7 @@ namespace CliTool
     {
         private static IContainer Container { get; set; }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             // Reading Configuration from file
             IConfigurationService configurationService = new ConfigurationService();
@@ -29,15 +31,15 @@ namespace CliTool
             builder.RegisterType<StorageFactory>().As<IStorageFactory>();
             Container = builder.Build();
 
-            RunOrchestrator();
+            await RunOrchestratorAsync();
         }
 
-        public static void RunOrchestrator()
+        public static async Task RunOrchestratorAsync()
         {
             using (var scope = Container.BeginLifetimeScope())
             {
                 var orchestrator = scope.Resolve<Orchestrator>();
-                orchestrator.Run();
+                await orchestrator.Run();
             }
         }
     }
