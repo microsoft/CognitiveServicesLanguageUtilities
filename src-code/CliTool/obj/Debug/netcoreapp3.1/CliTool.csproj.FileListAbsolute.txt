@@ -1,0 +1,11 @@
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\bin\Debug\netcoreapp3.1\CliTool.exe
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\obj\Debug\netcoreapp3.1\CliTool.csprojAssemblyReference.cache
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\obj\Debug\netcoreapp3.1\CliTool.AssemblyInfoInputs.cache
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\obj\Debug\netcoreapp3.1\CliTool.AssemblyInfo.cs
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\obj\Debug\netcoreapp3.1\CliTool.csproj.CopyComplete
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\bin\Debug\netcoreapp3.1\Azure.Core.dll
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\bin\Debug\netcoreapp3.1\Azure.Storage.Blobs.dll
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\bin\Debug\netcoreapp3.1\Azure.Storage.Common.dll
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\a-moshab\Desktop\LUIS-D Tool\src-code\CliTool\CliTool\obj\Debug\netcoreapp3.1\CliTool.csproj.CoreCompileInputs.cache
