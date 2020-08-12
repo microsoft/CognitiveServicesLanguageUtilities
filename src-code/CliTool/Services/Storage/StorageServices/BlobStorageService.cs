@@ -11,7 +11,7 @@ namespace CliTool.Services.Storage.StorageServices
 {
     class BlobStorageService : IStorageService
     {
-        private static BlobContainerClient _blobContainerClient;
+        private BlobContainerClient _blobContainerClient;
         public BlobStorageService(string connectionString, string containerName) {
             BlobServiceClient BlobServiceClient = new BlobServiceClient(connectionString);
             _blobContainerClient = BlobServiceClient.GetBlobContainerClient(containerName);
@@ -22,14 +22,16 @@ namespace CliTool.Services.Storage.StorageServices
             return blobs.Select(f => f.Name).ToArray();
         }
 
-        public async Task<Stream> ReadFile(string fileName)
+        public Task<Stream> ReadFile(string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = await blobClient.DownloadAsync();
-            return download.Content;
+            BlobDownloadInfo download = blobClient.Download();
+            var tcs = new TaskCompletionSource<Stream>();
+            tcs.SetResult(download.Content);
+            return tcs.Task;
         }
 
-        public async void StoreData(string data, string fileName)
+        public void StoreData(string data, string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             using (MemoryStream stream = new MemoryStream())
@@ -39,7 +41,7 @@ namespace CliTool.Services.Storage.StorageServices
                     sw.Write(data);
                     sw.Flush();
                     stream.Position = 0;
-                    await blobClient.UploadAsync(stream, overwrite: true).ConfigureAwait(false);
+                    blobClient.Upload(stream, overwrite: true);
                 }
             }
         }

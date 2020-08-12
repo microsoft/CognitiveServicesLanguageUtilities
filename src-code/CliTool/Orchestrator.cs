@@ -24,7 +24,6 @@ namespace CliTool
 
         public void Run() {
             // load configs
-            MSReadConfigModel msReadConfigs = _configurationService.GetMSReadConfigModel();
             StorageConfigModel sourceStorageConfigModel = _configurationService.GetSourceStorageConfigModel();
             StorageConfigModel destinationStorageConfigModel = _configurationService.GetDestinationStorageConfigModel();
             // create storage service

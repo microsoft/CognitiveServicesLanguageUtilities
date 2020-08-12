@@ -1,11 +1,11 @@
 {
-  "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=jAAYWwUed9ZubOY0jnwus2FjibBflOIKpAg8voQFxjE7ZSpFErdUg4H801wY2/1PeUuOXEhZ5MxuyevXCuDEQQ==;EndpointSuffix=core.windows.net",
+  "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
   "cognitiveServiceEndPoint": "https://eastus.api.cognitive.microsoft.com/",
   "congnitiveServiceKey": "2e10bb66ed3e46bebd3`ca1b3522b8f6b",
   "localSourceFolder": "C:\\Users\\a-noyass\\Desktop\\LUIS\\LuisDocumentCracking\\src-code\\source",
   "localDestinationFolder": "C:\\Users\\a-noyass\\Desktop\\LUIS\\LuisDocumentCracking\\src-code\\destination",
-  "blobSourceContainer": "container2",
+  "blobSourceContainer": "container3",
   "blobDestinationContainer": "container2",
   "sourceStorageConnectionType": "Blob",
-  "destinationStorageConnectionType": "Local"
+  "destinationStorageConnectionType": "Blob"
 }
