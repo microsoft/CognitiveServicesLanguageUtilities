@@ -9,7 +9,7 @@ namespace CliTool.Services.Storage
     interface IStorageService
     {
         public string[] ListFiles();
-        public Task<FileStream> ReadFile(string fileName);
-        public void StoreFile(FileStream file);
+        public Task<Stream> ReadFile(string fileName);
+        public void StoreData(string data, string fileName);
     }
 }

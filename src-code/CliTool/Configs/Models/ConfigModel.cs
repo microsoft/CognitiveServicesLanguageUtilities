@@ -5,26 +5,26 @@ namespace CliTool.Services.Configuration
     class ConfigModel
     {
         // Blob Storage Connection Configs
-        [JsonProperty("BlobStorageConnectionString")]
+        [JsonProperty("blobStorageConnectionString")]
         public string BlobStorageConnectionString { get; set; }
         // MS-Read Connection Configs
-        [JsonProperty("CognitiveServiceEndPoint")]
+        [JsonProperty("cognitiveServiceEndPoint")]
         public string CognitiveServiceEndPoint { get; set; }
-        [JsonProperty("CongnitiveServiceKey")]
+        [JsonProperty("congnitiveServiceKey")]
         public string CongnitiveServiceKey { get; set; }
         // Storage Configs
-        [JsonProperty("LocalSourceFolder")]
+        [JsonProperty("localSourceFolder")]
         public string LocalSourceFolder { get; set; }
-        [JsonProperty("LocalDestinationFolder")]
+        [JsonProperty("localDestinationFolder")]
         public string LocalDestinationFolder { get; set; }
-        [JsonProperty("BlobSourceContainer")]
+        [JsonProperty("blobSourceContainer")]
         public string BlobSourceContainer { get; set; }
-        [JsonProperty("BlobDestinationContainer")]
+        [JsonProperty("blobDestinationContainer")]
         public string BlobDestinationContainer { get; set; }
         // Storage type
-        [JsonProperty("SourceStorageConnectionType")]
+        [JsonProperty("sourceStorageConnectionType")]
         public StorageType SourceStorageConnectionType { get; set; }
-        [JsonProperty("DestinationStorageConnectionType")]
+        [JsonProperty("destinationStorageConnectionType")]
         public StorageType DestinationStorageConnectionType { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace CliTool.Configs
 {
     class Constants
     {
-        public static readonly string ConfigsFileDir = "Configs.json";
+        public static readonly string ConfigsFileDir = "C:\\Users\\a-noyass\\Desktop\\LUIS\\LuisDocumentCracking\\src-code\\CliTool\\configs.json";
     }
 }

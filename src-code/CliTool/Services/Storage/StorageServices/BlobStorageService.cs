@@ -22,18 +22,26 @@ namespace CliTool.Services.Storage.StorageServices
             return blobs.Select(f => f.Name).ToArray();
         }
 
-        public async Task<FileStream> ReadFile(string fileName)
+        public async Task<Stream> ReadFile(string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = await blobClient.DownloadAsync();
-            return download.Content as FileStream;
+            return download.Content;
         }
 
-        public async void StoreFile(FileStream file)
+        public async void StoreData(string data, string fileName)
         {
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(file.Name);
-            await blobClient.UploadAsync(file, true);
-            file.Close();
+            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (StreamWriter sw = new StreamWriter(stream))
+                {
+                    sw.Write(data);
+                    sw.Flush();
+                    stream.Position = 0;
+                    await blobClient.UploadAsync(stream, overwrite: true).ConfigureAwait(false);
+                }
+            }
         }
     }
 }

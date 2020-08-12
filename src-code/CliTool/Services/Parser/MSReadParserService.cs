@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CliTool.Services.Parser
 {
-    class ParserService : IParserService
+    class MSReadParserService : IParserService
     {
         static ComputerVisionClient _client;
 
-        public ParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey) {
+        public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey) {
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
             { Endpoint = cognitiveServiceEndPoint };
         }
@@ -25,12 +25,12 @@ namespace CliTool.Services.Parser
             ReadOperationResult result;
             do
             {
-                result = await _client.getresu(Guid.Parse(operationId));
+                result = await _client.GetReadOperationResultAsync(operationId);
             }
-            while ((result.Status == OperationStatusCodes.Running ||
-                result.Status == OperationStatusCodes.NotStarted));
+            while ((result.Status == TextOperationStatusCodes.Running ||
+                result.Status == TextOperationStatusCodes.NotStarted));
             StringBuilder finalText = new StringBuilder();
-            foreach (ReadResult rr in result.AnalyzeResult.ReadResults)
+            foreach (TextRecognitionResult rr in result.RecognitionResults)
             {
                 foreach (Line l in rr.Lines)
                 {

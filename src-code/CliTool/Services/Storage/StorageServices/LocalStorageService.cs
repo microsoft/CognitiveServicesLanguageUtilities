@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,26 +19,29 @@ namespace CliTool.Services.Storage.StorageServices
 
         public string[] ListFiles()
         {
-            return Directory.GetFiles(_targetDirectory);
+            return Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray();
         }
 
-        public Task<FileStream> ReadFile(string fileName)
+        public Task<Stream> ReadFile(string fileName)
         {
             string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
-            using (FileStream fs = File.OpenRead(fileDir)) {
-                var tcs = new TaskCompletionSource<FileStream>();
-                tcs.SetResult(fs);
-                return tcs.Task;
+            var tcs = new TaskCompletionSource<Stream>();
+            try
+            {
+                FileStream fs = File.OpenRead(fileDir);
+                tcs.SetResult(fs as Stream);
             }
+            catch (Exception e)
+            {
+                tcs.SetException(e);
+            }
+            return tcs.Task;
         }
 
-        public void StoreFile(FileStream file)
+        public void StoreData(string data, string fileName)
         {
-            string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(file.Name));
-            using (var fileStream = new FileStream(fileDir, FileMode.Create, FileAccess.Write))
-            {
-                file.CopyTo(fileStream);
-            }
+            string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
+            File.WriteAllText(fileDir, data);
         }
     }
 }
