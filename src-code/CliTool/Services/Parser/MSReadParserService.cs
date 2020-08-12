@@ -16,9 +16,10 @@ namespace CliTool.Services.Parser
             { Endpoint = cognitiveServiceEndPoint };
         }
 
-        public async Task<string> ExtractText(FileStream file)
+        public async Task<string> ExtractText(Stream file)
         {
-            var response = await _client.BatchReadFileInStreamAsync(file);
+            FileStream fs = File.OpenRead("C:\\Users\\a-noyass\\Documents\\CrackingDocs\\loremipsum\\loremipsum-2.pdf");
+            var response = await _client.BatchReadFileInStreamAsync(fs);
             const int numberOfCharsInOperationId = 36;
             string operationId = response.OperationLocation.Substring(response.OperationLocation.Length - numberOfCharsInOperationId);
 

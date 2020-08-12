@@ -8,6 +8,6 @@ namespace CliTool.Services.Parser
 {
     interface IParserService
     {
-        public Task<string> ExtractText(FileStream file);
+        public Task<string> ExtractText(Stream file);
     }
 }

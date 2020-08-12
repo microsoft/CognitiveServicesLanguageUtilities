@@ -35,8 +35,8 @@ namespace CliTool
             Parallel.ForEach(fileNames, async (fileName) =>
             {
                 Stream file = await sourceStorageService.ReadFile(fileName);
-                //string text = "test"; //await _parserService.ExtractText(file);
-                string text = (new StreamReader(file)).ReadToEnd();
+                string text = await _parserService.ExtractText(file);
+                //string text = (new StreamReader(file)).ReadToEnd();
                 destinationStorageService.StoreData(text, Path.ChangeExtension(fileName, "txt"));
             });
         }
