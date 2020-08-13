@@ -1,6 +1,7 @@
 ﻿using CliTool.Configs;
 using CliTool.Services.Configuration.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 
 namespace CliTool.Services.Configuration
@@ -12,32 +13,20 @@ namespace CliTool.Services.Configuration
             var configsFile = File.ReadAllText(Constants.ConfigsFileDir);
             _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
         }
-        public StorageConfigModel GetSourceStorageConfigModel() {
-            return new StorageConfigModel
-            {
-                StorageType = _configModel.SourceStorageConnectionType,
-                Directory = _configModel.SourceStorageConnectionType == StorageType.Local ? _configModel.LocalSourceFolder : _configModel.BlobSourceContainer,
-                ConnectionString = _configModel.BlobStorageConnectionString
-            };
+
+        public StorageConfigModel GetSourceStorageConfigModel()
+        {
+            return _configModel.Storage.Source;
         }
 
         public StorageConfigModel GetDestinationStorageConfigModel()
         {
-            return new StorageConfigModel
-            {
-                StorageType = _configModel.DestinationStorageConnectionType,
-                Directory = _configModel.DestinationStorageConnectionType == StorageType.Local ? _configModel.LocalDestinationFolder : _configModel.BlobDestinationContainer,
-                ConnectionString = _configModel.BlobStorageConnectionString
-            };
+            return _configModel.Storage.Destination;
         }
 
         public MSReadConfigModel GetMSReadConfigModel()
         {
-            return new MSReadConfigModel
-            {
-                CognitiveServiceEndPoint = _configModel.CognitiveServiceEndPoint,
-                CongnitiveServiceKey = _configModel.CongnitiveServiceKey
-            };
+            return _configModel.Parser.MsRead;
         }
 
     }

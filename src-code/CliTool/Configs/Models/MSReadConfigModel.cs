@@ -1,10 +1,15 @@
 ﻿
 
+using Newtonsoft.Json;
+
 namespace CliTool.Services.Configuration.Models
 {
-    class MSReadConfigModel
+    public class MSReadConfigModel
     {
+        [JsonProperty("cognitiveServiceEndPoint")]
         public string CognitiveServiceEndPoint { get; set; }
+
+        [JsonProperty("congnitiveServiceKey")]
         public string CongnitiveServiceKey { get; set; }
     }
 }

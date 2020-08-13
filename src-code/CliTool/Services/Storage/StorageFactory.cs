@@ -7,12 +7,12 @@ namespace CliTool.Services.Storage
     {
         public IStorageService CreateStorageService(StorageConfigModel configs)
         {
-            if (configs.StorageType == StorageType.Local) {
-                return new LocalStorageService(configs.Directory);
+            if (configs.ConnectionType == StorageType.Local) {
+                return new LocalStorageService(configs.LocalDirectory);
             }
-            if (configs.StorageType == StorageType.Blob)
+            if (configs.ConnectionType == StorageType.Blob)
             {
-                return new BlobStorageService(configs.ConnectionString, configs.Directory);
+                return new BlobStorageService(configs.BlobStorageConnectionString, configs.BlobContainerName);
             }
             return null;
         }

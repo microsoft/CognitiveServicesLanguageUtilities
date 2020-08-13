@@ -1,20 +1,29 @@
-﻿using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
+﻿
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace CliTool.Services.Configuration
 {
-    class StorageConfigModel
+    public class StorageConfigModel
     {
-        public StorageType StorageType;
-        public string Directory;
-        public string ConnectionString;
+        [JsonProperty("connectionType")]
+        public StorageType ConnectionType { get; set; }
+
+        [JsonProperty("localDirectory")]
+        public string LocalDirectory { get; set; }
+
+        [JsonProperty("blobContainerName")]
+        public string BlobContainerName { get; set; }
+
+        [JsonProperty("blobStorageConnectionString")]
+        public string BlobStorageConnectionString { get; set; }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
-    enum StorageType
+    public enum StorageType
     {
         Local,
         Blob
     }
-
 }

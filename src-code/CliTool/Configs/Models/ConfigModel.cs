@@ -1,30 +1,34 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
-namespace CliTool.Services.Configuration
+using System.Globalization;
+using CliTool.Services.Configuration;
+using CliTool.Services.Configuration.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace CliTool.Configs
 {
-    class ConfigModel
+    public class ConfigModel
     {
-        // Blob Storage Connection Configs
-        [JsonProperty("blobStorageConnectionString")]
-        public string BlobStorageConnectionString { get; set; }
-        // MS-Read Connection Configs
-        [JsonProperty("cognitiveServiceEndPoint")]
-        public string CognitiveServiceEndPoint { get; set; }
-        [JsonProperty("congnitiveServiceKey")]
-        public string CongnitiveServiceKey { get; set; }
-        // Storage Configs
-        [JsonProperty("localSourceFolder")]
-        public string LocalSourceFolder { get; set; }
-        [JsonProperty("localDestinationFolder")]
-        public string LocalDestinationFolder { get; set; }
-        [JsonProperty("blobSourceContainer")]
-        public string BlobSourceContainer { get; set; }
-        [JsonProperty("blobDestinationContainer")]
-        public string BlobDestinationContainer { get; set; }
-        // Storage type
-        [JsonProperty("sourceStorageConnectionType")]
-        public StorageType SourceStorageConnectionType { get; set; }
-        [JsonProperty("destinationStorageConnectionType")]
-        public StorageType DestinationStorageConnectionType { get; set; }
+        [JsonProperty("storage")]
+        public Storage Storage { get; set; }
+
+        [JsonProperty("parser")]
+        public Parser Parser { get; set; }
+    }
+
+    public class Parser
+    {
+        [JsonProperty("MSRead")]
+        public MSReadConfigModel MsRead { get; set; }
+    }
+
+    public class Storage
+    {
+        [JsonProperty("source")]
+        public StorageConfigModel Source { get; set; }
+
+        [JsonProperty("destination")]
+        public StorageConfigModel Destination { get; set; }
     }
 }

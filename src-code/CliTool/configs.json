@@ -1,11 +1,22 @@
 {
-  "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
-  "cognitiveServiceEndPoint": "https://eastus.api.cognitive.microsoft.com",
-  "congnitiveServiceKey": "2e10bb66ed3e46bebd3ca1b3522b8f6b",
-  "localSourceFolder": "C:\\Users\\a-noyass\\Desktop\\LUIS\\LuisDocumentCracking\\src-code\\source",
-  "localDestinationFolder": "C:\\Users\\a-noyass\\Desktop\\LUIS\\LuisDocumentCracking\\src-code\\destination",
-  "blobSourceContainer": "container3",
-  "blobDestinationContainer": "container2",
-  "sourceStorageConnectionType": "Blob",
-  "destinationStorageConnectionType": "Blob"
+  "storage": {
+    "source": {
+      "connectionType": "blob",
+      "localDirectory": "",
+      "blobContainerName": "container3",
+      "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net"
+    },
+    "destination": {
+      "connectionType": "blob",
+      "localDirectory": "",
+      "blobContainerName": "container2",
+      "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net"
+    }
+  },
+  "parser": {
+    "MSRead": {
+      "cognitiveServiceEndPoint": "https://eastus.api.cognitive.microsoft.com",
+      "congnitiveServiceKey": "2e10bb66ed3e46bebd3ca1b3522b8f6b"
+    }
+  }
 }
