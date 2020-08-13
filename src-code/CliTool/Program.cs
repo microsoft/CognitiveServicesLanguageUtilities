@@ -4,8 +4,6 @@ using CliTool.Services.Configuration.Models;
 using CliTool.Services.Logger;
 using CliTool.Services.Parser;
 using CliTool.Services.Storage;
-using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace CliTool
@@ -39,7 +37,7 @@ namespace CliTool
             using (var scope = Container.BeginLifetimeScope())
             {
                 var orchestrator = scope.Resolve<Orchestrator>();
-                await orchestrator.Run();
+                await orchestrator.RunAsync();
             }
         }
     }

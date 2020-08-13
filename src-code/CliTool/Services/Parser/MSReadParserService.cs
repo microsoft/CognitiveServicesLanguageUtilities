@@ -1,8 +1,5 @@
-﻿using CliTool.Services.Configuration;
-using CliTool.Services.Configuration.Models;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
-using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +33,7 @@ namespace CliTool.Services.Parser
             {
                 foreach (Line l in rr.Lines)
                 {
-                    finalText.AppendFormat($"{l.Text} ");
+                    finalText.Append($"{l.Text} ");
                 }
             }
             return finalText.ToString();

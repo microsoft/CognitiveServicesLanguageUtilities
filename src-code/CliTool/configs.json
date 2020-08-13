@@ -6,6 +6,6 @@
   "localDestinationFolder": "C:\\Users\\a-noyass\\Desktop\\LUIS\\LuisDocumentCracking\\src-code\\destination",
   "blobSourceContainer": "container3",
   "blobDestinationContainer": "container2",
-  "sourceStorageConnectionType": "Local",
-  "destinationStorageConnectionType": "Local"
+  "sourceStorageConnectionType": "Blob",
+  "destinationStorageConnectionType": "Blob"
 }
