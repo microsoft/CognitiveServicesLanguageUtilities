@@ -31,9 +31,12 @@ namespace CliTool.Services.Parser
                 var file = new MemoryStream();
                 var response = await _client.BatchReadFileInStreamAsync(file);
             }
-            catch (ComputerVisionErrorException)
+            catch (ComputerVisionErrorException e)
             {
-                throw new MsReadUnauthorizedException(congnitiveServiceKey, cognitiveServiceEndPoint);
+                if (e.Message.Contains("Unauthorized"))
+                {
+                    throw new MsReadUnauthorizedException(congnitiveServiceKey, cognitiveServiceEndPoint);
+                }
             }
         }
 
