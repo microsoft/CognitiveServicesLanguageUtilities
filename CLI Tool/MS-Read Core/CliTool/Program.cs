@@ -1,31 +1,25 @@
-﻿using CliTool.CommandControllers;
+﻿
+using CliTool.Commands;
 using CliTool.Configs.Constants;
 using CliTool.Exceptions.Commands;
+using McMaster.Extensions.CommandLineUtils;
+
 namespace CliTool
 {
+    [Command("app")]
+    [VersionOptionFromMember("--version")]
+    [Subcommand(
+        typeof(ParseCommand),
+        typeof(PredictCommand))]
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args) => CommandLineApplication.Execute<Program>(args);
+
+        protected int OnExecute(CommandLineApplication app)
         {
-            // obtain command
-            var commandName = args[0].Split(":")[0];
-
-            // select proper controller
-            ICommandController commandController;
-            if (commandName.Equals(Constants.CommandNames.ConfigCommand))
-            {
-                commandController = new ParseCommandController();
-            }
-            else if (commandName.Equals(Constants.CommandNames.ParseCommand))
-            {
-                commandController = new ParseCommandController();
-            }
-            else {
-                throw new CommandNotFoundException(commandName);
-            }
-
-            // execute command
-            commandController.Execute(args);
+            // this shows help even if the --help option isn't specified
+            app.ShowHelp();
+            return 1;
         }
     }
 }

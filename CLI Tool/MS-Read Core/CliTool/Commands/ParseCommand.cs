@@ -1,24 +1,27 @@
-﻿using Autofac;
+﻿
+using Autofac;
 using CliTool.Configs;
+using CliTool.Configs.Models.Enums;
 using CliTool.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System;
+using System.Threading.Tasks;
 
-namespace CliTool.CommandControllers
+namespace CliTool.Commands
 {
-    class ParseCommandController : ICommandController
+    [Command("parse")]
+    class ParseCommand
     {
         [Option("--parser <msread/tika>")]
-        public string Parser { get; }
+        public ParserType Parser { get; }
         [Option("--source <local/blob>")]
-        public string Source { get; }
+        public StorageType Source { get; }
         [Option("--destination <local/blob>")]
-        public string Destination { get; }
+        public StorageType Destination { get; }
         [Option("--chunk-type <page/char>")]
-        public string ChunkType { get; }
+        public ChunkType ChunkType { get; }
 
-
-        public async void Execute(string[] args)
+        protected async Task<int> OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildDependencies();
@@ -29,19 +32,16 @@ namespace CliTool.CommandControllers
                 var controller = scope.Resolve<ParserServiceController>();
                 await controller.ExtractText();
             }
+
+            return 0;
         }
 
-        public void ValidateArgs()
+        public void PrintCommandData()
         {
-            throw new NotImplementedException();
-        }
-
-        public void ExtractArgs(string[] args) {
-            // input: parse --parser {MSREAD/TIKA} --source {BLOB/LOCAL} --destination {BLOB/LOCAL} --chunking-type {PAGE/CHAR}
-            var i = 1;
-            while (i < args.Length) { 
-                
-            }
+            Console.WriteLine("Parser : " + Parser);
+            Console.WriteLine("Source : " + Source);
+            Console.WriteLine("Desitnation : " + Destination);
+            Console.WriteLine("ChunkType : " + ChunkType);
         }
     }
 }

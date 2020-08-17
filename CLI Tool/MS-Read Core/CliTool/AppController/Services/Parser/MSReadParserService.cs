@@ -1,4 +1,5 @@
 ﻿using CliTool.Configs;
+using CliTool.Configs.Constants;
 using CliTool.Exceptions.Parser;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
