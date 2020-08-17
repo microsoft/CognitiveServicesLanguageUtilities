@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CliTool
+namespace CliTool.ServiceControllers.Controllers
 {
-    class Orchestrator
+    class ParserServiceController : IParserServiceController
     {
         readonly IConfigurationService _configurationService;
         readonly IStorageFactory _storageFactory;
@@ -18,7 +18,8 @@ namespace CliTool
         readonly IStorageService _destinationStorageService;
         readonly ILoggerService _loggerService;
 
-        public Orchestrator(IConfigurationService configurationService, IStorageFactory storageFactory, IParserService parserService, ILoggerService loggerService) {
+        public ParserServiceController(IConfigurationService configurationService, IStorageFactory storageFactory, IParserService parserService, ILoggerService loggerService)
+        {
             _configurationService = configurationService;
             _storageFactory = storageFactory;
             _parserService = parserService;
@@ -29,7 +30,8 @@ namespace CliTool
             _destinationStorageService = _storageFactory.CreateStorageService(destinationStorageConfigModel);
         }
 
-        public async Task RunAsync() {
+        public async Task ExtractText()
+        {
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
             // parse files

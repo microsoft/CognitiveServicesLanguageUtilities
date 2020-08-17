@@ -1,44 +1,31 @@
-﻿using Autofac;
-using CliTool.Services.Configuration;
-using CliTool.Services.Configuration.Models;
-using CliTool.Services.Logger;
-using CliTool.Services.Parser;
-using CliTool.Services.Storage;
-using System.Threading.Tasks;
-
+﻿using CliTool.CommandControllers;
+using CliTool.Configs.Constants;
+using CliTool.Exceptions.Commands;
 namespace CliTool
 {
     class Program
     {
-        private static IContainer Container { get; set; }
-
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            // Reading Configuration from file
-            IConfigurationService configurationService = new ConfigurationService();
-            MSReadConfigModel msReadConfigs = configurationService.GetMSReadConfigModel();
+            // obtain command
+            var commandName = args[0].Split(":")[0];
 
-            // Setup DI
-            var builder = new ContainerBuilder();    
-            builder.RegisterInstance(new ConsoleLoggerService())
-                   .As<ILoggerService>();
-            builder.RegisterInstance(new MSReadParserService(msReadConfigs.CognitiveServiceEndPoint, msReadConfigs.CongnitiveServiceKey))
-                   .As<IParserService>();
-            builder.RegisterType<Orchestrator>();
-            builder.RegisterType<ConfigurationService>().As<IConfigurationService>();
-            builder.RegisterType<StorageFactory>().As<IStorageFactory>();
-            Container = builder.Build();
-
-            await RunOrchestratorAsync();
-        }
-
-        public static async Task RunOrchestratorAsync()
-        {
-            using (var scope = Container.BeginLifetimeScope())
+            // select proper controller
+            ICommandController commandController;
+            if (commandName.Equals(Constants.CommandNames.ConfigCommand))
             {
-                var orchestrator = scope.Resolve<Orchestrator>();
-                await orchestrator.RunAsync();
+                commandController = new ParseCommandController();
             }
+            else if (commandName.Equals(Constants.CommandNames.ParseCommand))
+            {
+                commandController = new ParseCommandController();
+            }
+            else {
+                throw new CommandNotFoundException(commandName);
+            }
+
+            // execute command
+            commandController.Execute(args);
         }
     }
 }
