@@ -1,5 +1,9 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using CliTool.Exceptions;
+using CliTool.Exceptions.Storage;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,10 +13,23 @@ namespace CliTool.Services.Storage.StorageServices
     class BlobStorageService : IStorageService
     {
         private BlobContainerClient _blobContainerClient;
+
         public BlobStorageService(string connectionString, string containerName) {
-            BlobServiceClient BlobServiceClient = new BlobServiceClient(connectionString);
-            _blobContainerClient = BlobServiceClient.GetBlobContainerClient(containerName);
+            try
+            {
+                 BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+                _blobContainerClient = blobServiceClient.GetBlobContainerClient(containerName);
+                if (!_blobContainerClient.Exists())
+                {
+                    throw new BlobContainerNotFoundException(containerName);
+                }
+            }
+            catch (Exception e) when (e is RequestFailedException || e is FormatException || e is AggregateException)
+            {
+                throw new InvalidBlobStorageConnectionStringException(connectionString);
+            }
         }
+
         public string[] ListFiles()
         {
             var blobs = _blobContainerClient.GetBlobs();

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CliTool.Exceptions;
+using CliTool.Exceptions.Storage;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,10 +11,11 @@ namespace CliTool.Services.Storage.StorageServices
     {
         private string _targetDirectory;
         public LocalStorageService(string targetDirectory) {
-            _targetDirectory = targetDirectory;
-            if (Directory.Exists(_targetDirectory) == false) { 
-                // throw error
+            if (!Directory.Exists(_targetDirectory))
+            {
+                throw new FolderNotFoundException(targetDirectory);
             }
+            _targetDirectory = targetDirectory;
         }
 
         public string[] ListFiles()
@@ -22,24 +25,31 @@ namespace CliTool.Services.Storage.StorageServices
 
         public Task<Stream> ReadFile(string fileName)
         {
-            string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
+            string fileDir = Path.Combine(_targetDirectory, fileName);
             var tcs = new TaskCompletionSource<Stream>();
             try
             {
                 FileStream fs = File.OpenRead(fileDir);
                 tcs.SetResult(fs as Stream);
             }
-            catch (Exception e)
+            catch (UnauthorizedAccessException)
             {
-                tcs.SetException(e);
+                throw new UnauthorizedException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
             }
             return tcs.Task;
         }
 
         public void StoreData(string data, string fileName)
         {
-            string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
-            File.WriteAllText(fileDir, data);
+            try 
+            { 
+                string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
+                File.WriteAllText(fileDir, data);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new UnauthorizedException(AccessType.Write.ToString(), fileName);
+            }
         }
     }
 }

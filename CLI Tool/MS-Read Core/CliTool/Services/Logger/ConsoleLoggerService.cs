@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CliTool.Exceptions;
+using System;
 
 namespace CliTool.Services.Logger
 {
@@ -7,6 +8,11 @@ namespace CliTool.Services.Logger
         public void Log(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public void LogCustomError(CliException e)
+        {
+            Console.WriteLine("Error: " + e.CustomMessage);
         }
     }
 }
