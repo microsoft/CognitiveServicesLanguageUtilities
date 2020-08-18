@@ -5,6 +5,7 @@ using CliTool.Configs.Models.Enums;
 using CliTool.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace CliTool.Commands
@@ -12,10 +13,13 @@ namespace CliTool.Commands
     [Command("parse")]
     class ParseCommand
     {
+        [Required]
         [Option("--parser <msread/tika>")]
         public ParserType Parser { get; }
+        [Required]
         [Option("--source <local/blob>")]
         public StorageType Source { get; }
+        [Required]
         [Option("--destination <local/blob>")]
         public StorageType Destination { get; }
         [Option("--chunk-type <page/char>")]
