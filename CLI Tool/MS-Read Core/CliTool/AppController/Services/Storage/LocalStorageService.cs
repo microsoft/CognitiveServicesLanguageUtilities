@@ -30,7 +30,7 @@ namespace CliTool.Services.Storage.StorageServices
         public Task<Stream> ReadFile(string fileName)
         {
             string filePath = Path.Combine(_targetDirectory, fileName);
-            _loggerService.LogOperation(OperationType.ReadingFile, filePath + " from disk");
+            _loggerService.LogOperation(OperationType.ReadingFile, fileName + " from disk");
             var tcs = new TaskCompletionSource<Stream>();
             try
             {

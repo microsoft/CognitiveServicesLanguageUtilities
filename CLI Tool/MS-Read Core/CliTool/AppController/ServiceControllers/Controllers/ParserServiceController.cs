@@ -1,4 +1,5 @@
-﻿using CliTool.Configs.Models.Enums;
+﻿using CliTool.AppController.Factories.Storage;
+using CliTool.Configs.Models.Enums;
 using CliTool.Exceptions;
 using CliTool.Services.Configuration;
 using CliTool.Services.Logger;
@@ -14,26 +15,26 @@ namespace CliTool.ServiceControllers.Controllers
     class ParserServiceController : IParserServiceController
     {
         readonly IConfigurationService _configurationService;
-        readonly IStorageFactory _storageFactory;
+        readonly IStorageFactoryFactory _storageFactoryFactory;
         readonly IParserService _parserService;
-        IStorageService _sourceStorageService;
-        IStorageService _destinationStorageService;
+        readonly IStorageService _sourceStorageService;
+        readonly IStorageService _destinationStorageService;
         readonly ILoggerService _loggerService;
 
-        public ParserServiceController(IConfigurationService configurationService, IStorageFactory storageFactory, IParserService parserService, ILoggerService loggerService)
+        public ParserServiceController(IConfigurationService configurationService, IStorageFactoryFactory storageFactoryFactory, 
+            IParserService parserService, ILoggerService loggerService, StorageType sourceStorageType, StorageType destinationStorageType)
         {
             _configurationService = configurationService;
-            _storageFactory = storageFactory;
+            _storageFactoryFactory = storageFactoryFactory;
             _parserService = parserService;
             _loggerService = loggerService;
+            IStorageFactory sourceFactory = _storageFactoryFactory.CreateStorageFactory(TargetStorage.Source);
+            IStorageFactory destinationFactory = _storageFactoryFactory.CreateStorageFactory(TargetStorage.Destination);
+            var storageConfigModel = _configurationService.GetStorageConfigModel();
+            _sourceStorageService = sourceFactory.CreateStorageService(sourceStorageType, storageConfigModel);
+            _destinationStorageService = destinationFactory.CreateStorageService(destinationStorageType, storageConfigModel);
         }
 
-        public void SetStorageServices(StorageType source, StorageType destination)
-        {
-            var storageConfigModel = _configurationService.GetStorageConfigModel();
-            _sourceStorageService = _storageFactory.CreateSourceStorageService(source, storageConfigModel);
-            _destinationStorageService = _storageFactory.CreateDestinationStorageService(destination, storageConfigModel);
-        }
         public async Task ExtractText()
         {
             List<string> convertedFiles = new List<string>();

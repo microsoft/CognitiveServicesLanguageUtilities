@@ -3,7 +3,6 @@ using CliTool.Configs.Consts
     ;
 using CliTool.Services.Configuration.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
 
 namespace CliTool.Services.Configuration

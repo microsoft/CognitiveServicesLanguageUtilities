@@ -30,7 +30,7 @@ namespace CliTool.Commands
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ParserServiceController>();
-                controller.SetStorageServices(Source, Destination);
+                // controller.SetStorageServices(Source, Destination);
                 await controller.ExtractText();
             }
 

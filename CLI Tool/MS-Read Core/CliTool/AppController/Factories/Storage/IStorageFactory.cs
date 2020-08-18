@@ -1,15 +1,12 @@
 ﻿using CliTool.Configs;
 using CliTool.Configs.Models.Enums;
-using CliTool.Services.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CliTool.Services.Storage;
 
-namespace CliTool.Services.Storage
+
+namespace CliTool.AppController.Factories.Storage
 {
     interface IStorageFactory
     {
-        public IStorageService CreateSourceStorageService(StorageType storageType, StorageConfigModel configs);
-        public IStorageService CreateDestinationStorageService(StorageType storageType, StorageConfigModel configs);
+        public IStorageService CreateStorageService(StorageType targetStorage, StorageConfigModel storageConfigModel);
     }
 }

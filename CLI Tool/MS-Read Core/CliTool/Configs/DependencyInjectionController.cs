@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using CliTool.AppController.Factories.Storage;
 using CliTool.Configs.Consts;
 using CliTool.Configs.Models.Enums;
 using CliTool.ServiceControllers.Controllers;
@@ -38,8 +39,14 @@ namespace CliTool.Configs
                 var loggerService = c.Resolve<ILoggerService>();
                 return CreateParserService(parserType, configService, loggerService);
             }).As<IParserService>();
-            builder.RegisterType<ParserServiceController>();
-            builder.RegisterType<StorageFactory>().As<IStorageFactory>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigurationService>();
+                var loggerService = c.Resolve<ILoggerService>();
+                var parserservice = c.Resolve<IParserService>();
+                return new ParserServiceController(configService, new StorageFactoryFactory(), parserservice, 
+                    loggerService, source, destination);
+            }).As<ParserServiceController>();
             return builder.Build();
         }
 
