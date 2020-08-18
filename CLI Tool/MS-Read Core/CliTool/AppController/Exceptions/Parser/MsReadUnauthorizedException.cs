@@ -1,5 +1,5 @@
 ﻿using CliTool.Configs;
-using CliTool.Configs.Constants;
+using CliTool.Configs.Consts;
 using System;
 using System.Collections.Generic;
 using System.Text;

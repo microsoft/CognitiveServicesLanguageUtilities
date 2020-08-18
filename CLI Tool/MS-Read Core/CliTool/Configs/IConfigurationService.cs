@@ -1,13 +1,16 @@
-﻿using CliTool.Services.Configuration.Models;
+﻿using CliTool.Configs;
+using CliTool.Services.Configuration.Models;
 
 namespace CliTool.Services.Configuration
 {
     interface IConfigurationService
     {
-        public StorageConfigModel GetSourceStorageConfigModel();
+        public BlobStorageConfigModel GetBlobConfigModel();
 
-        public StorageConfigModel GetDestinationStorageConfigModel();
+        public LocalStorageConfigModel GetLocalConfigModel();
 
         public MSReadConfigModel GetMSReadConfigModel();
+
+        public StorageConfigModel GetStorageConfigModel();
     }
 }

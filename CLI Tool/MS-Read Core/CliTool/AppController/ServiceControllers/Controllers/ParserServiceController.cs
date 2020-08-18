@@ -1,4 +1,5 @@
-﻿using CliTool.Exceptions;
+﻿using CliTool.Configs.Models.Enums;
+using CliTool.Exceptions;
 using CliTool.Services.Configuration;
 using CliTool.Services.Logger;
 using CliTool.Services.Parser;
@@ -14,8 +15,8 @@ namespace CliTool.ServiceControllers.Controllers
         readonly IConfigurationService _configurationService;
         readonly IStorageFactory _storageFactory;
         readonly IParserService _parserService;
-        readonly IStorageService _sourceStorageService;
-        readonly IStorageService _destinationStorageService;
+        IStorageService _sourceStorageService;
+        IStorageService _destinationStorageService;
         readonly ILoggerService _loggerService;
 
         public ParserServiceController(IConfigurationService configurationService, IStorageFactory storageFactory, IParserService parserService, ILoggerService loggerService)
@@ -24,12 +25,14 @@ namespace CliTool.ServiceControllers.Controllers
             _storageFactory = storageFactory;
             _parserService = parserService;
             _loggerService = loggerService;
-            var sourceStorageConfigModel = _configurationService.GetSourceStorageConfigModel();
-            var destinationStorageConfigModel = _configurationService.GetDestinationStorageConfigModel();
-            _sourceStorageService = _storageFactory.CreateStorageService(sourceStorageConfigModel);
-            _destinationStorageService = _storageFactory.CreateStorageService(destinationStorageConfigModel);
         }
 
+        public void SetStorageServices(StorageType source, StorageType destination)
+        {
+            var storageConfigModel = _configurationService.GetStorageConfigModel();
+            _sourceStorageService = _storageFactory.CreateSourceStorageService(source, storageConfigModel);
+            _destinationStorageService = _storageFactory.CreateDestinationStorageService(destination, storageConfigModel);
+        }
         public async Task ExtractText()
         {
             // read files from source storage

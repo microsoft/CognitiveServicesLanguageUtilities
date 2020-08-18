@@ -1,16 +1,13 @@
 {
   "storage": {
-    "source": {
-      "connectionType": "blob",
-      "localDirectory": "",
-      "blobContainerName": "container3",
-      "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net"
+    "blob": {
+      "connectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
+      "sourceContainer": "container3",
+      "destinationContainer": "container2"
     },
-    "destination": {
-      "connectionType": "blob",
-      "localDirectory": "",
-      "blobContainerName": "container2",
-      "blobStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net"
+    "local": {
+      "sourceDirectory": "",
+      "destinationDirectory": ""
     }
   },
   "parser": {

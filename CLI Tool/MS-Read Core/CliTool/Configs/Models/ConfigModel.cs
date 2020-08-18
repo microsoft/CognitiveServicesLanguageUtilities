@@ -1,34 +1,31 @@
 ﻿using System;
 
-using System.Globalization;
-using CliTool.Services.Configuration;
 using CliTool.Services.Configuration.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace CliTool.Configs
 {
     public class ConfigModel
     {
         [JsonProperty("storage")]
-        public Storage Storage { get; set; }
+        public StorageConfigModel Storage { get; set; }
 
         [JsonProperty("parser")]
-        public Parser Parser { get; set; }
+        public ParserConfigModel Parser { get; set; }
     }
 
-    public class Parser
+    public class ParserConfigModel
     {
         [JsonProperty("MSRead")]
         public MSReadConfigModel MsRead { get; set; }
     }
 
-    public class Storage
+    public class StorageConfigModel
     {
-        [JsonProperty("source")]
-        public StorageConfigModel Source { get; set; }
+        [JsonProperty("blob")]
+        public BlobStorageConfigModel Blob { get; set; }
 
-        [JsonProperty("destination")]
-        public StorageConfigModel Destination { get; set; }
+        [JsonProperty("local")]
+        public LocalStorageConfigModel Local { get; set; }
     }
 }

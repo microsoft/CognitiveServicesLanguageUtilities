@@ -11,5 +11,6 @@ namespace CliTool.Services.Storage
         public string[] ListFiles();
         public Task<Stream> ReadFile(string fileName);
         public void StoreData(string data, string fileName);
+        public string ReadFileAsString(string fileName);
     }
 }

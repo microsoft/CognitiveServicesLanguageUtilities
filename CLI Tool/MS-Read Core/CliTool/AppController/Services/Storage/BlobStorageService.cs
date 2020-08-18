@@ -45,6 +45,11 @@ namespace CliTool.Services.Storage.StorageServices
             return tcs.Task;
         }
 
+        public string ReadFileAsString(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
         public void StoreData(string data, string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);

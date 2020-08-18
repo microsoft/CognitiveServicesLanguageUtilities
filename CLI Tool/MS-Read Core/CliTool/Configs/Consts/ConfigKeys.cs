@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CliTool.Configs.Constants
+namespace CliTool.Configs.Consts
 {
     class ConfigKeys
     {

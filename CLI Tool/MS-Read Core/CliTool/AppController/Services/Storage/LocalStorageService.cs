@@ -39,6 +39,11 @@ namespace CliTool.Services.Storage.StorageServices
             return tcs.Task;
         }
 
+        public string ReadFileAsString(string fileName)
+        {
+            return File.ReadAllText(Path.Combine(_targetDirectory, fileName));
+        }
+
         public void StoreData(string data, string fileName)
         {
             try 

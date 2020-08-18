@@ -1,5 +1,5 @@
 ﻿using CliTool.Configs;
-using CliTool.Configs.Constants;
+using CliTool.Configs.Consts;
 
 namespace CliTool.Exceptions.Parser
 {

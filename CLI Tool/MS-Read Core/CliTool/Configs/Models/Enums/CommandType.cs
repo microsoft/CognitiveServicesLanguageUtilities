@@ -4,10 +4,8 @@ using System.Text;
 
 namespace CliTool.Configs.Models.Enums
 {
-    public enum ParserType
+    enum CommandType
     {
-        MSRead,
-        Tika,
-        Null
+        Config, Parse
     }
 }

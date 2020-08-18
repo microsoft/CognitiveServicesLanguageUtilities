@@ -1,12 +1,10 @@
-﻿using CliTool.Configs;
-using CliTool.Configs.Constants;
+﻿using CliTool.Configs.Consts;
 using CliTool.Exceptions.Parser;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 

@@ -1,7 +1,5 @@
-﻿
-using CliTool.Commands;
-using CliTool.Configs.Constants;
-using CliTool.Exceptions.Commands;
+﻿using CliTool.Commands;
+using CliTool.Commands.Config;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace CliTool
@@ -10,12 +8,13 @@ namespace CliTool
     [VersionOptionFromMember("--version")]
     [Subcommand(
         typeof(ParseCommand),
-        typeof(PredictCommand))]
+        typeof(PredictCommand),
+        typeof(ConfigCommand))]
     class Program
     {
         public static void Main(string[] args) => CommandLineApplication.Execute<Program>(args);
 
-        protected int OnExecute(CommandLineApplication app)
+        private int OnExecute(CommandLineApplication app)
         {
             // this shows help even if the --help option isn't specified
             app.ShowHelp();

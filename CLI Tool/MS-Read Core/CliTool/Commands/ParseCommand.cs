@@ -21,15 +21,16 @@ namespace CliTool.Commands
         [Option("--chunk-type <page/char>")]
         public ChunkType ChunkType { get; }
 
-        protected async Task<int> OnExecute(CommandLineApplication app)
+        private async Task<int> OnExecute(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildDependencies();
+            var container = DependencyInjectionController.BuildParseCommandDependencies(Parser, Source, Destination);
 
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ParserServiceController>();
+                controller.SetStorageServices(Source, Destination);
                 await controller.ExtractText();
             }
 

@@ -1,31 +1,57 @@
 ﻿using Autofac;
+using CliTool.Configs.Consts;
+using CliTool.Configs.Models.Enums;
 using CliTool.ServiceControllers.Controllers;
 using CliTool.Services.Configuration;
-using CliTool.Services.Configuration.Models;
 using CliTool.Services.Logger;
 using CliTool.Services.Parser;
 using CliTool.Services.Storage;
-using System.Threading.Tasks;
+using CliTool.Services.Storage.StorageServices;
+using System;
 
 namespace CliTool.Configs
 {
     class DependencyInjectionController
     {
-        public static IContainer BuildDependencies() {
-            IConfigurationService configurationService = new ConfigurationService();
-            MSReadConfigModel msReadConfigs = configurationService.GetMSReadConfigModel();
-
-            // Setup DI
+        private static ContainerBuilder BuildCommonDependencies()
+        {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(new ConsoleLoggerService())
-                   .As<ILoggerService>();
-            builder.RegisterInstance(new MSReadParserService(msReadConfigs.CognitiveServiceEndPoint, msReadConfigs.CongnitiveServiceKey))
-                   .As<IParserService>();
-            builder.RegisterType<ParserServiceController>();
             builder.RegisterType<ConfigurationService>().As<IConfigurationService>();
-            builder.RegisterType<StorageFactory>().As<IStorageFactory>();
+            builder.RegisterInstance(new ConsoleLoggerService()).As<ILoggerService>();
+            return builder;
+        }
 
+        public static IContainer BuildConfigCommandDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterInstance(new LocalStorageService(Constants.ConfigsFileLocalDirectory)).As<IStorageService>();
             return builder.Build();
+        }
+
+        public static IContainer BuildParseCommandDependencies(ParserType parserType, StorageType source, StorageType destination)
+        {
+            var builder = BuildCommonDependencies();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigurationService>();
+                return CreateParserService(parserType, configService);
+            }).As<IParserService>();
+            builder.RegisterType<ParserServiceController>();
+            builder.RegisterType<StorageFactory>().As<IStorageFactory>();
+            return builder.Build();
+        }
+
+        private static IParserService CreateParserService(ParserType parserType, IConfigurationService configService)
+        {
+            if (parserType.Equals(ParserType.MSRead))
+            {
+                var msReadConfig = configService.GetMSReadConfigModel();
+                return new MSReadParserService(msReadConfig.CognitiveServiceEndPoint, msReadConfig.CongnitiveServiceKey);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

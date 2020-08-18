@@ -1,5 +1,6 @@
 ﻿using CliTool.Configs;
-using CliTool.Configs.Constants;
+using CliTool.Configs.Consts
+    ;
 using CliTool.Services.Configuration.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -11,18 +12,28 @@ namespace CliTool.Services.Configuration
     {
         readonly ConfigModel _configModel;
         public ConfigurationService() {
-            var configsFile = File.ReadAllText(Constants.ConfigsFileDir);
-            _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
+            if (File.Exists(filePath))
+            {
+                var configsFile = File.ReadAllText(filePath);
+                _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            }
+            else
+            {
+                var configModel = new ConfigModel();
+                var configFile = JsonConvert.SerializeObject(configModel);
+                File.WriteAllText(filePath, configFile);
+            }
         }
 
-        public StorageConfigModel GetSourceStorageConfigModel()
+        public BlobStorageConfigModel GetBlobConfigModel()
         {
-            return _configModel.Storage.Source;
+            return _configModel.Storage.Blob;
         }
 
-        public StorageConfigModel GetDestinationStorageConfigModel()
+        public LocalStorageConfigModel GetLocalConfigModel()
         {
-            return _configModel.Storage.Destination;
+            return _configModel.Storage.Local;
         }
 
         public MSReadConfigModel GetMSReadConfigModel()
@@ -30,5 +41,9 @@ namespace CliTool.Services.Configuration
             return _configModel.Parser.MsRead;
         }
 
+        public StorageConfigModel GetStorageConfigModel()
+        {
+            return _configModel.Storage;
+        }
     }
 }
