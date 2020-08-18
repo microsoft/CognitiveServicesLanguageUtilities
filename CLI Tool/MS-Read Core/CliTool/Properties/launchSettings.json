@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "CliTool": {
-      "commandName": "Project",
-      "commandLineArgs": "config show --help"
-    }
-  }
-}
