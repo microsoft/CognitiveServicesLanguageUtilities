@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using CliTool.Commands.Config.ConfigShow;
+using CliTool.Commands.Config.Show;
 using CliTool.Configs;
 using CliTool.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
@@ -11,9 +11,8 @@ namespace CliTool.Commands.Config
 {
     [Command("show")]
     [Subcommand(
-        typeof(ConfigShowMsReadCommand),
-        typeof(ConfigShowLocalCommand),
-        typeof(ConfigShowBlobCommand))]
+        typeof(ConfigShowParser),
+        typeof(ConfigShowStorageCommand))]
     class ConfigShowCommand
     {
         private int OnExecute(CommandLineApplication app)

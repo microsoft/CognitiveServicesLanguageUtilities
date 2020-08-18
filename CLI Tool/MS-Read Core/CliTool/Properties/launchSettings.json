@@ -2,7 +2,7 @@
   "profiles": {
     "CliTool": {
       "commandName": "Project",
-      "commandLineArgs": "parse --parser msread --source blob --destination blob"
+      "commandLineArgs": "config show --help"
     }
   }
 }

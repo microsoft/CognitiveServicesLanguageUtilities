@@ -11,7 +11,7 @@ namespace CliTool.Services.Storage.StorageServices
     {
         private string _targetDirectory;
         public LocalStorageService(string targetDirectory) {
-            if (!Directory.Exists(_targetDirectory))
+            if (!Directory.Exists(targetDirectory))
             {
                 throw new FolderNotFoundException(targetDirectory);
             }

@@ -8,8 +8,10 @@ using System.Text;
 
 namespace CliTool.Commands.Config.Show
 {
-    [Command("local")]
-    class ConfigShowLocalCommand
+    [Command("parser")]
+    [Subcommand(
+        typeof(ConfigShowMsReadCommand))]
+    class ConfigShowParser
     {
         private int OnExecute(CommandLineApplication app)
         {
@@ -20,7 +22,7 @@ namespace CliTool.Commands.Config.Show
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowStorageLocalConfigs();
+                controller.ShowParserConfigs();
             }
             return 1;
         }

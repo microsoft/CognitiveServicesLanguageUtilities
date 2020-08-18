@@ -41,6 +41,7 @@ namespace CliTool.ServiceControllers.Controllers
                 _configModel.Parser.MsRead.CognitiveServiceEndPoint = endpointUrl;
             }
             StoreConfigsModel();
+            _loggerService.Log("Updated MsRead configs");
         }
 
         public void SetBlobStorageConfigs(string connectionString, string sourceContainer, string destinationContainer)
@@ -58,6 +59,7 @@ namespace CliTool.ServiceControllers.Controllers
                 _configModel.Storage.Blob.DestinationContainer = destinationContainer;
             }
             StoreConfigsModel();
+            _loggerService.Log("Updated Blob Storage configs");
         }
 
         public void SetLocalStorageConfigs(string sourceDirectory, string destinationDirectory)
@@ -71,11 +73,42 @@ namespace CliTool.ServiceControllers.Controllers
                 _configModel.Storage.Local.DestinationDirectory = destinationDirectory;
             }
             StoreConfigsModel();
+            _loggerService.Log("Updated Local Storage configs");
         }
 
         public void ShowAllConfigs()
         {
-            var configString = JsonConvert.SerializeObject(_configModel);
+            var configString = JsonConvert.SerializeObject(_configModel, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
+        public void ShowParserConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Parser, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
+        public void ShowParserMsReadConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Parser.MsRead, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
+        public void ShowStorageConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Storage, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
+        public void ShowStorageLocalConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Storage.Local, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
+        public void ShowStorageBlobConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Storage.Blob, Formatting.Indented);
             _loggerService.Log(configString);
         }
     }

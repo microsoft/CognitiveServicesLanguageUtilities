@@ -25,6 +25,7 @@ namespace CliTool.Configs
         {
             var builder = BuildCommonDependencies();
             builder.RegisterInstance(new LocalStorageService(Constants.ConfigsFileLocalDirectory)).As<IStorageService>();
+            builder.RegisterType<ConfigServiceController>();
             return builder.Build();
         }
 
