@@ -1,1 +1,19 @@
-{"storage":{"blob":{"connectionString":"DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net","sourceContainer":"container3","destinationContainer":"container2"},"local":{"sourceDirectory":"","destinationDirectory":""}},"parser":{"MSRead":{"cognitiveServiceEndPoint":"https://eastus.api.cognitive.microsoft.com","congnitiveServiceKey":"test"}}}
+{
+  "storage": {
+    "blob": {
+      "connectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
+      "sourceContainer": "container3",
+      "destinationContainer": "container2"
+    },
+    "local": {
+      "sourceDirectory": "C:\\Users\\a-noyass\\Desktop\\LUIS\\Cognitive-Custom_text_Utilities\\CLI Tool\\MS-Read Core\\CliTool\\source",
+      "destinationDirectory": "C:\\Users\\a-noyass\\Desktop\\LUIS\\Cognitive-Custom_text_Utilities\\CLI Tool\\MS-Read Core\\CliTool\\destination"
+    }
+  },
+  "parser": {
+    "MSRead": {
+      "cognitiveServiceEndPoint": "https://eastus.api.cognitive.microsoft.com",
+      "congnitiveServiceKey": "2e10bb66ed3e46bebd3ca1b3522b8f6b"
+    }
+  }
+}

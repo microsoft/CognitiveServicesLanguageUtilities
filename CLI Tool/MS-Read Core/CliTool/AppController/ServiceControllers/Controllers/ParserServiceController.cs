@@ -4,6 +4,7 @@ using CliTool.Services.Configuration;
 using CliTool.Services.Logger;
 using CliTool.Services.Parser;
 using CliTool.Services.Storage;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,26 +36,32 @@ namespace CliTool.ServiceControllers.Controllers
         }
         public async Task ExtractText()
         {
+            List<string> convertedFiles = new List<string>();
+            List<string> failedFiles = new List<string>();
+
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
             // parse files
             var tasks = fileNames.Select(async fileName =>
             {
-                _loggerService.Log("started processing " + fileName);
                 try
                 {
                     _parserService.ValidateFileType(Path.GetExtension(fileName));
                     Stream file = await _sourceStorageService.ReadFile(fileName);
-                    string text = await _parserService.ExtractText(file);
+                    string text = await _parserService.ExtractText(file, fileName);
                     _destinationStorageService.StoreData(text, Path.ChangeExtension(fileName, "txt"));
+                    convertedFiles.Add(fileName);
                 }
                 catch (CliException e)
                 {
-                    _loggerService.LogCustomError(e);
+                    failedFiles.Add(fileName);
+                    _loggerService.LogError(e);
                 }
-                _loggerService.Log("finished processing " + fileName);
             });
             await Task.WhenAll(tasks);
+            _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
+
+
     }
 }

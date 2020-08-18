@@ -1,5 +1,7 @@
-﻿using CliTool.Exceptions;
+﻿using CliTool.Configs.Models.Enums;
+using CliTool.Exceptions;
 using System;
+using System.Collections.Generic;
 
 namespace CliTool.Services.Logger
 {
@@ -7,6 +9,9 @@ namespace CliTool.Services.Logger
     {
         public void Log(string message);
 
-        public void LogCustomError(CliException e);
+        public void LogError(CliException e);
+
+        public void LogOperation(OperationType operationType, string message);
+        void LogParsingResult(List<string> convertedFiles, List<string> failedFiles);
     }
 }

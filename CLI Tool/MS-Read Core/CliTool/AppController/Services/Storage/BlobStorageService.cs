@@ -1,8 +1,10 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using CliTool.Configs.Models.Enums;
 using CliTool.Exceptions;
 using CliTool.Exceptions.Storage;
+using CliTool.Services.Logger;
 using System;
 using System.IO;
 using System.Linq;
@@ -13,6 +15,8 @@ namespace CliTool.Services.Storage.StorageServices
     class BlobStorageService : IStorageService
     {
         private BlobContainerClient _blobContainerClient;
+
+        ILoggerService _loggerService = new ConsoleLoggerService();
 
         public BlobStorageService(string connectionString, string containerName) {
             try
@@ -38,6 +42,7 @@ namespace CliTool.Services.Storage.StorageServices
 
         public Task<Stream> ReadFile(string fileName)
         {
+            _loggerService.LogOperation(OperationType.ReadingFile, fileName + " from Blob Storage");
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = blobClient.Download();
             var tcs = new TaskCompletionSource<Stream>();
@@ -52,6 +57,7 @@ namespace CliTool.Services.Storage.StorageServices
 
         public void StoreData(string data, string fileName)
         {
+            _loggerService.LogOperation(OperationType.StoringResult, fileName + " to Blob Storage");
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             using (MemoryStream stream = new MemoryStream())
             {

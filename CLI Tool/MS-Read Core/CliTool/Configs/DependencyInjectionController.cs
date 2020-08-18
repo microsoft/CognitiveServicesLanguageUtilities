@@ -35,19 +35,20 @@ namespace CliTool.Configs
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigurationService>();
-                return CreateParserService(parserType, configService);
+                var loggerService = c.Resolve<ILoggerService>();
+                return CreateParserService(parserType, configService, loggerService);
             }).As<IParserService>();
             builder.RegisterType<ParserServiceController>();
             builder.RegisterType<StorageFactory>().As<IStorageFactory>();
             return builder.Build();
         }
 
-        private static IParserService CreateParserService(ParserType parserType, IConfigurationService configService)
+        private static IParserService CreateParserService(ParserType parserType, IConfigurationService configService, ILoggerService loggerService)
         {
             if (parserType.Equals(ParserType.MSRead))
             {
                 var msReadConfig = configService.GetMSReadConfigModel();
-                return new MSReadParserService(msReadConfig.CognitiveServiceEndPoint, msReadConfig.CongnitiveServiceKey);
+                return new MSReadParserService(loggerService, msReadConfig.CognitiveServiceEndPoint, msReadConfig.CongnitiveServiceKey);
             }
             else
             {

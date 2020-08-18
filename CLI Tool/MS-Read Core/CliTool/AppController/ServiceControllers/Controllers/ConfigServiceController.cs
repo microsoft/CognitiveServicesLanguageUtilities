@@ -26,7 +26,7 @@ namespace CliTool.ServiceControllers.Controllers
 
         private void StoreConfigsModel()
         {
-            var configString = JsonConvert.SerializeObject(_configModel);
+            var configString = JsonConvert.SerializeObject(_configModel, Formatting.Indented);
             _storageService.StoreData(configString, Constants.ConfigsFileName);
         }
 

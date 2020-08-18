@@ -1,5 +1,7 @@
-﻿using CliTool.Exceptions;
+﻿using CliTool.Configs.Models.Enums;
+using CliTool.Exceptions;
 using CliTool.Exceptions.Storage;
+using CliTool.Services.Logger;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace CliTool.Services.Storage.StorageServices
     class LocalStorageService : IStorageService
     {
         private string _targetDirectory;
+        ILoggerService _loggerService = new ConsoleLoggerService();
+
         public LocalStorageService(string targetDirectory) {
             if (!Directory.Exists(targetDirectory))
             {
@@ -25,11 +29,12 @@ namespace CliTool.Services.Storage.StorageServices
 
         public Task<Stream> ReadFile(string fileName)
         {
-            string fileDir = Path.Combine(_targetDirectory, fileName);
+            string filePath = Path.Combine(_targetDirectory, fileName);
+            _loggerService.LogOperation(OperationType.ReadingFile, filePath + " from disk");
             var tcs = new TaskCompletionSource<Stream>();
             try
             {
-                FileStream fs = File.OpenRead(fileDir);
+                FileStream fs = File.OpenRead(filePath);
                 tcs.SetResult(fs as Stream);
             }
             catch (UnauthorizedAccessException)
@@ -48,8 +53,10 @@ namespace CliTool.Services.Storage.StorageServices
         {
             try 
             { 
-                string fileDir = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
-                File.WriteAllText(fileDir, data);
+                string filePath = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
+                _loggerService.LogOperation(OperationType.StoringResult, filePath + " to disk");
+
+                File.WriteAllText(filePath, data);
             }
             catch (UnauthorizedAccessException)
             {
