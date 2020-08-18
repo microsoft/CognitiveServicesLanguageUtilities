@@ -3,7 +3,7 @@ using CliTool.Services.Configuration.Models;
 
 namespace CliTool.Services.Configuration
 {
-    interface IConfigurationService
+    interface IConfigsLoader
     {
         public BlobStorageConfigModel GetBlobConfigModel();
 

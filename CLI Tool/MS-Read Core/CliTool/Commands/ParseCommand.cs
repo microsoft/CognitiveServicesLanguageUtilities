@@ -1,5 +1,4 @@
-﻿
-using Autofac;
+﻿using Autofac;
 using CliTool.Configs;
 using CliTool.Configs.Models.Enums;
 using CliTool.ServiceControllers.Controllers;

@@ -6,9 +6,13 @@ namespace CliTool.Exceptions.Parser
     class UnsupportedFileTypeException : CliException
     {
         public UnsupportedFileTypeException(string fileName, string fileType)
+            :base(ConstructMessage(fileName, fileType))
+        { }
+
+        public static string ConstructMessage(string fileName, string fileType)
         {
-            CustomMessage = "Unsupported file type " + fileType + "for file " + fileName 
-                + "\nSupported types are " + Constants.ValidTypes.ToString();
+            return "Unsupported file type " + fileType + "for file " + fileName + "\nSupported types are " + Constants.ValidTypes.ToString();
         }
+        
     }
 }

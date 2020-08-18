@@ -14,14 +14,14 @@ namespace CliTool.ServiceControllers.Controllers
 {
     class ParserServiceController : IParserServiceController
     {
-        readonly IConfigurationService _configurationService;
+        readonly IConfigsLoader _configurationService;
         readonly IStorageFactoryFactory _storageFactoryFactory;
         readonly IParserService _parserService;
         readonly IStorageService _sourceStorageService;
         readonly IStorageService _destinationStorageService;
         readonly ILoggerService _loggerService;
 
-        public ParserServiceController(IConfigurationService configurationService, IStorageFactoryFactory storageFactoryFactory, 
+        public ParserServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory, 
             IParserService parserService, ILoggerService loggerService, StorageType sourceStorageType, StorageType destinationStorageType)
         {
             _configurationService = configurationService;

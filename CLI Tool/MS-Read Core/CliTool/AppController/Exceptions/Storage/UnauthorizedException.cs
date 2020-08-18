@@ -3,8 +3,12 @@
     class UnauthorizedException : CliException
     {
         public UnauthorizedException(string accessType, string filePath)
+            : base(ConstructMessage(accessType, filePath))
+        { }
+
+        public static string ConstructMessage(string accessType, string filePath)
         {
-            CustomMessage = "Unauthorized " + accessType + " for file " + filePath;
+            return "Unauthorized " + accessType + " for file " + filePath;
         }
     }
 

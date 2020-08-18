@@ -5,8 +5,12 @@ namespace CliTool.Exceptions.Storage
     class BlobContainerNotFoundException : CliException
     {
         public BlobContainerNotFoundException(string containerName)
+            :base(ConstructMessage(containerName))
+        { }
+
+        public static string ConstructMessage(string containerName)
         {
-            CustomMessage = "Blob Container Not Found: " + containerName;
+            return "Blob Container Not Found: " + containerName;
         }
     }
 }

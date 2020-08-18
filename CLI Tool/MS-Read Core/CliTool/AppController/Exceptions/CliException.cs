@@ -7,6 +7,8 @@ namespace CliTool.Exceptions
 {
     class CliException : Exception
     {
-        public string CustomMessage { get; set; }
+        public CliException(string message)
+            : base(message)
+        { }
     }
 }

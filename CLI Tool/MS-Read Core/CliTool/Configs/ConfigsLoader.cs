@@ -1,16 +1,17 @@
-﻿using CliTool.Configs;
-using CliTool.Configs.Consts
-    ;
+﻿using CliTool.AppController.Exceptions.Config;
+using CliTool.Configs;
+using CliTool.Configs.Consts;
 using CliTool.Services.Configuration.Models;
 using Newtonsoft.Json;
 using System.IO;
 
 namespace CliTool.Services.Configuration
 {
-    class ConfigurationService : IConfigurationService
+    class ConfigsLoader : IConfigsLoader
     {
         readonly ConfigModel _configModel;
-        public ConfigurationService() {
+
+        public ConfigsLoader() {
             var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
             if (File.Exists(filePath))
             {
@@ -19,9 +20,7 @@ namespace CliTool.Services.Configuration
             }
             else
             {
-                var configModel = new ConfigModel();
-                var configFile = JsonConvert.SerializeObject(configModel);
-                File.WriteAllText(filePath, configFile);
+                throw new MissingConfigsException();
             }
         }
 

@@ -21,14 +21,6 @@ namespace CliTool.Services.Logger
             Console.WriteLine(message);
         }
 
-        public void LogError(CliException e)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("Error: ");
-            Console.ResetColor();
-            Console.WriteLine(e.CustomMessage);
-        }
-
         public void LogParsingResult(List<string> convertedFiles, List<string> failedFiles)
         {
             var totalFilesCount = convertedFiles.Count + failedFiles.Count;
@@ -42,6 +34,14 @@ namespace CliTool.Services.Logger
             Console.WriteLine("Failed:");
             failedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
             Console.ResetColor();
+        }
+
+        public void LogError(Exception e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error: ");
+            Console.ResetColor();
+            Console.WriteLine(e.Message);
         }
     }
 }

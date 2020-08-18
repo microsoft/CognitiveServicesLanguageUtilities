@@ -3,8 +3,12 @@
     class InvalidBlobStorageConnectionStringException : CliException
     {
         public InvalidBlobStorageConnectionStringException(string connectionString)
+            : base(ConstructMessage(connectionString))
+        { }
+
+        public static string ConstructMessage(string connectionString)
         {
-            CustomMessage = "Invalid Blob Storage Connection String: " + connectionString;
+            return "Invalid Blob Storage Connection String: " + connectionString;
         }
     }
 }

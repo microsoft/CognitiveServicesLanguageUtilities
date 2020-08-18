@@ -4,9 +4,7 @@ using CliTool.Services.Logger;
 using CliTool.Services.Storage;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace CliTool.ServiceControllers.Controllers
 {
@@ -20,8 +18,17 @@ namespace CliTool.ServiceControllers.Controllers
         {
             _loggerService = loggerService;
             _storageService = storageService;
-            var configsFile = storageService.ReadFileAsString(Constants.ConfigsFileName);
-            _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
+            if (File.Exists(filePath))
+            {
+                var configsFile = storageService.ReadFileAsString(Constants.ConfigsFileName);
+                _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            }
+            else
+            {
+                _configModel = new ConfigModel();
+                StoreConfigsModel();
+            }
         }
 
         private void StoreConfigsModel()

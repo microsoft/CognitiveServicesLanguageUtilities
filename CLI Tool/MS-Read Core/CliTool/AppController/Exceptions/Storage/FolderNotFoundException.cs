@@ -3,8 +3,12 @@
     class FolderNotFoundException : CliException
     {
         public FolderNotFoundException(string folderPath)
+            : base(ConstructMessage(folderPath))
+        { }
+
+        public static string ConstructMessage(string folderPath)
         {
-            CustomMessage = "Directory Not Found: " + folderPath;
+            return "Directory Not Found: " + folderPath;
         }
     }
 }

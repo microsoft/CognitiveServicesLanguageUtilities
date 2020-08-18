@@ -17,7 +17,6 @@ namespace CliTool.Configs
         private static ContainerBuilder BuildCommonDependencies()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<ConfigurationService>().As<IConfigurationService>();
             builder.RegisterInstance(new ConsoleLoggerService()).As<ILoggerService>();
             return builder;
         }
@@ -33,14 +32,15 @@ namespace CliTool.Configs
         public static IContainer BuildParseCommandDependencies(ParserType parserType, StorageType source, StorageType destination)
         {
             var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
             builder.Register(c =>
             {
-                var configService = c.Resolve<IConfigurationService>();
+                var configService = c.Resolve<IConfigsLoader>();
                 return CreateParserService(parserType, configService);
             }).As<IParserService>();
             builder.Register(c =>
             {
-                var configService = c.Resolve<IConfigurationService>();
+                var configService = c.Resolve<IConfigsLoader>();
                 var loggerService = c.Resolve<ILoggerService>();
                 var parserservice = c.Resolve<IParserService>();
                 return new ParserServiceController(configService, new StorageFactoryFactory(), parserservice, 
@@ -49,7 +49,7 @@ namespace CliTool.Configs
             return builder.Build();
         }
 
-        private static IParserService CreateParserService(ParserType parserType, IConfigurationService configService)
+        private static IParserService CreateParserService(ParserType parserType, IConfigsLoader configService)
         {
             if (parserType.Equals(ParserType.MSRead))
             {
