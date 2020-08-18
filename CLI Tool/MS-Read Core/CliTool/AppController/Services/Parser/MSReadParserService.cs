@@ -1,7 +1,5 @@
 ﻿using CliTool.Configs.Consts;
-using CliTool.Configs.Models.Enums;
 using CliTool.Exceptions.Parser;
-using CliTool.Services.Logger;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
@@ -16,10 +14,8 @@ namespace CliTool.Services.Parser
     {
         ComputerVisionClient _client;
         HashSet<string> _validTypesSet;
-        ILoggerService _loggerService;
 
-        public MSReadParserService(ILoggerService loggerService, string cognitiveServiceEndPoint, string congnitiveServiceKey) {
-            _loggerService = loggerService;
+        public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey) {
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
             { Endpoint = cognitiveServiceEndPoint };
             Task.Run(() => this.TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey)).Wait();
@@ -28,7 +24,6 @@ namespace CliTool.Services.Parser
 
         private async Task TestConnectionAsync(string cognitiveServiceEndPoint, string congnitiveServiceKey)
         {
-            _loggerService.Log("testing connection to " + _client.Endpoint);
             try
             {
                 var file = new MemoryStream();
@@ -45,7 +40,6 @@ namespace CliTool.Services.Parser
 
         public async Task<string> ExtractText(Stream file, string fileName)
         {
-            _loggerService.LogOperation(OperationType.ParsingFile, fileName + " using MsRead service");
             var response = await _client.BatchReadFileInStreamAsync(file);
             const int numberOfCharsInOperationId = 36;
             string operationId = response.OperationLocation.Substring(response.OperationLocation.Length - numberOfCharsInOperationId);

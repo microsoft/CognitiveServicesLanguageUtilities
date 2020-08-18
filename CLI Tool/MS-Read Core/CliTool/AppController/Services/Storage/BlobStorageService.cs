@@ -16,8 +16,6 @@ namespace CliTool.Services.Storage.StorageServices
     {
         private BlobContainerClient _blobContainerClient;
 
-        ILoggerService _loggerService = new ConsoleLoggerService();
-
         public BlobStorageService(string connectionString, string containerName) {
             try
             {
@@ -42,7 +40,6 @@ namespace CliTool.Services.Storage.StorageServices
 
         public Task<Stream> ReadFile(string fileName)
         {
-            _loggerService.LogOperation(OperationType.ReadingFile, fileName + " from Blob Storage");
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = blobClient.Download();
             var tcs = new TaskCompletionSource<Stream>();
@@ -57,7 +54,6 @@ namespace CliTool.Services.Storage.StorageServices
 
         public void StoreData(string data, string fileName)
         {
-            _loggerService.LogOperation(OperationType.StoringResult, fileName + " to Blob Storage");
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             using (MemoryStream stream = new MemoryStream())
             {

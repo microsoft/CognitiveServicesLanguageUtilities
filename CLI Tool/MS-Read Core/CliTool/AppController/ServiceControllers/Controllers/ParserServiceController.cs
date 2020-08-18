@@ -48,8 +48,11 @@ namespace CliTool.ServiceControllers.Controllers
                 try
                 {
                     _parserService.ValidateFileType(Path.GetExtension(fileName));
+                    _loggerService.LogOperation(OperationType.ReadingFile, fileName);
                     Stream file = await _sourceStorageService.ReadFile(fileName);
+                    _loggerService.LogOperation(OperationType.ParsingFile, fileName);
                     string text = await _parserService.ExtractText(file, fileName);
+                    _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     _destinationStorageService.StoreData(text, Path.ChangeExtension(fileName, "txt"));
                     convertedFiles.Add(fileName);
                 }
