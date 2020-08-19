@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
-namespace CliTool.Configs.Consts
+namespace CustomTextCliUtils.Configs.Consts
 {
     class ConfigKeys
     {

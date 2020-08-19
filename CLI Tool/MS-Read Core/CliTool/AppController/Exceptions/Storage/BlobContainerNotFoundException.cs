@@ -1,6 +1,6 @@
-﻿using System;
+﻿
 
-namespace CliTool.Exceptions.Storage
+namespace CustomTextCliUtils.AppController.Exceptions.Storage
 {
     class BlobContainerNotFoundException : CliException
     {

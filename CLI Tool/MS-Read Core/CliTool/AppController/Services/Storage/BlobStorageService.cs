@@ -1,16 +1,13 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using CliTool.Configs.Models.Enums;
-using CliTool.Exceptions;
-using CliTool.Exceptions.Storage;
-using CliTool.Services.Logger;
+using CustomTextCliUtils.AppController.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CliTool.Services.Storage.StorageServices
+namespace CustomTextCliUtils.AppController.Services.Storage
 {
     class BlobStorageService : IStorageService
     {

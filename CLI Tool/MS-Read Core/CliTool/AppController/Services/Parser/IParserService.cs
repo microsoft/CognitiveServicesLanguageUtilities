@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace CliTool.Services.Parser
+namespace CustomTextCliUtils.AppController.Services.Parser
 {
     interface IParserService
     {

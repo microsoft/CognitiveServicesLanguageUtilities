@@ -1,9 +1,7 @@
-﻿using Azure;
-using CliTool.Exceptions.Storage;
+﻿
 using System;
-using System.IO;
 
-namespace CliTool.Exceptions
+namespace CustomTextCliUtils.AppController.Exceptions
 {
     class CliException : Exception
     {

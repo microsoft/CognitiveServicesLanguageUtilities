@@ -1,7 +1,6 @@
-﻿using CliTool.Configs;
-using CliTool.Configs.Consts;
+﻿using CustomTextCliUtils.Configs.Consts;
 
-namespace CliTool.Exceptions.Parser
+namespace CustomTextCliUtils.AppController.Exceptions.Parser
 {
     class UnsupportedFileTypeException : CliException
     {

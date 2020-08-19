@@ -1,12 +1,12 @@
-﻿using CliTool.Configs;
-using CliTool.Configs.Consts;
-using CliTool.Services.Logger;
-using CliTool.Services.Storage;
+﻿using CustomTextCliUtils.AppController.Services.Logger;
+using CustomTextCliUtils.AppController.Services.Storage;
+using CustomTextCliUtils.Configs.Consts;
+using CustomTextCliUtils.Configs.Models;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 
-namespace CliTool.ServiceControllers.Controllers
+namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
 {
     class ConfigServiceController
     {

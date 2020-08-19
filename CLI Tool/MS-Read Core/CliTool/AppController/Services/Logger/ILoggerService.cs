@@ -1,9 +1,8 @@
-﻿using CliTool.Configs.Models.Enums;
-using CliTool.Exceptions;
+﻿using CustomTextCliUtils.Configs.Models.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace CliTool.Services.Logger
+namespace CustomTextCliUtils.AppController.Services.Logger
 {
     interface ILoggerService
     {

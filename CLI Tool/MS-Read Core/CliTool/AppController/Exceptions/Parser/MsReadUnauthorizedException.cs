@@ -1,10 +1,6 @@
-﻿using CliTool.Configs;
-using CliTool.Configs.Consts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CustomTextCliUtils.Configs.Consts;
 
-namespace CliTool.Exceptions.Parser
+namespace CustomTextCliUtils.AppController.Exceptions.Parser
 {
     class MsReadUnauthorizedException : CliException
     {

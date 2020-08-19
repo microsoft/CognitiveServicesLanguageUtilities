@@ -1,12 +1,11 @@
-﻿using CliTool.Commands;
-using CliTool.Commands.Config;
-using CliTool.Configs.Consts;
-using CliTool.Exceptions;
-using CliTool.Services.Logger;
+﻿using CustomTextCliUtils.AppController.Services.Logger;
+using CustomTextCliUtils.Commands;
+using CustomTextCliUtils.Commands.Config;
+using CustomTextCliUtils.Configs.Consts;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 
-namespace CliTool
+namespace CustomTextCliUtils
 {
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version")]

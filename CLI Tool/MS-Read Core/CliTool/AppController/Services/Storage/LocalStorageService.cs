@@ -1,10 +1,10 @@
-﻿using CliTool.Exceptions.Storage;
+﻿using CustomTextCliUtils.AppController.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CliTool.Services.Storage.StorageServices
+namespace CustomTextCliUtils.AppController.Services.Storage
 {
     class LocalStorageService : IStorageService
     {

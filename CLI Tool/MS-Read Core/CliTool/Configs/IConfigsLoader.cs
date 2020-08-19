@@ -1,7 +1,10 @@
-﻿using CliTool.Configs;
-using CliTool.Services.Configuration.Models;
+﻿
 
-namespace CliTool.Services.Configuration
+using CustomTextCliUtils.Configs.Models;
+using CustomTextCliUtils.Configs.Models.Parser;
+using CustomTextCliUtils.Configs.Models.Storage;
+
+namespace CustomTextCliUtils.Configs
 {
     interface IConfigsLoader
     {

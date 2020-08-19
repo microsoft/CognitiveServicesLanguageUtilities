@@ -1,13 +1,13 @@
 ﻿using Autofac;
-using CliTool.Configs;
-using CliTool.Configs.Models.Enums;
-using CliTool.ServiceControllers.Controllers;
+using CustomTextCliUtils.Configs;
+using CustomTextCliUtils.Configs.Models.Enums;
+using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace CliTool.Commands
+namespace CustomTextCliUtils.Commands
 {
     [Command("parse")]
     class ParseCommand

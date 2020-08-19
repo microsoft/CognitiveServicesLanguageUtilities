@@ -1,16 +1,14 @@
 ﻿using Autofac;
-using CliTool.AppController.Factories.Storage;
-using CliTool.Configs.Consts;
-using CliTool.Configs.Models.Enums;
-using CliTool.ServiceControllers.Controllers;
-using CliTool.Services.Configuration;
-using CliTool.Services.Logger;
-using CliTool.Services.Parser;
-using CliTool.Services.Storage;
-using CliTool.Services.Storage.StorageServices;
+using CustomTextCliUtils.AppController.Factories.Storage;
+using CustomTextCliUtils.Configs.Consts;
+using CustomTextCliUtils.Configs.Models.Enums;
+using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
+using CustomTextCliUtils.AppController.Services.Logger;
+using CustomTextCliUtils.AppController.Services.Parser;
+using CustomTextCliUtils.AppController.Services.Storage;
 using System;
 
-namespace CliTool.Configs
+namespace CustomTextCliUtils.Configs
 {
     class DependencyInjectionController
     {

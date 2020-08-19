@@ -1,9 +1,7 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CliTool.Commands.Config
+
+namespace CustomTextCliUtils.Commands.Config
 {
     [Command("config")]
     [Subcommand(

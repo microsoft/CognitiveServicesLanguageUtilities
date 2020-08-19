@@ -1,5 +1,5 @@
-﻿using CliTool.Configs.Consts;
-using CliTool.Exceptions.Parser;
+﻿using CustomTextCliUtils.Configs.Consts;
+using CustomTextCliUtils.AppController.Exceptions.Parser;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CliTool.Services.Parser
+namespace CustomTextCliUtils.AppController.Services.Parser
 {
     class MSReadParserService : IParserService
     {

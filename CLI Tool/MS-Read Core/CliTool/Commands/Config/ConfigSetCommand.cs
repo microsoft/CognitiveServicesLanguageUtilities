@@ -1,10 +1,7 @@
-﻿using CliTool.Commands.Config.Set;
+﻿using CustomTextCliUtils.Commands.Config.Set;
 using McMaster.Extensions.CommandLineUtils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CliTool.Commands.Config
+namespace CustomTextCliUtils.Commands.Config
 {
     [Command("set")]
     [Subcommand(

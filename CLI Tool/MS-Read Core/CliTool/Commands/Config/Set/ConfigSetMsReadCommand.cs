@@ -1,12 +1,9 @@
 ﻿using Autofac;
-using CliTool.Configs;
-using CliTool.ServiceControllers.Controllers;
+using CustomTextCliUtils.Configs;
+using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CliTool.Commands.Config.Set
+namespace CustomTextCliUtils.Commands.Config.Set
 {
     [Command("msread")]
     class ConfigSetMsReadCommand

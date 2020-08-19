@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CliTool.Commands
+namespace CustomTextCliUtils.Commands
 {
     class PredictCommand
     {

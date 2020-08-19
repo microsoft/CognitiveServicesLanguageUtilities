@@ -1,11 +1,12 @@
-﻿using CliTool.AppController.Exceptions.Config;
-using CliTool.Configs;
-using CliTool.Configs.Consts;
-using CliTool.Services.Configuration.Models;
+﻿using CustomTextCliUtils.AppController.Exceptions.Config;
+using CustomTextCliUtils.Configs.Consts;
+using CustomTextCliUtils.Configs.Models;
+using CustomTextCliUtils.Configs.Models.Parser;
+using CustomTextCliUtils.Configs.Models.Storage;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace CliTool.Services.Configuration
+namespace CustomTextCliUtils.Configs
 {
     class ConfigsLoader : IConfigsLoader
     {

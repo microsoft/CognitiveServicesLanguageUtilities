@@ -1,9 +1,6 @@
-﻿using CliTool.Configs.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CustomTextCliUtils.Configs.Models.Enums;
 
-namespace CliTool.AppController.Factories.Storage
+namespace CustomTextCliUtils.AppController.Factories.Storage
 {
     interface IStorageFactoryFactory
     {

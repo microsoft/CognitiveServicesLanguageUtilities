@@ -1,16 +1,16 @@
-﻿using CliTool.AppController.Factories.Storage;
-using CliTool.Configs.Models.Enums;
-using CliTool.Exceptions;
-using CliTool.Services.Configuration;
-using CliTool.Services.Logger;
-using CliTool.Services.Parser;
-using CliTool.Services.Storage;
+﻿using CustomTextCliUtils.AppController.Exceptions;
+using CustomTextCliUtils.AppController.Factories.Storage;
+using CustomTextCliUtils.AppController.Services.Logger;
+using CustomTextCliUtils.AppController.Services.Parser;
+using CustomTextCliUtils.AppController.Services.Storage;
+using CustomTextCliUtils.Configs;
+using CustomTextCliUtils.Configs.Models.Enums;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CliTool.ServiceControllers.Controllers
+namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
 {
     class ParserServiceController : IParserServiceController
     {

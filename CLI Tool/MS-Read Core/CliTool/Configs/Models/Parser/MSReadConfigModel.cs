@@ -2,7 +2,7 @@
 
 using Newtonsoft.Json;
 
-namespace CliTool.Services.Configuration.Models
+namespace CustomTextCliUtils.Configs.Models.Parser
 {
     public class MSReadConfigModel
     {

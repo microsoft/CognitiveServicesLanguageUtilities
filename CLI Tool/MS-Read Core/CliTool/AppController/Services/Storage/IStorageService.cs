@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace CliTool.Services.Storage
+namespace CustomTextCliUtils.AppController.Services.Storage
 {
     interface IStorageService
     {

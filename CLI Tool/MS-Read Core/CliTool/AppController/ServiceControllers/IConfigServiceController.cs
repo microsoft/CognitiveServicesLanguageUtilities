@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CliTool.ServiceControllers
+﻿
+namespace CustomTextCliUtils.AppController.ServiceControllers
 {
     interface IConfigServiceController
     {

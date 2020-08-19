@@ -1,10 +1,6 @@
-﻿using CliTool.Configs.Consts;
-using CliTool.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CustomTextCliUtils.Configs.Consts;
 
-namespace CliTool.AppController.Exceptions.Config
+namespace CustomTextCliUtils.AppController.Exceptions.Config
 {
     class MissingConfigsException : CliException
     {

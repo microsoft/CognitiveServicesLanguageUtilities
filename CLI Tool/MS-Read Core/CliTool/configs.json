@@ -6,8 +6,8 @@
       "destinationContainer": "container2"
     },
     "local": {
-      "sourceDirectory": "C:\\Users\\a-noyass\\Desktop\\LUIS\\Cognitive-Custom_text_Utilities\\CLI Tool\\MS-Read Core\\CliTool\\source",
-      "destinationDirectory": "C:\\Users\\a-noyass\\Desktop\\LUIS\\Cognitive-Custom_text_Utilities\\CLI Tool\\MS-Read Core\\CliTool\\destination"
+      "sourceDirectory": "C:\\Users\\a-noyass\\Desktop\\LUIS\\Cognitive-Custom_text_Utilities\\CLI Tool\\MS-Read Core\\CustomTextCliUtils\\source",
+      "destinationDirectory": "C:\\Users\\a-noyass\\Desktop\\LUIS\\Cognitive-Custom_text_Utilities\\CLI Tool\\MS-Read Core\\CustomTextCliUtils\\destination"
     }
   },
   "parser": {

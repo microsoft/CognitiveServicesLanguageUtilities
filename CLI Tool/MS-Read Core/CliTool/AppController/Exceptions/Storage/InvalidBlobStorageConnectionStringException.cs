@@ -1,4 +1,4 @@
-﻿namespace CliTool.Exceptions.Storage
+﻿namespace CustomTextCliUtils.AppController.Exceptions.Storage
 {
     class InvalidBlobStorageConnectionStringException : CliException
     {

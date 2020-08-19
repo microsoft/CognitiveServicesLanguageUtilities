@@ -1,9 +1,8 @@
-﻿using CliTool.Configs;
-using CliTool.Configs.Models.Enums;
-using CliTool.Services.Storage;
-using CliTool.Services.Storage.StorageServices;
+﻿using CustomTextCliUtils.AppController.Services.Storage;
+using CustomTextCliUtils.Configs.Models;
+using CustomTextCliUtils.Configs.Models.Enums;
 
-namespace CliTool.AppController.Factories.Storage
+namespace CustomTextCliUtils.AppController.Factories.Storage
 {
     internal class DestinationStorageFactory : IStorageFactory
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CliTool.Configs
+namespace CustomTextCliUtils.Configs.Models.Storage
 {
     public class BlobStorageConfigModel
     {

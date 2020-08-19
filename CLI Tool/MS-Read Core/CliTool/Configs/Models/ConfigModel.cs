@@ -1,9 +1,9 @@
-﻿using System;
-
-using CliTool.Services.Configuration.Models;
+﻿
+using CustomTextCliUtils.Configs.Models.Parser;
+using CustomTextCliUtils.Configs.Models.Storage;
 using Newtonsoft.Json;
 
-namespace CliTool.Configs
+namespace CustomTextCliUtils.Configs.Models
 {
     public class ConfigModel
     {
