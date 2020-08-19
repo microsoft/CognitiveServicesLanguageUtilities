@@ -2,7 +2,7 @@
 
 namespace CustomTextCliUtils.Commands.Config.Set
 {
-    [Command("storage")]
+    [Command("storage", Description = "sets configs for all storage services")]
     [Subcommand(
         typeof(ConfigSetBlobCommand),
         typeof(ConfigSetLocalCommand))]

@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Show
 {
-    [Command("parser")]
+    [Command("parser", Description = "shows configs for all parsers")]
     [Subcommand(
         typeof(ConfigShowMsReadCommand))]
     class ConfigShowParser

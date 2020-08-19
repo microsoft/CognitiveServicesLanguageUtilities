@@ -3,7 +3,7 @@
 
 namespace CustomTextCliUtils.Commands.Config
 {
-    [Command("config")]
+    [Command("config", Description = "shows or sets app configs")]
     [Subcommand(
         typeof(ConfigShowCommand),
         typeof(ConfigSetCommand))]

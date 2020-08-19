@@ -2,7 +2,7 @@
 
 namespace CustomTextCliUtils.Commands.Config.Set
 {
-    [Command("parser")]
+    [Command("parser", Description = "sets configs for all parsers")]
     [Subcommand(
         typeof(ConfigSetMsReadCommand))]
     class ConfigSetParser

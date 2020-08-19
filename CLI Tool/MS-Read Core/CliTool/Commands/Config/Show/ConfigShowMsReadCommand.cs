@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Show
 {
-    [Command("msread")]
+    [Command("msread", Description = "shows configs for msread parser")]
     class ConfigShowMsReadCommand
     {
         private int OnExecute(CommandLineApplication app)

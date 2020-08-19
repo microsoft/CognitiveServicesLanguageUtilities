@@ -5,13 +5,13 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Set
 {
-    [Command("msread")]
+    [Command("msread", Description = "sets configs for msread parser")]
     class ConfigSetMsReadCommand
     {
-        [Option("--cognitive-services-key <>")]
+        [Option("--cognitive-services-key <>", Description = "azure congnitive services key")]
         public string CognitiveServicesKey { get; }
 
-        [Option("--endpoint-url <ENDPOINT_URL>")]
+        [Option("--endpoint-url <ENDPOINT_URL>", Description = "endpoint url for azure congnitive services")]
         public string EndpointUrl { get; }
 
         private int OnExecute(CommandLineApplication app)

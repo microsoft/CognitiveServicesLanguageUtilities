@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Show
 {
-    [Command("local")]
+    [Command("local", Description = "shows configs for local storage")]
     class ConfigShowLocalCommand
     {
         private int OnExecute(CommandLineApplication app)

@@ -6,7 +6,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config
 {
-    [Command("show")]
+    [Command("show", Description = "shows app configs")]
     [Subcommand(
         typeof(ConfigShowParser),
         typeof(ConfigShowStorageCommand))]

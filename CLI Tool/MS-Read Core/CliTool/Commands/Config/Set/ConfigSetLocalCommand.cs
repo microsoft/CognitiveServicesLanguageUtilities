@@ -5,13 +5,13 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Set
 {
-    [Command("local")]
+    [Command("local", Description = "sets configs for local storage")]
     class ConfigSetLocalCommand
     {
-        [Option("--source-dir <ABSOLUTE_PATH>")]
+        [Option("--source-dir <ABSOLUTE_PATH>", Description = "absolute path for source directory")]
         public string SourceDirectory { get; }
 
-        [Option("--destination-dir <ABSOLUTE_PATH>")]
+        [Option("--destination-dir <ABSOLUTE_PATH>", Description = "absolute path for destination directory")]
         public string DestinationDirectory { get; }
 
         private int OnExecute(CommandLineApplication app)

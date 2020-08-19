@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Show
 {
-    [Command("storage")]
+    [Command("storage", Description = "shows configs for all storage services")]
     [Subcommand(
         typeof(ConfigShowLocalCommand),
         typeof(ConfigShowBlobCommand))]

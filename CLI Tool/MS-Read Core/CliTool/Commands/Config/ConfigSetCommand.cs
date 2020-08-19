@@ -3,7 +3,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config
 {
-    [Command("set")]
+    [Command("set", Description = "sets app configs")]
     [Subcommand(
         typeof(ConfigSetStorage),
         typeof(ConfigSetParser))]

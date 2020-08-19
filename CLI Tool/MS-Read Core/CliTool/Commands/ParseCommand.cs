@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.Commands
 {
-    [Command("parse")]
+    [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
     class ParseCommand
     {
         [Required]
-        [Option("--parser <msread/tika>")]
+        [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]
         public ParserType Parser { get; }
         [Required]
-        [Option("--source <local/blob>")]
+        [Option("--source <local/blob>", Description = "[required] indicates source storage type")]
         public StorageType Source { get; }
         [Required]
-        [Option("--destination <local/blob>")]
+        [Option("--destination <local/blob>", Description = "[required] indicates destination storage type")]
         public StorageType Destination { get; }
-        [Option("--chunk-type <page/char>")]
+        [Option("--chunk-type <page/char>", Description = "[optional] indeicates chunking type. if not set, no chunking will be used")]
         public ChunkType ChunkType { get; }
 
         private async Task<int> OnExecute(CommandLineApplication app)
