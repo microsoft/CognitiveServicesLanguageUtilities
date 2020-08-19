@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using CustomTextCliUtils.Configs;
-using CustomTextCliUtils.Configs.Models.Enums;
+using CustomTextCliUtils.AppController.Models.Enums;
 using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System;
@@ -21,8 +21,8 @@ namespace CustomTextCliUtils.Commands
         [Required]
         [Option("--destination <local/blob>", Description = "[required] indicates destination storage type")]
         public StorageType Destination { get; }
-        [Option("--chunk-type <page/char>", Description = "[optional] indeicates chunking type. if not set, no chunking will be used")]
-        public ChunkType ChunkType { get; }
+        [Option("--chunk-type <page/char>", Description = "[optional] indicates chunking type. if not set, no chunking will be used")]
+        public ChunkMethod ChunkType { get; } = ChunkMethod.NoChunking;
 
         private async Task<int> OnExecute(CommandLineApplication app)
         {
@@ -34,7 +34,7 @@ namespace CustomTextCliUtils.Commands
             {
                 var controller = scope.Resolve<ParserServiceController>();
                 // controller.SetStorageServices(Source, Destination);
-                await controller.ExtractText();
+                await controller.ExtractText(Source, Destination, ChunkType);
             }
 
             return 0;

@@ -1,5 +1,5 @@
-﻿using CustomTextCliUtils.Configs.Models;
-using CustomTextCliUtils.Configs.Models.Enums;
+﻿using CustomTextCliUtils.AppController.Models;
+using CustomTextCliUtils.AppController.Models.Enums;
 using CustomTextCliUtils.AppController.Services.Storage;
 
 namespace CustomTextCliUtils.AppController.Factories.Storage

@@ -10,7 +10,7 @@ namespace CustomTextCliUtils.AppController.Exceptions.Parser
 
         public static string ConstructMessage(string fileName, string fileType)
         {
-            return "Unsupported file type " + fileType + "for file " + fileName + "\nSupported types are " + Constants.ValidTypes.ToString();
+            return $"Unsupported file type {fileType} for file {fileName}\nSupported types are {Constants.ValidTypes.ToString()}";
         }
         
     }

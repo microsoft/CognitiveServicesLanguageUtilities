@@ -1,8 +1,8 @@
 ﻿using CustomTextCliUtils.AppController.Exceptions.Config;
 using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.Configs.Models;
-using CustomTextCliUtils.Configs.Models.Parser;
-using CustomTextCliUtils.Configs.Models.Storage;
+using CustomTextCliUtils.AppController.Models;
+using CustomTextCliUtils.AppController.Models.Parser;
+using CustomTextCliUtils.AppController.Models.Storage;
 using Newtonsoft.Json;
 using System.IO;
 

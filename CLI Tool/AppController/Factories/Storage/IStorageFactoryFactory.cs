@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.Configs.Models.Enums;
+﻿using CustomTextCliUtils.AppController.Models.Enums;
 
 namespace CustomTextCliUtils.AppController.Factories.Storage
 {

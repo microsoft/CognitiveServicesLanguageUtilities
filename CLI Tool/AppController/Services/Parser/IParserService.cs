@@ -1,11 +1,13 @@
-﻿using System.IO;
+﻿using CustomTextCliUtils.AppController.Models.Enums;
+using CustomTextCliUtils.AppController.Services.Chunker;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.AppController.Services.Parser
 {
     interface IParserService
     {
-        public Task<string> ExtractText(Stream file, string fileName);
+        public Task<ParseResult> ParseFile(Stream file);
 
         public void ValidateFileType(string fileType);
     }

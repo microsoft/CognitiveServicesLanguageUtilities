@@ -1,12 +1,13 @@
 ﻿using Autofac;
 using CustomTextCliUtils.AppController.Factories.Storage;
 using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.Configs.Models.Enums;
+using CustomTextCliUtils.AppController.Models.Enums;
 using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using CustomTextCliUtils.AppController.Services.Logger;
 using CustomTextCliUtils.AppController.Services.Parser;
 using CustomTextCliUtils.AppController.Services.Storage;
 using System;
+using CustomTextCliUtils.AppController.Services.Chunker;
 
 namespace CustomTextCliUtils.Configs
 {
@@ -41,8 +42,9 @@ namespace CustomTextCliUtils.Configs
                 var configService = c.Resolve<IConfigsLoader>();
                 var loggerService = c.Resolve<ILoggerService>();
                 var parserservice = c.Resolve<IParserService>();
+                var chunker = CreateChunkerService(parserType);
                 return new ParserServiceController(configService, new StorageFactoryFactory(), parserservice, 
-                    loggerService, source, destination);
+                    loggerService, chunker);
             }).As<ParserServiceController>();
             return builder.Build();
         }
@@ -53,6 +55,18 @@ namespace CustomTextCliUtils.Configs
             {
                 var msReadConfig = configService.GetMSReadConfigModel();
                 return new MSReadParserService(msReadConfig.CognitiveServiceEndPoint, msReadConfig.CongnitiveServiceKey);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private static IChunkerService CreateChunkerService(ParserType parserType)
+        {
+            if (parserType.Equals(ParserType.MSRead))
+            {
+                return new MsReadChunkerService();
             }
             else
             {

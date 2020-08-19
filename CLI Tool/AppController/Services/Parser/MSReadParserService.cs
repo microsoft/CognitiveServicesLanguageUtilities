@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using CustomTextCliUtils.AppController.Services.Chunker;
 
 namespace CustomTextCliUtils.AppController.Services.Parser
 {
@@ -31,14 +32,14 @@ namespace CustomTextCliUtils.AppController.Services.Parser
             }
             catch (ComputerVisionErrorException e)
             {
-                if (e.Message.Contains("Unauthorized"))
+                if (!e.Message.Contains("BadRequest"))
                 {
-                    throw new MsReadUnauthorizedException(congnitiveServiceKey, cognitiveServiceEndPoint);
+                    throw new MsReadConnectionException(e.Message, congnitiveServiceKey, cognitiveServiceEndPoint);
                 }
             }
         }
 
-        public async Task<string> ExtractText(Stream file, string fileName)
+        public async Task<ParseResult> ParseFile(Stream file)
         {
             var response = await _client.BatchReadFileInStreamAsync(file);
             const int numberOfCharsInOperationId = 36;
@@ -51,15 +52,7 @@ namespace CustomTextCliUtils.AppController.Services.Parser
             }
             while ((result.Status == TextOperationStatusCodes.Running ||
                 result.Status == TextOperationStatusCodes.NotStarted));
-            StringBuilder finalText = new StringBuilder();
-            foreach (TextRecognitionResult rr in result.RecognitionResults)
-            {
-                foreach (Line l in rr.Lines)
-                {
-                    finalText.Append($"{l.Text} ");
-                }
-            }
-            return finalText.ToString();
+            return new MsReadParseResult(result.RecognitionResults);
         }
 
         public void ValidateFileType(string fileName)

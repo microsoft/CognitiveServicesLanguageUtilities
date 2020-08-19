@@ -1,7 +1,7 @@
 ﻿using CustomTextCliUtils.AppController.Services.Logger;
 using CustomTextCliUtils.AppController.Services.Storage;
 using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.Configs.Models;
+using CustomTextCliUtils.AppController.Models;
 using Newtonsoft.Json;
 using System;
 using System.IO;

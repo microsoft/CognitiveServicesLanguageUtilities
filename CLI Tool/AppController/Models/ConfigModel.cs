@@ -1,9 +1,8 @@
-﻿
-using CustomTextCliUtils.Configs.Models.Parser;
-using CustomTextCliUtils.Configs.Models.Storage;
+﻿using CustomTextCliUtils.AppController.Models.Parser;
+using CustomTextCliUtils.AppController.Models.Storage;
 using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.Configs.Models
+namespace CustomTextCliUtils.AppController.Models
 {
     public class ConfigModel
     {

@@ -1,6 +1,4 @@
-﻿
-
-namespace CustomTextCliUtils.Configs.Models.Enums
+﻿namespace CustomTextCliUtils.AppController.Models.Enums
 {
     enum CommandType
     {

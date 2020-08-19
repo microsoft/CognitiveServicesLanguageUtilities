@@ -1,6 +1,6 @@
 ﻿using CustomTextCliUtils.AppController.Services.Storage;
-using CustomTextCliUtils.Configs.Models;
-using CustomTextCliUtils.Configs.Models.Enums;
+using CustomTextCliUtils.AppController.Models;
+using CustomTextCliUtils.AppController.Models.Enums;
 
 namespace CustomTextCliUtils.AppController.Factories.Storage
 {

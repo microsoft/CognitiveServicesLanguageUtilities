@@ -1,7 +1,7 @@
 ﻿using CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.Configs.Models.Parser
+namespace CustomTextCliUtils.AppController.Models.Parser
 {
     public class MSReadConfigModel
     {

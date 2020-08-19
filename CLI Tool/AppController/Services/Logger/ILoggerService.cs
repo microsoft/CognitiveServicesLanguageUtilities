@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.Configs.Models.Enums;
+﻿using CustomTextCliUtils.AppController.Models.Enums;
 using System;
 using System.Collections.Generic;
 
