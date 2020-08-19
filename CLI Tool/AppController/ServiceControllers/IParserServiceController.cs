@@ -1,5 +1,4 @@
-﻿
-using CustomTextCliUtils.AppController.Models.Enums;
+﻿using CustomTextCliUtils.AppController.Models.Enums;
 using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.AppController.ServiceControllers

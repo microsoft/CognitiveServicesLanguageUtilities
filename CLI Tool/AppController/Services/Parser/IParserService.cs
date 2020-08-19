@@ -1,5 +1,4 @@
-﻿using CustomTextCliUtils.AppController.Models.Enums;
-using CustomTextCliUtils.AppController.Services.Chunker;
+﻿using CustomTextCliUtils.AppController.Services.Chunker;
 using System.IO;
 using System.Threading.Tasks;
 

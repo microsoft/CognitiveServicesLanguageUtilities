@@ -1,6 +1,4 @@
-﻿
-
-namespace CustomTextCliUtils.AppController.Exceptions.Storage
+﻿namespace CustomTextCliUtils.AppController.Exceptions.Storage
 {
     class BlobContainerNotFoundException : CliException
     {

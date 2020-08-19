@@ -1,6 +1,4 @@
-﻿
-
-namespace CustomTextCliUtils.Configs.Consts
+﻿namespace CustomTextCliUtils.Configs.Consts
 {
     class Constants
     {
