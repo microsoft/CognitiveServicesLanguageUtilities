@@ -12,8 +12,8 @@
   },
   "parser": {
     "MSRead": {
-      "cognitiveServiceEndPoint": "https://eastus.api.cognitive.microsoft.com",
-      "congnitiveServiceKey": "2e20bb66ed3e46bebd3ca1b3522b8f6b"
+      "cognitiveServiceEndPoint": "https://eastus.api.cognitive.microsoft.com/",
+      "congnitiveServiceKey": "2e10bb66ed3e46bebd3ca1b3522b8f6b"
     }
   }
 }
