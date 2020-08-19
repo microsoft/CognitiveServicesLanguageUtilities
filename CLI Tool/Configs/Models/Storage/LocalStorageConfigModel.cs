@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using CustomTextCliUtils.Configs.Consts;
+using Newtonsoft.Json;
 
 namespace CustomTextCliUtils.Configs.Models.Storage
 {
     public class LocalStorageConfigModel
     {
-        [JsonProperty("sourceDirectory")]
+        [JsonProperty(ConfigKeys.LocalStorageSourceDir)]
         public string SourceDirectory { get; set; }
 
-        [JsonProperty("destinationDirectory")]
+        [JsonProperty(ConfigKeys.LocalStorageDestinationDir)]
         public string DestinationDirectory { get; set; }
     }
 }

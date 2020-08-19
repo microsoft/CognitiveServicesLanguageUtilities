@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using CustomTextCliUtils.Configs.Consts;
+using Newtonsoft.Json;
 
 namespace CustomTextCliUtils.Configs.Models.Storage
 {
     public class BlobStorageConfigModel
     {
-        [JsonProperty("connectionString")]
+        [JsonProperty(ConfigKeys.BlobStorageConnectionstring)]
         public string ConnectionString { get; set; }
 
-        [JsonProperty("sourceContainer")]
+        [JsonProperty(ConfigKeys.BlobStorageSourceContainer)]
         public string SourceContainer { get; set; }
 
-        [JsonProperty("destinationContainer")]
+        [JsonProperty(ConfigKeys.BlobStorageDestinationContainer)]
         public string DestinationContainer { get; set; }
     }
 }

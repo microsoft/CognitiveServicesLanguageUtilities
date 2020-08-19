@@ -2,16 +2,17 @@
 using CustomTextCliUtils.Configs;
 using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
+using CustomTextCliUtils.Configs.Consts;
 
 namespace CustomTextCliUtils.Commands.Config.Set
 {
     [Command("msread", Description = "sets configs for msread parser")]
     class ConfigSetMsReadCommand
     {
-        [Option("--cognitive-services-key <>", Description = "azure congnitive services key")]
+        [Option(CommandOptionTemplate.MSReadCognitiveServicesKey, Description = "azure congnitive services key")]
         public string CognitiveServicesKey { get; }
 
-        [Option("--endpoint-url <ENDPOINT_URL>", Description = "endpoint url for azure congnitive services")]
+        [Option(CommandOptionTemplate.MSReadCognitiveServicesEndpoint, Description = "endpoint url for azure congnitive services")]
         public string EndpointUrl { get; }
 
         private int OnExecute(CommandLineApplication app)

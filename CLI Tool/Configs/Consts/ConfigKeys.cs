@@ -4,18 +4,17 @@ namespace CustomTextCliUtils.Configs.Consts
 {
     class ConfigKeys
     {
-        //MS Read
-        public readonly string CognitiveServicesKey = "cognitive-services-key";
-        public readonly string CognitiveServicesEndpoint = "cognitive-services-endpoint";
-        //Tika
-        public readonly string EnableOcr = "enable-ocr";
-        public readonly string DetectTiltedText = "detect-tilted-text";
-        public readonly string SortByPostition = "sort-by-position";
-        //Storage
-        public readonly string SourceDir = "source-dir";
-        public readonly string DestinationDir = "destination-dir";
-        public readonly string SourceContainer = "source-container";
-        public readonly string DestinationContainer = "destination-container";
-        public readonly string Connectionstring = "connection-string";
+        // msread
+        public const string MSReadCognitiveServicesKey = "cognitive-services-key";
+        public const string MSReadCognitiveServicesEndpoint = "cognitive-services-endpoint";
+
+        // local storage
+        public const string LocalStorageSourceDir = "source-dir";
+        public const string LocalStorageDestinationDir = "destination-dir";
+
+        // blob storage
+        public const string BlobStorageSourceContainer = "source-container";
+        public const string BlobStorageDestinationContainer = "destination-container";
+        public const string BlobStorageConnectionstring = "connection-string";
     }
 }
