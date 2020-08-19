@@ -63,12 +63,11 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
                     List<string> chunkedText = _chunkerService.Chunk(parseResult, chunkType);
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
-                    chunkedText.Select((t, i) =>
+                    foreach (var item in chunkedText.Select((value, i) => (value, i)))
                     {
-                        var newFileName = Path.GetFileNameWithoutExtension(fileName) + ".txt";
-                        _destinationStorageService.StoreData(chunkedText[0], newFileName);
-                        return newFileName;
-                    });
+                        var newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{item.i + 1}.txt";
+                        _destinationStorageService.StoreData(item.value, newFileName);
+                    }
                     convertedFiles.Add(fileName);
                 }
                 catch (CliException e)
