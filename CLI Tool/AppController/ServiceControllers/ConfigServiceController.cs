@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 
-namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
+namespace CustomTextCliUtils.AppController.ServiceControllers
 {
     class ConfigServiceController
     {

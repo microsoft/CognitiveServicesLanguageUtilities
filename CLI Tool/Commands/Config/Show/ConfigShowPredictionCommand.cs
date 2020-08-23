@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using CustomTextCliUtils.Configs;
-using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
+using CustomTextCliUtils.AppController.ServiceControllers;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace CustomTextCliUtils.Commands.Config.Show

@@ -11,9 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using CustomTextCliUtils.AppController.Services.Chunker;
 
-namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
+namespace CustomTextCliUtils.AppController.ServiceControllers
 {
-    class ParserServiceController : IParserServiceController
+    class ParserServiceController
     {
         readonly IConfigsLoader _configurationService;
         readonly IStorageFactoryFactory _storageFactoryFactory;
