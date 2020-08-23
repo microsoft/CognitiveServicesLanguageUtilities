@@ -21,5 +21,11 @@ namespace CustomTextCliUtils.Configs.Consts
 
         // chunker
         public const string ChunkerCharLimit = "--" + ConfigKeys.ChunkerCharLimit + " <INTEGER>";
+
+        // prediction
+        public const string PredictionCustomTextKey = "--" + ConfigKeys.PredictionCustomTextKey + " <CUSTOM_TEXT_KEY>";
+        public const string PredictionEndpointUrl = "--" + ConfigKeys.PredictionEndpointUrl + " <ENDPOINT_URL>";
+        public const string PredictionAppId = "--" + ConfigKeys.PredictionAppId + " <APP_ID>";
+        public const string PredictionVersionId = "--" + ConfigKeys.PredictionVersionId + " <APP_VERSION>";
     }
 }

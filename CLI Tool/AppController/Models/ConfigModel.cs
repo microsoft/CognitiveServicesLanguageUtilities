@@ -1,5 +1,6 @@
 ﻿using CustomTextCliUtils.AppController.Models.Chunker;
 using CustomTextCliUtils.AppController.Models.Parser;
+using CustomTextCliUtils.AppController.Models.Prediction;
 using CustomTextCliUtils.AppController.Models.Storage;
 using Newtonsoft.Json;
 
@@ -16,10 +17,14 @@ namespace CustomTextCliUtils.AppController.Models
         [JsonProperty("chunker")]
         public ChunkerConfigModel Chunker { get; set; }
 
+        [JsonProperty("prediction")]
+        public PredictionConfigModel Prediction { get; set; }
+
         public ConfigModel() {
             Storage = new StorageConfigModel();
             Parser = new ParserConfigModel();
             Chunker = new ChunkerConfigModel();
+            Prediction = new PredictionConfigModel();
         }
     }
 

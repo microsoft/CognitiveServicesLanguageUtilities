@@ -91,6 +91,28 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
             _loggerService.Log("Updated Local Storage configs");
         }
 
+        public void SetPredictionConfigs(string customTextKey, string endpointUrl, string appId, string versionId)
+        {
+            if (!String.IsNullOrEmpty(customTextKey))
+            {
+                _configModel.Prediction.CustomTextKey = customTextKey;
+            }
+            if (!String.IsNullOrEmpty(endpointUrl))
+            {
+                _configModel.Prediction.EndpointUrl = endpointUrl;
+            }
+            if (!String.IsNullOrEmpty(appId))
+            {
+                _configModel.Prediction.AppId = appId;
+            }
+            if (!String.IsNullOrEmpty(versionId))
+            {
+                _configModel.Prediction.VersionId = versionId;
+            }
+            StoreConfigsModel();
+            _loggerService.Log("Updated Custom Text prediction configs");
+        }
+
         public void ShowAllConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel, Formatting.Indented);
@@ -130,6 +152,11 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
         public void ShowStorageBlobConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel.Storage.Blob, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+        public void ShowPredictionConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Prediction, Formatting.Indented);
             _loggerService.Log(configString);
         }
     }

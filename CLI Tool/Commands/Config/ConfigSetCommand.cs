@@ -7,7 +7,8 @@ namespace CustomTextCliUtils.Commands.Config
     [Subcommand(
         typeof(ConfigSetStorageCommand),
         typeof(ConfigSetParserCommand),
-        typeof(ConfigSetChunkerCommand))]
+        typeof(ConfigSetChunkerCommand),
+        typeof(ConfigSetPredictionCommand))]
     class ConfigSetCommand
     {
         private int OnExecute(CommandLineApplication app)

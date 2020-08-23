@@ -1,18 +1,12 @@
 ﻿using Autofac;
-using CustomTextCliUtils.Commands.Config.Show;
 using CustomTextCliUtils.Configs;
 using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace CustomTextCliUtils.Commands.Config
+namespace CustomTextCliUtils.Commands.Config.Show
 {
-    [Command("show", Description = "shows app configs")]
-    [Subcommand(
-        typeof(ConfigShowParserCommand),
-        typeof(ConfigShowStorageCommand),
-        typeof(ConfigShowChunkerCommand),
-        typeof(ConfigShowPredictionCommand))]
-    class ConfigShowCommand
+    [Command("prediction", Description = "shows configs for all prediction")]
+    class ConfigShowPredictionCommand
     {
         private int OnExecute(CommandLineApplication app)
         {
@@ -23,7 +17,7 @@ namespace CustomTextCliUtils.Commands.Config
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowAllConfigs();
+                controller.ShowPredictionConfigs();
             }
             return 1;
         }
