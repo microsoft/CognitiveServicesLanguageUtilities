@@ -5,6 +5,6 @@ namespace CustomTextCliUtils.AppController.Services.Chunker
 {
     interface IChunkerService
     {
-        public List<string> Chunk(ParseResult parseResult, ChunkMethod chunkMethod);
+        public List<string> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit);
     }
 }

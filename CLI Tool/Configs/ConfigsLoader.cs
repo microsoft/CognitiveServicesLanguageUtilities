@@ -5,6 +5,7 @@ using CustomTextCliUtils.AppController.Models.Parser;
 using CustomTextCliUtils.AppController.Models.Storage;
 using Newtonsoft.Json;
 using System.IO;
+using CustomTextCliUtils.AppController.Models.Chunker;
 
 namespace CustomTextCliUtils.Configs
 {
@@ -28,6 +29,11 @@ namespace CustomTextCliUtils.Configs
         public BlobStorageConfigModel GetBlobConfigModel()
         {
             return _configModel.Storage.Blob;
+        }
+
+        public ChunkerConfigModel GetChunkerConfigModel()
+        {
+            return _configModel.Chunker;
         }
 
         public LocalStorageConfigModel GetLocalConfigModel()

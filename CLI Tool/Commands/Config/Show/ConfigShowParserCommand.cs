@@ -1,17 +1,14 @@
 ﻿using Autofac;
-using CustomTextCliUtils.Commands.Config.Show;
 using CustomTextCliUtils.Configs;
 using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace CustomTextCliUtils.Commands.Config
+namespace CustomTextCliUtils.Commands.Config.Show
 {
-    [Command("show", Description = "shows app configs")]
+    [Command("parser", Description = "shows configs for all parsers")]
     [Subcommand(
-        typeof(ConfigShowParserCommand),
-        typeof(ConfigShowStorageCommand),
-        typeof(ConfigShowChunkerCommand))]
-    class ConfigShowCommand
+        typeof(ConfigShowMsReadCommand))]
+    class ConfigShowParserCommand
     {
         private int OnExecute(CommandLineApplication app)
         {
@@ -22,7 +19,7 @@ namespace CustomTextCliUtils.Commands.Config
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowAllConfigs();
+                controller.ShowParserConfigs();
             }
             return 1;
         }

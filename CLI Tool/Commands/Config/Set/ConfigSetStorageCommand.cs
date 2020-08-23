@@ -6,7 +6,7 @@ namespace CustomTextCliUtils.Commands.Config.Set
     [Subcommand(
         typeof(ConfigSetBlobCommand),
         typeof(ConfigSetLocalCommand))]
-    class ConfigSetStorage
+    class ConfigSetStorageCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

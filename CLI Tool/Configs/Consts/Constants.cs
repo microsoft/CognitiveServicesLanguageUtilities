@@ -6,5 +6,6 @@
         public static readonly string ConfigsFileName = "configs.json";
         public static readonly string[] ValidTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
         public const string ToolName = "ctcu";
+        public const double PercentageOfMaxLineLength = 0.98;
     }
 }

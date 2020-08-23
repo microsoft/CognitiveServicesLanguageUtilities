@@ -37,6 +37,14 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
             _storageService.StoreData(configString, Constants.ConfigsFileName);
         }
 
+        internal void SetChunkerConfigs(int charLimit)
+        {
+            // TODO: should we have an allowed range for char limit?
+            _configModel.Chunker.CharLimit = charLimit;
+            StoreConfigsModel();
+            _loggerService.Log("Updated Chunker configs");
+        }
+
         public void SetMsReadConfigs(string cognitiveServicesKey, string endpointUrl)
         {
             if (!String.IsNullOrEmpty(cognitiveServicesKey))
@@ -86,6 +94,12 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
         public void ShowAllConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
+        internal void ShowChunkerConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Chunker, Formatting.Indented);
             _loggerService.Log(configString);
         }
 

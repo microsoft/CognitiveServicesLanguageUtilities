@@ -2,14 +2,18 @@
 using CustomTextCliUtils.Configs;
 using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
 using McMaster.Extensions.CommandLineUtils;
+using CustomTextCliUtils.Configs.Consts;
+using System.ComponentModel.DataAnnotations;
 
-namespace CustomTextCliUtils.Commands.Config.Show
+namespace CustomTextCliUtils.Commands.Config.Set
 {
-    [Command("parser", Description = "shows configs for all parsers")]
-    [Subcommand(
-        typeof(ConfigShowMsReadCommand))]
-    class ConfigShowParser
+    [Command("chunker", Description = "sets configs for chunker")]
+    class ConfigSetChunkerCommand
     {
+        [Required]
+        [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "name of destination container")]
+        public int CharLimit { get; }
+
         private int OnExecute(CommandLineApplication app)
         {
             // build dependencies
@@ -19,8 +23,9 @@ namespace CustomTextCliUtils.Commands.Config.Show
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowParserConfigs();
+                controller.SetChunkerConfigs(CharLimit);
             }
+
             return 1;
         }
     }

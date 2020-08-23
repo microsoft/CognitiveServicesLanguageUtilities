@@ -1,4 +1,5 @@
 ﻿using CustomTextCliUtils.AppController.Models.Enums;
+using CustomTextCliUtils.Configs.Consts;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CustomTextCliUtils.AppController.Services.Chunker
 {
     class MsReadChunkerService : IChunkerService
     {
-        public List<string> Chunk(ParseResult parseResult, ChunkMethod chunkMethod)
+        public List<string> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit)
         {
             MsReadParseResult msReadChunkingInput = parseResult as MsReadParseResult;
             switch (chunkMethod)
@@ -17,7 +18,7 @@ namespace CustomTextCliUtils.AppController.Services.Chunker
                 case ChunkMethod.NoChunking:
                     return ExtractText(msReadChunkingInput);
                 case ChunkMethod.Char:
-                    return ChunkCharacters(msReadChunkingInput);
+                    return ChunkCharacters(msReadChunkingInput, charLimit);
                 case ChunkMethod.Page:
                     return ChunkPages(msReadChunkingInput);
             }
@@ -37,24 +38,80 @@ namespace CustomTextCliUtils.AppController.Services.Chunker
             return new List<string>() { finalText.ToString() };
         }
 
-        private List<string> ChunkPages(MsReadParseResult chunkingInput)
+        private List<string> ChunkPages(MsReadParseResult parsingResult)
         {
             List<string> pages = new List<string>();
-            foreach (TextRecognitionResult rr in chunkingInput.RecognitionResults)
+            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
+            var maxLineLength = linesArray[(int)(linesArray.Length * 0.95)] * Constants.PercentageOfMaxLineLength;
+            var paragraph = new StringBuilder();
+            var extendedParagraph = false;
+            StringBuilder pageText = new StringBuilder();
+            var i = 0;
+            var count = parsingResult.RecognitionResults.Count;
+            foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
-                StringBuilder pageText = new StringBuilder();
                 foreach (Line l in rr.Lines)
                 {
                     pageText.Append($"{l.Text} ");
+                    if (extendedParagraph && l.BoundingBox[2] - l.BoundingBox[0] < maxLineLength)
+                    {
+                        pages.Add(pageText.ToString());
+                        pageText.Clear();
+                        extendedParagraph = false;
+                    }
                 }
-                pages.Add(pageText.ToString());
+                if (++i == count || rr.Lines.Last().BoundingBox[2] - rr.Lines.Last().BoundingBox[0] < maxLineLength)
+                {
+                    pages.Add(pageText.ToString());
+                    pageText.Clear();
+                }
+                else
+                {
+                    extendedParagraph = true;
+                }
             }
             return pages;
         }
 
-        private List<string> ChunkCharacters(MsReadParseResult chunkingInput)
+        // TODO: paragraph bigger than char limit
+        private List<string> ChunkCharacters(MsReadParseResult parsingResult, int charLimit)
         {
-            throw new NotImplementedException();
+            StringBuilder paragraph = new StringBuilder();
+            StringBuilder chunk = new StringBuilder();
+            List<string> chunks = new List<string>();
+            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
+            var maxLineLength = linesArray[(int)(linesArray.Length * 0.95)] * Constants.PercentageOfMaxLineLength;
+            foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
+            {
+                foreach (Line l in rr.Lines)
+                {
+                    paragraph.Append($"{l.Text} ");
+                    if (l.BoundingBox[2] - l.BoundingBox[0] < maxLineLength) // end of paragraph
+                    {
+                        if (chunk.Length + paragraph.Length > charLimit)
+                        {
+                            chunks.Add(chunk.ToString());
+                            chunk.Clear();
+                        }
+                        chunk.Append(paragraph.ToString());
+                        paragraph.Clear();
+                    }
+                }
+            }
+            if (paragraph.Length > 0)
+            {
+                if (chunk.Length + paragraph.Length <= charLimit)
+                {
+                    chunk.Append(paragraph.ToString());
+                    chunks.Add(chunk.ToString());
+                }
+                else
+                {
+                    chunks.Add(chunk.ToString());
+                    chunks.Add(paragraph.ToString());
+                }
+            }
+            return chunks;
         }
     }
 }

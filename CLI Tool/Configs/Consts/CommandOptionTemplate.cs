@@ -18,5 +18,8 @@ namespace CustomTextCliUtils.Configs.Consts
         public const string BlobStorageSourceContainer = "--" + ConfigKeys.BlobStorageSourceContainer + " <CONTAINER_NAME>";
         public const string BlobStorageDestinationContainer = "--" + ConfigKeys.BlobStorageDestinationContainer + " <CONTAINER_NAME>";
         public const string BlobStorageConnectionstring = "--" + ConfigKeys.BlobStorageConnectionstring + " <CONNECTION_STRING>";
+
+        // chunker
+        public const string ChunkerCharLimit = "--" + ConfigKeys.ChunkerCharLimit + " <INTEGER>";
     }
 }

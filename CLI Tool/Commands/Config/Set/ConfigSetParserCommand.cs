@@ -5,7 +5,7 @@ namespace CustomTextCliUtils.Commands.Config.Set
     [Command("parser", Description = "sets configs for all parsers")]
     [Subcommand(
         typeof(ConfigSetMsReadCommand))]
-    class ConfigSetParser
+    class ConfigSetParserCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

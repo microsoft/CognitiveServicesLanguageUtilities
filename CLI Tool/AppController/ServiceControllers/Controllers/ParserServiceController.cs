@@ -45,6 +45,7 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
         public async Task ExtractText(StorageType sourceStorageType, StorageType destinationStorageType, ChunkMethod chunkType)
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
+            var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
             List<string> convertedFiles = new List<string>();
             List<string> failedFiles = new List<string>();
 
@@ -61,7 +62,7 @@ namespace CustomTextCliUtils.AppController.ServiceControllers.Controllers
                     _loggerService.LogOperation(OperationType.ParsingFile, fileName);
                     ParseResult parseResult = await _parserService.ParseFile(file);
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<string> chunkedText = _chunkerService.Chunk(parseResult, chunkType);
+                    List<string> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))
                     {
