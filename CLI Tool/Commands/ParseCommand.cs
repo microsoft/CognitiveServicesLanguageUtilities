@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using CustomTextCliUtils.Configs;
 using CustomTextCliUtils.AppController.Models.Enums;
-using CustomTextCliUtils.AppController.ServiceControllers.Controllers;
+using CustomTextCliUtils.AppController.ServiceControllers;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -38,14 +38,6 @@ namespace CustomTextCliUtils.Commands
             }
 
             return 0;
-        }
-
-        public void PrintCommandData()
-        {
-            Console.WriteLine("Parser : " + Parser);
-            Console.WriteLine("Source : " + Source);
-            Console.WriteLine("Desitnation : " + Destination);
-            Console.WriteLine("ChunkType : " + ChunkType);
         }
     }
 }

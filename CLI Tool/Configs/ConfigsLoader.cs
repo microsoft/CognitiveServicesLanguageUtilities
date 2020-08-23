@@ -6,6 +6,7 @@ using CustomTextCliUtils.AppController.Models.Storage;
 using Newtonsoft.Json;
 using System.IO;
 using CustomTextCliUtils.AppController.Models.Chunker;
+using CustomTextCliUtils.AppController.Models.Prediction;
 
 namespace CustomTextCliUtils.Configs
 {
@@ -44,6 +45,11 @@ namespace CustomTextCliUtils.Configs
         public MSReadConfigModel GetMSReadConfigModel()
         {
             return _configModel.Parser.MsRead;
+        }
+
+        public PredictionConfigModel GetPredictionConfigModel()
+        {
+            return _configModel.Prediction;
         }
 
         public StorageConfigModel GetStorageConfigModel()
