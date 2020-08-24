@@ -1,8 +1,11 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
+﻿using CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +24,9 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Prediction
         }
         public async Task<CustomTextPredictionResponse> PredictAsync(string query)
         {
+            if (query.Length > Constants.CustomTextPredictionMaxCharLimit) {
+                throw new CustomTextPredictionMaxCharExceededException(query.Length);
+            }
             // send prediciotn request
             var operationId = await SendPredictionRequestAsync(query);
             // get result when status is 'success'

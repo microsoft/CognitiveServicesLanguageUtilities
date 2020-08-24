@@ -15,6 +15,7 @@ using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
 namespace CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -24,7 +25,6 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
         readonly IStorageFactoryFactory _storageFactoryFactory;
         readonly IParserService _parserService;
         IStorageService _sourceStorageService;
-        IStorageService _destinationStorageService;
         readonly ILoggerService _loggerService;
         readonly IChunkerService _chunkerService;
         readonly IPredictionService _predictionService;
@@ -46,7 +46,6 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
             IStorageFactory destinationFactory = _storageFactoryFactory.CreateStorageFactory(TargetStorage.Destination);
             var storageConfigModel = _configurationService.GetStorageConfigModel();
             _sourceStorageService = sourceFactory.CreateStorageService(sourceStorageType, storageConfigModel);
-            _destinationStorageService = destinationFactory.CreateStorageService(destinationStorageType, storageConfigModel);
         }
 
         public async Task Predict(StorageType sourceStorageType, StorageType destinationStorageType, string fileName, ChunkMethod chunkType)
@@ -68,19 +67,26 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
                 ParseResult parseResult = await _parserService.ParseFile(file);
                 // chunk file
                 _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                List<string> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
+                List<ChunkInfo> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
                 // run prediction
-                var chunkPredictionResults = new List<CustomTextPredictionResponse>();
+                var chunkPredictionResults = new List<CustomTextPredictionChunkInfo>();
                 foreach (var item in chunkedText.Select((value, i) => (value, i)))
                 {
-                    var chunkPredictionResult = await _predictionService.PredictAsync(item.value);
-                    chunkPredictionResults.Add(chunkPredictionResult);
+                    var customTextPredictionResponse = await _predictionService.PredictAsync(item.value.Text);
+                    var chunkInfo = new CustomTextPredictionChunkInfo { 
+                        ChunkNumber = item.i,
+                        CharCount = item.value.Text.Length,
+                        CustomTextPredictionResponse = customTextPredictionResponse,
+                        InnerText = item.value.Summary,
+                        StartPage = item.value.StartPage,
+                        EndPage = item.value.EndPage
+                    };
+                    chunkPredictionResults.Add(chunkInfo);
                 }
                 // store or display result
-                var concatenatedResult = JsonConvert.SerializeObject(chunkPredictionResults, Formatting.Indented);
-                _loggerService.LogOperation(OperationType.StoringResult, fileName);
+                _loggerService.LogOperation(OperationType.DisplayingResult, fileName);
+                var concatenatedResult = JsonConvert.SerializeObject(chunkPredictionResults, Formatting.Indented); 
                 _loggerService.Log(concatenatedResult);
-                //_destinationStorageService.StoreData(item.value, newFileName);
             }
             catch (CliException e)
             {

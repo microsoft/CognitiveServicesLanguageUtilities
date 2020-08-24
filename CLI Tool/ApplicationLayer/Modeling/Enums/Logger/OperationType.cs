@@ -5,6 +5,7 @@
         ReadingFile, 
         StoringResult, 
         ParsingFile,
-        ChunkingFile
+        ChunkingFile,
+        DisplayingResult
     }
 }

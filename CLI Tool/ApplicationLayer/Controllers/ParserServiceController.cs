@@ -12,6 +12,7 @@ using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
 namespace CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -58,18 +59,23 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
             {
                 try
                 {
+                    // validate types
                     _parserService.ValidateFileType(Path.GetExtension(fileName));
+                    // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
                     Stream file = await _sourceStorageService.ReadFile(fileName);
+                    // parse file
                     _loggerService.LogOperation(OperationType.ParsingFile, fileName);
                     ParseResult parseResult = await _parserService.ParseFile(file);
+                    // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<string> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
+                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
+                    // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))
                     {
                         var newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{item.i + 1}.txt";
-                        _destinationStorageService.StoreData(item.value, newFileName);
+                        _destinationStorageService.StoreData(item.value.Text, newFileName);
                     }
                     convertedFiles.Add(fileName);
                 }
