@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.AppController.Models.HttpModels.Prediction;
+﻿using CustomTextCliUtils.AppController.Models.ServiceModels.Prediction;
 using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.AppController.Services.Prediction

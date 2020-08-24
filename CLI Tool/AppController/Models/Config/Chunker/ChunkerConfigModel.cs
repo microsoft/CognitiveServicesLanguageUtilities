@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CustomTextCliUtils.AppController.Models.Chunker
+namespace CustomTextCliUtils.AppController.Models.Config.Chunker
 {
     public class ChunkerConfigModel
     {

@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.AppController.Models.Chunker;
-using CustomTextCliUtils.AppController.Models.Parser;
-using CustomTextCliUtils.AppController.Models.Prediction;
-using CustomTextCliUtils.AppController.Models.Storage;
+﻿using CustomTextCliUtils.AppController.Models.Config.Chunker;
+using CustomTextCliUtils.AppController.Models.Config.Parser;
+using CustomTextCliUtils.AppController.Models.Config.Prediction;
+using CustomTextCliUtils.AppController.Models.Config.Storage;
 using Newtonsoft.Json;
 
 namespace CustomTextCliUtils.AppController.Models

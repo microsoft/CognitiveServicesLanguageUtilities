@@ -1,7 +1,7 @@
 ﻿using CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.AppController.Models.Storage
+namespace CustomTextCliUtils.AppController.Models.Config.Storage
 {
     public class BlobStorageConfigModel
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CustomTextCliUtils.AppController.Services.Chunker
+namespace CustomTextCliUtils.AppController.Models.ServiceModels.Parser
 {
     class MsReadParseResult : ParseResult
     {

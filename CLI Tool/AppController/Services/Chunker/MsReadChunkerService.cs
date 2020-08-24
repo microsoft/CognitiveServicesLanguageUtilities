@@ -1,7 +1,7 @@
 ﻿using CustomTextCliUtils.AppController.Models.Enums;
+using CustomTextCliUtils.AppController.Models.ServiceModels.Parser;
 using CustomTextCliUtils.Configs.Consts;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

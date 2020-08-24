@@ -1,4 +1,5 @@
-﻿using CustomTextCliUtils.AppController.Services.Chunker;
+﻿using CustomTextCliUtils.AppController.Models.ServiceModels.Parser;
+using CustomTextCliUtils.AppController.Services.Chunker;
 using System.IO;
 using System.Threading.Tasks;
 

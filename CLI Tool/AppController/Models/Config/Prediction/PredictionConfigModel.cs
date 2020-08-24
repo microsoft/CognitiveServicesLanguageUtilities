@@ -1,7 +1,7 @@
 ﻿using CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.AppController.Models.Prediction
+namespace CustomTextCliUtils.AppController.Models.Config.Prediction
 {
     public class PredictionConfigModel
     {

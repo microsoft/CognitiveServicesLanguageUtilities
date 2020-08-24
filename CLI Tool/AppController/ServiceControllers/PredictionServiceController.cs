@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CustomTextCliUtils.AppController.Services.Chunker;
-using System;
 using Newtonsoft.Json;
 using CustomTextCliUtils.AppController.Services.Prediction;
-using CustomTextCliUtils.AppController.Models.HttpModels.Prediction;
+using CustomTextCliUtils.AppController.Models.ServiceModels.Prediction;
+using CustomTextCliUtils.AppController.Models.ServiceModels.Parser;
 
 namespace CustomTextCliUtils.AppController.ServiceControllers
 {

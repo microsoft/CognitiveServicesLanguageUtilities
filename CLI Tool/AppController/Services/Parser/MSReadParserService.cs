@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using CustomTextCliUtils.AppController.Services.Chunker;
+using CustomTextCliUtils.AppController.Models.ServiceModels.Parser;
 
 namespace CustomTextCliUtils.AppController.Services.Parser
 {

@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.AppController.Models.HttpModels.Prediction;
+﻿using CustomTextCliUtils.AppController.Models.ServiceModels.Prediction;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
