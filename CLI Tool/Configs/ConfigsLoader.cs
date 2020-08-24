@@ -1,12 +1,9 @@
-﻿using CustomTextCliUtils.AppController.Exceptions.Config;
+﻿
+using CustomTextCliUtils.ApplicationLayer.Exceptions.Configs;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.AppController.Models;
-using CustomTextCliUtils.AppController.Models.Config.Parser;
-using CustomTextCliUtils.AppController.Models.Config.Storage;
 using Newtonsoft.Json;
 using System.IO;
-using CustomTextCliUtils.AppController.Models.Config.Chunker;
-using CustomTextCliUtils.AppController.Models.Config.Prediction;
 
 namespace CustomTextCliUtils.Configs
 {

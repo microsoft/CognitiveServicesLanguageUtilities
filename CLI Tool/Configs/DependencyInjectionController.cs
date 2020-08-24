@@ -1,14 +1,14 @@
 ﻿using Autofac;
-using CustomTextCliUtils.AppController.Factories.Storage;
+using CustomTextCliUtils.ApplicationLayer.Factories.Storage;
 using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.AppController.Models.Enums;
-using CustomTextCliUtils.AppController.ServiceControllers;
-using CustomTextCliUtils.AppController.Services.Logger;
-using CustomTextCliUtils.AppController.Services.Parser;
-using CustomTextCliUtils.AppController.Services.Storage;
+using CustomTextCliUtils.ApplicationLayer.Controllers;
+using CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using CustomTextCliUtils.ApplicationLayer.Services.Parser;
+using CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using System;
-using CustomTextCliUtils.AppController.Services.Chunker;
-using CustomTextCliUtils.AppController.Services.Prediction;
+using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+using CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 
 namespace CustomTextCliUtils.Configs
 {

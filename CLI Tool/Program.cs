@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.AppController.Exceptions;
-using CustomTextCliUtils.AppController.Services.Logger;
-using CustomTextCliUtils.Commands;
-using CustomTextCliUtils.Commands.Config;
+﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
+using CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using CustomTextCliUtils.CommandsLayer;
+using CustomTextCliUtils.CommandsLayer.ConfigCommand;
 using CustomTextCliUtils.Configs.Consts;
 using McMaster.Extensions.CommandLineUtils;
 using System;
