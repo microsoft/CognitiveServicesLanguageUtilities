@@ -27,7 +27,7 @@ namespace CustomTextCliUtils.Commands
         private async Task<int> OnExecute(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildParseCommandDependencies(Parser, Source, Destination);
+            var container = DependencyInjectionController.BuildParseCommandDependencies(Parser);
 
             // run program
             using (var scope = container.BeginLifetimeScope())

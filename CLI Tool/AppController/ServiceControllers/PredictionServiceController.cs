@@ -13,6 +13,7 @@ using CustomTextCliUtils.AppController.Services.Chunker;
 using System;
 using Newtonsoft.Json;
 using CustomTextCliUtils.AppController.Services.Prediction;
+using CustomTextCliUtils.AppController.Models.HttpModels.Prediction;
 
 namespace CustomTextCliUtils.AppController.ServiceControllers
 {
@@ -68,16 +69,15 @@ namespace CustomTextCliUtils.AppController.ServiceControllers
                 _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
                 List<string> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
                 // run prediction
-                _loggerService.LogOperation(OperationType.StoringResult, fileName);
-                var chunkPredictionResults = new List<string>();
+                var chunkPredictionResults = new List<CustomTextPredictionResponse>();
                 foreach (var item in chunkedText.Select((value, i) => (value, i)))
                 {
-                    //var newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{item.i + 1}.txt";
-                    var chunkPredictionResult = _predictionService.Predict(item.value);
+                    var chunkPredictionResult = await _predictionService.PredictAsync(item.value);
                     chunkPredictionResults.Add(chunkPredictionResult);
                 }
                 // store or display result
                 var concatenatedResult = JsonConvert.SerializeObject(chunkPredictionResults, Formatting.Indented);
+                _loggerService.LogOperation(OperationType.StoringResult, fileName);
                 _loggerService.Log(concatenatedResult);
                 //_destinationStorageService.StoreData(item.value, newFileName);
             }

@@ -23,21 +23,21 @@ namespace CustomTextCliUtils.Commands
         public StorageType Destination { get; }
         [Required]
         [Option("--file-name <FILE_NAME>", Description = "[required] target file to use for prediction")]
-        public StorageType FileName { get; }
+        public string FileName { get; }
         [Option("--chunk-type <page/char>", Description = "[optional] indicates chunking type. if not set, no chunking will be used")]
         public ChunkMethod ChunkType { get; } = ChunkMethod.NoChunking;
 
         private async Task<int> OnExecute(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildParseCommandDependencies(Parser, Source, Destination);
+            var container = DependencyInjectionController.BuildPredictCommandDependencies(Parser);
 
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<ParserServiceController>();
+                var controller = scope.Resolve<PredictionServiceController>();
                 // controller.SetStorageServices(Source, Destination);
-                await controller.ExtractText(Source, Destination, ChunkType);
+                await controller.Predict(Source, Destination, FileName, ChunkType);
             }
 
             return 0;

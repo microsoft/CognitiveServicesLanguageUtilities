@@ -64,7 +64,7 @@ namespace CustomTextCliUtils.Configs
                 var configService = c.Resolve<IConfigsLoader>();
                 var predictionConfigs = configService.GetPredictionConfigModel();
                 return new CustomTextPredictionService(predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
-                    predictionConfigs.AppId, predictionConfigs.VersionId);
+                    predictionConfigs.AppId);
             }).As<IPredictionService>();
             builder.Register(c =>
             {

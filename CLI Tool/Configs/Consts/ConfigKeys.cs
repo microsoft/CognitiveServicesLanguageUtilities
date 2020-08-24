@@ -22,7 +22,7 @@ namespace CustomTextCliUtils.Configs.Consts
 
         // prediction
         public const string PredictionCustomTextKey = "customtext-key";
-        public const string PredictionEndpointUrl = "endpoint-url";
+        public const string PredictionEndpointUrl = "customtext-endpoint";
         public const string PredictionAppId = "app-id";
         public const string PredictionVersionId = "version-id";
 
