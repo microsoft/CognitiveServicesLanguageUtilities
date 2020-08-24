@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
-    class LocalStorageService : IStorageService
+    public class LocalStorageService : IStorageService
     {
         private string _targetDirectory;
 

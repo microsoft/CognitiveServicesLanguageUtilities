@@ -1,0 +1,85 @@
+#############################
+>> Unit Testing
+#############################
+- commands layer (unit)(shaban)
+    - tests
+        - command maps to correct class
+        - able to parse parameters correctly
+    - command list
+        - config
+        - parse
+        - predict
+        - chunk
+
+- app layer
+
+    - services (unit)
+        - storage (nour)
+            - tests
+                - test connection
+                - list files
+                - read file
+                - store file
+            - sources
+                - local
+                - blob
+
+        - parsing (shaban)
+            - tests
+                - test connection
+                - compare source doc with expected text (pdf, text)
+            - parsers
+                - msread
+                - tika
+
+        - chunking (nour)
+            - tests
+                - chunk text file into chunks, and compare results with expected
+                - methods
+                    - no chunking
+                    - chunking by page
+                    - chunking by char 
+            - chunkers
+                - msread chunker
+                - tika chunker
+
+        - prediction (shaban)
+            - tests
+                - input text file as string
+                    and make sure prediction HTTP result maps to our model 
+                    regardless of data (not our problem)
+            - prediction service
+                - custom text (LUIS-D)
+
+    - factories (unit) (nour)
+        - make sure object returned is correct
+
+
+
+#############################
+>> Integration Tests
+#############################
+- app layer
+
+    - controllers (integration)
+        - configs (shaban)
+            - set
+            - show
+        - parser (nour)
+            - parse files
+        - prediction (shaban)
+            - predict file
+        - chunker (nour)
+            - chunk file
+
+
+#############################
+>> E2E Tests
+#############################
+- commands layer
+    - cli options
+    - commands
+        - config (shaban)
+        - parse (nour)
+        - chunk (shaban)
+        - predict (nour)
