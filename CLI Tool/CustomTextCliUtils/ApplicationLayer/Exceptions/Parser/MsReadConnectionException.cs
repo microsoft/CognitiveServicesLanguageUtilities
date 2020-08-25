@@ -2,7 +2,7 @@
 
 namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
 {
-    class MsReadConnectionException : CliException
+    public class MsReadConnectionException : CliException
     {
         public MsReadConnectionException(string message, string cognitiveServicesKey, string cognitiveServicesEndpoint)
             : base(ConstructMessage(message, cognitiveServicesKey, cognitiveServicesEndpoint))

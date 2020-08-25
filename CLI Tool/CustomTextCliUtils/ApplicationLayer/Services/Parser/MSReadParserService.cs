@@ -10,7 +10,7 @@ using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
-    class MSReadParserService : IParserService
+    public class MSReadParserService : IParserService
     {
         ComputerVisionClient _client;
         HashSet<string> _validTypesSet;
@@ -18,16 +18,16 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Parser
         public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey) {
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
             { Endpoint = cognitiveServiceEndPoint };
-            Task.Run(() => this.TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey)).Wait();
+            TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey);
             _validTypesSet = new HashSet<string>(Constants.ValidTypes, StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task TestConnectionAsync(string cognitiveServiceEndPoint, string congnitiveServiceKey)
+        private void TestConnectionAsync(string cognitiveServiceEndPoint, string congnitiveServiceKey)
         {
             try
             {
                 var file = new MemoryStream();
-                var response = await _client.BatchReadFileInStreamAsync(file);
+                var response = _client.BatchReadFileInStreamAsync(file).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             catch (ComputerVisionErrorException e)
             {
