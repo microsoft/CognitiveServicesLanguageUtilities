@@ -1,6 +1,6 @@
 ﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
-    class BlobContainerNotFoundException : CliException
+    public class BlobContainerNotFoundException : CliException
     {
         public BlobContainerNotFoundException(string containerName)
             :base(ConstructMessage(containerName))

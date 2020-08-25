@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser
 {
-    class MsReadParseResult : ParseResult
+    public class MsReadParseResult : ParseResult
     {
         public IList<TextRecognitionResult> RecognitionResults { get; set; }
 

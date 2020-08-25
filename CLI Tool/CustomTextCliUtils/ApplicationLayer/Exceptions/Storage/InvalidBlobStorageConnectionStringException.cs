@@ -1,6 +1,6 @@
 ﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
-    class InvalidBlobStorageConnectionStringException : CliException
+    public class InvalidBlobStorageConnectionStringException : CliException
     {
         public InvalidBlobStorageConnectionStringException(string connectionString)
             : base(ConstructMessage(connectionString))

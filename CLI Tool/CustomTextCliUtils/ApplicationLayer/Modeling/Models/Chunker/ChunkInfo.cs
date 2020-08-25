@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
 {
-    class ChunkInfo
+    public class ChunkInfo
     {
         public int StartPage { get; set; }
         public int EndPage { get; set; }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
-    interface IStorageService
+    public interface IStorageService
     {
         public string[] ListFiles();
         public Task<Stream> ReadFile(string fileName);

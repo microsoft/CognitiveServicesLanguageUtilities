@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
-    class BlobStorageService : IStorageService
+    public class BlobStorageService : IStorageService
     {
         private BlobContainerClient _blobContainerClient;
 
@@ -46,7 +46,12 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
 
         public string ReadFileAsString(string fileName)
         {
-            throw new NotImplementedException();
+            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
+            BlobDownloadInfo download = blobClient.Download();
+            using (StreamReader sr = new StreamReader(download.Content))
+            {
+                return sr.ReadToEnd();
+            }
         }
 
         public void StoreData(string data, string fileName)

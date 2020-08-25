@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
-    interface IChunkerService
+    public interface IChunkerService
     {
         public List<ChunkInfo> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit);
     }

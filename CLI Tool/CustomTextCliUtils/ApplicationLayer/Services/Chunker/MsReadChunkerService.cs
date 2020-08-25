@@ -10,7 +10,7 @@ using System.Text;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
-    class MsReadChunkerService : IChunkerService
+    public class MsReadChunkerService : IChunkerService
     {
         public List<ChunkInfo> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit)
         {
