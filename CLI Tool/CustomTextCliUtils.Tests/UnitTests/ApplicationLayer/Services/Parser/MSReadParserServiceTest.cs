@@ -4,6 +4,12 @@ using CustomTextCliUtils.ApplicationLayer.Exceptions;
 using CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
 using System;
 using CustomTextCliUtils.Tests.Configs;
+using CustomTextCliUtils.Tests.Utilities;
+using System.IO;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CustomTextCliToo.Tests
 {
@@ -13,39 +19,51 @@ namespace CustomTextCliToo.Tests
         // ######################################################################
         public static TheoryData TestConnectionData()
         {
-            return new TheoryData<string, string, bool>
+            // test 1 data
+            string test1CognitiveServicesKey = Secrets.MSReadCongnitiveServiceKey;
+            string test1CognitiveServicesEndpoint = Secrets.MSReadCognitiveServiceEndPoint;
+            // test 2 data - wrong service key
+            string test2Message = "";
+            string test2CognitiveServicesKey = "2e10bb66ed3e7685bd3ca1b3abcd8f6b";
+            string test2CognitiveServicesEndpoint = Secrets.MSReadCognitiveServiceEndPoint;
+            // test 3 data - wrong endpoint
+            string test3Message = "";
+            string test3CognitiveServicesKey = Secrets.MSReadCongnitiveServiceKey;
+            string test3CognitiveServicesEndpoint = "https://westus.api.cognitive.microsoft.com/";
+
+            return new TheoryData<string, string, CliException>
             {
                 {
                     // correct data 
-                    Secrets.MSReadCognitiveServiceEndPoint,
-                    Secrets.MSReadCongnitiveServiceKey,
-                    true
+                    test1CognitiveServicesKey,
+                    test1CognitiveServicesEndpoint,
+                    null
                 },
                 {
                     // wrong service key
-                    "https://eastus.api.cognitive.microsoft.com/",
-                    "2e107685ed3e46bebd3ca123422b8f6b",
-                    false
+                    test2CognitiveServicesKey,
+                    test2CognitiveServicesEndpoint,
+                    new MsReadConnectionException(test2Message, test2CognitiveServicesKey, test2CognitiveServicesEndpoint)
                 },
                 {
                     // wrong endpoint
-                    "https://westus.api.cognitive.microsoft.com/",
-                    "2e10bb66ed3e46bebd3ca1b3522b8f6b",
-                    false
+                    test3CognitiveServicesKey,
+                    test3CognitiveServicesEndpoint,
+                    new MsReadConnectionException(test3Message, test3CognitiveServicesKey, test3CognitiveServicesEndpoint)
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(TestConnectionData))]
-        public void TestConnection(string cognitiveServiceEndPoint, string congnitiveServiceKey, bool correctParams)
+        public void TestConnection(string congnitiveServiceKey, string cognitiveServiceEndPoint, CliException expectedException)
         {
-            if (correctParams)
+            if (expectedException == null)
             {
-                var parser = new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
+                new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
             }
             else {
-                Assert.Throws<MsReadConnectionException>(() => {
+                Utilities.AssertThrows(expectedException, () => {
                     new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
                 });
             }
@@ -54,6 +72,63 @@ namespace CustomTextCliToo.Tests
 
         // Test Connection to MSRead Cognitive Service
         // ######################################################################
+        public static TheoryData TestParsingData()
+        {
+            // test 1 data
+            var inputDocument = File.OpenRead(@"TestData\Parser\MSRead\test1 - inputDocument.pdf");  // read input document
+            var parser = new MSReadParserService(Secrets.MSReadCognitiveServiceEndPoint, Secrets.MSReadCongnitiveServiceKey);
+            var expectedResultFile = File.ReadAllText(@"TestData\Parser\MSRead\test1 - expectedResult.json");
+            var expectedResult = JsonConvert.DeserializeObject<MsReadParseResult>(expectedResultFile);
+
+            return new TheoryData<Stream, MSReadParserService, MsReadParseResult, CliException>
+            {
+                {
+                    inputDocument,
+                    parser,
+                    expectedResult,
+                    null
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(TestParsingData))]
+        public void TestParsing(Stream inputDocument, MSReadParserService parser, MsReadParseResult expectedResult, CliException expectedException)
+        {
+            if (expectedException == null)
+            {
+                var tmp = parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
+                var actualResult = (MsReadParseResult)tmp;
+                Assert.Equal(actualResult, expectedResult, new MSReadResultComparator());
+            }
+            else
+            {
+                Utilities.AssertThrows(expectedException, () => {
+                    parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
+                });
+            }
+        }
+    }
+
+    public class MSReadResultComparator : IEqualityComparer<MsReadParseResult>
+    {
+        public bool Equals(MsReadParseResult x, MsReadParseResult y)
+        {
+            var xLines = x.RecognitionResults.SelectMany(p => p.Lines.Select(l => l.Text)).ToArray();
+            var yLines = y.RecognitionResults.SelectMany(p => p.Lines.Select(l => l.Text)).ToArray();
+            if (xLines.Length != yLines.Length) { return false; }
+            for (int i = 0; i < xLines.Length; i++) {
+                if (xLines[i] != yLines[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public int GetHashCode(MsReadParseResult obj)
+        {
+            return obj.GetHashCode();
+        }
     }
 }
 
