@@ -2,7 +2,6 @@
 using Azure.Storage.Blobs.Models;
 using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Tests.Utils;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -69,7 +68,7 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
             }
             else
             {
-                Utilities.AssertThrows(excpectedException, () => new BlobStorageService(connectionString, containerName));
+                Assert.Throws(excpectedException.GetType(), () => new BlobStorageService(connectionString, containerName));
             }
         }
 

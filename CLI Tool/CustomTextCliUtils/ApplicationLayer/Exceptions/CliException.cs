@@ -1,17 +1,11 @@
-﻿
-using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
-using System;
+﻿using System;
 
 namespace CustomTextCliUtils.ApplicationLayer.Exceptions
 {
     public class CliException : Exception
     {
-        public CliExceptionCode ExceptionCode;
-
-        public CliException(CliExceptionCode exceptionCode, string message)
+        public CliException(string message)
             : base(message)
-        {
-            ExceptionCode = exceptionCode;
-        }
+        { }
     }
 }

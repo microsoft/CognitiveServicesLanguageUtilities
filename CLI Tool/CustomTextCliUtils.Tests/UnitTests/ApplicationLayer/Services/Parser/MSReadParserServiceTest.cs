@@ -4,7 +4,6 @@ using CustomTextCliUtils.ApplicationLayer.Exceptions;
 using CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
 using System;
 using CustomTextCliUtils.Tests.Configs;
-using CustomTextCliUtils.Tests.Utilities;
 using System.IO;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using Newtonsoft.Json;
@@ -63,7 +62,7 @@ namespace CustomTextCliToo.Tests
                 new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
             }
             else {
-                Utilities.AssertThrows(expectedException, () => {
+                Assert.Throws(expectedException.GetType(), () => {
                     new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
                 });
             }
@@ -103,7 +102,7 @@ namespace CustomTextCliToo.Tests
             }
             else
             {
-                Utilities.AssertThrows(expectedException, () => {
+                Assert.Throws(expectedException.GetType(), () => {
                     parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 });
             }

@@ -1,11 +1,9 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
-
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
+﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
     public class BlobContainerNotFoundException : CliException
     {
         public BlobContainerNotFoundException(string containerName)
-            :base(CliExceptionCode.BlobContainerNotFound, ConstructMessage(containerName))
+            :base(ConstructMessage(containerName))
         { }
 
         public static string ConstructMessage(string containerName)

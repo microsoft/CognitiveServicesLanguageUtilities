@@ -1,11 +1,9 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
-
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
+﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
     public class InvalidBlobStorageConnectionStringException : CliException
     {
         public InvalidBlobStorageConnectionStringException(string connectionString)
-            : base(CliExceptionCode.InvalidBlobStorageConnectionString, ConstructMessage(connectionString))
+            : base(ConstructMessage(connectionString))
         { }
 
         public static string ConstructMessage(string connectionString)

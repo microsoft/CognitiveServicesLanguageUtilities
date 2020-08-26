@@ -1,11 +1,9 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
-
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
+﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
     public class UnauthorizedException : CliException
     {
         public UnauthorizedException(string accessType, string filePath)
-            : base(CliExceptionCode.Unauthorized, ConstructMessage(accessType, filePath))
+            : base(ConstructMessage(accessType, filePath))
         { }
 
         public static string ConstructMessage(string accessType, string filePath)

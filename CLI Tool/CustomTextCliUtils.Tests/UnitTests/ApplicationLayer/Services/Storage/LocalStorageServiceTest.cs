@@ -1,6 +1,5 @@
 ﻿using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Tests.Utils;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -48,7 +47,7 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
             }
             else
             {
-                Utilities.AssertThrows(excpectedException, () => new LocalStorageService(directory));
+                Assert.Throws(excpectedException.GetType(), () => new LocalStorageService(directory));
             }
         }
 
