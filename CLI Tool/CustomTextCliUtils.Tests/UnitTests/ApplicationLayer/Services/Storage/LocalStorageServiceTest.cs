@@ -40,7 +40,7 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
 
         [Theory]
         [MemberData(nameof(LocalStorageConnectionTestData))]
-        public void BlobStorageConnectionTest(string directory, Exception excpectedException)
+        public void LocalStorageConnectionTest(string directory, Exception excpectedException)
         {
             if (excpectedException == null)
             {

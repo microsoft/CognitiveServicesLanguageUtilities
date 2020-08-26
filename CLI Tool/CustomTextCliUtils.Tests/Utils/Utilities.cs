@@ -13,7 +13,7 @@ namespace CustomTextCliUtils.Tests.Utils
         {
             var type = expectedException.GetType();
             var exception = Assert.Throws(type, testCode);
-            if (type == typeof(CliException))
+            if (expectedException is CliException)
             {
                 var expected = expectedException as CliException;
                 var actual = exception as CliException;
@@ -29,7 +29,7 @@ namespace CustomTextCliUtils.Tests.Utils
         {
             var type = expectedException.GetType();
             var exception = await Assert.ThrowsAsync(type, testCode).ConfigureAwait(false);
-            if (type == typeof(CliException))
+            if (expectedException is CliException)
             {
                 var expected = expectedException as CliException;
                 var actual = exception as CliException;
