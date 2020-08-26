@@ -18,5 +18,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
             EndPage = endPage;
             Summary = string.Format("{0} ... {1}", text.Substring(0, text.IndexOf(' ')), text.Substring(text.LastIndexOf(' ') + 1));
         }
+        public ChunkInfo()
+        { }
     }
 }
