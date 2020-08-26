@@ -49,40 +49,41 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
             var maxLineLength = linesArray[(int)(linesArray.Length * 0.95)] * Constants.PercentageOfMaxLineLength;
             var paragraph = new StringBuilder();
-            var extendedParagraph = false;
             StringBuilder pageText = new StringBuilder();
-            var i = 0;
-            var count = parsingResult.RecognitionResults.Count;
+            var currentPage = 0;
+            var totalPageCount = parsingResult.RecognitionResults.Count;
             var pageStart = 1;
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults) // loop over each page to create list of pages
             {
-                // construct current page line by line
                 foreach (Line l in rr.Lines)
                 {
-                    pageText.Append($"{l.Text} "); // add line to current page
-                    if (extendedParagraph && l.BoundingBox[2] - l.BoundingBox[0] < maxLineLength) // if paragraph from former page
+                    paragraph.Append($"{l.Text} ");
+                    if (IsLineEndOfParagraph(l, maxLineLength)) // end of paragraph
                     {
-                        var text = pageText.ToString().Trim();
-                        var chunkInfo = new ChunkInfo(text, pageStart, (int) rr.Page);
-                        pages.Add(chunkInfo);
-                        pageText.Clear();
-                        extendedParagraph = false;
-                        pageStart = (int) rr.Page;
+                        if (pageText.Length + paragraph.Length > Constants.CustomTextPredictionMaxCharLimit)
+                        {
+                            var text = pageText.ToString().Trim();
+                            var chunkInfo = new ChunkInfo(text, pageStart, (int)rr.Page);
+                            pages.Add(chunkInfo);
+                            pageText.Clear();
+                            pageStart = (int)rr.Page;
+                        }
+                        pageText.Append(paragraph.ToString());
+                        paragraph.Clear();
                     }
                 }
-                // check last line
-                if (++i == count || rr.Lines.Last().BoundingBox[2] - rr.Lines.Last().BoundingBox[0] < maxLineLength) // if last line is end of paragraph (page)
+                if (paragraph.Length > 0 && ++currentPage == totalPageCount)
+                {
+                    pageText.Append(paragraph.ToString());
+                }
+                if (pageText.Length > 0)
                 {
                     var text = pageText.ToString().Trim();
-                    var chunkInfo = new ChunkInfo(text, (int)rr.Page, (int) rr.Page);
+                    var chunkInfo = new ChunkInfo(text, pageStart, (int)rr.Page);
                     pages.Add(chunkInfo);
                     pageText.Clear();
-                    pageStart = (int)rr.Page + 1;
-                }
-                else
-                {
-                    extendedParagraph = true;
-                }
+                    pageStart = paragraph.Length > 0 ? (int)rr.Page : ((int)rr.Page + 1);
+                } 
             }
             return pages;
         }
@@ -101,7 +102,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 foreach (Line l in rr.Lines)
                 {
                     paragraph.Append($"{l.Text} ");
-                    if (l.BoundingBox[2] - l.BoundingBox[0] < maxLineLength) // end of paragraph
+                    if (IsLineEndOfParagraph(l, maxLineLength)) // end of paragraph
                     {
                         if (chunk.Length + paragraph.Length > charLimit)
                         {
@@ -134,6 +135,11 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 }
             }
             return chunks;
+        }
+
+        private bool IsLineEndOfParagraph(Line line, double maxLineLength)
+        {
+            return line.BoundingBox[2] - line.BoundingBox[0] < maxLineLength;
         }
     }
 }

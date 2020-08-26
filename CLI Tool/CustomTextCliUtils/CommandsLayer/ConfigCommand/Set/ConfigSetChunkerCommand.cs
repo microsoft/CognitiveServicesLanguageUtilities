@@ -11,6 +11,7 @@ namespace CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
     class ConfigSetChunkerCommand
     {
         [Required]
+        [Range(Constants.MinAllowedCharLimit, Constants.CustomTextPredictionMaxCharLimit)]
         [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "name of destination container")]
         public int CharLimit { get; }
 

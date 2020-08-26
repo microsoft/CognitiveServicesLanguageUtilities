@@ -7,6 +7,7 @@
         public static readonly string[] ValidTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
         public const string ToolName = "ctcu";
         public const double PercentageOfMaxLineLength = 0.98;
-        public const int CustomTextPredictionMaxCharLimit = 23000;
+        public const int CustomTextPredictionMaxCharLimit = 25000;
+        public const int MinAllowedCharLimit = 20;
     }
 }
