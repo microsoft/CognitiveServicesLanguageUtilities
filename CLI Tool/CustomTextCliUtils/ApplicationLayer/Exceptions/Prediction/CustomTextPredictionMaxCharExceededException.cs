@@ -1,11 +1,12 @@
-﻿using CustomTextCliUtils.Configs.Consts;
+﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
+using CustomTextCliUtils.Configs.Consts;
 
 namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
     class CustomTextPredictionMaxCharExceededException : CliException
     {
         public CustomTextPredictionMaxCharExceededException(int currCharCount)
-            : base(ConstructMessage(currCharCount))
+            : base(CliExceptionCode.CustomTextPredictionMaxCharExceeded, ConstructMessage(currCharCount))
         { }
 
         public static string ConstructMessage(int currCharCount)

@@ -1,11 +1,12 @@
-﻿using CustomTextCliUtils.Configs.Consts;
+﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
+using CustomTextCliUtils.Configs.Consts;
 
 namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Configs
 {
     class MissingConfigsException : CliException
     {
         public MissingConfigsException()
-            : base(ConstructMessage())
+            : base(CliExceptionCode.MissingConfig, ConstructMessage())
         { }
 
         public static string ConstructMessage()

@@ -1,11 +1,12 @@
-﻿using CustomTextCliUtils.Configs.Consts;
+﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Exceptions;
+using CustomTextCliUtils.Configs.Consts;
 
 namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
 {
     class UnsupportedFileTypeException : CliException
     {
         public UnsupportedFileTypeException(string fileName, string fileType)
-            :base(ConstructMessage(fileName, fileType))
+            :base(CliExceptionCode.UnsupportedFileType, ConstructMessage(fileName, fileType))
         { }
 
         public static string ConstructMessage(string fileName, string fileType)
