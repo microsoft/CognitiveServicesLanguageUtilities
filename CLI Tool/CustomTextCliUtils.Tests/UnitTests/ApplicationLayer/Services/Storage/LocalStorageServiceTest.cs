@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+﻿using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using CustomTextCliUtils.Tests.Utils;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
@@ -10,7 +10,7 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
 {
     public class LocalStorageServiceTest : IDisposable
     {
-        readonly string TestDirectory = "./testDirectory";
+        const string TestDirectory = "./testDirectory";
 
         public LocalStorageServiceTest()
         {
@@ -20,6 +20,36 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
         public void Dispose()
         {
             Directory.Delete(TestDirectory, true);
+        }
+
+        public static TheoryData LocalStorageConnectionTestData()
+        {
+            string invalidDirectory = "folderDoesNotExist";
+            return new TheoryData<string, Exception>
+            {
+                {
+                    invalidDirectory,
+                    new FolderNotFoundException(invalidDirectory)
+                },
+                {
+                    TestDirectory,
+                    null
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(LocalStorageConnectionTestData))]
+        public void BlobStorageConnectionTest(string directory, Exception excpectedException)
+        {
+            if (excpectedException == null)
+            {
+                new LocalStorageService(directory);
+            }
+            else
+            {
+                Utilities.AssertThrows(excpectedException, () => new LocalStorageService(directory));
+            }
         }
 
         [Fact]

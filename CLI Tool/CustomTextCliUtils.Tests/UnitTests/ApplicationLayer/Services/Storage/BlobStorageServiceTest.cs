@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using CustomTextCliUtils.Tests.Utils;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -34,9 +35,11 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
             DeleteAllBlobs();
         }
 
-        public static TheoryData<string, string, Type> BlobStorageConnectionTestData()
+        public static TheoryData BlobStorageConnectionTestData()
         {
-            return new TheoryData<string, string, Type>
+            string invalidConnectionString = "DefaultEndpointsProtocol=https;AccountName=invalid;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3s31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net";
+            string invalidContainerName = "nonexistentcontainer";
+            return new TheoryData<string, string, Exception>
             {
                 {
                     _connectionString,
@@ -44,33 +47,29 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
                     null
                 },
                 {
-                    "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3s31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
+                    invalidConnectionString,
                     _testContainer,
-                    typeof(InvalidBlobStorageConnectionStringException)
+                    new InvalidBlobStorageConnectionStringException(invalidConnectionString)
                 },
                 {
                     _connectionString,
-                    "nonexistentcontainer",
-                    typeof(BlobContainerNotFoundException)
+                    invalidContainerName,
+                    new BlobContainerNotFoundException(invalidContainerName)
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(BlobStorageConnectionTestData))]
-        public void BlobStorageConnectionTest(string connectionString, string containerName, Type exceptionType)
+        public void BlobStorageConnectionTest(string connectionString, string containerName, Exception excpectedException)
         {
-            if (exceptionType == null)
+            if (excpectedException == null)
             {
                 new BlobStorageService(connectionString, containerName);
             }
-            else if (exceptionType.Equals(typeof(InvalidBlobStorageConnectionStringException)))
+            else
             {
-                Assert.Throws<InvalidBlobStorageConnectionStringException>(() => { new BlobStorageService(connectionString, containerName); });
-            }
-            else if (exceptionType.Equals(typeof(BlobContainerNotFoundException)))
-            {
-                Assert.Throws<BlobContainerNotFoundException>(() => { new BlobStorageService(connectionString, containerName); });
+                Utilities.AssertThrows(excpectedException, () => new BlobStorageService(connectionString, containerName));
             }
         }
 

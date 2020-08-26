@@ -3,9 +3,9 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.Utilities
+namespace CustomTextCliUtils.Tests.Utils
 {
-    class Utilities
+    public class Utilities
     {
         public static void AssertThrows(
             Exception expectedException,

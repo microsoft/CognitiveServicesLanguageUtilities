@@ -2,7 +2,7 @@
 
 namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
-    class FolderNotFoundException : CliException
+    public class FolderNotFoundException : CliException
     {
         public FolderNotFoundException(string folderPath)
             : base(CliExceptionCode.FolderNotFound, ConstructMessage(folderPath))
