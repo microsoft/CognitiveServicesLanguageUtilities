@@ -2,6 +2,7 @@
 using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using CustomTextCliUtils.Tests.Configs;
 using System;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
         {
             BlobStorageConfigModel blobStorageConfigModel = new BlobStorageConfigModel
             {
-                ConnectionString = "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
+                ConnectionString = Secrets.StorageAccountConnectionString,
                 SourceContainer = "container1",
                 DestinationContainer = "container2"
             };

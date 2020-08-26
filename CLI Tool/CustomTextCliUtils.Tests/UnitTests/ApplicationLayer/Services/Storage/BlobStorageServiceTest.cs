@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using CustomTextCliUtils.Tests.Configs;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
 {
     public class BlobStorageServiceTest : IDisposable
     {
-        private const string _connectionString = "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net";// Environment.GetEnvironmentVariable("TestBlobStorageConnectionString");
+        private const string _connectionString = Secrets.StorageAccountConnectionString;
         private const string _testContainer = "containertest";
         private readonly BlobContainerClient _blobContainerClient;
 
