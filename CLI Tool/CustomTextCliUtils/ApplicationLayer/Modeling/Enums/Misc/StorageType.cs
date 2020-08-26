@@ -7,8 +7,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc
     public enum StorageType
     {
         Local,
-        Blob,
-        Null
+        Blob
     }
 }
 

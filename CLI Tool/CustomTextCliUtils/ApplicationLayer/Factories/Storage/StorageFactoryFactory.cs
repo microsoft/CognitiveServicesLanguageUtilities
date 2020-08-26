@@ -2,7 +2,7 @@
 
 namespace CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
-    class StorageFactoryFactory : IStorageFactoryFactory
+    public class StorageFactoryFactory : IStorageFactoryFactory
     {
         public IStorageFactory CreateStorageFactory(TargetStorage targetStorage)
         {

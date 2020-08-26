@@ -5,7 +5,7 @@ using CustomTextCliUtils.ApplicationLayer.Services.Storage;
 
 namespace CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
-    interface IStorageFactory
+    public interface IStorageFactory
     {
         public IStorageService CreateStorageService(StorageType targetStorage, StorageConfigModel storageConfigModel);
     }

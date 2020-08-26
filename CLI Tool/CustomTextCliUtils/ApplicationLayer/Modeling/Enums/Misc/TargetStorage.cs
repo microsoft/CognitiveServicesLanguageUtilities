@@ -1,6 +1,6 @@
 ﻿namespace CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc
 {
-    enum TargetStorage
+    public enum TargetStorage
     {
         Source, Destination
     }
