@@ -3,7 +3,6 @@
     public enum ParserType
     {
         MSRead,
-        Tika,
-        Null
+        Tika
     }
 }

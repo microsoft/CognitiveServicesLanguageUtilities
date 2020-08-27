@@ -14,7 +14,8 @@ namespace CustomTextCliUtils
     [Subcommand(
         typeof(ParseCommand),
         typeof(PredictCommand),
-        typeof(ConfigCommand))]
+        typeof(ConfigCommand),
+        typeof(ChunkCommand))]
     class Program
     {
         public static void Main(string[] args) 

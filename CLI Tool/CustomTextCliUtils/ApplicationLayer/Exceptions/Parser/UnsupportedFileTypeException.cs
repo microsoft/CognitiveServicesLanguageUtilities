@@ -1,16 +1,14 @@
-﻿using CustomTextCliUtils.Configs.Consts;
-
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
+﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
 {
     class UnsupportedFileTypeException : CliException
     {
-        public UnsupportedFileTypeException(string fileName, string fileType)
-            :base(ConstructMessage(fileName, fileType))
+        public UnsupportedFileTypeException(string fileName, string fileType, string[] validTypes)
+            :base(ConstructMessage(fileName, fileType, validTypes))
         { }
 
-        public static string ConstructMessage(string fileName, string fileType)
+        public static string ConstructMessage(string fileName, string fileType, string[] validTypes)
         {
-            return $"Unsupported file type {fileType} for file {fileName}\nSupported types are {Constants.ValidTypes.ToString()}";
+            return $"Unsupported file type {fileType} for file {fileName}\nSupported types are {string.Join(", ", validTypes)}";
         }
         
     }

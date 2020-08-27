@@ -1,6 +1,6 @@
 ﻿namespace CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger
 {
-    enum OperationType
+    public enum OperationType
     {
         ReadingFile, 
         StoringResult, 

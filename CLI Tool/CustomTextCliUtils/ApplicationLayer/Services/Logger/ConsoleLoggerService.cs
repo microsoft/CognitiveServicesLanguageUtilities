@@ -6,17 +6,25 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
     class ConsoleLoggerService : ILoggerService
     {
+        static readonly object _lock = new object();
+
         public void Log(string message)
         {
-            Console.WriteLine(message);
+            lock (_lock)
+            {
+                Console.WriteLine(message);
+            }
         }
 
         public void LogOperation(OperationType operationType, string message)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write(operationType.ToString() + ":\t");
-            Console.ResetColor();
-            Console.WriteLine(message);
+            lock (_lock)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(operationType.ToString() + ":\t");
+                Console.ResetColor();
+                Console.WriteLine(message);
+            }
         }
 
         public void LogParsingResult(List<string> convertedFiles, List<string> failedFiles)
@@ -36,10 +44,13 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Logger
 
         public void LogError(Exception e)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Error: ");
-            Console.ResetColor();
-            Console.WriteLine(e.Message);
+            lock (_lock)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error: ");
+                Console.ResetColor();
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

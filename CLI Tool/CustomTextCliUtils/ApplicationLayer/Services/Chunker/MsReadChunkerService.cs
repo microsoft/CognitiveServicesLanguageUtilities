@@ -4,6 +4,7 @@ using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using CustomTextCliUtils.Configs.Consts;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -141,5 +142,12 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
         {
             return line.BoundingBox[2] - line.BoundingBox[0] < maxLineLength;
         }
+        public List<ChunkInfo> Chunk(string text, int charLimit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidateFileType(string fileName)
+        { }
     }
 }

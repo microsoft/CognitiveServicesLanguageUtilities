@@ -29,6 +29,16 @@ namespace CustomTextCliUtils.Configs
             return builder.Build();
         }
 
+        public static IContainer BuildChunkerCommandDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.RegisterType<PlainTextChunkerService>().As<IChunkerService>();
+            builder.RegisterType<ChunkerServiceController>();
+            return builder.Build();
+        }
+
         public static IContainer BuildParseCommandDependencies(ParserType parserType)
         {
             var builder = BuildCommonDependencies();

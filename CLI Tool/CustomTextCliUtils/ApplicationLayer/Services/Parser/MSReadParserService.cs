@@ -19,7 +19,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Parser
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
             { Endpoint = cognitiveServiceEndPoint };
             TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey);
-            _validTypesSet = new HashSet<string>(Constants.ValidTypes, StringComparer.OrdinalIgnoreCase);
+            _validTypesSet = new HashSet<string>(Constants.MsReadValidFileTypes, StringComparer.OrdinalIgnoreCase);
         }
 
         private void TestConnectionAsync(string cognitiveServiceEndPoint, string congnitiveServiceKey)
@@ -58,7 +58,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Parser
         {
             if (!_validTypesSet.Contains(Path.GetExtension(fileName)))
             {
-                throw new UnsupportedFileTypeException(fileName, Path.GetExtension(fileName));
+                throw new UnsupportedFileTypeException(fileName, Path.GetExtension(fileName), Constants.MsReadValidFileTypes);
             }
         }
     }

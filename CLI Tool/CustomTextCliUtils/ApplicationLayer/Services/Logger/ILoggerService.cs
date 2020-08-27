@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
-    interface ILoggerService
+    public interface ILoggerService
     {
         public void Log(string message);
 

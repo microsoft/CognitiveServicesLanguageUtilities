@@ -4,7 +4,7 @@ using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 
 namespace CustomTextCliUtils.Configs
 {
-    interface IConfigsLoader
+    public interface IConfigsLoader
     {
         public BlobStorageConfigModel GetBlobConfigModel();
         public LocalStorageConfigModel GetLocalConfigModel();

@@ -1,37 +1,33 @@
 ﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
 using CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using CustomTextCliUtils.ApplicationLayer.Services.Parser;
 using CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
 namespace CustomTextCliUtils.ApplicationLayer.Controllers
 {
-    class ParserServiceController
+    public class ChunkerServiceController
     {
         readonly IConfigsLoader _configurationService;
         readonly IStorageFactoryFactory _storageFactoryFactory;
-        readonly IParserService _parserService;
         IStorageService _sourceStorageService;
         IStorageService _destinationStorageService;
         readonly ILoggerService _loggerService;
         readonly IChunkerService _chunkerService;
 
-        public ParserServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory, 
-            IParserService parserService, ILoggerService loggerService, IChunkerService chunkerService)
+        public ChunkerServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory,
+            ILoggerService loggerService, IChunkerService chunkerService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;
-            _parserService = parserService;
             _loggerService = loggerService;
             _chunkerService = chunkerService;
         }
@@ -45,7 +41,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
             _destinationStorageService = destinationFactory.CreateStorageService(destinationStorageType, storageConfigModel);
         }
 
-        public async Task ExtractText(StorageType sourceStorageType, StorageType destinationStorageType, ChunkMethod chunkType)
+        public void ChunkText(StorageType sourceStorageType, StorageType destinationStorageType)
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
@@ -54,22 +50,19 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
 
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
-            // parse files
-            var tasks = fileNames.Select(async fileName =>
+            // chunk files
+            Parallel.ForEach(fileNames, fileName =>
             {
                 try
                 {
                     // validate types
-                    _parserService.ValidateFileType(fileName);
+                    this._chunkerService.ValidateFileType(fileName);
                     // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                    Stream file = await _sourceStorageService.ReadFile(fileName);
-                    // parse file
-                    _loggerService.LogOperation(OperationType.ParsingFile, fileName);
-                    ParseResult parseResult = await _parserService.ParseFile(file);
+                    string file = _sourceStorageService.ReadFileAsString(fileName);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
+                    List<ChunkInfo> chunkedText = this._chunkerService.Chunk(file, charLimit);
                     // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))
@@ -85,10 +78,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
                     _loggerService.LogError(e);
                 }
             });
-            await Task.WhenAll(tasks);
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
-
-
     }
 }
