@@ -8,10 +8,10 @@ using System.IO;
 
 namespace CustomTextCliUtils.ApplicationLayer.Controllers
 {
-    class ConfigServiceController
+    public class ConfigServiceController
     {
-        ILoggerService _loggerService;
-        IStorageService _storageService;
+        readonly ILoggerService _loggerService;
+        readonly IStorageService _storageService;
         ConfigModel _configModel;
 
         public ConfigServiceController(ILoggerService loggerService, IStorageService storageService)
@@ -37,10 +37,12 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
             _storageService.StoreData(configString, Constants.ConfigsFileName);
         }
 
-        internal void SetChunkerConfigs(int charLimit)
+        public void SetChunkerConfigs(int? charLimit)
         {
-            // TODO: should we have an allowed range for char limit?
-            _configModel.Chunker.CharLimit = charLimit;
+            if (charLimit != null)
+            {
+                _configModel.Chunker.CharLimit = (int) charLimit;
+            }
             StoreConfigsModel();
             _loggerService.Log("Updated Chunker configs");
         }
@@ -119,7 +121,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService.Log(configString);
         }
 
-        internal void ShowChunkerConfigs()
+        public void ShowChunkerConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel.Chunker, Formatting.Indented);
             _loggerService.Log(configString);

@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Storage
+namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
 {
     public class LocalStorageServiceTest : IDisposable
     {

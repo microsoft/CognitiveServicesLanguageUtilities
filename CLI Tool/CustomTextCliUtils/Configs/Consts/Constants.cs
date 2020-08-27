@@ -1,6 +1,6 @@
 ﻿namespace CustomTextCliUtils.Configs.Consts
 {
-    class Constants
+    public class Constants
     {
         public static readonly string ConfigsFileLocalDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
         public static readonly string ConfigsFileName = "configs.json";

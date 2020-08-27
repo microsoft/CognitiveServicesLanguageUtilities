@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CustomTextCliToo.Tests
+namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
 {
     public class MSReadParserServiceTest
     {

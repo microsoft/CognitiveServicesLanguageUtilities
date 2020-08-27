@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
-    class ConsoleLoggerService : ILoggerService
+    public class ConsoleLoggerService : ILoggerService
     {
         static readonly object _lock = new object();
 
