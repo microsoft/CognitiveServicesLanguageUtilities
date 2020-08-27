@@ -2,12 +2,9 @@
 using CustomTextCliUtils.ApplicationLayer.Services.Parser;
 using CustomTextCliUtils.ApplicationLayer.Exceptions;
 using CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
-using System;
 using CustomTextCliUtils.Tests.Configs;
 using System.IO;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
@@ -69,22 +66,19 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pa
         }
 
 
-        // Test Connection to MSRead Cognitive Service
+        // Test Parser Mapping
         // ######################################################################
         public static TheoryData TestParsingData()
         {
             // test 1 data
             var inputDocument = File.OpenRead(@"TestData\Parser\MSRead\test1 - inputDocument.pdf");  // read input document
             var parser = new MSReadParserService(Secrets.MSReadCognitiveServiceEndPoint, Secrets.MSReadCongnitiveServiceKey);
-            var expectedResultFile = File.ReadAllText(@"TestData\Parser\MSRead\test1 - expectedResult.json");
-            var expectedResult = JsonConvert.DeserializeObject<MsReadParseResult>(expectedResultFile);
-
-            return new TheoryData<Stream, MSReadParserService, MsReadParseResult, CliException>
+            
+            return new TheoryData<Stream, MSReadParserService, CliException>
             {
                 {
                     inputDocument,
                     parser,
-                    expectedResult,
                     null
                 }
             };
@@ -92,13 +86,34 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pa
 
         [Theory]
         [MemberData(nameof(TestParsingData))]
-        public void TestParsing(Stream inputDocument, MSReadParserService parser, MsReadParseResult expectedResult, CliException expectedException)
+        public void TestParsing(Stream inputDocument, MSReadParserService parser, CliException expectedException)
         {
+            /* TEST NOTES
+             * *************
+             * we only care about parsing result
+             * i.e. parser results maps to our object correctly
+             * 
+             * we don't care about the actual values in the object
+             * because the service provider (in this case msread team)
+             * may optimize their engine
+             * rendering the values in our "ExpectedResult" object in correct
+             * */
             if (expectedException == null)
             {
                 var tmp = parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 var actualResult = (MsReadParseResult)tmp;
-                Assert.Equal(actualResult, expectedResult, new MSReadResultComparator());
+                // validate object values aren't null
+                actualResult.RecognitionResults.ToList().ForEach(page => {
+                    // check all properties
+                    Assert.NotNull(page.Page);
+                    Assert.NotNull(page.Lines);
+                    // check line objects
+                    page.Lines.ToList().ForEach(line => {
+                        Assert.NotNull(line.BoundingBox);
+                        Assert.NotNull(line.Text);
+                        Assert.NotNull(line.Words);
+                    });
+                });
             }
             else
             {
@@ -106,27 +121,6 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pa
                     parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 });
             }
-        }
-    }
-
-    public class MSReadResultComparator : IEqualityComparer<MsReadParseResult>
-    {
-        public bool Equals(MsReadParseResult x, MsReadParseResult y)
-        {
-            var xLines = x.RecognitionResults.SelectMany(p => p.Lines.Select(l => l.Text)).ToArray();
-            var yLines = y.RecognitionResults.SelectMany(p => p.Lines.Select(l => l.Text)).ToArray();
-            if (xLines.Length != yLines.Length) { return false; }
-            for (int i = 0; i < xLines.Length; i++) {
-                if (xLines[i] != yLines[i]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public int GetHashCode(MsReadParseResult obj)
-        {
-            return obj.GetHashCode();
         }
     }
 }
