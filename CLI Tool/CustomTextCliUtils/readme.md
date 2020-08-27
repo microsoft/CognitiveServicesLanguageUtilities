@@ -14,26 +14,26 @@ Like extracting text from documents, chunking text files, and integrating with p
 - config
     - msread
         - ctcu config show msread
-        - ctcu config set msread --azure-resource-key {AZURE_RESOURCE_KEY} --endpoint-url {ENDPOINT_URL}
-    - tika
+        - ctcu config set msread --cognitive-services-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
+    - tika (Not Supported Yet)
         - ctcu config show tika
-        - ctcu config set tika --enable-ocr {BOOLEAN} --detect-titlted-text {BOOLEAN} --sort-by-position {BOOLEAN}
+        - ctcu config set tika --enable-ocr <BOOLEAN> --detect-titlted-text <BOOLEAN> --sort-by-position <BOOLEAN>
     - storage
         - ctcu config show storage
-        - ctcu config set storage local --source-dir {ABSOLUTE_PATH} --destination-dir {ABSOLUTE_PATH} 
-        - ctcu config set storage blob --connection-string {CONNECTION_STRING} --source-container {CONTAINER_NAME} --destination-container {CONTAINER_NAME} 
+        - ctcu config set storage local --source-dir <ABSOLUTE_PATH> --destination-dir <ABSOLUTE_PATH> 
+        - ctcu config set storage blob --connection-string <CONNECTION_STRING> --source-container <CONTAINER_NAME> --destination-container <CONTAINER_NAME> 
     - chunker
         - ctcu config show chunker
-        - ctcu config set chunker --char-limit {NUMBER}
+        - ctcu config set chunker --char-limit <NUMBER>
     - prediction
         - ctcu config show prediction
-        - ctcu config set prediction --endpoint-url {ENDPOINT_URL} --apim-subscription-key {APIM_SUBSCRIPTION_ID} --app-id {APP_ID} --version-id {VERSION_ID}
+        - ctcu config set prediction --customtext-endpoint <ENDPOINT_URL> --customtext-key <APIM_SUBSCRIPTION_ID> --app-id <APP_ID>
 
 - parsing
-    - ctcu parse --parser {MSREAD/TIKA} --source {BLOB/LOCAL} --destination {BLOB/LOCAL} --chunking-type {PAGE/CHAR}
+    - ctcu parse --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunking-type <PAGE/CHAR> ]
 
 - prediction
-    - ctcu prediction --parser {MSREAD/TIKA} --source {BLOB/LOCAL} --file-name {FILENAME} --chunking-type {PAGE/CHAR}
+    - ctcu predict --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --file-name <FILENAME> [ --chunking-type <PAGE/CHAR> ]
 
 - chunker
-    - ctcu chunker --source {BLOB/LOCAL} --destination {BLOB/LOCAL} --char-limit {CHAR-LIMIT}
+    - ctcu chunk --source <BLOB/LOCAL> --destination <BLOB/LOCAL>
