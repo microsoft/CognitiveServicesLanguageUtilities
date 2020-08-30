@@ -1,4 +1,5 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using System;
 
 namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
@@ -13,7 +14,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
                 case TargetStorage.Destination:
                     return new DestinationStorageFactory();
                 default:
-                    return null; //TODO: throw exception
+                    throw new NotSupportedException();
             }
 
         }

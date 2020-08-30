@@ -24,8 +24,9 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                     return ChunkCharacters(msReadparsingResult, charLimit);
                 case ChunkMethod.Page:
                     return ChunkPages(msReadparsingResult);
+                default:
+                    throw new NotSupportedException();
             }
-            return null;
         }
 
         private List<ChunkInfo> ExtractText(MsReadParseResult parsingResult)

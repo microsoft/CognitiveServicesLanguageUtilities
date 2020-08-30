@@ -1,6 +1,7 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using System;
 
 namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
@@ -15,7 +16,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
                 case StorageType.Local:
                     return new LocalStorageService(storageConfigModel.Local.DestinationDirectory);
                 default:
-                    return null;
+                    throw new NotSupportedException();
             }
         }
     }
