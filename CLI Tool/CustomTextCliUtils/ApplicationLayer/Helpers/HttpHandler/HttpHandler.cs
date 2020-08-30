@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
 {
     class HttpHandler : IHttpHandler
     {

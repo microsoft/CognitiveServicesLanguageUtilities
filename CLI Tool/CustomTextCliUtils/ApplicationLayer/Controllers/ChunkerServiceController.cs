@@ -1,4 +1,5 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+﻿using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
@@ -8,7 +9,6 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -76,11 +76,10 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 _loggerService.LogOperation(OperationType.StoringResult, fileName);
                 foreach (var item in chunkedText.Select((value, i) => (value, i)))
                 {
-                    var newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{item.i + 1}.txt";
+                    var newFileName = ChunkInfoHelper.GetChunkFileName(fileName, item.i);
                     _destinationStorageService.StoreData(item.value.Text, newFileName);
                 }
                 convertedFiles.Add(fileName);
-
             }
             catch (CliException e)
             {

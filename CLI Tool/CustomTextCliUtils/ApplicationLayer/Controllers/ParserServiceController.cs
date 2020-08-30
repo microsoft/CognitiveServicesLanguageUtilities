@@ -13,6 +13,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 
 namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -74,7 +75,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))
                     {
-                        var newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{item.i + 1}.txt";
+                        var newFileName = ChunkInfoHelper.GetChunkFileName(fileName, item.i);
                         _destinationStorageService.StoreData(item.value.Text, newFileName);
                     }
                     convertedFiles.Add(fileName);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
 {
     public interface IHttpHandler
     {

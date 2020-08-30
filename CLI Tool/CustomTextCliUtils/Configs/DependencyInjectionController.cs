@@ -9,7 +9,7 @@ using System;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 
 namespace  Microsoft.CustomTextCliUtils.Configs
 {
