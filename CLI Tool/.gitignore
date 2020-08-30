@@ -6,6 +6,7 @@ CustomTextCliUtils/obj
 CustomTextCliUtils/bin
 CustomTextCliUtils/.vs
 CustomTextCliUtils/properties
+CustomTextCliUtils/CustomTextCliUtils.csproj.user
 
 # test project files
 CustomTextCliUtils.Tests/.vs
