@@ -8,7 +8,7 @@
 
         public static string ConstructMessage(string accessType, string filePath)
         {
-            return "Unauthorized " + accessType + " for file " + filePath;
+            return $"Unauthorized {accessType} for file {filePath}";
         }
     }
 
