@@ -1,4 +1,6 @@
-﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
+﻿using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
 {
     public class ChunkInfo
     {
@@ -12,14 +14,13 @@
             Text = text;
             StartPage = startPage;
             EndPage = endPage;
-            Summary = string.Format("{0} ... {1}", text.Substring(0, text.IndexOf(' ')), text.Substring(text.LastIndexOf(' ') + 1));
+            Summary = ChunkInfoHelper.GetChunksummary(text);
         }
         public ChunkInfo(string chunkText)
         {
             var text = chunkText.Trim();
             Text = text;
-            // TODO: check if no spaces
-            Summary = string.Format("{0} ... {1}", text.Substring(0, text.IndexOf(' ')), text.Substring(text.LastIndexOf(' ') + 1));
+            Summary = ChunkInfoHelper.GetChunksummary(text);
         }
         public ChunkInfo()
         { }
