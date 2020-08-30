@@ -1,8 +1,8 @@
 ﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
-    public class UnauthorizedException : CliException
+    public class UnauthorizedFileAccessException : CliException
     {
-        public UnauthorizedException(string accessType, string filePath)
+        public UnauthorizedFileAccessException(string accessType, string filePath)
             : base(ConstructMessage(accessType, filePath))
         { }
 

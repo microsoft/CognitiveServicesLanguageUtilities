@@ -70,9 +70,10 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
                 List<ChunkInfo> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
                 // run prediction
                 var chunkPredictionResults = new List<CustomTextPredictionChunkInfo>();
+                _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
                 foreach (var item in chunkedText.Select((value, i) => (value, i)))
                 {
-                    var customTextPredictionResponse = await _predictionService.PredictAsync(item.value.Text);
+                    var customTextPredictionResponse = _predictionService.GetPrediction(item.value.Text);
                     var chunkInfo = new CustomTextPredictionChunkInfo { 
                         ChunkNumber = item.i,
                         CharCount = item.value.Text.Length,

@@ -34,7 +34,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
             }
             catch (UnauthorizedAccessException)
             {
-                throw new UnauthorizedException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
+                throw new UnauthorizedFileAccessException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
             }
             return tcs.Task;
         }
@@ -53,7 +53,7 @@ namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
             }
             catch (UnauthorizedAccessException)
             {
-                throw new UnauthorizedException(AccessType.Write.ToString(), fileName);
+                throw new UnauthorizedFileAccessException(AccessType.Write.ToString(), fileName);
             }
         }
     }

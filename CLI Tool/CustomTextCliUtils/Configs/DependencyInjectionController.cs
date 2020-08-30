@@ -9,6 +9,7 @@ using System;
 using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
 
 namespace CustomTextCliUtils.Configs
 {
@@ -73,7 +74,7 @@ namespace CustomTextCliUtils.Configs
             {
                 var configService = c.Resolve<IConfigsLoader>();
                 var predictionConfigs = configService.GetPredictionConfigModel();
-                return new CustomTextPredictionService(predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
                     predictionConfigs.AppId);
             }).As<IPredictionService>();
             builder.Register(c =>

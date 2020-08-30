@@ -6,6 +6,7 @@
         StoringResult, 
         ParsingFile,
         ChunkingFile,
-        DisplayingResult
+        DisplayingResult,
+        RunningPrediction
     }
 }

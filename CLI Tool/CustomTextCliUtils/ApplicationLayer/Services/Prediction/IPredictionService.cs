@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
-    interface IPredictionService
+    public interface IPredictionService
     {
-        public Task<CustomTextPredictionResponse> PredictAsync(string query);
+        public CustomTextPredictionResponse GetPrediction(string query);
     }
 }
