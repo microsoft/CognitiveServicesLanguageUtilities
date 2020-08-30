@@ -6,10 +6,10 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Predicti
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CustomTextPredictionResponseStatus
     {
-        Succeeded,
-        NotStarted,
-        Running,
-        Failed,
-        Unknown
+        succeeded,
+        notstarted,
+        running,
+        failed,
+        unknown
     }
 }
