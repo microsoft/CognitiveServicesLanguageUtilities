@@ -1,6 +1,6 @@
 ﻿
 
-namespace CustomTextCliUtils.Configs.Consts
+namespace  Microsoft.CustomTextCliUtils.Configs.Consts
 {
     class ConfigKeys
     {

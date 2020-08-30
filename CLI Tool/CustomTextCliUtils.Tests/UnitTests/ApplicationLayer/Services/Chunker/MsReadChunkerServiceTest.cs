@@ -1,13 +1,13 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Chunker
+namespace  Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Chunker
 {
     public class MsReadChunkerServiceTest
     {

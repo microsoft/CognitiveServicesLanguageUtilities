@@ -1,6 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("storage", Description = "sets configs for all storage services")]
     [Subcommand(

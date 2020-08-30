@@ -1,14 +1,14 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Controllers;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
-using CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Controller
+namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Controller
 {
     public class ConfigServiceControllerTest
     {

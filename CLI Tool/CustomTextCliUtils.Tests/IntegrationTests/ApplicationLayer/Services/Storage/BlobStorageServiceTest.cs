@@ -1,19 +1,19 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Tests.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CustomTextCliUtils.Tests.Configs;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
+namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
 {
     public class BlobStorageServiceTest : IDisposable
     {
-        private const string _connectionString = Secrets.StorageAccountConnectionString;
-        private const string _testContainer = "containertest";
+        private static readonly string _connectionString = Secrets.StorageAccountConnectionString;
+        private static readonly string _testContainer = "containertest";
         private readonly BlobContainerClient _blobContainerClient;
 
         public BlobStorageServiceTest()

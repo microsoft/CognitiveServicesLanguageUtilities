@@ -1,6 +1,6 @@
-﻿using CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
     class CustomTextPredictionMaxCharExceededException : CliException
     {

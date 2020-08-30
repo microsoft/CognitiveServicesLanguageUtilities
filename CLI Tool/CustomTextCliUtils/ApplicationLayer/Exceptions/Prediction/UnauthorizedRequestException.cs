@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
     class UnauthorizedRequestException : CliException
     {

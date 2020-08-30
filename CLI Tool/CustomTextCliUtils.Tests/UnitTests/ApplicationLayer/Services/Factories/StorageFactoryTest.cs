@@ -1,12 +1,12 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Tests.Configs;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CustomTextCliUtils.Tests.Configs;
 using System;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
+namespace  Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
 {
     public class StorageFactoryTest
     {

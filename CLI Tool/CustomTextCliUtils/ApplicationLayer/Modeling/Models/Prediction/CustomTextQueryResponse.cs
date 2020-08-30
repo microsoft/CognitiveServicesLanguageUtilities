@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
 using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {
 
     public class CustomTextQueryResponse

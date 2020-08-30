@@ -1,8 +1,8 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using System;
 using System.Collections.Generic;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Logger
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
     public interface ILoggerService
     {

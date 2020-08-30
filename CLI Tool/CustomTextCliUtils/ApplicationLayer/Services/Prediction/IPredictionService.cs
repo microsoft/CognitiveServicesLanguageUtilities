@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
 using System.Threading.Tasks;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
     public interface IPredictionService
     {

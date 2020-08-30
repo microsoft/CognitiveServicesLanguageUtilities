@@ -1,15 +1,15 @@
 ﻿
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using CustomTextCliUtils.Configs.Consts;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
     public class MsReadChunkerService : IChunkerService
     {

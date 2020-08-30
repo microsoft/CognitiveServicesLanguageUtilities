@@ -1,4 +1,4 @@
-﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
+﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
     public class BlobContainerNotFoundException : CliException
     {

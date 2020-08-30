@@ -1,1 +1,13 @@
+# solution files
 .vs
+
+# src project files
+CustomTextCliUtils/obj
+CustomTextCliUtils/bin
+CustomTextCliUtils/.vs
+CustomTextCliUtils/properties
+
+# test project files
+CustomTextCliUtils.Tests/.vs
+CustomTextCliUtils.Tests/bin
+CustomTextCliUtils.Tests/obj

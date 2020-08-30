@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser
 {
     public class MsReadParseResult : ParseResult
     {

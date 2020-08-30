@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CustomTextPredictionResponseStatus

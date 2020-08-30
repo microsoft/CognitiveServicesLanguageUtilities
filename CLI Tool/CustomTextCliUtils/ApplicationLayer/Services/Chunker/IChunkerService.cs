@@ -1,9 +1,9 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using System.Collections.Generic;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
     public interface IChunkerService
     {

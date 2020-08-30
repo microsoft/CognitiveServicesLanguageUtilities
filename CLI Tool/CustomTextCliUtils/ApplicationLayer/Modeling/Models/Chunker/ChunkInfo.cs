@@ -1,4 +1,4 @@
-﻿namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
+﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
 {
     public class ChunkInfo
     {

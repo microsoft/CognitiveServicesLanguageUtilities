@@ -1,11 +1,11 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
+namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
 {
     public class LocalStorageServiceTest : IDisposable
     {

@@ -1,11 +1,11 @@
 ﻿
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Configs;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
-using CustomTextCliUtils.Configs.Consts;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace CustomTextCliUtils.Configs
+namespace  Microsoft.CustomTextCliUtils.Configs
 {
     class ConfigsLoader : IConfigsLoader
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
     class ResourceNotFoundExcption : CliException
     {

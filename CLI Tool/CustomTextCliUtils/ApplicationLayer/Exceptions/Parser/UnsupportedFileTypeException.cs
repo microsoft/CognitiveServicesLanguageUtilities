@@ -1,4 +1,4 @@
-﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
+﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
 {
     class UnsupportedFileTypeException : CliException
     {

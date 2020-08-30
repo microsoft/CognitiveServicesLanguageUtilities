@@ -1,13 +1,13 @@
 ﻿using Autofac;
-using CustomTextCliUtils.Configs;
-using CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CustomTextCliUtils.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 
-namespace CustomTextCliUtils.CommandsLayer
+namespace  Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
     class ParseCommand

@@ -1,13 +1,13 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public class BlobStorageService : IStorageService
     {

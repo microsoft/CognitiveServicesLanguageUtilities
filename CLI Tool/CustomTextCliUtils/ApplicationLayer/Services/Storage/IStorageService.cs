@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public interface IStorageService
     {

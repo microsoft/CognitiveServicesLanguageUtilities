@@ -1,18 +1,18 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Configs;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomTextCliUtils.ApplicationLayer.Controllers
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     public class ChunkerServiceController
     {
@@ -56,13 +56,13 @@ namespace CustomTextCliUtils.ApplicationLayer.Controllers
                 try
                 {
                     // validate types
-                    this._chunkerService.ValidateFileType(fileName);
+                    _chunkerService.ValidateFileType(fileName);
                     // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
                     string file = _sourceStorageService.ReadFileAsString(fileName);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<ChunkInfo> chunkedText = this._chunkerService.Chunk(file, charLimit);
+                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(file, charLimit);
                     // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))

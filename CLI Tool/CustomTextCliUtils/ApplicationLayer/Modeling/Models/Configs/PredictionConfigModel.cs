@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class PredictionConfigModel
     {

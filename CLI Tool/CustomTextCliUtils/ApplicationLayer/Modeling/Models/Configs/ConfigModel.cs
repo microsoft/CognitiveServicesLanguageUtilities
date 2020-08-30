@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class ConfigModel
     {

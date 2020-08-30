@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions
 {
     public class CliException : Exception
     {

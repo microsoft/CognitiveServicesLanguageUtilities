@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {
     public class CustomTextPredictionResponse
     {

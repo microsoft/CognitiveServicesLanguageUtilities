@@ -1,15 +1,15 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
-using CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
-using CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
     public class CustomTextPredictionService : IPredictionService
     {

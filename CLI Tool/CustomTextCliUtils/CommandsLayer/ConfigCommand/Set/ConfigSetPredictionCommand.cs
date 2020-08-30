@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using CustomTextCliUtils.Configs;
-using CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CustomTextCliUtils.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
-using CustomTextCliUtils.Configs.Consts;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("prediction", Description = "sets configs for prediction")]
     class ConfigSetPredictionCommand

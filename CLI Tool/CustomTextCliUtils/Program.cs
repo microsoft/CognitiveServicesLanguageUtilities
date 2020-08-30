@@ -1,13 +1,13 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using CustomTextCliUtils.CommandsLayer;
-using CustomTextCliUtils.CommandsLayer.ConfigCommand;
-using CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using Microsoft.CustomTextCliUtils.CommandsLayer;
+using Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.Reflection;
 
-namespace CustomTextCliUtils
+namespace  Microsoft.CustomTextCliUtils
 {
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]

@@ -1,13 +1,13 @@
 ﻿using Xunit;
-using CustomTextCliUtils.ApplicationLayer.Services.Parser;
-using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
-using CustomTextCliUtils.Tests.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
+using Microsoft.CustomTextCliUtils.Tests.Configs;
 using System.IO;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using System.Linq;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
+namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
 {
     public class MSReadParserServiceTest
     {

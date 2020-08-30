@@ -1,23 +1,23 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using CustomTextCliUtils.ApplicationLayer.Services.Parser;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using CustomTextCliUtils.Configs;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Newtonsoft.Json;
-using CustomTextCliUtils.ApplicationLayer.Services.Prediction;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
-namespace CustomTextCliUtils.ApplicationLayer.Controllers
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     class PredictionServiceController
     {

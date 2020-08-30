@@ -1,14 +1,14 @@
-﻿using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
+﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Parser
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
     public class MSReadParserService : IParserService
     {

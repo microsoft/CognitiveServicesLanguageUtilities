@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {
     public class CustomTextErrorResponse
     {

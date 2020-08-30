@@ -1,4 +1,4 @@
-﻿namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
+﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
     class PredictionOperationFailedException : CliException
     {

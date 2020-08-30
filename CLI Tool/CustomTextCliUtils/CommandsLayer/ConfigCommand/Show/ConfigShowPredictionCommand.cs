@@ -1,9 +1,9 @@
 ﻿using Autofac;
-using CustomTextCliUtils.Configs;
-using CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CustomTextCliUtils.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
 {
     [Command("prediction", Description = "shows configs for all prediction")]
     class ConfigShowPredictionCommand

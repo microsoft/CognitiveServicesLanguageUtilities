@@ -1,6 +1,6 @@
-﻿using CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace CustomTextCliUtils.ApplicationLayer.Exceptions.Configs
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Configs
 {
     class MissingConfigsException : CliException
     {

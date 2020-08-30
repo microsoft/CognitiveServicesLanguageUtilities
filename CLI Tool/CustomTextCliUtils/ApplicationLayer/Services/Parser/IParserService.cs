@@ -1,9 +1,9 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Parser
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
     interface IParserService
     {

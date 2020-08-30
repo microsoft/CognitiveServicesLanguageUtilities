@@ -1,10 +1,10 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public class LocalStorageService : IStorageService
     {

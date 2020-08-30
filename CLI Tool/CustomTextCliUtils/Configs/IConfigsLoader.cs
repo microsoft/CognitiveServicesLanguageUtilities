@@ -1,8 +1,8 @@
 ﻿
 
-using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 
-namespace CustomTextCliUtils.Configs
+namespace  Microsoft.CustomTextCliUtils.Configs
 {
     public interface IConfigsLoader
     {

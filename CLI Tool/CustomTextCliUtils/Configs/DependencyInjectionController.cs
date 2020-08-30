@@ -1,17 +1,17 @@
 ﻿using Autofac;
-using CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using CustomTextCliUtils.Configs.Consts;
-using CustomTextCliUtils.ApplicationLayer.Controllers;
-using CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using CustomTextCliUtils.ApplicationLayer.Services.Parser;
-using CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using System;
-using CustomTextCliUtils.ApplicationLayer.Services.Chunker;
-using CustomTextCliUtils.ApplicationLayer.Services.Prediction;
-using CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
 
-namespace CustomTextCliUtils.Configs
+namespace  Microsoft.CustomTextCliUtils.Configs
 {
     class DependencyInjectionController
     {

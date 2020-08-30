@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
+namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {
     class CustomTextPredictionChunkInfo
     {
