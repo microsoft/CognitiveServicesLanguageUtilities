@@ -7,7 +7,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("msread", Description = "sets configs for msread parser")]
-    class ConfigSetMsReadCommand
+    public class ConfigSetMsReadCommand
     {
         [Option(CommandOptionTemplate.MSReadCognitiveServicesKey, Description = "azure congnitive services key")]
         public string CognitiveServicesKey { get; }

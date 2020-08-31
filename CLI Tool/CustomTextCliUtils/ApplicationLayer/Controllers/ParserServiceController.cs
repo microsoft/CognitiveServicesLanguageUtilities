@@ -1,31 +1,35 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
-using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
-    class ParserServiceController
+    public class ParserServiceController
     {
-        readonly IConfigsLoader _configurationService;
-        readonly IStorageFactoryFactory _storageFactoryFactory;
-        readonly IParserService _parserService;
-        IStorageService _sourceStorageService;
-        IStorageService _destinationStorageService;
-        readonly ILoggerService _loggerService;
-        readonly IChunkerService _chunkerService;
+        private readonly IConfigsLoader _configurationService;
+        private readonly IStorageFactoryFactory _storageFactoryFactory;
+        private readonly IParserService _parserService;
+        private IStorageService _sourceStorageService;
+        private IStorageService _destinationStorageService;
+        private readonly ILoggerService _loggerService;
+        private readonly IChunkerService _chunkerService;
 
-        public ParserServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory,
-            IParserService parserService, ILoggerService loggerService, IChunkerService chunkerService)
+        public ParserServiceController(
+            IConfigsLoader configurationService,
+            IStorageFactoryFactory storageFactoryFactory,
+            IParserService parserService,
+            ILoggerService loggerService,
+            IChunkerService chunkerService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;

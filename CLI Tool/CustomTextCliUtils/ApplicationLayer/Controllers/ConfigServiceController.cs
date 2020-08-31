@@ -10,9 +10,9 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     public class ConfigServiceController
     {
-        readonly ILoggerService _loggerService;
-        readonly IStorageService _storageService;
-        ConfigModel _configModel;
+        private readonly ILoggerService _loggerService;
+        private readonly IStorageService _storageService;
+        private ConfigModel _configModel;
 
         public ConfigServiceController(ILoggerService loggerService, IStorageService storageService)
         {
@@ -49,11 +49,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 
         public void SetMsReadConfigs(string cognitiveServicesKey, string endpointUrl)
         {
-            if (!String.IsNullOrEmpty(cognitiveServicesKey))
+            if (!string.IsNullOrEmpty(cognitiveServicesKey))
             {
                 _configModel.Parser.MsRead.CongnitiveServiceKey = cognitiveServicesKey;
             }
-            if (!String.IsNullOrEmpty(endpointUrl))
+            if (!string.IsNullOrEmpty(endpointUrl))
             {
                 _configModel.Parser.MsRead.CognitiveServiceEndPoint = endpointUrl;
             }
@@ -63,15 +63,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 
         public void SetBlobStorageConfigs(string connectionString, string sourceContainer, string destinationContainer)
         {
-            if (!String.IsNullOrEmpty(connectionString))
+            if (!string.IsNullOrEmpty(connectionString))
             {
                 _configModel.Storage.Blob.ConnectionString = connectionString;
             }
-            if (!String.IsNullOrEmpty(sourceContainer))
+            if (!string.IsNullOrEmpty(sourceContainer))
             {
                 _configModel.Storage.Blob.SourceContainer = sourceContainer;
             }
-            if (!String.IsNullOrEmpty(destinationContainer))
+            if (!string.IsNullOrEmpty(destinationContainer))
             {
                 _configModel.Storage.Blob.DestinationContainer = destinationContainer;
             }
@@ -81,11 +81,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 
         public void SetLocalStorageConfigs(string sourceDirectory, string destinationDirectory)
         {
-            if (!String.IsNullOrEmpty(sourceDirectory))
+            if (!string.IsNullOrEmpty(sourceDirectory))
             {
                 _configModel.Storage.Local.SourceDirectory = sourceDirectory;
             }
-            if (!String.IsNullOrEmpty(destinationDirectory))
+            if (!string.IsNullOrEmpty(destinationDirectory))
             {
                 _configModel.Storage.Local.DestinationDirectory = destinationDirectory;
             }
@@ -95,19 +95,19 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 
         public void SetPredictionConfigs(string customTextKey, string endpointUrl, string appId, string versionId)
         {
-            if (!String.IsNullOrEmpty(customTextKey))
+            if (!string.IsNullOrEmpty(customTextKey))
             {
                 _configModel.Prediction.CustomTextKey = customTextKey;
             }
-            if (!String.IsNullOrEmpty(endpointUrl))
+            if (!string.IsNullOrEmpty(endpointUrl))
             {
                 _configModel.Prediction.EndpointUrl = endpointUrl;
             }
-            if (!String.IsNullOrEmpty(appId))
+            if (!string.IsNullOrEmpty(appId))
             {
                 _configModel.Prediction.AppId = appId;
             }
-            if (!String.IsNullOrEmpty(versionId))
+            if (!string.IsNullOrEmpty(versionId))
             {
                 _configModel.Prediction.VersionId = versionId;
             }

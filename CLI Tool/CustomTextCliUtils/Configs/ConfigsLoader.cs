@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
-    class ConfigsLoader : IConfigsLoader
+    public class ConfigsLoader : IConfigsLoader
     {
         readonly ConfigModel _configModel;
 

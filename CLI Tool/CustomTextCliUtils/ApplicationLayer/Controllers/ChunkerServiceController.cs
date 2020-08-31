@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
@@ -16,15 +16,18 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     public class ChunkerServiceController
     {
-        readonly IConfigsLoader _configurationService;
-        readonly IStorageFactoryFactory _storageFactoryFactory;
-        IStorageService _sourceStorageService;
-        IStorageService _destinationStorageService;
-        readonly ILoggerService _loggerService;
-        readonly IChunkerService _chunkerService;
+        private readonly IConfigsLoader _configurationService;
+        private readonly IStorageFactoryFactory _storageFactoryFactory;
+        private IStorageService _sourceStorageService;
+        private IStorageService _destinationStorageService;
+        private readonly ILoggerService _loggerService;
+        private readonly IChunkerService _chunkerService;
 
-        public ChunkerServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory,
-            ILoggerService loggerService, IChunkerService chunkerService)
+        public ChunkerServiceController(
+            IConfigsLoader configurationService,
+            IStorageFactoryFactory storageFactoryFactory,
+            ILoggerService loggerService,
+            IChunkerService chunkerService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;

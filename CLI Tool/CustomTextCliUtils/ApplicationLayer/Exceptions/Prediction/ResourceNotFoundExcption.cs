@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
-    class ResourceNotFoundExcption : CliException
+    public class ResourceNotFoundExcption : CliException
     {
         public ResourceNotFoundExcption(string message)
             : base(message)

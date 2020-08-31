@@ -3,6 +3,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextErrorResponse;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextResponse;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
@@ -63,14 +64,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 
         private string SendPredictionRequest(string queryText)
         {
-            /*
-             * request form
-             * https://nayergroup.cognitiveservices.azure.com/luis/prediction/v4.0-preview/documents/apps//5c0df28e-335a-4ff7-8580-91172fd57422/slots/production/predictText?log=true&%24expand=classifier%2Cextractor
-            */
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/predictText?log=true&%24expand=classifier%2Cextractor", _endpointUrl, _appId);
             var requestBody = new Dictionary<string, string>
                 {
-                    { "query", queryText}
+                    { "query", queryText }
                 };
             var headers = new Dictionary<string, string>
             {
@@ -92,9 +89,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 
         private CustomTextPredictionResponseStatus PingStatus(string operationId)
         {
-            /*
-             https://nayergroup.cognitiveservices.azure.com/luis/prediction/v4.0-preview/documents/apps/5c0df28e-335a-4ff7-8580-91172fd57422/slots/production/operations/64017d1d-7728-411d-871a-8d4b2a4779d8_637337376000000000/predictText
-             */
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText/status", _endpointUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
             {
@@ -116,9 +110,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 
         private CustomTextPredictionResponse GetResult(string operationId)
         {
-            /*
-             https://nayergroup.cognitiveservices.azure.com/luis/prediction/v4.0-preview/documents/apps/5c0df28e-335a-4ff7-8580-91172fd57422/slots/production/operations/64017d1d-7728-411d-871a-8d4b2a4779d8_637337376000000000/predictText
-             */
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText", _endpointUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
             {

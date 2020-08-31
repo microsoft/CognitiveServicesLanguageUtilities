@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
-    class UnauthorizedRequestException : CliException
+    public class UnauthorizedRequestException : CliException
     {
         public UnauthorizedRequestException(string url, string key)
             : base(ConstructMessage(url, key))

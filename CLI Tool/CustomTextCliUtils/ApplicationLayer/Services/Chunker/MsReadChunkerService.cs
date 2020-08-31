@@ -170,8 +170,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                         currentParagraph.Clear();
                         currentChunkPageStart = currentParagraphPageStart;
                     }
-                    currentParagraph.Append($"{l.Text} "); // concatenate line to current paragraph
-                    if (IsLineEndOfParagraph(l, maxLineLength)) // end of paragraph
+                    // concatenate line to current paragraph
+                    currentParagraph.Append($"{l.Text} ");
+                    // end of paragraph
+                    if (IsLineEndOfParagraph(l, maxLineLength))
                     {
                         // if adding the paragraph to the chunk exceeds the character limit
                         // current chunk will be added to result and the paragraph will be added to the next chunk
@@ -183,12 +185,14 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                             currentChunk.Clear();
                             currentChunkPageStart = (int)rr.Page;
                         }
-                        currentChunk.Append(currentParagraph.ToString()); // concatenate paragraph to current chunk
+                        // concatenate paragraph to current chunk
+                        currentChunk.Append(currentParagraph.ToString());
                         currentParagraph.Clear();
                     }
                 }
             }
-            if (currentParagraph.Length > 0 || currentChunk.Length > 0) // Add remaining text after loop ends
+            // Add remaining text after loop ends
+            if (currentParagraph.Length > 0 || currentChunk.Length > 0)
             {
                 currentChunk.Append(currentParagraph.ToString());
                 var text = currentChunk.ToString().Trim();

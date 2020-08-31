@@ -2,7 +2,7 @@
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Configs
 {
-    class MissingConfigsException : CliException
+    public class MissingConfigsException : CliException
     {
         public MissingConfigsException()
             : base(ConstructMessage())

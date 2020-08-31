@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc
 {
-    public enum CommandType
+    public enum AccessType
     {
-        Config, Parse
+        Read, Write
     }
 }

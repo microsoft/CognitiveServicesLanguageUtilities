@@ -9,7 +9,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         typeof(ConfigSetParserCommand),
         typeof(ConfigSetChunkerCommand),
         typeof(ConfigSetPredictionCommand))]
-    class ConfigSetCommand
+    public class ConfigSetCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

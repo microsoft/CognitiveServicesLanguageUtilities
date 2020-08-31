@@ -8,7 +8,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
     [Command("parser", Description = "shows configs for all parsers")]
     [Subcommand(
         typeof(ConfigShowMsReadCommand))]
-    class ConfigShowParserCommand
+    public class ConfigShowParserCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

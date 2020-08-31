@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
-    interface IParserService
+    public interface IParserService
     {
         public Task<ParseResult> ParseFile(Stream file);
 

@@ -7,7 +7,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
     [Subcommand(
         typeof(ConfigShowCommand),
         typeof(ConfigSetCommand))]
-    class ConfigCommand
+    public class ConfigCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

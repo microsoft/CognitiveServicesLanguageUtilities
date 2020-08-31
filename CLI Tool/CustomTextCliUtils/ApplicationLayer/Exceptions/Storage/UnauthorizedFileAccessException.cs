@@ -11,9 +11,4 @@
             return $"Unauthorized {accessType} for file {filePath}";
         }
     }
-
-    public enum AccessType
-    {
-        Read, Write
-    }
 }

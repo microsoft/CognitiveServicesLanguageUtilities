@@ -7,7 +7,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
     public class ConsoleLoggerService : ILoggerService
     {
-        static readonly object _lock = new object();
+        private static readonly object _lock = new object();
 
         public void Log(string message)
         {

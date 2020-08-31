@@ -6,7 +6,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
 {
     [Command("chunker", Description = "shows configs for chunker")]
-    class ConfigShowChunkerCommand
+    public class ConfigShowChunkerCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

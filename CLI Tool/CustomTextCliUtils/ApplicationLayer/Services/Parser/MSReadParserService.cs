@@ -12,8 +12,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
     public class MSReadParserService : IParserService
     {
-        ComputerVisionClient _client;
-        HashSet<string> _validTypesSet;
+        private ComputerVisionClient _client;
+        private HashSet<string> _validTypesSet;
 
         public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey)
         {
@@ -42,16 +42,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
         public async Task<ParseResult> ParseFile(Stream file)
         {
             var response = await _client.BatchReadFileInStreamAsync(file);
-            const int numberOfCharsInOperationId = 36;
-            string operationId = response.OperationLocation.Substring(response.OperationLocation.Length - numberOfCharsInOperationId);
+            const int NumberOfCharsInOperationId = 36;
+            string operationId = response.OperationLocation.Substring(response.OperationLocation.Length - NumberOfCharsInOperationId);
 
             ReadOperationResult result;
             do
             {
                 result = await _client.GetReadOperationResultAsync(operationId);
             }
-            while ((result.Status == TextOperationStatusCodes.Running ||
-                result.Status == TextOperationStatusCodes.NotStarted));
+            while (result.Status == TextOperationStatusCodes.Running || result.Status == TextOperationStatusCodes.NotStarted);
             return new MsReadParseResult(result.RecognitionResults);
         }
 

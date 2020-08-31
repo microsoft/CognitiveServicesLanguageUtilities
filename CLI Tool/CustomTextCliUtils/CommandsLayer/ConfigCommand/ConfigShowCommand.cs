@@ -12,7 +12,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         typeof(ConfigShowStorageCommand),
         typeof(ConfigShowChunkerCommand),
         typeof(ConfigShowPredictionCommand))]
-    class ConfigShowCommand
+    public class ConfigShowCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

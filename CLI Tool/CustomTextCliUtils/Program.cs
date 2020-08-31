@@ -16,7 +16,7 @@ namespace Microsoft.CustomTextCliUtils
         typeof(PredictCommand),
         typeof(ConfigCommand),
         typeof(ChunkCommand))]
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {

@@ -7,7 +7,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("blob", Description = "sets configs for blob storage")]
-    class ConfigSetBlobCommand
+    public class ConfigSetBlobCommand
     {
         [Option(CommandOptionTemplate.BlobStorageConnectionstring, Description = "azure storage account connection string")]
         public string ConnectionString { get; }

@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("chunker", Description = "sets configs for chunker")]
-    class ConfigSetChunkerCommand
+    public class ConfigSetChunkerCommand
     {
         [Required]
         [Range(Constants.MinAllowedCharLimit, Constants.CustomTextPredictionMaxCharLimit)]

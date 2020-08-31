@@ -2,7 +2,7 @@
 
 namespace Microsoft.CustomTextCliUtils.Tests.Configs
 {
-    class Secrets
+    public class Secrets
     {
         public static readonly string MSReadCognitiveServiceEndPoint = Environment.GetEnvironmentVariable("MSReadCognitiveServiceEndPoint");
         public static readonly string MSReadCongnitiveServiceKey = Environment.GetEnvironmentVariable("MSReadCongnitiveServiceKey");

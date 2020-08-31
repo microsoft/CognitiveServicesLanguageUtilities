@@ -9,7 +9,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("predict", Description = "uses custom text to predict intents and entities in given document")]
-    class PredictCommand
+    public class PredictCommand
     {
         [Required]
         [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]

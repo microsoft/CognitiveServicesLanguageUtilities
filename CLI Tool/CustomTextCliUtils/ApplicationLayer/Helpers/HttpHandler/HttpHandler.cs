@@ -8,13 +8,13 @@ using System.Web;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
 {
-    class HttpHandler : IHttpHandler
+    public class HttpHandler : IHttpHandler
     {
         private static HttpClient httpClient = new HttpClient();
 
         public HttpResponseMessage SendGetRequest(string url, Dictionary<string, string> headers, Dictionary<string, string> parameters)
         {
-            var urlWithParameters = parameters == null ? url : createUrlWithParameters(url, parameters);
+            var urlWithParameters = parameters == null ? url : CreateUrlWithParameters(url, parameters);
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, urlWithParameters))
             {
                 headers?.ToList().ForEach(h => requestMessage.Headers.Add(h.Key, h.Value));
@@ -23,9 +23,9 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
             }
         }
 
-        public HttpResponseMessage SendJsonPostRequest(string url, Object body, Dictionary<string, string> headers, Dictionary<string, string> parameters)
+        public HttpResponseMessage SendJsonPostRequest(string url, object body, Dictionary<string, string> headers, Dictionary<string, string> parameters)
         {
-            var urlWithParameters = parameters == null ? url : createUrlWithParameters(url, parameters);
+            var urlWithParameters = parameters == null ? url : CreateUrlWithParameters(url, parameters);
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, urlWithParameters))
             {
                 headers?.ToList().ForEach(h => requestMessage.Headers.Add(h.Key, h.Value));
@@ -36,7 +36,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
             }
         }
 
-        private string createUrlWithParameters(string url, Dictionary<string, string> parameters)
+        private string CreateUrlWithParameters(string url, Dictionary<string, string> parameters)
         {
             var uriBuilder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);

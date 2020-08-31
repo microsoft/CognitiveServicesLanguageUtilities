@@ -19,18 +19,23 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
-    class PredictionServiceController
+    public class PredictionServiceController
     {
-        readonly IConfigsLoader _configurationService;
-        readonly IStorageFactoryFactory _storageFactoryFactory;
-        readonly IParserService _parserService;
-        IStorageService _sourceStorageService;
-        readonly ILoggerService _loggerService;
-        readonly IChunkerService _chunkerService;
-        readonly IPredictionService _predictionService;
+        private readonly IConfigsLoader _configurationService;
+        private readonly IStorageFactoryFactory _storageFactoryFactory;
+        private readonly IParserService _parserService;
+        private IStorageService _sourceStorageService;
+        private readonly ILoggerService _loggerService;
+        private readonly IChunkerService _chunkerService;
+        private readonly IPredictionService _predictionService;
 
-        public PredictionServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory,
-            IParserService parserService, ILoggerService loggerService, IChunkerService chunkerService, IPredictionService predictionService)
+        public PredictionServiceController(
+            IConfigsLoader configurationService,
+            IStorageFactoryFactory storageFactoryFactory,
+            IParserService parserService,
+            ILoggerService loggerService,
+            IChunkerService chunkerService,
+            IPredictionService predictionService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;

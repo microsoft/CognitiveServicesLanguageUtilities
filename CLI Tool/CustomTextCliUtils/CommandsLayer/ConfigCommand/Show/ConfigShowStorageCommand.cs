@@ -9,7 +9,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
     [Subcommand(
         typeof(ConfigShowLocalCommand),
         typeof(ConfigShowBlobCommand))]
-    class ConfigShowStorageCommand
+    public class ConfigShowStorageCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

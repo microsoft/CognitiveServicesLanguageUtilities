@@ -2,7 +2,7 @@
 
 namespace Microsoft.CustomTextCliUtils.Configs.Consts
 {
-    class ConfigKeys
+    public class ConfigKeys
     {
         // msread
         public const string MSReadCognitiveServicesKey = "cognitive-services-key";

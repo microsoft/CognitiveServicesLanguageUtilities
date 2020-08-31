@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {
-    class CustomTextPredictionChunkInfo
+    public class CustomTextPredictionChunkInfo
     {
         [JsonProperty(Order = 0)]
         public int ChunkNumber { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
-    class ParseCommand
+    public class ParseCommand
     {
         [Required]
         [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]

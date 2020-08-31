@@ -8,7 +8,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("chunk", Description = "chunk text file")]
-    class ChunkCommand
+    public class ChunkCommand
     {
         [Required]
         [Option("--source <local/blob>", Description = "[required] indicates source storage type")]

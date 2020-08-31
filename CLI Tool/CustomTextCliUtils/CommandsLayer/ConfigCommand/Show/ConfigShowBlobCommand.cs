@@ -6,7 +6,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
 {
     [Command("blob", Description = "shows configs for blob storage")]
-    class ConfigShowBlobCommand
+    public class ConfigShowBlobCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

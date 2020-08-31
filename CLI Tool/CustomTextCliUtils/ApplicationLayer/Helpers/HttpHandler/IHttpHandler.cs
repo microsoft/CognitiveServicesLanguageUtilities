@@ -8,6 +8,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
     {
         public HttpResponseMessage SendGetRequest(string url, Dictionary<string, string> headers, Dictionary<string, string> parameters);
 
-        public HttpResponseMessage SendJsonPostRequest(string url, Object body, Dictionary<string, string> headers, Dictionary<string, string> parameters);
+        public HttpResponseMessage SendJsonPostRequest(string url, object body, Dictionary<string, string> headers, Dictionary<string, string> parameters);
     }
 }

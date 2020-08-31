@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
-    class BadRequestException : CliException
+    public class BadRequestException : CliException
     {
         public BadRequestException(string message)
             : base(message)

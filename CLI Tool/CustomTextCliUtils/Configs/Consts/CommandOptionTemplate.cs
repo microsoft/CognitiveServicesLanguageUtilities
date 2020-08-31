@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Microsoft.CustomTextCliUtils.Configs.Consts
 {
-    class CommandOptionTemplate
+    public class CommandOptionTemplate
     {
         // msread
         public const string MSReadCognitiveServicesKey = "--" + ConfigKeys.MSReadCognitiveServicesKey + " <COGNITIVE_SERVICES_KEY>";

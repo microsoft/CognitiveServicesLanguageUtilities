@@ -6,7 +6,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
 {
     [Command("prediction", Description = "shows configs for all prediction")]
-    class ConfigShowPredictionCommand
+    public class ConfigShowPredictionCommand
     {
         private int OnExecute(CommandLineApplication app)
         {

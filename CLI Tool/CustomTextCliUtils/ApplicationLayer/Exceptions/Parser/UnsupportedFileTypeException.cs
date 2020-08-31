@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
 {
-    class UnsupportedFileTypeException : CliException
+    public class UnsupportedFileTypeException : CliException
     {
         public UnsupportedFileTypeException(string fileName, string fileType, string[] validTypes)
             : base(ConstructMessage(fileName, fileType, validTypes))

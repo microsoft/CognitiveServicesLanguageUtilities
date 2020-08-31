@@ -7,7 +7,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("local", Description = "sets configs for local storage")]
-    class ConfigSetLocalCommand
+    public class ConfigSetLocalCommand
     {
         [Option(CommandOptionTemplate.LocalStorageSourceDir, Description = "absolute path for source directory")]
         public string SourceDirectory { get; }

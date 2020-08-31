@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
-    class PredictionOperationFailedException : CliException
+    public class PredictionOperationFailedException : CliException
     {
         public PredictionOperationFailedException(string operationId)
             : base(ConstructMessage(operationId))

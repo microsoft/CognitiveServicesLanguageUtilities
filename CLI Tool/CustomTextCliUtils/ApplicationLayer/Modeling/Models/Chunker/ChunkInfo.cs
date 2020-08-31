@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker
 {

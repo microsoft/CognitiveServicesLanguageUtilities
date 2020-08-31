@@ -7,7 +7,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("prediction", Description = "sets configs for prediction")]
-    class ConfigSetPredictionCommand
+    public class ConfigSetPredictionCommand
     {
         [Option(CommandOptionTemplate.PredictionCustomTextKey, Description = "custom text app prediction resource key")]
         public string CustomTextKey { get; }

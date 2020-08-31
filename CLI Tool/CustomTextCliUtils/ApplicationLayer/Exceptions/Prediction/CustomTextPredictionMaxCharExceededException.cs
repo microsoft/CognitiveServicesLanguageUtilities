@@ -2,7 +2,7 @@
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 {
-    class CustomTextPredictionMaxCharExceededException : CliException
+    public class CustomTextPredictionMaxCharExceededException : CliException
     {
         public CustomTextPredictionMaxCharExceededException(int currCharCount)
             : base(ConstructMessage(currCharCount))

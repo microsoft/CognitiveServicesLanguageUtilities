@@ -13,7 +13,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
-    class DependencyInjectionController
+    public class DependencyInjectionController
     {
         private static ContainerBuilder BuildCommonDependencies()
         {

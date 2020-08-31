@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace CustomTextCliUtils.ApplicationLayer.Helpers.Models
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models
 {
     public class ChunkInfoHelper
     {
