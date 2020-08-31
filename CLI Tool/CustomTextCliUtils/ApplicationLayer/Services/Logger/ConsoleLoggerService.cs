@@ -1,6 +1,7 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
@@ -27,7 +28,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
             }
         }
 
-        public void LogParsingResult(List<string> convertedFiles, List<string> failedFiles)
+        public void LogParsingResult(List<string> convertedFiles, Dictionary<string, string> failedFiles)
         {
             var totalFilesCount = convertedFiles.Count + failedFiles.Count;
             lock (_lock)
@@ -40,7 +41,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
                 convertedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Failed:");
-                failedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
+                failedFiles.ToList().ForEach(kv => Console.WriteLine("\t{0}\t=> {1}", kv.Key, kv.Value));
                 Console.ResetColor();
             }
         }

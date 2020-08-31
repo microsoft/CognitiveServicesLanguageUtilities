@@ -8,7 +8,7 @@
 
         public static string ConstructMessage(string fileName, string fileType, string[] validTypes)
         {
-            return $"Unsupported file type {fileType} for file {fileName}\nSupported types are {string.Join(", ", validTypes)}";
+            return $"Unsupported file type {fileType} for file {fileName} (Supported types are {string.Join(", ", validTypes)})";
         }
         
     }

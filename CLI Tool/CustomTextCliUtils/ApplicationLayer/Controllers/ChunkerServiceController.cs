@@ -45,13 +45,13 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
-            List<string> convertedFiles = new List<string>();
-            List<string> failedFiles = new List<string>();
+            var convertedFiles = new List<string>();
+            var failedFiles = new Dictionary<string, string>();
 
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
             // chunk files
-            List<Task> listOfTasks = new List<Task>();
+            var listOfTasks = new List<Task>();
             fileNames.ToList().ForEach(fileName =>
             {
                 listOfTasks.Add(Task.Run(() => RunAsync(fileName, charLimit, convertedFiles, failedFiles)));
@@ -60,7 +60,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
 
-        private void RunAsync(string fileName, int charLimit, List<string> convertedFiles, List<string> failedFiles)
+        private void RunAsync(string fileName, int charLimit, List<string> convertedFiles, Dictionary<string, string> failedFiles)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             }
             catch (CliException e)
             {
-                failedFiles.Add(fileName);
+                failedFiles[fileName] = e.Message;
                 _loggerService.LogError(e);
             }
         }

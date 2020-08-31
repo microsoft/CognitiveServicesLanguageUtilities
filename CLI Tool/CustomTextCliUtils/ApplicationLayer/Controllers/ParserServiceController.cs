@@ -5,14 +5,11 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 
 namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
@@ -50,8 +47,8 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
-            List<string> convertedFiles = new List<string>();
-            List<string> failedFiles = new List<string>();
+            var convertedFiles = new List<string>();
+            var failedFiles = new Dictionary<string, string>();
 
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
@@ -64,13 +61,13 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     _parserService.ValidateFileType(fileName);
                     // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                    Stream file = await _sourceStorageService.ReadFile(fileName);
+                    var file = await _sourceStorageService.ReadFile(fileName);
                     // parse file
                     _loggerService.LogOperation(OperationType.ParsingFile, fileName);
-                    ParseResult parseResult = await _parserService.ParseFile(file);
+                    var parseResult = await _parserService.ParseFile(file);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
+                    var chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
                     // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))
@@ -82,7 +79,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 }
                 catch (CliException e)
                 {
-                    failedFiles.Add(fileName);
+                    failedFiles[fileName] = e.Message;
                     _loggerService.LogError(e);
                 }
             });

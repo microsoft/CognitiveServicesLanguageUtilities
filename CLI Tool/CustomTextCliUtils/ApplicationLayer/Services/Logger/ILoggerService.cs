@@ -12,6 +12,6 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 
         public void LogOperation(OperationType operationType, string message);
 
-        void LogParsingResult(List<string> convertedFiles, List<string> failedFiles);
+        void LogParsingResult(List<string> convertedFiles, Dictionary<string, string> failedFiles);
     }
 }
