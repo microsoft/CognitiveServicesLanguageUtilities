@@ -8,6 +8,4 @@ namespace  Microsoft.CustomTextCliUtils.Tests.Configs
         public static readonly string MSReadCongnitiveServiceKey = Environment.GetEnvironmentVariable("MSReadCongnitiveServiceKey");
         public static readonly string StorageAccountConnectionString = Environment.GetEnvironmentVariable("StorageAccountConnectionString");
     }
-
-    
 }
