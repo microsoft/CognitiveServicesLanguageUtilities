@@ -47,9 +47,9 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             {
                 pingResult = PingStatus(operationId);
             }
-            while (pingResult == CustomTextPredictionResponseStatus.NotStarted || pingResult == CustomTextPredictionResponseStatus.Running);
+            while (pingResult == CustomTextPredictionResponseStatus.notstarted || pingResult == CustomTextPredictionResponseStatus.running);
             // get result
-            if (pingResult == CustomTextPredictionResponseStatus.Succeeded)
+            if (pingResult == CustomTextPredictionResponseStatus.succeeded)
             {
                 var prediction = GetResult(operationId);
                 return prediction;
@@ -109,7 +109,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             else
             {
                 HandleExceptionResponseCodes(response, requestUrl);
-                return CustomTextPredictionResponseStatus.Unknown;
+                return CustomTextPredictionResponseStatus.unknown;
             }
         }
 

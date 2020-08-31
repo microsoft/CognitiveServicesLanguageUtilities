@@ -1,5 +1,4 @@
-﻿
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
     public class MsReadChunkerService : IChunkerService
     {
@@ -29,15 +28,16 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             }
         }
 
+        /*
+         *  MsReadParseResult is a list of pages and each page contains a list of lines
+            This function joins the lines in a single string 
+         */
         private List<ChunkInfo> ExtractText(MsReadParseResult parsingResult)
         {
             StringBuilder finalText = new StringBuilder();
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
-                foreach (Line l in rr.Lines)
-                {
-                    finalText.Append($"{l.Text} ");
-                }
+                finalText.Append(string.Join(' ', rr.Lines.Select(l => l.Text)));
             }
             var text = finalText.ToString().Trim();
             return new List<ChunkInfo> {
@@ -45,98 +45,173 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             };
         }
 
+        /*
+         *  Data structure: 
+         *      MsReadParseResult is a list of pages and each page contains a list of lines
+         *  Intuition:
+         *      To construct a page, we concatenate paragraphs in the page to the chunk
+         *  Considerations:
+         *      1- Chunk doesn't exceed CustomText limit
+         *      2- Construct page without cutting through paragraphs
+         *  Special cases: 
+         *      1- Paragraph overflows to next page. 
+         *          - Overflowing Paragraph will be added to next page
+         *      2- Paragraph length bigger than character limit
+         *          - Paragraph will be split into different chunks
+         */
         private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult)
         {
-            var pages = new List<ChunkInfo>();
+            var resultPages = new List<ChunkInfo>();
             var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
-            var maxLineLength = linesArray[(int)(linesArray.Length * 0.95)] * Constants.PercentageOfMaxLineLength;
-            var paragraph = new StringBuilder();
+            var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
+            var currentParagraph = new StringBuilder();
             StringBuilder pageText = new StringBuilder();
             var currentPage = 0;
             var totalPageCount = parsingResult.RecognitionResults.Count;
-            var pageStart = 1;
-            foreach (TextRecognitionResult rr in parsingResult.RecognitionResults) // loop over each page to create list of pages
+            var currentPageStart = 1;
+            var currentParagraphPageStart = 1;
+            // loop over each page to create list of pages
+            foreach (TextRecognitionResult rr in parsingResult.RecognitionResults) 
             {
+                // update paragraphPageStart if no overflowing paragraph in new page
+                currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
                 foreach (Line l in rr.Lines)
                 {
-                    paragraph.Append($"{l.Text} ");
-                    if (IsLineEndOfParagraph(l, maxLineLength)) // end of paragraph
+                    // Special case: paragraph length is bigger that character limit
+                    if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
                     {
-                        if (pageText.Length + paragraph.Length > Constants.CustomTextPredictionMaxCharLimit)
+                        // add existing page to result
+                        if (pageText.Length > 0) 
+                        {
+                            resultPages.Add(new ChunkInfo(pageText.ToString(), currentPageStart, (int)rr.Page));
+                            pageText.Clear();
+                        }
+                        // concatenate paragraph to current page
+                        pageText.Append(currentParagraph.ToString()); 
+                        currentParagraph.Clear();
+                        currentPageStart = currentParagraphPageStart;
+                    }
+                    // concatenate line to current paragraph
+                    currentParagraph.Append($"{l.Text} "); 
+                    // end of paragraph
+                    if (IsLineEndOfParagraph(l, maxLineLength))
+                    {
+                        // if adding the paragraph to the page exceeds the character limit
+                        // current page will be added to result and the paragraph will be added to the next page
+                        if (pageText.Length + currentParagraph.Length > Constants.CustomTextPredictionMaxCharLimit)
                         {
                             var text = pageText.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(text, pageStart, (int)rr.Page);
-                            pages.Add(chunkInfo);
+                            var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
+                            resultPages.Add(chunkInfo);
                             pageText.Clear();
-                            pageStart = (int)rr.Page;
+                            currentPageStart = (int)rr.Page;
                         }
-                        pageText.Append(paragraph.ToString());
-                        paragraph.Clear();
+                        // concatenate paragraph to current page
+                        pageText.Append(currentParagraph.ToString()); 
+                        currentParagraph.Clear();
+                        currentParagraphPageStart = (int)rr.Page;
                     }
                 }
-                if (paragraph.Length > 0 && ++currentPage == totalPageCount)
+                // special case: if last page add any text in the current paragraph to the page
+                if (currentParagraph.Length > 0 && ++currentPage == totalPageCount) 
                 {
-                    pageText.Append(paragraph.ToString());
+                    pageText.Append(currentParagraph.ToString());
                 }
-                if (pageText.Length > 0)
+                // add pageText to list of pages after concatenating all paragraphs
+                if (pageText.Length > 0) 
                 {
                     var text = pageText.ToString().Trim();
-                    var chunkInfo = new ChunkInfo(text, pageStart, (int)rr.Page);
-                    pages.Add(chunkInfo);
+                    var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
+                    resultPages.Add(chunkInfo);
                     pageText.Clear();
-                    pageStart = paragraph.Length > 0 ? (int)rr.Page : ((int)rr.Page + 1);
-                } 
+                    currentPageStart = currentParagraph.Length > 0 ? (int)rr.Page : ((int)rr.Page + 1);
+                }
             }
-            return pages;
+            return resultPages;
         }
 
-        // TODO: paragraph bigger than char limit
+        /*
+         *  Data structure: 
+         *      MsReadParseResult is a list of pages and each page contains a list of lines
+         *  Intuition:
+         *      To construct a chunk, we concatenate paragraphs to the chunk without exceeding the character limit
+         *  Considerations:
+         *      1- Chunk doesn't exceed character limit
+         *      2- Construct chunk without cutting through paragraphs
+         *  Special cases:
+         *      1- Paragraph length bigger than character limit
+         *          - Paragraph will be split into different chunks
+         */
         private List<ChunkInfo> ChunkCharacters(MsReadParseResult parsingResult, int charLimit)
         {
-            StringBuilder paragraph = new StringBuilder();
-            StringBuilder chunk = new StringBuilder();
-            List<ChunkInfo> chunks = new List<ChunkInfo>();
-            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
-            var maxLineLength = linesArray[(int)(linesArray.Length * 0.95)] * Constants.PercentageOfMaxLineLength;
-            var pageStart = 1;
+            StringBuilder currentParagraph = new StringBuilder();
+            StringBuilder currentChunk = new StringBuilder();
+            List<ChunkInfo> resultChunks = new List<ChunkInfo>();
+            double maxLineLength = CaluculateMaxLineLength(parsingResult); 
+            var currentChunkPageStart = 1;
+            var currentParagraphPageStart = 1;
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
+                // update paragraphPageStart if no overflowing paragraph in new page
+                currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
                 foreach (Line l in rr.Lines)
                 {
-                    paragraph.Append($"{l.Text} ");
+                    // Special case: paragraph length is bigger that character limit
+                    if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
+                    {
+                        // add existing chunk to result
+                        if (currentChunk.Length > 0)
+                        {
+                            resultChunks.Add(new ChunkInfo(currentChunk.ToString(), currentChunkPageStart, (int)rr.Page));
+                            currentChunk.Clear();
+                        }
+                        // concatenate paragraph to current chunk
+                        currentChunk.Append(currentParagraph.ToString());
+                        currentParagraph.Clear();
+                        currentChunkPageStart = currentParagraphPageStart;
+                    }
+                    currentParagraph.Append($"{l.Text} "); // concatenate line to current paragraph
                     if (IsLineEndOfParagraph(l, maxLineLength)) // end of paragraph
                     {
-                        if (chunk.Length + paragraph.Length > charLimit)
+                        // if adding the paragraph to the chunk exceeds the character limit
+                        // current chunk will be added to result and the paragraph will be added to the next chunk
+                        if (currentChunk.Length + currentParagraph.Length > charLimit)
                         {
-                            var text = chunk.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(text, pageStart, (int) rr.Page);
-                            chunks.Add(chunkInfo);
-                            chunk.Clear();
-                            pageStart = (int)rr.Page;
+                            var text = currentChunk.ToString().Trim();
+                            var chunkInfo = new ChunkInfo(text, currentChunkPageStart, (int)rr.Page);
+                            resultChunks.Add(chunkInfo);
+                            currentChunk.Clear();
+                            currentChunkPageStart = (int)rr.Page;
                         }
-                        chunk.Append(paragraph.ToString());
-                        paragraph.Clear();
+                        currentChunk.Append(currentParagraph.ToString()); // concatenate paragraph to current chunk
+                        currentParagraph.Clear();
                     }
                 }
             }
-            if (paragraph.Length > 0)
+            if (currentParagraph.Length > 0 || currentChunk.Length > 0) // Add remaining text after loop ends
             {
-                if (chunk.Length + paragraph.Length <= charLimit)
-                {
-                    chunk.Append(paragraph.ToString());
-                    var text = chunk.ToString().Trim();
-                    var chunkInfo = new ChunkInfo(text, pageStart, parsingResult.RecognitionResults.Count);
-                    chunks.Add(chunkInfo);
-                }
-                else
-                {
-                    var chunkInfo = new ChunkInfo(chunk.ToString(), pageStart, parsingResult.RecognitionResults.Count);
-                    var paragraphInfo = new ChunkInfo(paragraph.ToString(), pageStart, parsingResult.RecognitionResults.Count);
-                    chunks.Add(chunkInfo);
-                    chunks.Add(paragraphInfo);
-                }
+                currentChunk.Append(currentParagraph.ToString());
+                var text = currentChunk.ToString().Trim();
+                var chunkInfo = new ChunkInfo(text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
+                resultChunks.Add(chunkInfo);
             }
-            return chunks;
+            return resultChunks;
+        }
+
+        private static double CaluculateMaxLineLength(MsReadParseResult parsingResult)
+        {
+            /*
+             * Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
+             * 
+             *   [0, 1] ------------------ [2, 3]
+             *         -                  -
+             *         -                  -
+             *         -                  -
+             *   [4, 5] ------------------ [6, 7]
+             */
+            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
+            var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
+            return maxLineLength;
         }
 
         private bool IsLineEndOfParagraph(Line line, double maxLineLength)
