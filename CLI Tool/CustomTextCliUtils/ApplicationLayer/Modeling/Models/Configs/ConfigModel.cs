@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class ConfigModel
     {
@@ -21,30 +21,6 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
             Parser = new ParserConfigModel();
             Chunker = new ChunkerConfigModel();
             Prediction = new PredictionConfigModel();
-        }
-    }
-
-    public class ParserConfigModel
-    {
-        [JsonProperty("MSRead")]
-        public MSReadConfigModel MsRead { get; set; }
-
-        public ParserConfigModel() {
-            MsRead = new MSReadConfigModel();
-        }
-    }
-
-    public class StorageConfigModel
-    {
-        [JsonProperty("blob")]
-        public BlobStorageConfigModel Blob { get; set; }
-
-        [JsonProperty("local")]
-        public LocalStorageConfigModel Local { get; set; }
-
-        public StorageConfigModel() {
-            Blob = new BlobStorageConfigModel();
-            Local = new LocalStorageConfigModel();
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextResponse;
+using Newtonsoft.Json;
 
 namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {

@@ -3,6 +3,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextResponse;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
