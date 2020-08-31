@@ -1,0 +1,27 @@
+{
+  "storage": {
+    "blob": {
+      "connection-string": "",
+      "source-container": "",
+      "destination-container": ""
+    },
+    "local": {
+      "source-dir": "",
+      "destination-dir": ""
+    }
+  },
+  "parser": {
+    "MSRead": {
+      "cognitive-services-endpoint": "",
+      "cognitive-services-key": ""
+    }
+  },
+  "chunker": {
+    "char-limit": 5000
+  },
+  "prediction": {
+    "customtext-key": "",
+    "customtext-endpoint": "",
+    "app-id": ""
+  }
+}
