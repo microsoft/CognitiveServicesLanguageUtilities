@@ -13,26 +13,19 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
     public class BlobStorageServiceTest : IDisposable
     {
         private static readonly string _connectionString = Secrets.StorageAccountConnectionString;
-        private static readonly string _testContainer = "containertest";
+        private readonly string _testContainerName;
         private readonly BlobContainerClient _blobContainerClient;
 
         public BlobStorageServiceTest()
         {
+            _testContainerName = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
             BlobServiceClient blobServiceClient = new BlobServiceClient(_connectionString);
-            _blobContainerClient = blobServiceClient.GetBlobContainerClient(_testContainer);
-            if (!_blobContainerClient.Exists())
-            {
-                _blobContainerClient = blobServiceClient.CreateBlobContainer(_testContainer);
-            }
-            else
-            {
-                Parallel.ForEach(_blobContainerClient.GetBlobs(), x => _blobContainerClient.DeleteBlob(x.Name));
-            }
+            _blobContainerClient = blobServiceClient.CreateBlobContainer(_testContainerName);
         }
 
         public void Dispose()
         {
-            DeleteAllBlobs();
+            _blobContainerClient.Delete();
         }
 
         public static TheoryData BlobStorageConnectionTestData()
@@ -43,12 +36,12 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             {
                 {
                     _connectionString,
-                    _testContainer,
+                    null,
                     null
                 },
                 {
                     invalidConnectionString,
-                    _testContainer,
+                    null,
                     new InvalidBlobStorageConnectionStringException(invalidConnectionString)
                 },
                 {
@@ -63,6 +56,7 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
         [MemberData(nameof(BlobStorageConnectionTestData))]
         public void BlobStorageConnectionTest(string connectionString, string containerName, Exception excpectedException)
         {
+            containerName = containerName ?? _testContainerName;
             if (excpectedException == null)
             {
                 new BlobStorageService(connectionString, containerName);
@@ -79,7 +73,7 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             string fileName = "storageTest.txt";
             string expected = "StoreDataTest text for testing";
             string actual = "";
-            IStorageService storageService = new BlobStorageService(_connectionString, _testContainer);
+            IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
             storageService.StoreData(expected, fileName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = blobClient.Download();
@@ -98,7 +92,7 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             string expected = "ReadFileTest text for testing";
             string actual = "";
             UploadFileHelper(fileName, expected);
-            IStorageService storageService = new BlobStorageService(_connectionString, _testContainer);
+            IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
             Stream file = await storageService.ReadFile(fileName);
             using (StreamReader sr = new StreamReader(file))
             {
@@ -114,7 +108,7 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             string fileName = "storageTest.txt";
             string expected = "ReadFileAsStringTest text for testing";
             UploadFileHelper(fileName, expected);
-            IStorageService storageService = new BlobStorageService(_connectionString, _testContainer);
+            IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
             string actual = storageService.ReadFileAsString(fileName);
             Assert.Equal(expected, actual);
         }
@@ -127,7 +121,7 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             {
                 UploadFileHelper(fileName, "text");
             });
-            IStorageService storageService = new BlobStorageService(_connectionString, _testContainer);
+            IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
             string[] actualFiles = storageService.ListFiles();
             Assert.Equal(expectedFiles, actualFiles);
         }
