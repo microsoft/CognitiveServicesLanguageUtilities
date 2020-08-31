@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     public class ChunkerServiceController
     {

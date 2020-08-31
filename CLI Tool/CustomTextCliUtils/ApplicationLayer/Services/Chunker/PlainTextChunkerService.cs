@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
     class PlainTextChunkerService : IChunkerService
     {

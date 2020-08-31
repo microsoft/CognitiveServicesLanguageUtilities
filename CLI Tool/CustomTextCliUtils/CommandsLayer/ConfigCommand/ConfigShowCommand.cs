@@ -4,7 +4,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
 {
     [Command("show", Description = "shows app configs")]
     [Subcommand(

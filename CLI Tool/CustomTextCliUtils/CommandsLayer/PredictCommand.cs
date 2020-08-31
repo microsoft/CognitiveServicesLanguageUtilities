@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer
+namespace Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("predict", Description = "uses custom text to predict intents and entities in given document")]
     class PredictCommand

@@ -1,4 +1,4 @@
-﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser
+﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser
 {
     public abstract class ParseResult
     {

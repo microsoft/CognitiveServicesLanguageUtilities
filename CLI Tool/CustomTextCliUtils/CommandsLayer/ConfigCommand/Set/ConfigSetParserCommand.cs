@@ -1,6 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("parser", Description = "sets configs for all parsers")]
     [Subcommand(

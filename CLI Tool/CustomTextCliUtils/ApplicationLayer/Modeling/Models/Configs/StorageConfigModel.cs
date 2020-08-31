@@ -10,7 +10,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
         [JsonProperty("local")]
         public LocalStorageConfigModel Local { get; set; }
 
-        public StorageConfigModel() {
+        public StorageConfigModel()
+        {
             Blob = new BlobStorageConfigModel();
             Local = new LocalStorageConfigModel();
         }

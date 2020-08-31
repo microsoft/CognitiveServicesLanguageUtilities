@@ -71,7 +71,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var currentPageStart = 1;
             var currentParagraphPageStart = 1;
             // loop over each page to create list of pages
-            foreach (TextRecognitionResult rr in parsingResult.RecognitionResults) 
+            foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
                 // update paragraphPageStart if no overflowing paragraph in new page
                 currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
@@ -81,18 +81,18 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                     if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
                     {
                         // add existing page to result
-                        if (pageText.Length > 0) 
+                        if (pageText.Length > 0)
                         {
                             resultPages.Add(new ChunkInfo(pageText.ToString(), currentPageStart, (int)rr.Page));
                             pageText.Clear();
                         }
                         // concatenate paragraph to current page
-                        pageText.Append(currentParagraph.ToString()); 
+                        pageText.Append(currentParagraph.ToString());
                         currentParagraph.Clear();
                         currentPageStart = currentParagraphPageStart;
                     }
                     // concatenate line to current paragraph
-                    currentParagraph.Append($"{l.Text} "); 
+                    currentParagraph.Append($"{l.Text} ");
                     // end of paragraph
                     if (IsLineEndOfParagraph(l, maxLineLength))
                     {
@@ -107,18 +107,18 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                             currentPageStart = (int)rr.Page;
                         }
                         // concatenate paragraph to current page
-                        pageText.Append(currentParagraph.ToString()); 
+                        pageText.Append(currentParagraph.ToString());
                         currentParagraph.Clear();
                         currentParagraphPageStart = (int)rr.Page;
                     }
                 }
                 // special case: if last page add any text in the current paragraph to the page
-                if (currentParagraph.Length > 0 && ++currentPage == totalPageCount) 
+                if (currentParagraph.Length > 0 && ++currentPage == totalPageCount)
                 {
                     pageText.Append(currentParagraph.ToString());
                 }
                 // add pageText to list of pages after concatenating all paragraphs
-                if (pageText.Length > 0) 
+                if (pageText.Length > 0)
                 {
                     var text = pageText.ToString().Trim();
                     var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
@@ -147,7 +147,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             StringBuilder currentParagraph = new StringBuilder();
             StringBuilder currentChunk = new StringBuilder();
             List<ChunkInfo> resultChunks = new List<ChunkInfo>();
-            double maxLineLength = CaluculateMaxLineLength(parsingResult); 
+            double maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)

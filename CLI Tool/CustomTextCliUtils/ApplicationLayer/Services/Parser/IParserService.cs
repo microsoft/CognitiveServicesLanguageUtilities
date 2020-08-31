@@ -3,7 +3,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
     interface IParserService
     {

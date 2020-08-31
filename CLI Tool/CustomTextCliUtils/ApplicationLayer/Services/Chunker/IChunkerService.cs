@@ -3,7 +3,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using System.Collections.Generic;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
     public interface IChunkerService
     {

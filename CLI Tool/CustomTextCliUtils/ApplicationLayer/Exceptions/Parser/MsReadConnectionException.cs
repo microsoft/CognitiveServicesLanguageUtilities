@@ -1,6 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
 {
     public class MsReadConnectionException : CliException
     {

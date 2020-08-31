@@ -1,4 +1,4 @@
-﻿namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction
+﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction
 {
     public enum CustomTextPredictionResponseStatus
     {

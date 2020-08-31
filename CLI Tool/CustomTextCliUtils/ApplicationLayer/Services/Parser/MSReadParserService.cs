@@ -8,14 +8,15 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
     public class MSReadParserService : IParserService
     {
         ComputerVisionClient _client;
         HashSet<string> _validTypesSet;
 
-        public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey) {
+        public MSReadParserService(string cognitiveServiceEndPoint, string congnitiveServiceKey)
+        {
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
             { Endpoint = cognitiveServiceEndPoint };
             TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey);

@@ -4,13 +4,13 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("prediction", Description = "sets configs for prediction")]
     class ConfigSetPredictionCommand
     {
         [Option(CommandOptionTemplate.PredictionCustomTextKey, Description = "custom text app prediction resource key")]
-        public string CustomTextKey { get;}
+        public string CustomTextKey { get; }
         [Option(CommandOptionTemplate.PredictionEndpointUrl, Description = "custom text app prediction resource endpoint url")]
         public string EndpointUrl { get; }
         [Option(CommandOptionTemplate.PredictionAppId, Description = "custom text app id")]

@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using System.ComponentModel.DataAnnotations;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
     [Command("chunker", Description = "sets configs for chunker")]
     class ConfigSetChunkerCommand

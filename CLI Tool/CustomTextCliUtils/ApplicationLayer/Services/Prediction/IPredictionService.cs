@@ -1,6 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextResponse;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
     public interface IPredictionService
     {

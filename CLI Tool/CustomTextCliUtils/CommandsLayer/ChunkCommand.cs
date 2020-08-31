@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer
+namespace Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("chunk", Description = "chunk text file")]
     class ChunkCommand

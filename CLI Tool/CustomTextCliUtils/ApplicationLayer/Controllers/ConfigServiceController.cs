@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     public class ConfigServiceController
     {
@@ -41,7 +41,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         {
             if (charLimit != null)
             {
-                _configModel.Chunker.CharLimit = (int) charLimit;
+                _configModel.Chunker.CharLimit = (int)charLimit;
             }
             StoreConfigsModel();
             _loggerService.Log("Updated Chunker configs");
@@ -68,7 +68,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 _configModel.Storage.Blob.ConnectionString = connectionString;
             }
             if (!String.IsNullOrEmpty(sourceContainer))
-            { 
+            {
                 _configModel.Storage.Blob.SourceContainer = sourceContainer;
             }
             if (!String.IsNullOrEmpty(destinationContainer))

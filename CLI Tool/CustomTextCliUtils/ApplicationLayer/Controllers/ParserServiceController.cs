@@ -12,7 +12,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     class ParserServiceController
     {
@@ -24,7 +24,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         readonly ILoggerService _loggerService;
         readonly IChunkerService _chunkerService;
 
-        public ParserServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory, 
+        public ParserServiceController(IConfigsLoader configurationService, IStorageFactoryFactory storageFactoryFactory,
             IParserService parserService, ILoggerService loggerService, IChunkerService chunkerService)
         {
             _configurationService = configurationService;

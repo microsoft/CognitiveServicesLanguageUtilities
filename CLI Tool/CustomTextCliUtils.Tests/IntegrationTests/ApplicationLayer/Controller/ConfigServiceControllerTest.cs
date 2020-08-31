@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using Xunit;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Controller
+namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Controller
 {
     public class ConfigServiceControllerTest
     {

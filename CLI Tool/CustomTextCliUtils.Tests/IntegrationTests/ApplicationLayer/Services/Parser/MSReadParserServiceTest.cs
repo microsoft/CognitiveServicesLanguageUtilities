@@ -7,7 +7,7 @@ using System.IO;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using System.Linq;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
+namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
 {
     public class MSReadParserServiceTest
     {
@@ -58,8 +58,10 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             {
                 new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
             }
-            else {
-                Assert.Throws(expectedException.GetType(), () => {
+            else
+            {
+                Assert.Throws(expectedException.GetType(), () =>
+                {
                     new MSReadParserService(cognitiveServiceEndPoint, congnitiveServiceKey);
                 });
             }
@@ -73,7 +75,7 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             // test 1 data
             var inputDocument = File.OpenRead(@"TestData\Parser\MSRead\test1 - inputDocument.pdf");  // read input document
             var parser = new MSReadParserService(Secrets.MSReadCognitiveServiceEndPoint, Secrets.MSReadCongnitiveServiceKey);
-            
+
             return new TheoryData<Stream, MSReadParserService, CliException>
             {
                 {
@@ -103,12 +105,14 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
                 var tmp = parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 var actualResult = (MsReadParseResult)tmp;
                 // validate object values aren't null
-                actualResult.RecognitionResults.ToList().ForEach(page => {
+                actualResult.RecognitionResults.ToList().ForEach(page =>
+                {
                     // check all properties
                     Assert.NotNull(page.Page);
                     Assert.NotNull(page.Lines);
                     // check line objects
-                    page.Lines.ToList().ForEach(line => {
+                    page.Lines.ToList().ForEach(line =>
+                    {
                         Assert.NotNull(line.BoundingBox);
                         Assert.NotNull(line.Text);
                         Assert.NotNull(line.Words);
@@ -117,7 +121,8 @@ namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.
             }
             else
             {
-                Assert.Throws(expectedException.GetType(), () => {
+                Assert.Throws(expectedException.GetType(), () =>
+                {
                     parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 });
             }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.Configs
+namespace Microsoft.CustomTextCliUtils.Tests.Configs
 {
     class Secrets
     {

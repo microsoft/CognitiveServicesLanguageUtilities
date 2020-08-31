@@ -1,7 +1,7 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using System;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
     public class StorageFactoryFactory : IStorageFactoryFactory
     {
@@ -10,7 +10,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
             switch (targetStorage)
             {
                 case TargetStorage.Source:
-                        return new SourceStorageFactory();
+                    return new SourceStorageFactory();
                 case TargetStorage.Destination:
                     return new DestinationStorageFactory();
                 default:

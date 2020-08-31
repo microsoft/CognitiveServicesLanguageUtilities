@@ -2,7 +2,7 @@
 
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 
-namespace  Microsoft.CustomTextCliUtils.Configs
+namespace Microsoft.CustomTextCliUtils.Configs
 {
     public interface IConfigsLoader
     {

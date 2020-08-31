@@ -16,7 +16,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
         [JsonProperty("prediction")]
         public PredictionConfigModel Prediction { get; set; }
 
-        public ConfigModel() {
+        public ConfigModel()
+        {
             Storage = new StorageConfigModel();
             Parser = new ParserConfigModel();
             Chunker = new ChunkerConfigModel();

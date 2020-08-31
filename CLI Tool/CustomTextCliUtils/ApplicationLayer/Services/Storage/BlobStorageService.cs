@@ -7,16 +7,17 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public class BlobStorageService : IStorageService
     {
         private BlobContainerClient _blobContainerClient;
 
-        public BlobStorageService(string connectionString, string containerName) {
+        public BlobStorageService(string connectionString, string containerName)
+        {
             try
             {
-                 BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+                BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
                 _blobContainerClient = blobServiceClient.GetBlobContainerClient(containerName);
                 if (!_blobContainerClient.Exists())
                 {

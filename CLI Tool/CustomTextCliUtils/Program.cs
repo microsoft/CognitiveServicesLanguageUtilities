@@ -7,7 +7,7 @@ using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.Reflection;
 
-namespace  Microsoft.CustomTextCliUtils
+namespace Microsoft.CustomTextCliUtils
 {
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
@@ -18,7 +18,7 @@ namespace  Microsoft.CustomTextCliUtils
         typeof(ChunkCommand))]
     class Program
     {
-        public static void Main(string[] args) 
+        public static void Main(string[] args)
         {
             System.AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
             CommandLineApplication.Execute<Program>(args);

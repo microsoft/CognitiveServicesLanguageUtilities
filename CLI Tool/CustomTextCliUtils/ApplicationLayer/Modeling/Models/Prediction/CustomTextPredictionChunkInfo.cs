@@ -1,7 +1,7 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextResponse;
 using Newtonsoft.Json;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction
 {
     class CustomTextPredictionChunkInfo
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
     public interface ILoggerService
     {

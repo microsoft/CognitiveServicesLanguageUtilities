@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer
+namespace Microsoft.CustomTextCliUtils.CommandsLayer
 {
     [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
     class ParseCommand

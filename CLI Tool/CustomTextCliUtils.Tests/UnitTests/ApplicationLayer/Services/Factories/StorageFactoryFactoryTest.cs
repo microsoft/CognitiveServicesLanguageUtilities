@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
+namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
 {
     public class StorageFactoryFactoryTest
     {

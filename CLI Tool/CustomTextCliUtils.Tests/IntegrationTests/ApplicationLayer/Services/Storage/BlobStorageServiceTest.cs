@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
+namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
 {
     public class BlobStorageServiceTest : IDisposable
     {

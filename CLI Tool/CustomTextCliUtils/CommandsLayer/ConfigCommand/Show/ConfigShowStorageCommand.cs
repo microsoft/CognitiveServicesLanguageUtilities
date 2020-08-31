@@ -3,7 +3,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
 {
     [Command("storage", Description = "shows configs for all storage services")]
     [Subcommand(

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
     public class CustomTextPredictionService : IPredictionService
     {

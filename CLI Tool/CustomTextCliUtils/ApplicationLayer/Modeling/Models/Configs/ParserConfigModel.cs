@@ -7,7 +7,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
         [JsonProperty("MSRead")]
         public MSReadConfigModel MsRead { get; set; }
 
-        public ParserConfigModel() {
+        public ParserConfigModel()
+        {
             MsRead = new MSReadConfigModel();
         }
     }

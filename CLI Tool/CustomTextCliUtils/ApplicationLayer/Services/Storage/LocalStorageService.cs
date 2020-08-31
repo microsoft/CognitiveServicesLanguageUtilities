@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public class LocalStorageService : IStorageService
     {
         private string _targetDirectory;
 
-        public LocalStorageService(string targetDirectory) {
+        public LocalStorageService(string targetDirectory)
+        {
             if (!Directory.Exists(targetDirectory))
             {
                 throw new FolderNotFoundException(targetDirectory);
@@ -46,8 +47,8 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 
         public void StoreData(string data, string fileName)
         {
-            try 
-            { 
+            try
+            {
                 string filePath = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
                 File.WriteAllText(filePath, data);
             }

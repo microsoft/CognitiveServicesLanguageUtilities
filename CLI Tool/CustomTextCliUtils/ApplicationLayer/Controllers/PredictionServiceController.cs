@@ -17,7 +17,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
     class PredictionServiceController
     {
@@ -74,7 +74,8 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 foreach (var item in chunkedText.Select((value, i) => (value, i)))
                 {
                     var customTextPredictionResponse = _predictionService.GetPrediction(item.value.Text);
-                    var chunkInfo = new CustomTextPredictionChunkInfo { 
+                    var chunkInfo = new CustomTextPredictionChunkInfo
+                    {
                         ChunkNumber = item.i,
                         CharCount = item.value.Text.Length,
                         CustomTextPredictionResponse = customTextPredictionResponse,
@@ -86,7 +87,7 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 }
                 // store or display result
                 _loggerService.LogOperation(OperationType.DisplayingResult, fileName);
-                var concatenatedResult = JsonConvert.SerializeObject(chunkPredictionResults, Formatting.Indented); 
+                var concatenatedResult = JsonConvert.SerializeObject(chunkPredictionResults, Formatting.Indented);
                 _loggerService.Log(concatenatedResult);
             }
             catch (CliException e)

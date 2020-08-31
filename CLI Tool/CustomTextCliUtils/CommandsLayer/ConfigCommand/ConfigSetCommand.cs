@@ -1,7 +1,7 @@
 ﻿using Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
 {
     [Command("set", Description = "sets app configs")]
     [Subcommand(

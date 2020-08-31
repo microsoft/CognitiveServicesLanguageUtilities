@@ -6,7 +6,7 @@ using Microsoft.CustomTextCliUtils.Tests.Configs;
 using System;
 using Xunit;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
+namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Factories
 {
     public class StorageFactoryTest
     {

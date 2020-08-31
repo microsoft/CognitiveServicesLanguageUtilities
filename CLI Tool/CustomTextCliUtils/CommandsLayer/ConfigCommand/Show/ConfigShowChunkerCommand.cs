@@ -3,7 +3,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace  Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
 {
     [Command("chunker", Description = "shows configs for chunker")]
     class ConfigShowChunkerCommand

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-namespace  Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Chunker
+namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Chunker
 {
     public class MsReadChunkerServiceTest
     {

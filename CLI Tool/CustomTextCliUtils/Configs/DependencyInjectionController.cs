@@ -11,7 +11,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 
-namespace  Microsoft.CustomTextCliUtils.Configs
+namespace Microsoft.CustomTextCliUtils.Configs
 {
     class DependencyInjectionController
     {
@@ -55,7 +55,7 @@ namespace  Microsoft.CustomTextCliUtils.Configs
                 var loggerService = c.Resolve<ILoggerService>();
                 var parserservice = c.Resolve<IParserService>();
                 var chunkerService = CreateChunkerService(parserType);
-                return new ParserServiceController(configService, new StorageFactoryFactory(), parserservice, 
+                return new ParserServiceController(configService, new StorageFactoryFactory(), parserservice,
                     loggerService, chunkerService);
             }).As<ParserServiceController>();
             return builder.Build();

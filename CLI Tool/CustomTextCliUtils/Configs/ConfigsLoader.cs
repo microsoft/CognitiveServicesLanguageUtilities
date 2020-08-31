@@ -5,13 +5,14 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace  Microsoft.CustomTextCliUtils.Configs
+namespace Microsoft.CustomTextCliUtils.Configs
 {
     class ConfigsLoader : IConfigsLoader
     {
         readonly ConfigModel _configModel;
 
-        public ConfigsLoader() {
+        public ConfigsLoader()
+        {
             var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
             if (File.Exists(filePath))
             {
