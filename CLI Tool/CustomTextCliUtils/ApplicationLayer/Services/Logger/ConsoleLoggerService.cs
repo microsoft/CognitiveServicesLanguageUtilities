@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
+namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
     public class ConsoleLoggerService : ILoggerService
     {
@@ -30,16 +30,19 @@ namespace  Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
         public void LogParsingResult(List<string> convertedFiles, List<string> failedFiles)
         {
             var totalFilesCount = convertedFiles.Count + failedFiles.Count;
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Total Files: {0},\tSuccessfully Converted: {1},\tFailed: {2}", 
-                totalFilesCount, convertedFiles.Count, failedFiles.Count);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Successfully Converted:");
-            convertedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Failed:");
-            failedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
-            Console.ResetColor();
+            lock (_lock)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Total Files: {0},\tSuccessfully Converted: {1},\tFailed: {2}",
+                    totalFilesCount, convertedFiles.Count, failedFiles.Count);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Successfully Converted:");
+                convertedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Failed:");
+                failedFiles.ForEach(f => Console.WriteLine("\t{0}", f));
+                Console.ResetColor();
+            }
         }
 
         public void LogError(Exception e)
