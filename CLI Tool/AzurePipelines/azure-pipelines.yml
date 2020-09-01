@@ -1,0 +1,51 @@
+pool:
+  name: Azure Pipelines
+  vmImage: windows-2019
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+trigger: none
+
+pr:
+- main
+- dev
+
+steps:
+- task: NuGetToolInstaller@1
+  displayName: 'Use NuGet 4.9.2'
+  inputs:
+    versionSpec: 4.9.2
+    checkLatest: true
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: 'CLI Tool\CustomTextCliUtils.sln'
+    vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: restore
+    projects: 'CLI Tool\CustomTextCliUtils.sln'
+    vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
+
+- task: VSBuild@1
+  displayName: 'Build solution CLI Tool\CustomTextCliUtils.sln'
+  inputs:
+    solution: 'CLI Tool\CustomTextCliUtils.sln'
+    msbuildArgs: '/p:Deterministic=true /p:PathMap=$(Agent.BuildDirectory)=C:\'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'Run Tests'
+  env:
+    CUSTOM_TEXT_APP_ID: $(custom.text.app.id)
+    CUSTOM_TEXT_ENDPOINT: $(custom.text.endpoint)
+    CUSTOM_TEXT_KEY: $(custom.text.key)
+    MSREAD_COGNITIVE_SERVICES_ENDPOINT: $(msread.cognitive.services.endpoint)
+    MSREAD_COGNITIVE_SERVICES_KEY: $(msread.cognitive.services.key)
+    STORAGE_ACCOUNT_CONNECTION_STRING: $(storage.account.connection.string)
