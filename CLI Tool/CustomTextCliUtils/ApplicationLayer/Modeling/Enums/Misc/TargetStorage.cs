@@ -2,6 +2,7 @@
 {
     public enum TargetStorage
     {
-        Source, Destination
+        Source,
+        Destination
     }
 }

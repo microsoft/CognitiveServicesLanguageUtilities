@@ -2,6 +2,7 @@
 {
     public enum CommandType
     {
-        Config, Parse
+        Config,
+        Parse
     }
 }

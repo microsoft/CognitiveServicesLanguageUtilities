@@ -2,6 +2,7 @@
 {
     public enum AccessType
     {
-        Read, Write
+        Read,
+        Write
     }
 }
