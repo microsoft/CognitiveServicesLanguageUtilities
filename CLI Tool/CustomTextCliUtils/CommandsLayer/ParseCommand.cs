@@ -33,7 +33,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ParserServiceController>();
-                // controller.SetStorageServices(Source, Destination);
                 await controller.ExtractText(Source, Destination, ChunkType);
             }
 

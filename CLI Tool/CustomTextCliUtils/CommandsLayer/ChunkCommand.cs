@@ -26,7 +26,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ChunkerServiceController>();
-                // controller.SetStorageServices(Source, Destination);
                 controller.ChunkTextAsync(Source, Destination).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 

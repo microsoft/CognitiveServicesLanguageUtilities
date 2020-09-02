@@ -10,7 +10,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
 
         public static string ConstructMessage(int currCharCount)
         {
-            return $"Sorry your document is {currCharCount}-char long, but 'Custom Text' prediction endpoint only supports text documents up to {Constants.CustomTextPredictionMaxCharLimit}.\nPlease consider using the chunking flag to chunk down your document before prediction!";
+            return $"Prediction failed. Your document is {currCharCount}-char long, but 'Custom Text' character limit is {Constants.CustomTextPredictionMaxCharLimit}.\nPlease consider using the chunking flag to chunk down your document before prediction!";
         }
 
     }

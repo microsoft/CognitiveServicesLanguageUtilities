@@ -35,7 +35,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<PredictionServiceController>();
-                // controller.SetStorageServices(Source, Destination);
                 await controller.Predict(Source, Destination, FileName, ChunkType);
             }
 
