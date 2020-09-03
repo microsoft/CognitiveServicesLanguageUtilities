@@ -66,7 +66,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 _parserService.ValidateFileType(Path.GetExtension(fileName));
                 // read file
                 _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                Stream file = await _sourceStorageService.ReadFile(fileName);
+                Stream file = await _sourceStorageService.ReadFileAsync(fileName);
                 // parse file
                 _loggerService.LogOperation(OperationType.ParsingFile, fileName);
                 ParseResult parseResult = await _parserService.ParseFile(file);

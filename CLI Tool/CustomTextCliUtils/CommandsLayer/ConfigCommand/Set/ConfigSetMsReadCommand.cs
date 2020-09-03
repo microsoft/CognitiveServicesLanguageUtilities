@@ -24,7 +24,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetMsReadConfigs(CognitiveServicesKey, EndpointUrl);
+                controller.SetMsReadConfigsAsync(CognitiveServicesKey, EndpointUrl).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return 1;

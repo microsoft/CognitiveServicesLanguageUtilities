@@ -11,7 +11,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public class BlobStorageService : IStorageService
     {
-        private BlobContainerClient _blobContainerClient;
+        private readonly BlobContainerClient _blobContainerClient;
 
         public BlobStorageService(string connectionString, string containerName)
         {
@@ -36,26 +36,24 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             return blobs.Select(f => f.Name).ToArray();
         }
 
-        public Task<Stream> ReadFile(string fileName)
+        public async Task<Stream> ReadFileAsync(string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = blobClient.Download();
-            var tcs = new TaskCompletionSource<Stream>();
-            tcs.SetResult(download.Content);
-            return tcs.Task;
+            BlobDownloadInfo download = await blobClient.DownloadAsync();
+            return download.Content;
         }
 
-        public string ReadFileAsString(string fileName)
+        public async Task<string> ReadFileAsStringAsync(string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = blobClient.Download();
+            BlobDownloadInfo download = await blobClient.DownloadAsync();
             using (StreamReader sr = new StreamReader(download.Content))
             {
                 return sr.ReadToEnd();
             }
         }
 
-        public void StoreData(string data, string fileName)
+        public async Task StoreDataAsync(string data, string fileName)
         {
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             using (MemoryStream stream = new MemoryStream())
@@ -65,7 +63,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
                     sw.Write(data);
                     sw.Flush();
                     stream.Position = 0;
-                    blobClient.Upload(stream, overwrite: true);
+                    await blobClient.UploadAsync(stream, overwrite: true);
                 }
             }
         }

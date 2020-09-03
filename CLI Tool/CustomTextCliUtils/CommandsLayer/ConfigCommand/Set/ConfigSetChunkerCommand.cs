@@ -24,7 +24,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetChunkerConfigs(CharLimit);
+                controller.SetChunkerConfigsAsync(CharLimit).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return 1;

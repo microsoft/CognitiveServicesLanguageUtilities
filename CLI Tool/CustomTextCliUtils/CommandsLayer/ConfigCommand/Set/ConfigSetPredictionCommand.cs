@@ -27,7 +27,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetPredictionConfigs(CustomTextKey, EndpointUrl, AppId, VersionId);
+                controller.SetPredictionConfigsAsync(CustomTextKey, EndpointUrl, AppId, VersionId).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return 1;

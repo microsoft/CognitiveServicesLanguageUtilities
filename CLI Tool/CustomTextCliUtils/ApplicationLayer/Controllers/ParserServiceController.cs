@@ -66,7 +66,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     _parserService.ValidateFileType(fileName);
                     // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                    var file = await _sourceStorageService.ReadFile(fileName);
+                    var file = await _sourceStorageService.ReadFileAsync(fileName);
                     // parse file
                     _loggerService.LogOperation(OperationType.ParsingFile, fileName);
                     var parseResult = await _parserService.ParseFile(file);
@@ -78,7 +78,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))
                     {
                         var newFileName = ChunkInfoHelper.GetChunkFileName(fileName, item.i);
-                        _destinationStorageService.StoreData(item.value.Text, newFileName);
+                        await _destinationStorageService.StoreDataAsync(item.value.Text, newFileName);
                     }
                     convertedFiles.Add(fileName);
                 }

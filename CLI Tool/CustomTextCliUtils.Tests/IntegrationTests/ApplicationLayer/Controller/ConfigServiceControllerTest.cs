@@ -6,6 +6,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Controller
@@ -29,104 +30,104 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
         }
 
         [Fact]
-        public void AllConfigShowTest()
+        public async Task AllConfigShowTestAsync()
         {
             // act
             _controller.ShowAllConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void ParserConfigShowTest()
+        public async Task ParserConfigShowTestAsync()
         {
             // act
             _controller.ShowParserConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Parser, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void MsReadConfigShowTest()
+        public async Task MsReadConfigShowTestAsync()
         {
             // act
             _controller.ShowParserMsReadConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Parser.MsRead, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void StorageConfigShowTest()
+        public async Task StorageConfigShowTestAsync()
         {
             // act
             _controller.ShowStorageConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Storage, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void LocalStorageConfigShowTest()
+        public async Task LocalStorageConfigShowTestAsync()
         {
             // act
             _controller.ShowStorageLocalConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Storage.Local, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void BlobStorageConfigShowTest()
+        public async Task BlobStorageConfigShowTestAsync()
         {
             // act
             _controller.ShowStorageBlobConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Storage.Blob, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void PredictionConfigShowTest()
+        public async Task PredictionConfigShowTestAsync()
         {
             // act
             _controller.ShowPredictionConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Prediction, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
         [Fact]
-        public void ChunkerConfigShowTest()
+        public async Task ChunkerConfigShowTestAsync()
         {
             // act
             _controller.ShowChunkerConfigs();
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             var expectedString = JsonConvert.SerializeObject(configModel.Chunker, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
@@ -145,13 +146,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         [Theory]
         [MemberData(nameof(MsReadConfigSetTestData))]
-        public void MsReadConfigSetTest(string cognitiveServicesKey, string cognitiveServicesEndpoint)
+        public async Task MsReadConfigSetTestAsync(string cognitiveServicesKey, string cognitiveServicesEndpoint)
         {
-            _controller.SetMsReadConfigs(cognitiveServicesKey, cognitiveServicesEndpoint);
-            _controller.SetMsReadConfigs(null, null); // Value not affected if user doesn't pass it
+            await _controller.SetMsReadConfigsAsync(cognitiveServicesKey, cognitiveServicesEndpoint);
+            await _controller.SetMsReadConfigsAsync(null, null); // Value not affected if user doesn't pass it
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(cognitiveServicesKey, configModel.Parser.MsRead.CongnitiveServiceKey);
             Assert.Equal(cognitiveServicesEndpoint, configModel.Parser.MsRead.CognitiveServiceEndPoint);
@@ -170,13 +171,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         [Theory]
         [MemberData(nameof(LocalStorageConfigSetTestData))]
-        public void LocalStorageConfigSetTest(string sourceDir, string destinationDir)
+        public async Task LocalStorageConfigSetTestAsync(string sourceDir, string destinationDir)
         {
-            _controller.SetLocalStorageConfigs(sourceDir, destinationDir);
-            _controller.SetLocalStorageConfigs(null, null); // Value not affected if user doesn't pass it
+            await _controller.SetLocalStorageConfigsAsync(sourceDir, destinationDir);
+            await _controller.SetLocalStorageConfigsAsync(null, null); // Value not affected if user doesn't pass it
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(sourceDir, configModel.Storage.Local.SourceDirectory);
             Assert.Equal(destinationDir, configModel.Storage.Local.DestinationDirectory);
@@ -196,13 +197,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         [Theory]
         [MemberData(nameof(BlobStorageConfigSetTestData))]
-        public void BlobStorageConfigSetTest(string connectionString, string sourceContainer, string destinationContainer)
+        public async Task BlobStorageConfigSetTestAsync(string connectionString, string sourceContainer, string destinationContainer)
         {
-            _controller.SetBlobStorageConfigs(connectionString, sourceContainer, destinationContainer);
-            _controller.SetBlobStorageConfigs(null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetBlobStorageConfigsAsync(connectionString, sourceContainer, destinationContainer);
+            await _controller.SetBlobStorageConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(sourceContainer, configModel.Storage.Blob.SourceContainer);
             Assert.Equal(destinationContainer, configModel.Storage.Blob.DestinationContainer);
@@ -224,13 +225,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         [Theory]
         [MemberData(nameof(PredictionConfigSetTestData))]
-        public void PredictionConfigSetTest(string customTextKey, string customTextEndpoint, string appId, string versionId)
+        public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId, string versionId)
         {
-            _controller.SetPredictionConfigs(customTextKey, customTextEndpoint, appId, versionId);
-            _controller.SetPredictionConfigs(null, null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetPredictionConfigsAsync(customTextKey, customTextEndpoint, appId, versionId);
+            await _controller.SetPredictionConfigsAsync(null, null, null, null); // Value not affected if user doesn't pass it
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(customTextKey, configModel.Prediction.CustomTextKey);
             Assert.Equal(customTextEndpoint, configModel.Prediction.EndpointUrl);
@@ -250,13 +251,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         [Theory]
         [MemberData(nameof(ChunkerConfigSetTestData))]
-        public void ChunkerConfigSetTest(int charLimit)
+        public async Task ChunkerConfigSetTestAsync(int charLimit)
         {
-            _controller.SetChunkerConfigs(charLimit);
-            _controller.SetChunkerConfigs(null); // Value not affected if user doesn't pass it
+            await _controller.SetChunkerConfigsAsync(charLimit);
+            await _controller.SetChunkerConfigsAsync(null); // Value not affected if user doesn't pass it
 
             // assert
-            var configsFile = _storageService.ReadFileAsString(Constants.ConfigsFileName);
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(charLimit, configModel.Chunker.CharLimit);
         }

@@ -25,7 +25,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             return Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray();
         }
 
-        public Task<Stream> ReadFile(string fileName)
+        public Task<Stream> ReadFileAsync(string fileName)
         {
             string filePath = Path.Combine(_targetDirectory, fileName);
             var tcs = new TaskCompletionSource<Stream>();
@@ -41,17 +41,17 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             return tcs.Task;
         }
 
-        public string ReadFileAsString(string fileName)
+        public async Task<string> ReadFileAsStringAsync(string fileName)
         {
-            return File.ReadAllText(Path.Combine(_targetDirectory, fileName));
+            return await File.ReadAllTextAsync(Path.Combine(_targetDirectory, fileName));
         }
 
-        public void StoreData(string data, string fileName)
+        public async Task StoreDataAsync(string data, string fileName)
         {
             try
             {
                 string filePath = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
-                File.WriteAllText(filePath, data);
+                await File.WriteAllTextAsync(filePath, data);
             }
             catch (UnauthorizedAccessException)
             {

@@ -74,7 +74,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
             string expected = "StoreDataTest text for testing";
             string actual = "";
             IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
-            storageService.StoreData(expected, fileName);
+            storageService.StoreDataAsync(expected, fileName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = blobClient.Download();
             using (StreamReader sr = new StreamReader(download.Content))
@@ -93,7 +93,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
             string actual = "";
             UploadFileHelper(fileName, expected);
             IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
-            Stream file = await storageService.ReadFile(fileName);
+            Stream file = await storageService.ReadFileAsync(fileName);
             using (StreamReader sr = new StreamReader(file))
             {
                 actual = sr.ReadToEnd();
@@ -102,14 +102,14 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void ReadFileAsStringTest()
+        public async Task ReadFileAsStringTestAsync()
         {
             // Write file to blob store
             string fileName = "storageTest.txt";
             string expected = "ReadFileAsStringTest text for testing";
             UploadFileHelper(fileName, expected);
             IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
-            string actual = storageService.ReadFileAsString(fileName);
+            string actual = await storageService.ReadFileAsStringAsync(fileName);
             Assert.Equal(expected, actual);
         }
 

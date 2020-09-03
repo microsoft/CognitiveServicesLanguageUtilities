@@ -24,7 +24,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetLocalStorageConfigs(SourceDirectory, DestinationDirectory);
+                controller.SetLocalStorageConfigsAsync(SourceDirectory, DestinationDirectory).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return 1;

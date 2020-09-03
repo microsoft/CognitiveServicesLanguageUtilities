@@ -27,7 +27,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetBlobStorageConfigs(ConnectionString, SourceContainer, DestinationContainer);
+                controller.SetBlobStorageConfigsAsync(ConnectionString, SourceContainer, DestinationContainer).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return 1;

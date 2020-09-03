@@ -55,41 +55,35 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
             // chunk files
-            var listOfTasks = new List<Task>();
-            fileNames.ToList().ForEach(fileName =>
+            var tasks = fileNames.Select(async fileName =>
             {
-                listOfTasks.Add(Task.Run(() => RunAsync(fileName, charLimit, convertedFiles, failedFiles)));
-            });
-            await Task.WhenAll(listOfTasks);
-            _loggerService.LogParsingResult(convertedFiles, failedFiles);
-        }
-
-        private void RunAsync(string fileName, int charLimit, IEnumerable<string> convertedFiles, IDictionary<string, string> failedFiles)
-        {
-            try
-            {
-                // validate types
-                _chunkerService.ValidateFileType(fileName);
-                // read file
-                _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                string file = _sourceStorageService.ReadFileAsString(fileName);
-                // chunk file
-                _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                List<ChunkInfo> chunkedText = _chunkerService.Chunk(file, charLimit);
-                // store file
-                _loggerService.LogOperation(OperationType.StoringResult, fileName);
-                foreach (var item in chunkedText.Select((value, i) => (value, i)))
+                try
                 {
-                    var newFileName = ChunkInfoHelper.GetChunkFileName(fileName, item.i);
-                    _destinationStorageService.StoreData(item.value.Text, newFileName);
+                    // validate types
+                    _chunkerService.ValidateFileType(fileName);
+                    // read file
+                    _loggerService.LogOperation(OperationType.ReadingFile, fileName);
+                    string file = await _sourceStorageService.ReadFileAsStringAsync(fileName);
+                    // chunk file
+                    _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
+                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(file, charLimit);
+                    // store file
+                    _loggerService.LogOperation(OperationType.StoringResult, fileName);
+                    foreach (var item in chunkedText.Select((value, i) => (value, i)))
+                    {
+                        var newFileName = ChunkInfoHelper.GetChunkFileName(fileName, item.i);
+                        await _destinationStorageService.StoreDataAsync(item.value.Text, newFileName);
+                    }
+                    convertedFiles.Add(fileName);
                 }
-                convertedFiles.Append(fileName);
-            }
-            catch (CliException e)
-            {
-                failedFiles[fileName] = e.Message;
-                _loggerService.LogError(e);
-            }
+                catch (CliException e)
+                {
+                    failedFiles[fileName] = e.Message;
+                    _loggerService.LogError(e);
+                }
+            });
+            await Task.WhenAll(tasks);
+            _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
     }
 }

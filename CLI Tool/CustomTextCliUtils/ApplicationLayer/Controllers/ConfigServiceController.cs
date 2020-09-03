@@ -5,6 +5,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -21,33 +22,33 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
             if (File.Exists(filePath))
             {
-                var configsFile = storageService.ReadFileAsString(Constants.ConfigsFileName);
+                var configsFile = storageService.ReadFileAsStringAsync(Constants.ConfigsFileName).ConfigureAwait(false).GetAwaiter().GetResult();
                 _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             }
             else
             {
                 _configModel = new ConfigModel();
-                StoreConfigsModel();
+                StoreConfigsModelAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
 
-        private void StoreConfigsModel()
+        private async Task StoreConfigsModelAsync()
         {
             var configString = JsonConvert.SerializeObject(_configModel, Formatting.Indented);
-            _storageService.StoreData(configString, Constants.ConfigsFileName);
+            await _storageService.StoreDataAsync(configString, Constants.ConfigsFileName);
         }
 
-        public void SetChunkerConfigs(int? charLimit)
+        public async Task SetChunkerConfigsAsync(int? charLimit)
         {
             if (charLimit != null)
             {
                 _configModel.Chunker.CharLimit = (int)charLimit;
             }
-            StoreConfigsModel();
+            await StoreConfigsModelAsync();
             _loggerService.Log("Updated Chunker configs");
         }
 
-        public void SetMsReadConfigs(string cognitiveServicesKey, string endpointUrl)
+        public async Task SetMsReadConfigsAsync(string cognitiveServicesKey, string endpointUrl)
         {
             if (!string.IsNullOrEmpty(cognitiveServicesKey))
             {
@@ -57,11 +58,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             {
                 _configModel.Parser.MsRead.CognitiveServiceEndPoint = endpointUrl;
             }
-            StoreConfigsModel();
+            await StoreConfigsModelAsync();
             _loggerService.Log("Updated MsRead configs");
         }
 
-        public void SetBlobStorageConfigs(string connectionString, string sourceContainer, string destinationContainer)
+        public async Task SetBlobStorageConfigsAsync(string connectionString, string sourceContainer, string destinationContainer)
         {
             if (!string.IsNullOrEmpty(connectionString))
             {
@@ -75,11 +76,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             {
                 _configModel.Storage.Blob.DestinationContainer = destinationContainer;
             }
-            StoreConfigsModel();
+            await StoreConfigsModelAsync();
             _loggerService.Log("Updated Blob Storage configs");
         }
 
-        public void SetLocalStorageConfigs(string sourceDirectory, string destinationDirectory)
+        public async Task SetLocalStorageConfigsAsync(string sourceDirectory, string destinationDirectory)
         {
             if (!string.IsNullOrEmpty(sourceDirectory))
             {
@@ -89,11 +90,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             {
                 _configModel.Storage.Local.DestinationDirectory = destinationDirectory;
             }
-            StoreConfigsModel();
+            await StoreConfigsModelAsync();
             _loggerService.Log("Updated Local Storage configs");
         }
 
-        public void SetPredictionConfigs(string customTextKey, string endpointUrl, string appId, string versionId)
+        public async Task SetPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId, string versionId)
         {
             if (!string.IsNullOrEmpty(customTextKey))
             {
@@ -111,7 +112,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             {
                 _configModel.Prediction.VersionId = versionId;
             }
-            StoreConfigsModel();
+            await StoreConfigsModelAsync();
             _loggerService.Log("Updated Custom Text prediction configs");
         }
 

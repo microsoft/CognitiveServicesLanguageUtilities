@@ -57,7 +57,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
             string fileName = "storageTest.txt";
             string expected = "StoreDataTest text for testing";
             IStorageService storageService = new LocalStorageService(TestDirectory);
-            storageService.StoreData(expected, fileName);
+            storageService.StoreDataAsync(expected, fileName);
             string actual = File.ReadAllText(Path.Combine(TestDirectory, fileName));
             Assert.Equal(expected, actual);
         }
@@ -70,7 +70,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
             File.WriteAllText(Path.Combine(TestDirectory, fileName), expected);
             string actual = "";
             IStorageService storageService = new LocalStorageService(TestDirectory);
-            Stream file = await storageService.ReadFile(fileName);
+            Stream file = await storageService.ReadFileAsync(fileName);
             using (StreamReader sr = new StreamReader(file))
             {
                 actual = sr.ReadToEnd();
@@ -79,13 +79,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void ReadFileAsStringTest()
+        public async Task ReadFileAsStringTestAsync()
         {
             string fileName = "storageTest.txt";
             string expected = "ReadFileAsStringTestAsync text for testing";
             File.WriteAllText(Path.Combine(TestDirectory, fileName), expected);
             IStorageService storageService = new LocalStorageService(TestDirectory);
-            string actual = storageService.ReadFileAsString(fileName);
+            string actual = await storageService.ReadFileAsStringAsync(fileName);
             Assert.Equal(expected, actual);
         }
 
