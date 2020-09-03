@@ -44,21 +44,25 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             // send prediction request
             var operationId = SendPredictionRequest(query);
             // wait until operation is finished
-            CustomTextPredictionResponseStatus pingResult;
+            CustomTextQueryResponse operationStatus;
             do
             {
-                pingResult = PingStatus(operationId);
+                operationStatus = PingStatus(operationId);
             }
-            while (pingResult == CustomTextPredictionResponseStatus.notstarted || pingResult == CustomTextPredictionResponseStatus.running);
+            while (operationStatus.Status == CustomTextPredictionResponseStatus.notstarted || operationStatus.Status == CustomTextPredictionResponseStatus.running);
             // get result
-            if (pingResult == CustomTextPredictionResponseStatus.succeeded)
+            if (operationStatus.Status == CustomTextPredictionResponseStatus.succeeded)
             {
                 var prediction = GetResult(operationId);
                 return prediction;
             }
             else
             {
-                throw new PredictionOperationFailedException(operationId);
+                if (string.IsNullOrEmpty(operationStatus.ErrorDetails))
+                {
+                    throw new PredictionOperationFailedException(operationId);
+                }
+                throw new PredictionOperationFailedException(operationId, operationStatus.ErrorDetails);
             }
         }
 
@@ -87,7 +91,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             }
         }
 
-        private CustomTextPredictionResponseStatus PingStatus(string operationId)
+        private CustomTextQueryResponse PingStatus(string operationId)
         {
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText/status", _endpointUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
@@ -99,12 +103,12 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             {
                 var responseString = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
                 var responseContent = JsonConvert.DeserializeObject<CustomTextQueryResponse>(responseString);
-                return responseContent.Status;
+                return responseContent;
             }
             else
             {
                 HandleExceptionResponseCodes(response, requestUrl);
-                return CustomTextPredictionResponseStatus.unknown;
+                return null;
             }
         }
 

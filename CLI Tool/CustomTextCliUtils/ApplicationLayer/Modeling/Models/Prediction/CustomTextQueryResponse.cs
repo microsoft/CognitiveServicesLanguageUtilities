@@ -17,5 +17,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Predicti
 
         [JsonProperty("lastActionDateTime")]
         public string LastActionDateTime { get; set; }
+
+        [JsonProperty(PropertyName = "errorDetails", NullValueHandling = NullValueHandling.Ignore)]
+        public string ErrorDetails { get; set; }
     }
 }
