@@ -11,6 +11,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -48,8 +49,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
-            var convertedFiles = new List<string>();
-            var failedFiles = new Dictionary<string, string>();
+            var convertedFiles = new ConcurrentBag<string>();
+            var failedFiles = new ConcurrentDictionary<string, string>();
 
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
@@ -63,7 +64,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
 
-        private void RunAsync(string fileName, int charLimit, List<string> convertedFiles, Dictionary<string, string> failedFiles)
+        private void RunAsync(string fileName, int charLimit, IEnumerable<string> convertedFiles, IDictionary<string, string> failedFiles)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     var newFileName = ChunkInfoHelper.GetChunkFileName(fileName, item.i);
                     _destinationStorageService.StoreData(item.value.Text, newFileName);
                 }
-                convertedFiles.Add(fileName);
+                convertedFiles.Append(fileName);
             }
             catch (CliException e)
             {

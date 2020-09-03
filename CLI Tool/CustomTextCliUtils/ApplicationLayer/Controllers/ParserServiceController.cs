@@ -11,6 +11,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -51,8 +52,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
-            var convertedFiles = new List<string>();
-            var failedFiles = new Dictionary<string, string>();
+            var convertedFiles = new ConcurrentBag<string>();
+            var failedFiles = new ConcurrentDictionary<string, string>();
 
             // read files from source storage
             var fileNames = _sourceStorageService.ListFiles();
