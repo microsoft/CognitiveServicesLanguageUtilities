@@ -42,6 +42,12 @@ steps:
 
 - task: VSTest@2
   displayName: 'Run Tests'
+  inputs:
+    testAssemblyVer2: |
+      CLI Tool\CustomTextCliUtils.Tests\bin\Release\**\*CustomTextCliUtils*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1'
   env:
     CUSTOM_TEXT_APP_ID: $(custom.text.app.id)
     CUSTOM_TEXT_ENDPOINT: $(custom.text.endpoint)
