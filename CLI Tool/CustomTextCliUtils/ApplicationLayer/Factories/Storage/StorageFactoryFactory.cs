@@ -14,9 +14,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
                 case TargetStorage.Destination:
                     return new DestinationStorageFactory();
                 default:
-                    throw new NotSupportedException();
+                    throw new NotSupportedException($"The target storage {targetStorage} isn't supported.");
             }
-
         }
     }
 }

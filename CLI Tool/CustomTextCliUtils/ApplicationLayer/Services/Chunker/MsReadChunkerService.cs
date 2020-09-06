@@ -24,7 +24,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 case ChunkMethod.Page:
                     return ChunkPages(msReadparsingResult);
                 default:
-                    throw new NotSupportedException();
+                    throw new NotSupportedException($"The chunk type {chunkMethod} isn't supported.");
             }
         }
 
