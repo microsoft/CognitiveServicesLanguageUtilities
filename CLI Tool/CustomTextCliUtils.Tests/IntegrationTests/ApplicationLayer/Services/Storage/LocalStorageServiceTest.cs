@@ -52,12 +52,12 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void StoreDataTest()
+        public async Task StoreDataTestAsync()
         {
             string fileName = "storageTest.txt";
             string expected = "StoreDataTest text for testing";
             IStorageService storageService = new LocalStorageService(TestDirectory);
-            storageService.StoreDataAsync(expected, fileName);
+            await storageService.StoreDataAsync(expected, fileName);
             string actual = File.ReadAllText(Path.Combine(TestDirectory, fileName));
             Assert.Equal(expected, actual);
         }
