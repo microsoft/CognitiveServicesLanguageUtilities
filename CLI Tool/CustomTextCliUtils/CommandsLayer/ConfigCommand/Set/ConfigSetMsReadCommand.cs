@@ -3,6 +3,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
@@ -15,7 +16,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
         [Option(CommandOptionTemplate.MSReadCognitiveServicesEndpoint, Description = "endpoint url for azure congnitive services")]
         public string EndpointUrl { get; }
 
-        private int OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -24,10 +25,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetMsReadConfigsAsync(CognitiveServicesKey, EndpointUrl).ConfigureAwait(false).GetAwaiter().GetResult();
+                await controller.SetMsReadConfigsAsync(CognitiveServicesKey, EndpointUrl);
             }
-
-            return 1;
         }
     }
 }

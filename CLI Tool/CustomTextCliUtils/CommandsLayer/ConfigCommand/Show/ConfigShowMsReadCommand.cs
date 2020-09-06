@@ -8,7 +8,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
     [Command("msread", Description = "shows configs for msread parser")]
     public class ConfigShowMsReadCommand
     {
-        private int OnExecute(CommandLineApplication app)
+        private void OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -19,7 +19,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
                 var controller = scope.Resolve<ConfigServiceController>();
                 controller.ShowParserMsReadConfigs();
             }
-            return 1;
         }
     }
 }

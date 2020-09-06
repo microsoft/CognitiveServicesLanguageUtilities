@@ -68,13 +68,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void StoreDataTest()
+        public async Task StoreDataTestAsync()
         {
             string fileName = "storageTest.txt";
             string expected = "StoreDataTest text for testing";
             string actual = "";
             IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
-            storageService.StoreDataAsync(expected, fileName);
+            await storageService.StoreDataAsync(expected, fileName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = blobClient.Download();
             using (StreamReader sr = new StreamReader(download.Content))
@@ -114,7 +114,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void ListFilesTest()
+        public async Task ListFilesTestAsync()
         {
             string[] expectedFiles = new string[] { "file1", "file2", "file3" };
             Array.ForEach(expectedFiles, fileName =>
@@ -122,7 +122,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
                 UploadFileHelper(fileName, "text");
             });
             IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
-            string[] actualFiles = storageService.ListFiles();
+            string[] actualFiles = await storageService.ListFilesAsync();
             Assert.Equal(expectedFiles, actualFiles);
         }
 
@@ -139,11 +139,6 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
                     blobClient.Upload(stream, overwrite: true);
                 }
             }
-        }
-
-        private void DeleteAllBlobs()
-        {
-            Parallel.ForEach(_blobContainerClient.GetBlobs(), x => _blobContainerClient.DeleteBlob(x.Name));
         }
     }
 }

@@ -19,16 +19,16 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
         {
             _client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(congnitiveServiceKey))
             { Endpoint = cognitiveServiceEndPoint };
-            TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey);
+            TestConnectionAsync(cognitiveServiceEndPoint, congnitiveServiceKey).ConfigureAwait(false).GetAwaiter().GetResult();
             _validTypesSet = new HashSet<string>(Constants.MsReadValidFileTypes, StringComparer.OrdinalIgnoreCase);
         }
 
-        private void TestConnectionAsync(string cognitiveServiceEndPoint, string congnitiveServiceKey)
+        private async Task TestConnectionAsync(string cognitiveServiceEndPoint, string congnitiveServiceKey)
         {
             try
             {
                 var file = new MemoryStream();
-                var response = _client.BatchReadFileInStreamAsync(file).ConfigureAwait(false).GetAwaiter().GetResult();
+                var response = await _client.BatchReadFileInStreamAsync(file);
             }
             catch (ComputerVisionErrorException e)
             {

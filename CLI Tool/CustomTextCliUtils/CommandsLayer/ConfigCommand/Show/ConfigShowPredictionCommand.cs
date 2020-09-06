@@ -8,7 +8,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
     [Command("prediction", Description = "shows configs for all prediction")]
     public class ConfigShowPredictionCommand
     {
-        private int OnExecute(CommandLineApplication app)
+        private void OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -19,7 +19,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
                 var controller = scope.Resolve<ConfigServiceController>();
                 controller.ShowPredictionConfigs();
             }
-            return 1;
         }
     }
 }

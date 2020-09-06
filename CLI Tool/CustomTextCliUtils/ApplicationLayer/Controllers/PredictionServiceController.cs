@@ -76,20 +76,21 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 // run prediction
                 var chunkPredictionResults = new List<CustomTextPredictionChunkInfo>();
                 _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
-                foreach (var item in chunkedText.Select((value, i) => (value, i)))
+                var tasks = chunkedText.Select(async (value, i) =>
                 {
-                    var customTextPredictionResponse = _predictionService.GetPrediction(item.value.Text);
+                    var customTextPredictionResponse = await _predictionService.GetPredictionAsync(value.Text);
                     var chunkInfo = new CustomTextPredictionChunkInfo
                     {
-                        ChunkNumber = item.i,
-                        CharCount = item.value.Text.Length,
+                        ChunkNumber = i,
+                        CharCount = value.Text.Length,
                         CustomTextPredictionResponse = customTextPredictionResponse,
-                        InnerText = item.value.Summary,
-                        StartPage = item.value.StartPage,
-                        EndPage = item.value.EndPage
+                        InnerText = value.Summary,
+                        StartPage = value.StartPage,
+                        EndPage = value.EndPage
                     };
                     chunkPredictionResults.Add(chunkInfo);
-                }
+                });
+                await Task.WhenAll(tasks);
                 // store or display result
                 _loggerService.LogOperation(OperationType.DisplayingResult, fileName);
                 var concatenatedResult = JsonConvert.SerializeObject(chunkPredictionResults, Formatting.Indented);
@@ -100,7 +101,5 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 _loggerService.LogError(e);
             }
         }
-
-
     }
 }

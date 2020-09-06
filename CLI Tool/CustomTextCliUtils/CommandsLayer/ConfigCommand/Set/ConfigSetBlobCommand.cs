@@ -3,6 +3,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
@@ -18,7 +19,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
         [Option(CommandOptionTemplate.BlobStorageDestinationContainer, Description = "name of destination container")]
         public string DestinationContainer { get; }
 
-        private int OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -27,10 +28,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetBlobStorageConfigsAsync(ConnectionString, SourceContainer, DestinationContainer).ConfigureAwait(false).GetAwaiter().GetResult();
+                await controller.SetBlobStorageConfigsAsync(ConnectionString, SourceContainer, DestinationContainer);
             }
-
-            return 1;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
     public class LocalStorageService : IStorageService
     {
-        private string _targetDirectory;
+        private readonly string _targetDirectory;
 
         public LocalStorageService(string targetDirectory)
         {
@@ -20,25 +20,23 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             _targetDirectory = targetDirectory;
         }
 
-        public string[] ListFiles()
+        public Task<string[]> ListFilesAsync()
         {
-            return Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray();
+            return Task.FromResult(Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray());
         }
 
         public Task<Stream> ReadFileAsync(string fileName)
         {
             string filePath = Path.Combine(_targetDirectory, fileName);
-            var tcs = new TaskCompletionSource<Stream>();
             try
             {
                 FileStream fs = File.OpenRead(filePath);
-                tcs.SetResult(fs as Stream);
+                return Task.FromResult(fs as Stream);
             }
             catch (UnauthorizedAccessException)
             {
                 throw new UnauthorizedFileAccessException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
             }
-            return tcs.Task;
         }
 
         public async Task<string> ReadFileAsStringAsync(string fileName)

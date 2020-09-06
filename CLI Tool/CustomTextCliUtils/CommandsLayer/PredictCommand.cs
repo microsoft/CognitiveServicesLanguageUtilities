@@ -26,7 +26,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer
         [Option("--chunk-type <page/char>", Description = "[optional] indicates chunking type. if not set, no chunking will be used")]
         public ChunkMethod ChunkType { get; } = ChunkMethod.NoChunking;
 
-        private async Task<int> OnExecute(CommandLineApplication app)
+        private async Task OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildPredictCommandDependencies(Parser);
@@ -37,8 +37,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer
                 var controller = scope.Resolve<PredictionServiceController>();
                 await controller.Predict(Source, Destination, FileName, ChunkType);
             }
-
-            return 0;
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
@@ -12,10 +13,10 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
     {
         [Required]
         [Range(Constants.MinAllowedCharLimit, Constants.CustomTextPredictionMaxCharLimit)]
-        [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "name of destination container")]
+        [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "character limit for chunk")]
         public int CharLimit { get; }
 
-        private int OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -24,10 +25,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetChunkerConfigsAsync(CharLimit).ConfigureAwait(false).GetAwaiter().GetResult();
+                await controller.SetChunkerConfigsAsync(CharLimit);
             }
-
-            return 1;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         typeof(ConfigShowPredictionCommand))]
     public class ConfigShowCommand
     {
-        private int OnExecute(CommandLineApplication app)
+        private void OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -25,7 +25,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
                 var controller = scope.Resolve<ConfigServiceController>();
                 controller.ShowAllConfigs();
             }
-            return 1;
         }
     }
 }

@@ -11,11 +11,10 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         typeof(ConfigSetPredictionCommand))]
     public class ConfigSetCommand
     {
-        private int OnExecute(CommandLineApplication app)
+        private void OnExecute(CommandLineApplication app)
         {
             // this shows help even if the --help option isn't specified
             app.ShowHelp();
-            return 1;
         }
     }
 }

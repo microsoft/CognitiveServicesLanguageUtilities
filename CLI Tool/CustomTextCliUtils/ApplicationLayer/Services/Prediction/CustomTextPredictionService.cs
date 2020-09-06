@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
@@ -26,34 +27,34 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             _endpointUrl = endpointUrl;
             _appId = appId;
             _httpHandler = httpHandler;
-            TestConnection();
+            TestConnectionAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        private void TestConnection()
+        private async Task TestConnectionAsync()
         {
             var testQuery = "test";
-            SendPredictionRequest(testQuery);
+            await SendPredictionRequestAsync(testQuery);
         }
 
-        public CustomTextPredictionResponse GetPrediction(string query)
+        public async Task<CustomTextPredictionResponse> GetPredictionAsync(string query)
         {
             if (query.Length > Constants.CustomTextPredictionMaxCharLimit)
             {
                 throw new CustomTextPredictionMaxCharExceededException(query.Length);
             }
             // send prediction request
-            var operationId = SendPredictionRequest(query);
+            var operationId = await SendPredictionRequestAsync(query);
             // wait until operation is finished
             CustomTextQueryResponse operationStatus;
             do
             {
-                operationStatus = PingStatus(operationId);
+                operationStatus = await PingStatusAsync(operationId);
             }
             while (operationStatus.Status == CustomTextPredictionResponseStatus.notstarted || operationStatus.Status == CustomTextPredictionResponseStatus.running);
             // get result
             if (operationStatus.Status == CustomTextPredictionResponseStatus.succeeded)
             {
-                var prediction = GetResult(operationId);
+                var prediction = await GetResultAsync(operationId);
                 return prediction;
             }
             else
@@ -66,7 +67,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             }
         }
 
-        private string SendPredictionRequest(string queryText)
+        private async Task<string> SendPredictionRequestAsync(string queryText)
         {
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/predictText?log=true&%24expand=classifier%2Cextractor", _endpointUrl, _appId);
             var requestBody = new Dictionary<string, string>
@@ -77,64 +78,64 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
             };
-            var response = _httpHandler.SendJsonPostRequest(requestUrl, requestBody, headers, null);
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, requestBody, headers, null);
             if (response.StatusCode == HttpStatusCode.Accepted)
             {
-                var responseString = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                var responseString = await response.Content.ReadAsStringAsync();
                 var responseContent = JsonConvert.DeserializeObject<CustomTextQueryResponse>(responseString);
                 return responseContent.OperationId;
             }
             else
             {
-                HandleExceptionResponseCodes(response, requestUrl);
+                await HandleExceptionResponseCodesAsync(response, requestUrl);
                 return null;
             }
         }
 
-        private CustomTextQueryResponse PingStatus(string operationId)
+        private async Task<CustomTextQueryResponse> PingStatusAsync(string operationId)
         {
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText/status", _endpointUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
             };
-            var response = _httpHandler.SendGetRequest(requestUrl, headers, null);
+            var response = await _httpHandler.SendGetRequestAsync(requestUrl, headers, null);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                var responseString = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                var responseString = await response.Content.ReadAsStringAsync();
                 var responseContent = JsonConvert.DeserializeObject<CustomTextQueryResponse>(responseString);
                 return responseContent;
             }
             else
             {
-                HandleExceptionResponseCodes(response, requestUrl);
+                await HandleExceptionResponseCodesAsync(response, requestUrl);
                 return null;
             }
         }
 
-        private CustomTextPredictionResponse GetResult(string operationId)
+        private async Task<CustomTextPredictionResponse> GetResultAsync(string operationId)
         {
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText", _endpointUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
             };
-            HttpResponseMessage response = _httpHandler.SendGetRequest(requestUrl, headers, null);
+            HttpResponseMessage response = await _httpHandler.SendGetRequestAsync(requestUrl, headers, null);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                var responseString = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                var responseString = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<CustomTextPredictionResponse>(responseString);
             }
             else
             {
-                HandleExceptionResponseCodes(response, requestUrl);
+                await HandleExceptionResponseCodesAsync(response, requestUrl);
                 return null;
             }
         }
 
-        private void HandleExceptionResponseCodes(HttpResponseMessage response, string url)
+        private async Task HandleExceptionResponseCodesAsync(HttpResponseMessage response, string url)
         {
-            var responseBody = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            var responseBody = await response.Content.ReadAsStringAsync();
             var errorResponse = JsonConvert.DeserializeObject<CustomTextErrorResponse>(responseBody);
             switch (response.StatusCode)
             {

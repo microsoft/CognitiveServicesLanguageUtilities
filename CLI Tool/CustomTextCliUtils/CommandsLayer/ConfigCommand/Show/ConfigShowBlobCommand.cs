@@ -8,7 +8,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
     [Command("blob", Description = "shows configs for blob storage")]
     public class ConfigShowBlobCommand
     {
-        private int OnExecute(CommandLineApplication app)
+        private void OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -19,7 +19,6 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
                 var controller = scope.Resolve<ConfigServiceController>();
                 controller.ShowStorageBlobConfigs();
             }
-            return 1;
         }
     }
 }

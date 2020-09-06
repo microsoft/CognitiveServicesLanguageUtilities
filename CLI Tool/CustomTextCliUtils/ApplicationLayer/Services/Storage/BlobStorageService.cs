@@ -3,6 +3,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,10 +31,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             }
         }
 
-        public string[] ListFiles()
+        public async Task<string[]> ListFilesAsync()
         {
-            var blobs = _blobContainerClient.GetBlobs();
-            return blobs.Select(f => f.Name).ToArray();
+            var blobs = _blobContainerClient.GetBlobsAsync();
+            List<string> blobNames = new List<string>();
+            await foreach (BlobItem blob in blobs)
+            {
+                blobNames.Add(blob.Name);
+            }
+            return blobNames.ToArray();
         }
 
         public async Task<Stream> ReadFileAsync(string fileName)

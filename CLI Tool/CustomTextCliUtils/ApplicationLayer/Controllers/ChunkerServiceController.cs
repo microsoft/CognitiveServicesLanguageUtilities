@@ -53,7 +53,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             var failedFiles = new ConcurrentDictionary<string, string>();
 
             // read files from source storage
-            var fileNames = _sourceStorageService.ListFiles();
+            var fileNames = await _sourceStorageService.ListFilesAsync();
             // chunk files
             var tasks = fileNames.Select(async fileName =>
             {

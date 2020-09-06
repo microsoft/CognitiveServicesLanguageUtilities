@@ -90,7 +90,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void ListFilesTest()
+        public async Task ListFilesTestAsync()
         {
             Directory.CreateDirectory(TestDirectory);
             string[] expectedFiles = new string[] { "file1", "file2", "file3" };
@@ -99,7 +99,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
                 File.Create(Path.Combine(TestDirectory, fileName)).Dispose();
             });
             IStorageService storageService = new LocalStorageService(TestDirectory);
-            string[] actualFiles = storageService.ListFiles();
+            string[] actualFiles = await storageService.ListFilesAsync();
             Assert.Equal(expectedFiles, actualFiles);
         }
     }

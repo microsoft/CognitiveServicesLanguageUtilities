@@ -40,7 +40,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 finalText.Append(string.Join(' ', rr.Lines.Select(l => l.Text)));
             }
             var text = finalText.ToString().Trim();
-            return new List<ChunkInfo> {
+            return new List<ChunkInfo> 
+            {
                 new ChunkInfo(text, 1, parsingResult.RecognitionResults.Count())
             };
         }
