@@ -46,11 +46,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
             var operationId = await SendPredictionRequestAsync(query);
             // wait until operation is finished
             CustomTextQueryResponse operationStatus;
+            var iterationCounter = 0;
             do
             {
+                await Task.Delay(Constants.CustomTextPredictionStatusDelayInMillis);
                 operationStatus = await PingStatusAsync(operationId);
             }
-            while (operationStatus.Status == CustomTextPredictionResponseStatus.notstarted || operationStatus.Status == CustomTextPredictionResponseStatus.running);
+            while (iterationCounter < Constants.CustomTextPredictionStatusMaxIterations &&
+            (operationStatus.Status == CustomTextPredictionResponseStatus.notstarted ||
+            operationStatus.Status == CustomTextPredictionResponseStatus.running));
             // get result
             if (operationStatus.Status == CustomTextPredictionResponseStatus.succeeded)
             {
