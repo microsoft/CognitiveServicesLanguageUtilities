@@ -1,16 +1,6 @@
-# solution files
-.vs
-
-# src project files
-CustomTextCliUtils/obj
-CustomTextCliUtils/bin
-CustomTextCliUtils/.vs
-CustomTextCliUtils/properties
-CustomTextCliUtils/CustomTextCliUtils.csproj.user
-CustomTextCliUtils/StyleCop.Cache
-
-# test project files
-CustomTextCliUtils.Tests/.vs
-CustomTextCliUtils.Tests/bin
-CustomTextCliUtils.Tests/obj
-CustomTextCliUtils.Tests/StyleCop.Cache
+.vs/
+obj/
+bin/
+properties/
+*.csproj.user
+StyleCop.Cache
