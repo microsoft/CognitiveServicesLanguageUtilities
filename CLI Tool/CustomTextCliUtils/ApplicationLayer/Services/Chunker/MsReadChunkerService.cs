@@ -63,8 +63,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
         private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult)
         {
             var resultPages = new List<ChunkInfo>();
-            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
-            var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
+            var maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentParagraph = new StringBuilder();
             StringBuilder pageText = new StringBuilder();
             var currentPage = 0;
@@ -148,7 +147,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             StringBuilder currentParagraph = new StringBuilder();
             StringBuilder currentChunk = new StringBuilder();
             List<ChunkInfo> resultChunks = new List<ChunkInfo>();
-            double maxLineLength = CaluculateMaxLineLength(parsingResult);
+            var maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
