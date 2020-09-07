@@ -10,6 +10,17 @@ using System.Text;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
+    /*
+     *  Data structure: 
+     *      MsReadParseResult is a list of pages and each page contains a list of lines
+     *      Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
+     * 
+     *           [0, 1] ------------------ [2, 3]
+     *                 -                  -
+     *                 -                  -
+     *                 -                  -
+     *           [4, 5] ------------------ [6, 7]
+    */
     public class MsReadChunkerService : IChunkerService
     {
         public List<ChunkInfo> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit)
@@ -40,15 +51,13 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 finalText.Append(string.Join(' ', rr.Lines.Select(l => l.Text)));
             }
             var text = finalText.ToString().Trim();
-            return new List<ChunkInfo> 
+            return new List<ChunkInfo>
             {
                 new ChunkInfo(text, 1, parsingResult.RecognitionResults.Count())
             };
         }
 
         /*
-         *  Data structure: 
-         *      MsReadParseResult is a list of pages and each page contains a list of lines
          *  Intuition:
          *      To construct a page, we concatenate paragraphs in the page to the chunk
          *  Considerations:
@@ -131,8 +140,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
         }
 
         /*
-         *  Data structure: 
-         *      MsReadParseResult is a list of pages and each page contains a list of lines
          *  Intuition:
          *      To construct a chunk, we concatenate paragraphs to the chunk without exceeding the character limit
          *  Considerations:
@@ -202,26 +209,28 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             return resultChunks;
         }
 
-        private static double CaluculateMaxLineLength(MsReadParseResult parsingResult)
+        private double CaluculateMaxLineLength(MsReadParseResult parsingResult)
         {
-            /*
-             * Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
-             * 
-             *   [0, 1] ------------------ [2, 3]
-             *         -                  -
-             *         -                  -
-             *         -                  -
-             *   [4, 5] ------------------ [6, 7]
-             */
-            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
+            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => GetBoundingBoxTopRightX(l) - GetBoundingBoxTopLeftX(l)).OrderBy(l => l).ToArray();
             var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
             return maxLineLength;
         }
 
         private bool IsLineEndOfParagraph(Line line, double maxLineLength)
         {
-            return line.BoundingBox[2] - line.BoundingBox[0] < maxLineLength;
+            return GetBoundingBoxTopRightX(line) - GetBoundingBoxTopLeftX(line) < maxLineLength;
         }
+
+        private double GetBoundingBoxTopLeftX(Line line)
+        {
+            return line.BoundingBox[0];
+        }
+
+        private double GetBoundingBoxTopRightX(Line line)
+        {
+            return line.BoundingBox[2];
+        }
+
         public List<ChunkInfo> Chunk(string text, int charLimit)
         {
             throw new NotImplementedException();
