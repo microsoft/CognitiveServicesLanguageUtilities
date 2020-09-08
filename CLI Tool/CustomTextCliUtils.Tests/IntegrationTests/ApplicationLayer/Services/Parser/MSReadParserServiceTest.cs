@@ -16,15 +16,15 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         public static TheoryData TestConnectionData()
         {
             // test 1 data
-            string test1CognitiveServicesKey = Secrets.MSReadCongnitiveServiceKey;
-            string test1CognitiveServicesEndpoint = Secrets.MSReadCognitiveServiceEndPoint;
+            string test1CognitiveServicesKey = Secrets.MSReadCongnitiveServicesKey;
+            string test1CognitiveServicesEndpoint = Secrets.MSReadCognitiveServicesEndPoint;
             // test 2 data - wrong service key
             string test2Message = "";
             string test2CognitiveServicesKey = "2e10bb66ed3e7685bd3ca1b3abcd8f6b";
-            string test2CognitiveServicesEndpoint = Secrets.MSReadCognitiveServiceEndPoint;
+            string test2CognitiveServicesEndpoint = Secrets.MSReadCognitiveServicesEndPoint;
             // test 3 data - wrong endpoint
             string test3Message = "";
-            string test3CognitiveServicesKey = Secrets.MSReadCongnitiveServiceKey;
+            string test3CognitiveServicesKey = Secrets.MSReadCongnitiveServicesKey;
             string test3CognitiveServicesEndpoint = "https://westus.api.cognitive.microsoft.com/";
 
             return new TheoryData<string, string, CliException>
@@ -74,7 +74,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         {
             // test 1 data
             var inputDocument = File.OpenRead(@"TestData\Parser\MSRead\test1 - inputDocument.pdf");  // read input document
-            var parser = new MSReadParserService(Secrets.MSReadCognitiveServiceEndPoint, Secrets.MSReadCongnitiveServiceKey);
+            var parser = new MSReadParserService(Secrets.MSReadCognitiveServicesEndPoint, Secrets.MSReadCongnitiveServicesKey);
 
             return new TheoryData<Stream, MSReadParserService, CliException>
             {

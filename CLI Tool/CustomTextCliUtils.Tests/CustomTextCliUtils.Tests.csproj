@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.14.5" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.console" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
@@ -19,10 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomTextCliUtils\CustomTextCliUtils.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="E2ETests\" />
   </ItemGroup>
 
   <ItemGroup>
