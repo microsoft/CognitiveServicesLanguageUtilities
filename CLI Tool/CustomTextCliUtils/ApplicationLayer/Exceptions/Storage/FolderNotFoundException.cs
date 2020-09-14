@@ -8,7 +8,7 @@
 
         public static string ConstructMessage(string folderPath)
         {
-            return "Directory Not Found: " + folderPath;
+            return $"Directory Not Found: {folderPath}";
         }
     }
 }

@@ -36,18 +36,22 @@ steps:
   displayName: 'Build solution CLI Tool\CustomTextCliUtils.sln'
   inputs:
     solution: 'CLI Tool\CustomTextCliUtils.sln'
-    msbuildArgs: '/p:Deterministic=true /p:PathMap=$(Agent.BuildDirectory)=C:\'
+    msbuildArgs: '/m /v:q'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
+    msbuildArchitecture: x64
+    clean: true
 
 - task: VSTest@2
   displayName: 'Run Tests'
   inputs:
-    testAssemblyVer2: |
-      CLI Tool\CustomTextCliUtils.Tests\bin\Release\**\*CustomTextCliUtils*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: 'CLI Tool\CustomTextCliUtils.Tests\bin\Release\**\CustomTextCliUtils.Tests.dll'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1 /platform:x64'
+    platform: 'x64'
+    runInParallel: false
+    codeCoverageEnabled: false
   env:
     CUSTOM_TEXT_APP_ID: $(custom.text.app.id)
     CUSTOM_TEXT_ENDPOINT: $(custom.text.endpoint)

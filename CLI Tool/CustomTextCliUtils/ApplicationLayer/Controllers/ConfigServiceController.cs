@@ -20,16 +20,28 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService = loggerService;
             _storageService = storageService;
             var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
-            if (File.Exists(filePath))
+            try
             {
-                var configsFile = storageService.ReadFileAsStringAsync(Constants.ConfigsFileName).ConfigureAwait(false).GetAwaiter().GetResult();
-                _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+                ReadConfigsFromFile(filePath).ConfigureAwait(false).GetAwaiter().GetResult();
             }
-            else
+            catch (Exceptions.Storage.FileNotFoundException)
             {
                 _configModel = new ConfigModel();
                 StoreConfigsModelAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             }
+        }
+
+        private async Task ReadConfigsFromFile(string filePath)
+        {
+            var configsFile = await _storageService.ReadAsStringFromAbsolutePathAsync(filePath);
+            _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+        }
+
+        public async Task LoadConfigsFromFile(string configsFilePath)
+        {
+            await ReadConfigsFromFile(configsFilePath);
+            await StoreConfigsModelAsync();
+            _loggerService.Log("Configs loaded from file");
         }
 
         private async Task StoreConfigsModelAsync()

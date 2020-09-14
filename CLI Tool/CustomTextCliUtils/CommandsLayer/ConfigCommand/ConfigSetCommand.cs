@@ -1,5 +1,5 @@
-﻿using Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
 {

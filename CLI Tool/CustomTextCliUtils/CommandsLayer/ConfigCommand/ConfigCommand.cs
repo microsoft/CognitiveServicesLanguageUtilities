@@ -1,12 +1,12 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
 {
     [Command("config", Description = "shows or sets app configs")]
     [Subcommand(
         typeof(ConfigShowCommand),
-        typeof(ConfigSetCommand))]
+        typeof(ConfigSetCommand),
+        typeof(ConfigLoadCommand))]
     public class ConfigCommand
     {
         private void OnExecute(CommandLineApplication app)

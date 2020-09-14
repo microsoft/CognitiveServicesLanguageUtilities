@@ -5,11 +5,14 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
+    /*
+     * some notes:
+     *      - we use file exists in all reading methods, in order to throw our custom exception in case file wan't found
+     */
     public class BlobStorageService : IStorageService
     {
         private readonly BlobContainerClient _blobContainerClient;
@@ -44,18 +47,32 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 
         public async Task<Stream> ReadFileAsync(string fileName)
         {
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = await blobClient.DownloadAsync();
-            return download.Content;
+            if (await FileExists(fileName))
+            {
+                BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
+                BlobDownloadInfo download = await blobClient.DownloadAsync();
+                return download.Content;
+            }
+            else
+            {
+                throw new Exceptions.Storage.FileNotFoundException(fileName);
+            }
         }
 
         public async Task<string> ReadFileAsStringAsync(string fileName)
         {
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = await blobClient.DownloadAsync();
-            using (StreamReader sr = new StreamReader(download.Content))
+            if (await FileExists(fileName))
             {
-                return sr.ReadToEnd();
+                BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
+                BlobDownloadInfo download = await blobClient.DownloadAsync();
+                using (StreamReader sr = new StreamReader(download.Content))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+            else
+            {
+                throw new Exceptions.Storage.FileNotFoundException(fileName);
             }
         }
 
@@ -72,6 +89,19 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
                     await blobClient.UploadAsync(stream, overwrite: true);
                 }
             }
+        }
+
+        public Task<string> ReadAsStringFromAbsolutePathAsync(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> FileExists(string fileName)
+        {
+            return await Task.Run(() =>
+            {
+                return _blobContainerClient.GetBlobClient(fileName).Exists();
+            });
         }
     }
 }
