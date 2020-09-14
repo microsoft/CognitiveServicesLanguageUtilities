@@ -5,10 +5,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class MSReadConfigModel
     {
-        [JsonProperty(ConfigKeys.MSReadCognitiveServicesEndpoint)]
+        [JsonProperty(ConfigKeys.MSReadAzureResourceEndpoint)]
         public string CognitiveServiceEndPoint { get; set; }
 
-        [JsonProperty(ConfigKeys.MSReadCognitiveServicesKey)]
+        [JsonProperty(ConfigKeys.MSReadAzureResourceKey)]
         public string CongnitiveServiceKey { get; set; }
     }
 }

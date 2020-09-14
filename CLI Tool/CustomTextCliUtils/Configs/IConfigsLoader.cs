@@ -12,5 +12,6 @@ namespace Microsoft.CustomTextCliUtils.Configs
         public StorageConfigModel GetStorageConfigModel();
         public ChunkerConfigModel GetChunkerConfigModel();
         public PredictionConfigModel GetPredictionConfigModel();
+        public TextAnalyticsConfigModel GetTextAnalyticsConfigModel();
     }
 }

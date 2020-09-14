@@ -134,6 +134,19 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
+        [Fact]
+        public async Task TextAnalyticsConfigShowTestAsync()
+        {
+            // act
+            _controller.ShowTextAnalyticsConfigs();
+
+            // assert
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
+            var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            var expectedString = JsonConvert.SerializeObject(configModel.TextAnalytics, Formatting.Indented);
+            Assert.Equal(expectedString, _stringWriter.ToString().Trim());
+        }
+
         public static TheoryData MsReadConfigSetTestData()
         {
             return new TheoryData<string, string>
@@ -213,23 +226,22 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         public static TheoryData PredictionConfigSetTestData()
         {
-            return new TheoryData<string, string, string, string>
+            return new TheoryData<string, string, string>
             {
                 {
                     "testKey",
                     "testEndpoint",
-                    "testAppId",
-                    "testVersionId"
+                    "testAppId"
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(PredictionConfigSetTestData))]
-        public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId, string versionId)
+        public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId)
         {
-            await _controller.SetPredictionConfigsAsync(customTextKey, customTextEndpoint, appId, versionId);
-            await _controller.SetPredictionConfigsAsync(null, null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetPredictionConfigsAsync(customTextKey, customTextEndpoint, appId);
+            await _controller.SetPredictionConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
@@ -237,7 +249,6 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
             Assert.Equal(customTextKey, configModel.Prediction.CustomTextKey);
             Assert.Equal(customTextEndpoint, configModel.Prediction.EndpointUrl);
             Assert.Equal(appId, configModel.Prediction.AppId);
-            Assert.Equal(versionId, configModel.Prediction.VersionId);
         }
 
         public static TheoryData ChunkerConfigSetTestData()
@@ -261,6 +272,38 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(charLimit, configModel.Chunker.CharLimit);
+        }
+
+        public static TheoryData TextAnalyticsConfigSetTestData()
+        {
+            return new TheoryData<string, string, string, bool, bool, bool>
+            {
+                {
+                    "test1",
+                    "test2",
+                    "en",
+                    true,
+                    false,
+                    false
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(TextAnalyticsConfigSetTestData))]
+        public async Task TextAnalyticsConfigSetTestAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
+        {
+            await _controller.SetTextAnalyticsConfigsAsync(azureResourceKey, azureResourceEndpoint, defaultLanguage, enableSentimentByDefault, enableNerByDefault, enableKeyphraseByDefault);
+            await _controller.SetTextAnalyticsConfigsAsync(null, null, null, null, null, null); // Value not affected if user doesn't pass it
+
+            // assert
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
+            var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            Assert.Equal(azureResourceKey, configModel.TextAnalytics.AzureResourceKey);
+            Assert.Equal(azureResourceEndpoint, configModel.TextAnalytics.AzureResourceEndpoint);
+            Assert.Equal(enableSentimentByDefault, configModel.TextAnalytics.DefaultOperations.Sentiment);
+            Assert.Equal(enableNerByDefault, configModel.TextAnalytics.DefaultOperations.Ner);
+            Assert.Equal(enableKeyphraseByDefault, configModel.TextAnalytics.DefaultOperations.Keyphrase);
         }
 
         public static TheoryData ConfigLoadTestData()

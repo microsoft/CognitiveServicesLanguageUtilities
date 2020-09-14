@@ -2,6 +2,7 @@
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -71,7 +72,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services
         public void PageChunkingTest(ParseResult parseResult, List<ChunkInfo> expectedChunks)
         {
             IChunkerService msReadChunker = new MsReadChunkerService();
-            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Page, 0);
+            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Page, Constants.CustomTextPredictionMaxCharLimit);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
         }

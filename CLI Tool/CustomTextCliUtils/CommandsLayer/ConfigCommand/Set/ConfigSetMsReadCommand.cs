@@ -10,10 +10,10 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
     [Command("msread", Description = "sets configs for msread parser")]
     public class ConfigSetMsReadCommand
     {
-        [Option(CommandOptionTemplate.MSReadCognitiveServicesKey, Description = "azure congnitive services key")]
+        [Option(CommandOptionTemplate.MSReadAzureResourceKey, Description = "azure congnitive services key")]
         public string CognitiveServicesKey { get; }
 
-        [Option(CommandOptionTemplate.MSReadCognitiveServicesEndpoint, Description = "endpoint url for azure congnitive services")]
+        [Option(CommandOptionTemplate.MSReadAzureResourceEndpoint, Description = "endpoint url for azure congnitive services")]
         public string EndpointUrl { get; }
 
         private async Task OnExecuteAsync(CommandLineApplication app)

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.CustomTextCliUtils.Configs.Consts
+﻿namespace Microsoft.CustomTextCliUtils.Configs.Consts
 {
     public class CommandOptionTemplate
     {
         // msread
-        public const string MSReadCognitiveServicesKey = "--" + ConfigKeys.MSReadCognitiveServicesKey + " <COGNITIVE_SERVICES_KEY>";
-        public const string MSReadCognitiveServicesEndpoint = "--" + ConfigKeys.MSReadCognitiveServicesEndpoint + " <ENDPOINT_URL>";
+        public const string MSReadAzureResourceKey = "--" + ConfigKeys.MSReadAzureResourceKey + " <COGNITIVE_SERVICES_KEY>";
+        public const string MSReadAzureResourceEndpoint = "--" + ConfigKeys.MSReadAzureResourceEndpoint + " <ENDPOINT_URL>";
 
         // local storage
         public const string LocalStorageSourceDir = "--" + ConfigKeys.LocalStorageSourceDir + " <ABSOLUTE_PATH>";
@@ -23,9 +19,17 @@ namespace Microsoft.CustomTextCliUtils.Configs.Consts
         public const string ChunkerCharLimit = "--" + ConfigKeys.ChunkerCharLimit + " <INTEGER>";
 
         // prediction
-        public const string PredictionCustomTextKey = "--" + ConfigKeys.PredictionCustomTextKey + " <CUSTOM_TEXT_KEY>";
-        public const string PredictionEndpointUrl = "--" + ConfigKeys.PredictionEndpointUrl + " <ENDPOINT_URL>";
-        public const string PredictionAppId = "--" + ConfigKeys.PredictionAppId + " <APP_ID>";
-        public const string PredictionVersionId = "--" + ConfigKeys.PredictionVersionId + " <APP_VERSION>";
+        public const string CustomTextAzureResourceKey = "--" + ConfigKeys.CustomTextAzureResourceKey + " <CUSTOM_TEXT_KEY>";
+        public const string CustomTextAzureResourceEndpoint = "--" + ConfigKeys.CustomTextAzureResourceEndpoint + " <ENDPOINT_URL>";
+        public const string CustomTextAppId = "--" + ConfigKeys.CustomTextAppId + " <APP_ID>";
+
+        // text analytics
+        public const string TextAnalyticsAzureResourceKey = "--" + ConfigKeys.TextAnalyticsAzureResourceKey + " <TEXT_ANALYTICS_KEY>";
+        public const string TextAnalyticsAzureResourceEndpoint = "--" + ConfigKeys.TextAnalyticsAzureResourceEndpoint + " <TEXT_ANALYTICS_URL>";
+        public const string TextAnalyticsDefaultLanguage = "--" + ConfigKeys.TextAnalyticsDefaultLanguage + " <DEFAULT_LANGUAGE>";
+
+        public const string TextAnalyticsEnableSentiment = "--" + ConfigKeys.TextAnalyticsSentiment + " <BOOL>";
+        public const string TextAnalyticsEnableNer = "--" + ConfigKeys.TextAnalyticsNer + " <BOOL>";
+        public const string TextAnalyticsEnableKeyphrase = "--" + ConfigKeys.TextAnalyticsKeyphrase + " <BOOL>";
     }
 }

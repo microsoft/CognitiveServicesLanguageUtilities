@@ -14,7 +14,7 @@ Like extracting text from documents, chunking text files, and integrating with p
 - config
     - msread
         - ctcu config show msread
-        - ctcu config set msread --cognitive-services-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
+        - ctcu config set msread --azure-resource-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
     - tika (Not Supported Yet)
         - ctcu config show tika
         - ctcu config set tika --enable-ocr <BOOLEAN> --detect-titlted-text <BOOLEAN> --sort-by-position <BOOLEAN>
@@ -27,7 +27,10 @@ Like extracting text from documents, chunking text files, and integrating with p
         - ctcu config set chunker --char-limit <NUMBER>
     - prediction
         - ctcu config show prediction
-        - ctcu config set prediction --customtext-endpoint <ENDPOINT_URL> --customtext-key <APIM_SUBSCRIPTION_ID> --app-id <APP_ID>
+        - ctcu config set prediction --azure-resource-endpoint <ENDPOINT_URL> --azure-resource-key <AZURE_RESOURCE_KEY> --app-id <APP_ID>
+    - textanalytics
+        - ctcu config show textanalytics
+        - ctcu config set text analytics --azure-resource-key <AZURE_RESOURCE_KEY> --azure-resource-endpoint <ENDPOINT_URL> --default-language <LANGUAGE> --sentiment <BOOLEAN> --ner <BOOLEAN> --keyphrase <BOOLEAN>
 
 - parsing
     - ctcu parse --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunking-type <PAGE/CHAR> ]
@@ -37,3 +40,6 @@ Like extracting text from documents, chunking text files, and integrating with p
 
 - chunker
     - ctcu chunk --source <BLOB/LOCAL> --destination <BLOB/LOCAL>
+
+- textanalytics
+    - ctcu textanalytics --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunking-type <PAGE/CHAR> ]

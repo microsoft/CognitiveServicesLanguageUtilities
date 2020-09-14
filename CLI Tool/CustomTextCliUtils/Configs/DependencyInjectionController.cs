@@ -10,6 +10,8 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -87,6 +89,31 @@ namespace Microsoft.CustomTextCliUtils.Configs
                 return new PredictionServiceController(configService, new StorageFactoryFactory(), parserservice,
                     loggerService, chunkerService, predictionService);
             }).As<PredictionServiceController>();
+            return builder.Build();
+        }
+
+        public static IContainer BuildTextAnalyticsCommandDependencies(ParserType parserType)
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<ConcatenationService>().As<IConcatenationService>();
+            builder.RegisterInstance<IChunkerService>(CreateChunkerService(parserType));
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                return CreateParserService(parserType, configService);
+            }).As<IParserService>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                return new TextAnalyticsPredictionService(
+                    configService.GetTextAnalyticsConfigModel().AzureResourceKey,
+                    configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,
+                    configService.GetTextAnalyticsConfigModel().DefaultLanguage);
+            }).As<ITextAnalyticsPredictionService>();
+            builder.RegisterType<TextAnalyticsController>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.RegisterType<PredictionServiceController>();
             return builder.Build();
         }
 

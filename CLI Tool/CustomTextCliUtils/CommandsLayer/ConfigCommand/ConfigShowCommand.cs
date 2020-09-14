@@ -11,7 +11,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         typeof(ConfigShowParserCommand),
         typeof(ConfigShowStorageCommand),
         typeof(ConfigShowChunkerCommand),
-        typeof(ConfigShowPredictionCommand))]
+        typeof(ConfigShowPredictionCommand),
+        typeof(ConfigShowTextAnalyticsCommand))]
     public class ConfigShowCommand
     {
         private void OnExecute(CommandLineApplication app)

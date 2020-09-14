@@ -10,5 +10,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.Configs
         public static readonly string CustomTextKey = Environment.GetEnvironmentVariable("CUSTOM_TEXT_KEY");
         public static readonly string CustomTextEndpoint = Environment.GetEnvironmentVariable("CUSTOM_TEXT_ENDPOINT");
         public static readonly string CustomTextAppId = Environment.GetEnvironmentVariable("CUSTOM_TEXT_APP_ID");
+        public static readonly string TextAnalyticsKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_KEY");
+        public static readonly string TextAnalyticsEndpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
     }
 }

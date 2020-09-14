@@ -39,13 +39,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
                     // wrong service key
                     test2CognitiveServicesKey,
                     test2CognitiveServicesEndpoint,
-                    new MsReadConnectionException(test2Message, test2CognitiveServicesKey, test2CognitiveServicesEndpoint)
+                    new MsReadConnectionException(test2Message)
                 },
                 {
                     // wrong endpoint
                     test3CognitiveServicesKey,
                     test3CognitiveServicesEndpoint,
-                    new MsReadConnectionException(test3Message, test3CognitiveServicesKey, test3CognitiveServicesEndpoint)
+                    new MsReadConnectionException(test3Message)
                 }
             };
         }

@@ -12,16 +12,26 @@
   },
   "parser": {
     "MSRead": {
-      "cognitive-services-endpoint": "",
-      "cognitive-services-key": ""
+      "azure-resource-endpoint": "",
+      "azure-resource-key": ""
     }
   },
   "chunker": {
     "char-limit": 5000
   },
   "prediction": {
-    "customtext-key": "",
-    "customtext-endpoint": "",
+    "azure-resource-endpoint": "",
+    "azure-resource-key": "",
     "app-id": ""
+  },
+  "textanalytics": {
+    "azure-resource-endpoint": "",
+    "azure-resource-key": "",
+    "default-language":  "",
+    "default_operations": {
+      "sentiment": true,
+      "ner": false,
+      "keyphrase": true
+    }
   }
 }

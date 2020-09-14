@@ -54,5 +54,10 @@ namespace Microsoft.CustomTextCliUtils.Configs
         {
             return _configModel.Storage;
         }
+
+        public TextAnalyticsConfigModel GetTextAnalyticsConfigModel()
+        {
+            return _configModel.TextAnalytics;
+        }
     }
 }

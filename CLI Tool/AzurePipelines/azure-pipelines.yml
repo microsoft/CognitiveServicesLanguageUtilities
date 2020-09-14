@@ -59,3 +59,5 @@ steps:
     MSREAD_COGNITIVE_SERVICES_ENDPOINT: $(msread.cognitive.services.endpoint)
     MSREAD_COGNITIVE_SERVICES_KEY: $(msread.cognitive.services.key)
     STORAGE_ACCOUNT_CONNECTION_STRING: $(storage.account.connection.string)
+    TEXT_ANALYTICS_ENDPOINT: $(msread.cognitive.services.endpoint)
+    TEXT_ANALYTICS_KEY: $(msread.cognitive.services.key)

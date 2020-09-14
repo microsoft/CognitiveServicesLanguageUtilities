@@ -5,16 +5,13 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class PredictionConfigModel
     {
-        [JsonProperty(ConfigKeys.PredictionCustomTextKey)]
+        [JsonProperty(ConfigKeys.CustomTextAzureResourceKey)]
         public string CustomTextKey { get; set; }
 
-        [JsonProperty(ConfigKeys.PredictionEndpointUrl)]
+        [JsonProperty(ConfigKeys.CustomTextAzureResourceEndpoint)]
         public string EndpointUrl { get; set; }
 
-        [JsonProperty(ConfigKeys.PredictionAppId)]
+        [JsonProperty(ConfigKeys.CustomTextAppId)]
         public string AppId { get; set; }
-
-        [JsonProperty(ConfigKeys.PredictionVersionId)]
-        public string VersionId { get; set; }
     }
 }

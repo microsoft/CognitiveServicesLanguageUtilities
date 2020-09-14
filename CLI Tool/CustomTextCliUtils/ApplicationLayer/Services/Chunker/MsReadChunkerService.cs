@@ -33,7 +33,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 case ChunkMethod.Char:
                     return ChunkCharacters(msReadparsingResult, charLimit);
                 case ChunkMethod.Page:
-                    return ChunkPages(msReadparsingResult);
+                    return ChunkPages(msReadparsingResult, charLimit);
                 default:
                     throw new NotSupportedException($"The chunk type {chunkMethod} isn't supported.");
             }
@@ -53,7 +53,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var text = finalText.ToString().Trim();
             return new List<ChunkInfo>
             {
-                new ChunkInfo(text, 1, parsingResult.RecognitionResults.Count())
+                new ChunkInfo(1, text, 1, parsingResult.RecognitionResults.Count())
             };
         }
 
@@ -69,7 +69,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
          *      2- Paragraph length bigger than character limit
          *          - Paragraph will be split into different chunks
          */
-        private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult)
+        private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult, int charLimit)
         {
             var resultPages = new List<ChunkInfo>();
             var maxLineLength = CaluculateMaxLineLength(parsingResult);
@@ -77,8 +77,9 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             StringBuilder pageText = new StringBuilder();
             var currentPage = 0;
             var totalPageCount = parsingResult.RecognitionResults.Count;
-            var currentPageStart = 1;
+            var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
+            var chunkCounter = 1;
             // loop over each page to create list of pages
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
@@ -86,40 +87,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
                 foreach (Line l in rr.Lines)
                 {
-                    // Special case: paragraph length is bigger that character limit
-                    if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
-                    {
-                        // add existing page to result
-                        if (pageText.Length > 0)
-                        {
-                            resultPages.Add(new ChunkInfo(pageText.ToString(), currentPageStart, (int)rr.Page));
-                            pageText.Clear();
-                        }
-                        // concatenate paragraph to current page
-                        pageText.Append(currentParagraph.ToString());
-                        currentParagraph.Clear();
-                        currentPageStart = currentParagraphPageStart;
-                    }
-                    // concatenate line to current paragraph
-                    currentParagraph.Append($"{l.Text} ");
-                    // end of paragraph
-                    if (IsLineEndOfParagraph(l, maxLineLength))
-                    {
-                        // if adding the paragraph to the page exceeds the character limit
-                        // current page will be added to result and the paragraph will be added to the next page
-                        if (pageText.Length + currentParagraph.Length > Constants.CustomTextPredictionMaxCharLimit)
-                        {
-                            var text = pageText.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
-                            resultPages.Add(chunkInfo);
-                            pageText.Clear();
-                            currentPageStart = (int)rr.Page;
-                        }
-                        // concatenate paragraph to current page
-                        pageText.Append(currentParagraph.ToString());
-                        currentParagraph.Clear();
-                        currentParagraphPageStart = (int)rr.Page;
-                    }
+                    AppendLineToChunk(charLimit, currentParagraph, pageText, resultPages, maxLineLength, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l);
                 }
                 // special case: if last page add any text in the current paragraph to the page
                 if (currentParagraph.Length > 0 && ++currentPage == totalPageCount)
@@ -130,10 +98,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 if (pageText.Length > 0)
                 {
                     var text = pageText.ToString().Trim();
-                    var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
+                    var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, (int)rr.Page);
                     resultPages.Add(chunkInfo);
                     pageText.Clear();
-                    currentPageStart = currentParagraph.Length > 0 ? (int)rr.Page : ((int)rr.Page + 1);
+                    currentChunkPageStart = currentParagraph.Length > 0 ? (int)rr.Page : ((int)rr.Page + 1);
                 }
             }
             return resultPages;
@@ -157,45 +125,14 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
+            var chunkCounter = 1;
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
                 // update paragraphPageStart if no overflowing paragraph in new page
                 currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
                 foreach (Line l in rr.Lines)
                 {
-                    // Special case: paragraph length is bigger that character limit
-                    if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
-                    {
-                        // add existing chunk to result
-                        if (currentChunk.Length > 0)
-                        {
-                            resultChunks.Add(new ChunkInfo(currentChunk.ToString(), currentChunkPageStart, (int)rr.Page));
-                            currentChunk.Clear();
-                        }
-                        // concatenate paragraph to current chunk
-                        currentChunk.Append(currentParagraph.ToString());
-                        currentParagraph.Clear();
-                        currentChunkPageStart = currentParagraphPageStart;
-                    }
-                    // concatenate line to current paragraph
-                    currentParagraph.Append($"{l.Text} ");
-                    // end of paragraph
-                    if (IsLineEndOfParagraph(l, maxLineLength))
-                    {
-                        // if adding the paragraph to the chunk exceeds the character limit
-                        // current chunk will be added to result and the paragraph will be added to the next chunk
-                        if (currentChunk.Length + currentParagraph.Length > charLimit)
-                        {
-                            var text = currentChunk.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(text, currentChunkPageStart, (int)rr.Page);
-                            resultChunks.Add(chunkInfo);
-                            currentChunk.Clear();
-                            currentChunkPageStart = (int)rr.Page;
-                        }
-                        // concatenate paragraph to current chunk
-                        currentChunk.Append(currentParagraph.ToString());
-                        currentParagraph.Clear();
-                    }
+                    AppendLineToChunk(charLimit, currentParagraph, currentChunk, resultChunks, maxLineLength, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l);
                 }
             }
             // Add remaining text after loop ends
@@ -203,10 +140,59 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             {
                 currentChunk.Append(currentParagraph.ToString());
                 var text = currentChunk.ToString().Trim();
-                var chunkInfo = new ChunkInfo(text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
+                var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
                 resultChunks.Add(chunkInfo);
             }
             return resultChunks;
+        }
+
+        private void AppendLineToChunk(int charLimit, StringBuilder currentParagraph, StringBuilder currentChunk, List<ChunkInfo> resultChunks, double maxLineLength, ref int currentChunkPageStart, ref int currentParagraphPageStart, ref int chunkCounter, int currentPage, Line l)
+        {
+            // Special case: paragraph length is bigger that character limit
+            if (currentParagraph.Length + l.Text.Length > charLimit)
+            {
+                HandleParagraphLengthGreaterThanCharLimit(currentParagraph, currentChunk, resultChunks, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, currentPage);
+            }
+            // concatenate line to current paragraph
+            currentParagraph.Append($"{l.Text} ");
+            // end of paragraph
+            if (IsLineEndOfParagraph(l, maxLineLength))
+            {
+                HandleEndOfParagraph(charLimit, currentParagraph, currentChunk, resultChunks, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, currentPage);
+            }
+        }
+
+        private static void HandleEndOfParagraph(int charLimit, StringBuilder currentParagraph, StringBuilder currentChunk, List<ChunkInfo> resultChunks, ref int currentChunkPageStart, ref int currentParagraphPageStart, ref int chunkCounter, int currentPage)
+        {
+            // if adding the paragraph to the chunk exceeds the character limit
+            // current chunk will be added to result and the paragraph will be added to the next chunk
+            if (currentChunk.Length + currentParagraph.Length > charLimit)
+            {
+                var text = currentChunk.ToString().Trim();
+                var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, currentParagraphPageStart);
+                resultChunks.Add(chunkInfo);
+                currentChunk.Clear();
+                currentChunkPageStart = currentParagraphPageStart;
+            }
+            // concatenate paragraph to current chunk
+            currentChunk.Append(currentParagraph.ToString());
+            currentParagraph.Clear();
+            currentParagraphPageStart = currentPage;
+        }
+
+        private static void HandleParagraphLengthGreaterThanCharLimit(StringBuilder currentParagraph, StringBuilder currentChunk, List<ChunkInfo> resultChunks, ref int currentChunkPageStart, ref int currentParagraphPageStart, ref int chunkCounter, int currentPage)
+        {
+            // add existing chunk to result
+            if (currentChunk.Length > 0)
+            {
+                resultChunks.Add(new ChunkInfo(chunkCounter++, currentChunk.ToString(), currentChunkPageStart, currentParagraphPageStart));
+                currentChunk.Clear();
+            }
+            // concatenate paragraph to current chunk
+            currentChunk.Append(currentParagraph.ToString());
+            currentParagraph.Clear();
+            currentChunkPageStart = currentParagraphPageStart;
+            currentParagraphPageStart = currentPage;
         }
 
         private double CaluculateMaxLineLength(MsReadParseResult parsingResult)

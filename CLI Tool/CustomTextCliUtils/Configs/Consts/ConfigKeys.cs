@@ -1,12 +1,10 @@
-﻿
-
-namespace Microsoft.CustomTextCliUtils.Configs.Consts
+﻿namespace Microsoft.CustomTextCliUtils.Configs.Consts
 {
     public class ConfigKeys
     {
         // msread
-        public const string MSReadCognitiveServicesKey = "cognitive-services-key";
-        public const string MSReadCognitiveServicesEndpoint = "cognitive-services-endpoint";
+        public const string MSReadAzureResourceKey = "azure-resource-key";
+        public const string MSReadAzureResourceEndpoint = "azure-resource-endpoint";
 
         // local storage
         public const string LocalStorageSourceDir = "source-dir";
@@ -21,10 +19,17 @@ namespace Microsoft.CustomTextCliUtils.Configs.Consts
         public const string ChunkerCharLimit = "char-limit";
 
         // prediction
-        public const string PredictionCustomTextKey = "customtext-key";
-        public const string PredictionEndpointUrl = "customtext-endpoint";
-        public const string PredictionAppId = "app-id";
-        public const string PredictionVersionId = "version-id";
+        public const string CustomTextAzureResourceKey = "azure-resource-key";
+        public const string CustomTextAzureResourceEndpoint = "azure-resource-endpoint";
+        public const string CustomTextAppId = "app-id";
+
+        // text analytics
+        public const string TextAnalyticsAzureResourceKey = "azure-resource-key";
+        public const string TextAnalyticsAzureResourceEndpoint  = "azure-resource-endpoint";
+        public const string TextAnalyticsDefaultLanguage = "default-language";
+        public const string TextAnalyticsSentiment = "sentiment";
+        public const string TextAnalyticsNer = "ner";
+        public const string TextAnalyticsKeyphrase = "keyphrase";
 
     }
 }

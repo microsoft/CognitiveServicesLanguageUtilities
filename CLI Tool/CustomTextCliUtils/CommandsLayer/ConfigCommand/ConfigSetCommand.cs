@@ -8,7 +8,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         typeof(ConfigSetStorageCommand),
         typeof(ConfigSetParserCommand),
         typeof(ConfigSetChunkerCommand),
-        typeof(ConfigSetPredictionCommand))]
+        typeof(ConfigSetPredictionCommand),
+        typeof(ConfigSetTextAnalyticsCommand))]
     public class ConfigSetCommand
     {
         private void OnExecute(CommandLineApplication app)

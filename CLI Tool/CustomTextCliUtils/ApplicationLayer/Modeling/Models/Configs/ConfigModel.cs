@@ -16,12 +16,16 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
         [JsonProperty("prediction")]
         public PredictionConfigModel Prediction { get; set; }
 
+        [JsonProperty("textanalytics")]
+        public TextAnalyticsConfigModel TextAnalytics { get; set; }
+
         public ConfigModel()
         {
             Storage = new StorageConfigModel();
             Parser = new ParserConfigModel();
             Chunker = new ChunkerConfigModel();
             Prediction = new PredictionConfigModel();
+            TextAnalytics = new TextAnalyticsConfigModel();
         }
     }
 }

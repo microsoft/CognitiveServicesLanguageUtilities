@@ -81,12 +81,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     var customTextPredictionResponse = await _predictionService.GetPredictionAsync(value.Text);
                     var chunkInfo = new CustomTextPredictionChunkInfo
                     {
-                        ChunkNumber = i,
-                        CharCount = value.Text.Length,
-                        CustomTextPredictionResponse = customTextPredictionResponse,
-                        InnerText = value.Summary,
-                        StartPage = value.StartPage,
-                        EndPage = value.EndPage
+                        // chunk data
+                        ChunkInfo = value,
+                        // prediction data
+                        CustomTextPredictionResponse = customTextPredictionResponse
                     };
                     chunkPredictionResults.Add(chunkInfo);
                 });
