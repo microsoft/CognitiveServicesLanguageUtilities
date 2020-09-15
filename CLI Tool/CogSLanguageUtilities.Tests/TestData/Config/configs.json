@@ -19,7 +19,7 @@
   "chunker": {
     "char-limit": 5000
   },
-  "prediction": {
+  "customtext": {
     "customtext-key": "testKey",
     "customtext-endpoint": "https://test.cognitiveservices.azure.com",
     "app-id": "testId"

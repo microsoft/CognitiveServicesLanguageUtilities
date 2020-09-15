@@ -53,7 +53,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
 
         public CustomTextConfigModel GetPredictionConfigModel()
         {
-            return _configModel.Prediction;
+            return _configModel.CustomText;
         }
 
         public StorageConfigModel GetStorageConfigModel()

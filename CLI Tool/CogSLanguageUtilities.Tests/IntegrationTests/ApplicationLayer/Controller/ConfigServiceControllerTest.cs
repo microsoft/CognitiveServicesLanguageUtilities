@@ -118,7 +118,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
-            var expectedString = JsonConvert.SerializeObject(configModel.Prediction, Formatting.Indented);
+            var expectedString = JsonConvert.SerializeObject(configModel.CustomText, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
@@ -247,9 +247,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
-            Assert.Equal(customTextKey, configModel.Prediction.CustomTextKey);
-            Assert.Equal(customTextEndpoint, configModel.Prediction.EndpointUrl);
-            Assert.Equal(appId, configModel.Prediction.AppId);
+            Assert.Equal(customTextKey, configModel.CustomText.CustomTextKey);
+            Assert.Equal(customTextEndpoint, configModel.CustomText.EndpointUrl);
+            Assert.Equal(appId, configModel.CustomText.AppId);
         }
 
         public static TheoryData ChunkerConfigSetTestData()

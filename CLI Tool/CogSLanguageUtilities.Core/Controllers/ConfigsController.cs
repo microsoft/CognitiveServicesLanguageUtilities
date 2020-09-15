@@ -145,15 +145,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         {
             if (!string.IsNullOrEmpty(customTextKey))
             {
-                _configModel.Prediction.CustomTextKey = customTextKey;
+                _configModel.CustomText.CustomTextKey = customTextKey;
             }
             if (!string.IsNullOrEmpty(endpointUrl))
             {
-                _configModel.Prediction.EndpointUrl = endpointUrl;
+                _configModel.CustomText.EndpointUrl = endpointUrl;
             }
             if (!string.IsNullOrEmpty(appId))
             {
-                _configModel.Prediction.AppId = appId;
+                _configModel.CustomText.AppId = appId;
             }
             await StoreConfigsModelAsync();
             _loggerService.Log("Updated Custom Text prediction configs");
@@ -202,7 +202,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         }
         public void ShowPredictionConfigs()
         {
-            var configString = JsonConvert.SerializeObject(_configModel.Prediction, Formatting.Indented);
+            var configString = JsonConvert.SerializeObject(_configModel.CustomText, Formatting.Indented);
             _loggerService.Log(configString);
         }
     }
