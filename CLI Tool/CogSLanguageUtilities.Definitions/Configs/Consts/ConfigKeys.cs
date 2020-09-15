@@ -31,5 +31,10 @@
         public const string TextAnalyticsNer = "ner";
         public const string TextAnalyticsKeyphrase = "keyphrase";
 
+        // evaluation
+        public const string EvaluationLabeledExamplesAppAzureResourceKey = "azure-resource-key";
+        public const string EvaluationLabeledExamplesAppAzureResourceEndpoint = "azure-resource-endpoint";
+        public const string EvaluationLabeledExamplesAppId = "app-id";
+
     }
 }
