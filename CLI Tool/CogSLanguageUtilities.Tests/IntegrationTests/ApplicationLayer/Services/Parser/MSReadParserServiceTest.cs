@@ -50,7 +50,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
             };
         }
 
-        [Theory(Skip = "Hanging")]
+        [Theory]
         [MemberData(nameof(TestConnectionData))]
         public void TestConnection(string congnitiveServiceKey, string cognitiveServiceEndPoint, CliException expectedException)
         {
