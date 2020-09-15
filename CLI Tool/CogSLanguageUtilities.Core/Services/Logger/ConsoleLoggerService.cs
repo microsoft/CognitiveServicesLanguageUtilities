@@ -40,9 +40,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Logger
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Successfully Converted:");
                 convertedFiles.ToList().ForEach(f => Console.WriteLine("\t{0}", f));
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Failed:");
-                failedFiles.ToList().ForEach(kv => Console.WriteLine("\t{0}\t=> {1}", kv.Key, kv.Value));
+                if (failedFiles != null && failedFiles.Count != 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Failed:");
+                    failedFiles.ToList().ForEach(kv => Console.WriteLine("\t{0}\t=> {1}", kv.Key, kv.Value));
+                }
                 Console.ResetColor();
             }
         }
