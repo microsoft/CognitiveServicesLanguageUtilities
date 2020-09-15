@@ -16,7 +16,8 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
         typeof(ConfigCommand),
-        typeof(UtilitiesCommand),
+        typeof(ParseCommand),
+        typeof(ChunkCommand),
         typeof(PredictCommand),
         typeof(EvaluateCommand))]
     public class Program
