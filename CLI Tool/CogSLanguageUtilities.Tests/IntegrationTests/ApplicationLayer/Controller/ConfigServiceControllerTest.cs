@@ -148,6 +148,46 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
+        [Fact]
+        public async Task EvaluationConfigShowTestAsync()
+        {
+            // act
+            _controller.ShowEvaluationConfigs();
+
+            // assert
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
+            var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            var expectedString = JsonConvert.SerializeObject(configModel.Evaluation.LabeledExamplesApp, Formatting.Indented);
+            Assert.Equal(expectedString, _stringWriter.ToString().Trim());
+        }
+
+        public static TheoryData EvaluationSetTestData()
+        {
+            return new TheoryData<string, string, string>
+            {
+                {
+                "testKey",
+                "testEndpoint",
+                "asdouihaswd"
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(EvaluationSetTestData))]
+        public async Task EvaluationSetTestAsync(string azureResourceKey, string azureResourceEndpoint, string appId)
+        {
+            await _controller.SetEvaluationConfigsAsync(azureResourceKey, azureResourceEndpoint, appId);
+            await _controller.SetEvaluationConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
+
+            // assert
+            var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
+            var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            Assert.Equal(azureResourceKey, configModel.Evaluation.LabeledExamplesApp.AzureResourceKey);
+            Assert.Equal(azureResourceEndpoint, configModel.Evaluation.LabeledExamplesApp.AzureResourceEndpoint);
+            Assert.Equal(appId, configModel.Evaluation.LabeledExamplesApp.AppId);
+        }
+
         public static TheoryData MsReadConfigSetTestData()
         {
             return new TheoryData<string, string>
