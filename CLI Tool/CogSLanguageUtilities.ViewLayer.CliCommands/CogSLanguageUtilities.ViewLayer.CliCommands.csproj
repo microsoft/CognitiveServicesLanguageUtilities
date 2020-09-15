@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<AssemblyName>clutils</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+	<RootNamespace>Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CogSLanguageUtilities.Core\CogSLanguageUtilities.Core.csproj" />
+    <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
+  </ItemGroup>
+
+</Project>

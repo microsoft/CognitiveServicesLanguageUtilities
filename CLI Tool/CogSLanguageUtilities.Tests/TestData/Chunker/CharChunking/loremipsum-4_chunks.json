@@ -1,0 +1,170 @@
+[
+  {
+    "ChunkNumber": 1,
+    "CharCount": 811,
+    "StartPage": 1,
+    "EndPage": 1,
+    "Summary": "Lorem ... lorem"
+  },
+  {
+    "ChunkNumber": 2,
+    "CharCount": 975,
+    "StartPage": 1,
+    "EndPage": 1,
+    "Summary": "Vestibulum ... et."
+  },
+  {
+    "ChunkNumber": 3,
+    "CharCount": 812,
+    "StartPage": 1,
+    "EndPage": 1,
+    "Summary": "Nulla ... mus."
+  },
+  {
+    "ChunkNumber": 4,
+    "CharCount": 903,
+    "StartPage": 1,
+    "EndPage": 1,
+    "Summary": "Morbi ... ipsum."
+  },
+  {
+    "ChunkNumber": 5,
+    "CharCount": 956,
+    "StartPage": 1,
+    "EndPage": 2,
+    "Summary": "Mauris ... molestie."
+  },
+  {
+    "ChunkNumber": 6,
+    "CharCount": 882,
+    "StartPage": 2,
+    "EndPage": 2,
+    "Summary": "Ut ... pellentesque."
+  },
+  {
+    "ChunkNumber": 7,
+    "CharCount": 613,
+    "StartPage": 2,
+    "EndPage": 2,
+    "Summary": "Sed ... augue."
+  },
+  {
+    "ChunkNumber": 8,
+    "CharCount": 564,
+    "StartPage": 2,
+    "EndPage": 2,
+    "Summary": "Mauris ... erat."
+  },
+  {
+    "ChunkNumber": 9,
+    "CharCount": 477,
+    "StartPage": 2,
+    "EndPage": 2,
+    "Summary": "Curabitur ... aliquet."
+  },
+  {
+    "ChunkNumber": 10,
+    "CharCount": 648,
+    "StartPage": 2,
+    "EndPage": 2,
+    "Summary": "Nam ... nunc."
+  },
+  {
+    "ChunkNumber": 11,
+    "CharCount": 701,
+    "StartPage": 2,
+    "EndPage": 2,
+    "Summary": "Nullam ... eu."
+  },
+  {
+    "ChunkNumber": 12,
+    "CharCount": 482,
+    "StartPage": 2,
+    "EndPage": 3,
+    "Summary": "Nam ... lorem."
+  },
+  {
+    "ChunkNumber": 13,
+    "CharCount": 775,
+    "StartPage": 3,
+    "EndPage": 3,
+    "Summary": "Pellentesque ... turpis."
+  },
+  {
+    "ChunkNumber": 14,
+    "CharCount": 812,
+    "StartPage": 3,
+    "EndPage": 3,
+    "Summary": "Nam ... at."
+  },
+  {
+    "ChunkNumber": 15,
+    "CharCount": 677,
+    "StartPage": 3,
+    "EndPage": 3,
+    "Summary": "Etiam ... massa."
+  },
+  {
+    "ChunkNumber": 16,
+    "CharCount": 606,
+    "StartPage": 3,
+    "EndPage": 3,
+    "Summary": "Nunc ... ante."
+  },
+  {
+    "ChunkNumber": 17,
+    "CharCount": 575,
+    "StartPage": 3,
+    "EndPage": 3,
+    "Summary": "Vestibulum ... sollicitudin."
+  },
+  {
+    "ChunkNumber": 18,
+    "CharCount": 910,
+    "StartPage": 3,
+    "EndPage": 4,
+    "Summary": "Etiam ... In"
+  },
+  {
+    "ChunkNumber": 19,
+    "CharCount": 768,
+    "StartPage": 4,
+    "EndPage": 4,
+    "Summary": "scelerisque ... velit."
+  },
+  {
+    "ChunkNumber": 20,
+    "CharCount": 854,
+    "StartPage": 4,
+    "EndPage": 4,
+    "Summary": "In ... posuere."
+  },
+  {
+    "ChunkNumber": 21,
+    "CharCount": 788,
+    "StartPage": 4,
+    "EndPage": 4,
+    "Summary": "Etiam ... vestibulum."
+  },
+  {
+    "ChunkNumber": 22,
+    "CharCount": 786,
+    "StartPage": 4,
+    "EndPage": 4,
+    "Summary": "Phasellus ... dignissim."
+  },
+  {
+    "ChunkNumber": 23,
+    "CharCount": 757,
+    "StartPage": 4,
+    "EndPage": 4,
+    "Summary": "Aliquam ... urna."
+  },
+  {
+    "ChunkNumber": 24,
+    "CharCount": 288,
+    "StartPage": 4,
+    "EndPage": 4,
+    "Summary": "Mauris ... enim"
+  }
+]

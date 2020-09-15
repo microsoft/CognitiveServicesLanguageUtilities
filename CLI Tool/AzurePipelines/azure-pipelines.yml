@@ -22,20 +22,20 @@ steps:
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
   inputs:
-    restoreSolution: 'CLI Tool\CustomTextCliUtils.sln'
+    restoreSolution: 'CLI Tool\CogSLanguageUtilities.sln'
     vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
     command: restore
-    projects: 'CLI Tool\CustomTextCliUtils.sln'
+    projects: 'CLI Tool\CogSLanguageUtilities.sln'
     vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
 
 - task: VSBuild@1
-  displayName: 'Build solution CLI Tool\CustomTextCliUtils.sln'
+  displayName: 'Build solution CLI Tool\CogSLanguageUtilities.sln'
   inputs:
-    solution: 'CLI Tool\CustomTextCliUtils.sln'
+    solution: 'CLI Tool\CogSLanguageUtilities.sln'
     msbuildArgs: '/m /v:q'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
@@ -46,7 +46,7 @@ steps:
   displayName: 'Run Tests'
   inputs:
     testSelector: 'testAssemblies'
-    testAssemblyVer2: 'CLI Tool\CustomTextCliUtils.Tests\bin\Release\**\CustomTextCliUtils.Tests.dll'
+    testAssemblyVer2: 'CLI Tool\CogSLanguageUtilities.Tests\bin\Release\**\CogSLanguageUtilities.Tests.dll'
     searchFolder: '$(System.DefaultWorkingDirectory)'
     otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1 /platform:x64'
     platform: 'x64'
