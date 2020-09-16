@@ -37,36 +37,52 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// Incrementally aggregates the confusion results for intents
         /// </summary>
         public void AggregateIntentStats(
-            string actualIntentName,
-            string predictedIntentName)
+            List<string> actualIntentNames,
+            List<string> predictedIntentNames)
         {
-            if (!IntentsStats.TryGetValue(actualIntentName, out ConfusionMatrix labeledConfusionCount))
+            // initialize actualClassName in IntentStats
+            actualIntentNames.ForEach(actualIntentName =>
             {
-                // Initialize if not in dictionary to avoid null errors
-                labeledConfusionCount = IntentsStats[actualIntentName] = new ConfusionMatrix
+                if (!IntentsStats.TryGetValue(actualIntentName, out ConfusionMatrix labeledConfusionCount))
                 {
-                    ModelName = actualIntentName,
-                    ModelType = GetModelTypeString(actualIntentName)
-                };
-            }
-
-            if (actualIntentName == predictedIntentName)
-            {
-                labeledConfusionCount.TruePositives++;
-            }
-            else
-            {
-                labeledConfusionCount.FalseNegatives++;
-                if (!IntentsStats.TryGetValue(predictedIntentName, out ConfusionMatrix predictedConfusionCount))
-                {
-                    predictedConfusionCount = IntentsStats[predictedIntentName] = new ConfusionMatrix
+                    // Initialize if not in dictionary to avoid null errors
+                    labeledConfusionCount = IntentsStats[actualIntentName] = new ConfusionMatrix
                     {
-                        ModelName = predictedIntentName,
-                        ModelType = GetModelTypeString(predictedIntentName)
+                        ModelName = actualIntentName,
+                        ModelType = GetModelTypeString(actualIntentName)
                     };
                 }
-                predictedConfusionCount.FalsePositives++;
-            }
+            });
+            var actualIntentNamesSet = new HashSet<string>(actualIntentNames);
+            var predictedIntentNamesSet = new HashSet<string>(predictedIntentNames);
+            // calculate false positives
+            predictedIntentNames.ForEach(predictedIntentName =>
+            {
+                if (actualIntentNames.Contains(predictedIntentName))
+                {
+                    IntentsStats[predictedIntentName].TruePositives++;
+                }
+                else
+                {
+                    if (!IntentsStats.TryGetValue(predictedIntentName, out ConfusionMatrix predictedConfusionCount))
+                    {
+                        predictedConfusionCount = IntentsStats[predictedIntentName] = new ConfusionMatrix
+                        {
+                            ModelName = predictedIntentName,
+                            ModelType = GetModelTypeString(predictedIntentName)
+                        };
+                    }
+                    predictedConfusionCount.FalsePositives++;
+                }
+            });
+            // calculate false negatives
+            actualIntentNames.ForEach(actualIntentName =>
+            {
+                if (!predictedIntentNamesSet.Contains(actualIntentName))
+                {
+                    IntentsStats[actualIntentName].FalseNegatives++;
+                }
+            });
         }
 
         /// <summary>

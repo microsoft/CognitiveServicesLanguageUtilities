@@ -24,7 +24,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
             };
             var predictionData = new PredictionObject
             {
-                Classification = "testClass",
+                Classification = new List<string> { "testClass" },
                 Entities = entities
             };
             var list = new List<TestingExample>

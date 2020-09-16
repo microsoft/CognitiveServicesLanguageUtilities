@@ -7,7 +7,6 @@
      * https://nlp.cs.nyu.edu/sekine/papers/li07.pdf
      */
     public class MucEntityConfusionMatrix
-
     {
         /// <summary>
         /// Gets or sets the model name

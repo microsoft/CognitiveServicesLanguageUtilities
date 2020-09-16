@@ -29,8 +29,8 @@ namespace Microsoft.LuisModelEvaluation.Controllers
                 var utteranceStats = new UtteranceStats
                 {
                     UtteranceText = testCase.Text,
-                    LabeledIntentName = testCase.LabeledData.Classification,
-                    PredictedIntentName = testCase.PredictedData.Classification
+                    LabeledIntentNames = testCase.LabeledData.Classification,
+                    PredictedIntentNames = testCase.PredictedData.Classification
                 };
 
                 // Populate False entities and Aggregate Entity MUC model stats
@@ -88,6 +88,10 @@ namespace Microsoft.LuisModelEvaluation.Controllers
                 if (example?.PredictedData == null || example?.LabeledData == null)
                 {
                     throw new InvalidInputException("ActualData and LabeledData");
+                }
+                if (example.PredictedData.Classification.Count < 1 || example.LabeledData.Classification.Count < 1)
+                {
+                    throw new InvalidInputException("Classification");
                 }
             }
         }

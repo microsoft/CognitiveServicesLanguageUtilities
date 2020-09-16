@@ -15,10 +15,10 @@ namespace Microsoft.LuisModelEvaluation.Models.Result
         public string UtteranceText { get; set; }
 
         [JsonProperty(PropertyName = "predictedIntentName")]
-        public string PredictedIntentName { get; set; }
+        public List<string> PredictedIntentNames { get; set; }
 
         [JsonProperty(PropertyName = "labeledIntentName")]
-        public string LabeledIntentName { get; set; }
+        public List<string> LabeledIntentNames { get; set; }
 
         [JsonProperty(PropertyName = "falsePositiveEntities")]
         public List<EntityNameAndLocation> FalsePositiveEntities { get; set; }
