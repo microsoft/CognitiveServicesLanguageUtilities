@@ -50,7 +50,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
             };
         }
 
-        [Theory(Skip = "Test Hangs in azure pipeline")]
+        [Theory]
         [MemberData(nameof(TestConnectionData))]
         public void TestConnection(string congnitiveServiceKey, string cognitiveServiceEndPoint, CliException expectedException)
         {
@@ -86,7 +86,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
             };
         }
 
-        [Theory(Skip = "Test Hangs in azure pipeline")]
+        [Theory]
         [MemberData(nameof(TestParsingData))]
         public void TestParsing(Stream inputDocument, MSReadParserService parser, CliException expectedException)
         {
