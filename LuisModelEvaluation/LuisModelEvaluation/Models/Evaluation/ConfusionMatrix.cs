@@ -16,19 +16,19 @@
 
         public double CalculatePrecision()
         {
-            return (double)TruePositives / (TruePositives + FalsePositives);
+            return (TruePositives + FalsePositives) == 0 ? 0 : (double)TruePositives / (TruePositives + FalsePositives);
         }
 
         public double CalculateRecall()
         {
-            return (double)TruePositives / (TruePositives + FalseNegatives);
+            return (TruePositives + FalseNegatives) == 0 ? 0 : (double)TruePositives / (TruePositives + FalseNegatives);
         }
 
         public double CalculateFScore()
         {
             double precision = CalculatePrecision();
             double recall = CalculateRecall();
-            return 2 * precision * recall / (precision + recall);
+            return (precision + recall) == 0 ? 0 : 2 * precision * recall / (precision + recall);
         }
     }
 }

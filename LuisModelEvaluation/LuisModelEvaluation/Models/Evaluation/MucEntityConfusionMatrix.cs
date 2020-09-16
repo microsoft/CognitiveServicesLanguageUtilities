@@ -41,53 +41,53 @@
 
         public double CalculatePrecision()
         {
-            return ((double)CorrectTextCount + CorrectTypeCount) / (2 * ActualCount);
+            return ActualCount == 0 ? 0: ((double)CorrectTextCount + CorrectTypeCount) / (2 * ActualCount);
         }
 
         public double CalculateRecall()
         {
-            return ((double)CorrectTextCount + CorrectTypeCount) / (2 * PossibleCount);
+            return PossibleCount == 0 ? 0 : ((double)CorrectTextCount + CorrectTypeCount) / (2 * PossibleCount);
         }
 
         public double CalculateFScore()
         {
             double precision = CalculatePrecision();
             double recall = CalculateRecall();
-            return (2 * precision * recall) / (precision + recall);
+            return (precision + recall) == 0 ? 0: (2 * precision * recall) / (precision + recall);
         }
 
         public double CalculateTextPrecision()
         {
-            return ((double)CorrectTextCount) / ActualCount;
+            return ActualCount == 0 ? 0 : ((double)CorrectTextCount) / ActualCount;
         }
 
         public double CalculateTextRecall()
         {
-            return ((double)CorrectTextCount) / PossibleCount;
+            return PossibleCount == 0 ? 0 : ((double)CorrectTextCount) / PossibleCount;
         }
 
         public double CalculateTextFScore()
         {
             double precision = CalculateTextPrecision();
             double recall = CalculateTextRecall();
-            return (2 * precision * recall) / (precision + recall);
+            return (precision + recall) == 0 ? 0 : (2 * precision * recall) / (precision + recall);
         }
 
         public double CalculateTypePrecision()
         {
-            return ((double)CorrectTypeCount) / ActualCount;
+            return ActualCount == 0 ? 0 : ((double)CorrectTypeCount) / ActualCount;
         }
 
         public double CalculateTypeRecall()
         {
-            return ((double)CorrectTypeCount) / PossibleCount;
+            return PossibleCount == 0 ? 0 : ((double)CorrectTypeCount) / PossibleCount;
         }
 
         public double CalculateTypeFScore()
         {
             double precision = CalculateTypePrecision();
             double recall = CalculateTypeRecall();
-            return (2 * precision * recall) / (precision + recall);
+            return (precision + recall) == 0 ? 0 : (2 * precision * recall) / (precision + recall);
         }
     }
 }
