@@ -9,13 +9,8 @@ pool:
 trigger: none
 
 pr:
-  branches:
-    include:
-    - main
-    - dev
-  paths:
-    include:
-    - docs/*
+- main
+- dev
 
 steps:
 - task: NuGetToolInstaller@1

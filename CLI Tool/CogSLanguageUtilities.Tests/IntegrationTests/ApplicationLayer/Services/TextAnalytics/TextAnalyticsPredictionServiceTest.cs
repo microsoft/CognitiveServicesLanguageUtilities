@@ -40,7 +40,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             };
         }
 
-        [Theory(Skip = "Hanging")]
+        [Theory]
         [MemberData(nameof(TextAnalyticsPredictTestData))]
         public async Task PredictSentimentBatchAsyncTest(string key, string endpoint, string language, List<string> queries, CliException expectedException)
         {
@@ -71,7 +71,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             }
         }
 
-        [Theory(Skip = "Hanging")]
+        [Theory]
         [MemberData(nameof(TextAnalyticsPredictTestData))]
         public async Task PredictNerBatchAsyncTest(string key, string endpoint, string language, List<string> queries, CliException expectedException)
         {
@@ -104,7 +104,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             }
         }
 
-        [Theory(Skip = "Hanging")]
+        [Theory]
         [MemberData(nameof(TextAnalyticsPredictTestData))]
         public async Task PredictKeyphraseBatchAsyncTest(string key, string endpoint, string language, List<string> queries, CliException expectedException)
         {
