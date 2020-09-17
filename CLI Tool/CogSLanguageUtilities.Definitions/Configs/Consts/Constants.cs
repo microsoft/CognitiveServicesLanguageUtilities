@@ -11,7 +11,7 @@
         public static readonly string[] MsReadValidFileTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
         // chunker
         public const double MaxLineLengthPrecentile = 0.95;
-        public const double PercentageOfMaxLineLength = 0.7;
+        public const double MaxNumberOfIndentsAfterLine = 4;
         public const double IndentPercentageOfLine = 0.05;
         public const double EndOfParagraphVerticalSpaceFactor = 1.25;
         // custom text
