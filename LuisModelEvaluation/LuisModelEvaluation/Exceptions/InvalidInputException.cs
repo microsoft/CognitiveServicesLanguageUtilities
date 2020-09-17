@@ -10,7 +10,7 @@ namespace Microsoft.LuisModelEvaluation.Exceptions
 
         public static string ConstructMessage(string fieldName)
         {
-            return $"The field {fieldName} can't be null or empty";
+            return $"The field {fieldName} can't be null";
         }
     }
 }

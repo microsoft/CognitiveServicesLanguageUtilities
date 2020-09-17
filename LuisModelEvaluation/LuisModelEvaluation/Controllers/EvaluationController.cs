@@ -89,9 +89,13 @@ namespace Microsoft.LuisModelEvaluation.Controllers
                 {
                     throw new InvalidInputException("ActualData and LabeledData");
                 }
-                if (example.PredictedData.Classification.Count < 1 || example.LabeledData.Classification.Count < 1)
+                if (example.PredictedData.Classification == null || example.LabeledData.Classification == null)
                 {
                     throw new InvalidInputException("Classification");
+                }
+                if (example.PredictedData.Entities == null || example.LabeledData.Entities == null)
+                {
+                    throw new InvalidInputException("Entities");
                 }
             }
         }
