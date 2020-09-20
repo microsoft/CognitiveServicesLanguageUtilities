@@ -178,6 +178,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         {
             // if adding the paragraph to the chunk exceeds the character limit
             // current chunk will be added to result and the paragraph will be added to the next chunk
+            currentParagraph.Append(Environment.NewLine);
             if (currentChunk.Length + currentParagraph.Length > charLimit)
             {
                 var text = currentChunk.ToString().Trim();
