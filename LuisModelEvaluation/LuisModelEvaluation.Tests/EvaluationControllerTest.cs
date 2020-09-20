@@ -26,8 +26,17 @@ namespace Microsoft.LuisModelEvaluation.Tests
                     {
                         Name = "testEntity",
                         StartPosition = 1,
-                        EndPosition = 4,
-                        Children = null
+                        EndPosition = 20,
+                        Children = new List<Entity>()
+                        {
+                            new Entity
+                            {
+                                Name = "testChildEntity",
+                                StartPosition = 4,
+                                EndPosition = 10,
+                                Children = null
+                            }
+                        }
                     }
                 }
             };
@@ -41,7 +50,16 @@ namespace Microsoft.LuisModelEvaluation.Tests
                         Name = "wrongEntity",
                         StartPosition = 5,
                         EndPosition = 8,
-                        Children = null
+                        Children = new List<Entity>()
+                        {
+                            new Entity
+                            {
+                                Name = "testWrongChildEntity",
+                                StartPosition = 4,
+                                EndPosition = 10,
+                                Children = null
+                            }
+                        }
                     }
                 }
             };
@@ -58,7 +76,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
                         }
                     },
                     perfectScore,
-                    1,
+                    2,
                     1
                 },
                 {
@@ -70,7 +88,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
                         }
                     },
                     worstScore,
-                    2,
+                    4,
                     2
                 }
             };
