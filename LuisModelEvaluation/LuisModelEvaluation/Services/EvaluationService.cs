@@ -8,8 +8,8 @@ namespace Microsoft.LuisModelEvaluation.Services
 {
     /// <summary>
     /// This class is responsible for calculating and aggregating all the confusion values for a batch test.
-    /// It allows incremental aggregation of confusions results of intents and entities as well as keeping track
-    /// of utterances false positive and false negative entities.
+    /// It allows incremental aggregation of confusions results of classes and entities as well as keeping track
+    /// of queries false positive and false negative entities.
     /// This class follows the "Message Understanding Conference (MUC)" terminology
     /// https://en.wikipedia.org/wiki/Message_Understanding_Conference
     /// Entity evaluation specifics can be found in the following paper
@@ -24,80 +24,80 @@ namespace Microsoft.LuisModelEvaluation.Services
     {
         public EvaluationService(IEnumerable<Model> entities, IEnumerable<Model> classes)
         {
-            InitIntentAndEntityStats(entities, classes);
+            InitClassificationAndEntityStats(entities, classes);
         }
 
-        public Dictionary<string, ConfusionMatrix> IntentsStats { get; } = new Dictionary<string, ConfusionMatrix>();
+        public Dictionary<string, ConfusionMatrix> ClassificationStats { get; } = new Dictionary<string, ConfusionMatrix>();
 
         public Dictionary<string, MucEntityConfusionMatrix> EntityStats { get; } = new Dictionary<string, MucEntityConfusionMatrix>();
 
-        public List<UtteranceStats> UtterancesStats { get; } = new List<UtteranceStats>();
+        public List<QueryStats> QueryStats { get; } = new List<QueryStats>();
 
         /// <summary>
-        /// Incrementally aggregates the confusion results for intents
+        /// Incrementally aggregates the confusion results for classes
         /// </summary>
-        public void AggregateIntentStats(
-            List<string> actualIntentNames,
-            List<string> predictedIntentNames)
+        public void AggregateClassificationStats(
+            List<string> actualClassNames,
+            List<string> predictedClassNames)
         {
-            // initialize actualClassName in IntentStats
-            actualIntentNames.ForEach(actualIntentName =>
+            // initialize actualClassName in ClassificationStats
+            actualClassNames.ForEach(actualClassName =>
             {
-                if (!IntentsStats.TryGetValue(actualIntentName, out ConfusionMatrix labeledConfusionCount))
+                if (!ClassificationStats.TryGetValue(actualClassName, out ConfusionMatrix labeledConfusionCount))
                 {
                     // Initialize if not in dictionary to avoid null errors
-                    labeledConfusionCount = IntentsStats[actualIntentName] = new ConfusionMatrix
+                    labeledConfusionCount = ClassificationStats[actualClassName] = new ConfusionMatrix
                     {
-                        ModelName = actualIntentName,
-                        ModelType = GetModelTypeString(actualIntentName)
+                        ModelName = actualClassName,
+                        ModelType = GetModelTypeString(actualClassName)
                     };
                 }
             });
-            var actualIntentNamesSet = new HashSet<string>(actualIntentNames);
-            var predictedIntentNamesSet = new HashSet<string>(predictedIntentNames);
+            var actualClassNamesSet = new HashSet<string>(actualClassNames);
+            var predictedClassNamesSet = new HashSet<string>(predictedClassNames);
             // calculate false positives
-            predictedIntentNames.ForEach(predictedIntentName =>
+            predictedClassNames.ForEach(predictedClassName =>
             {
-                if (actualIntentNames.Contains(predictedIntentName))
+                if (actualClassNames.Contains(predictedClassName))
                 {
-                    IntentsStats[predictedIntentName].TruePositives++;
+                    ClassificationStats[predictedClassName].TruePositives++;
                 }
                 else
                 {
-                    if (!IntentsStats.TryGetValue(predictedIntentName, out ConfusionMatrix predictedConfusionCount))
+                    if (!ClassificationStats.TryGetValue(predictedClassName, out ConfusionMatrix predictedConfusionCount))
                     {
-                        predictedConfusionCount = IntentsStats[predictedIntentName] = new ConfusionMatrix
+                        predictedConfusionCount = ClassificationStats[predictedClassName] = new ConfusionMatrix
                         {
-                            ModelName = predictedIntentName,
-                            ModelType = GetModelTypeString(predictedIntentName)
+                            ModelName = predictedClassName,
+                            ModelType = GetModelTypeString(predictedClassName)
                         };
                     }
                     predictedConfusionCount.FalsePositives++;
                 }
             });
             // calculate false negatives
-            actualIntentNames.ForEach(actualIntentName =>
+            actualClassNames.ForEach(actualClassName =>
             {
-                if (!predictedIntentNamesSet.Contains(actualIntentName))
+                if (!predictedClassNamesSet.Contains(actualClassName))
                 {
-                    IntentsStats[actualIntentName].FalseNegatives++;
+                    ClassificationStats[actualClassName].FalseNegatives++;
                 }
             });
         }
 
         /// <summary>
         /// Incrementally aggregates the confusion results for entities
-        /// and populates false positive and negatives entities for each utterance
+        /// and populates false positive and negatives entities for each query
         /// </summary>
-        public void PopulateUtteranceAndEntityStats(
+        public void PopulateQueryAndEntityStats(
             IReadOnlyList<Entity> labeledEntities,
             IEnumerable<Entity> predictedEntities,
-            UtteranceStats utteranceStats)
+            QueryStats queryStats)
         {
             /*
              *  Will keep track of false negative entities in a dictionary with key in this format
              *  key = ["<entity name><entity start index><entity end index>"]
-             *  to make sure they do not collide if multiple entities of the same type exist in same utterance but in different places
+             *  to make sure they do not collide if multiple entities of the same type exist in same query but in different places
              */
             var falseNegativeEntities = new Dictionary<string, Entity>();
             foreach (var labeledEntity in labeledEntities)
@@ -112,14 +112,14 @@ namespace Microsoft.LuisModelEvaluation.Services
                 EvaluatePredictedEntity(
                     labeledEntities,
                     predictedEntity,
-                    utteranceStats,
+                    queryStats,
                     falseNegativeEntities);
             }
 
-            // After the false negatives are now purified (while evaluating entities), convert and add them to the utterancestats
+            // After the false negatives are now purified (while evaluating entities), convert and add them to the queryStats
             foreach (var falseNegative in falseNegativeEntities.Values)
             {
-                utteranceStats.FalseNegativeEntities.Add(new EntityNameAndLocation
+                queryStats.FalseNegativeEntities.Add(new EntityNameAndLocation
                 {
                     EntityName = falseNegative.Name,
                     StartPosition = falseNegative.StartPosition,
@@ -127,8 +127,8 @@ namespace Microsoft.LuisModelEvaluation.Services
                 });
             }
 
-            // Add the processed utterance to the list of processed utterances
-            UtterancesStats.Add(utteranceStats);
+            // Add the processed query to the list of processed queries
+            QueryStats.Add(queryStats);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// <summary>
         /// Appends the full entity name with start and end positions to form a unique key
         /// key = ["{entity_name}{entity_start_index}{entity_end_index}"]
-        /// to make sure they do not collide if multiple entities of the same type exist in same utterance but in different places
+        /// to make sure they do not collide if multiple entities of the same type exist in same query but in different places
         /// </summary>
         private static string GetUniqueEntityKey(string labeledEntityFullName, int startPosition, int endPosition)
         {
@@ -221,7 +221,7 @@ namespace Microsoft.LuisModelEvaluation.Services
         private void EvaluatePredictedEntity(
             IReadOnlyList<Entity> labeledEntities,
             Entity predictedEntity,
-            UtteranceStats utteranceStats,
+            QueryStats queryStats,
             Dictionary<string, Entity> falseNegativeEntities)
         {
 
@@ -230,7 +230,7 @@ namespace Microsoft.LuisModelEvaluation.Services
             AddUpCorrectTypeAndTextEntitiesCountsRecursively(
                                 labeledEntities,
                                 predictedEntity,
-                                utteranceStats,
+                                queryStats,
                                 falseNegativeEntities);
         }
 
@@ -272,7 +272,7 @@ namespace Microsoft.LuisModelEvaluation.Services
         private void AddUpCorrectTypeAndTextEntitiesCountsRecursively(
             IReadOnlyList<Entity> labeledEntities,
             Entity predictedEntity,
-            UtteranceStats utteranceStats,
+            QueryStats queryStats,
             Dictionary<string, Entity> falseNegativeEntities,
             string labeledEntityPrefix = "",
             string predictedEntityPrefix = "")
@@ -339,7 +339,7 @@ namespace Microsoft.LuisModelEvaluation.Services
                             AddUpCorrectTypeAndTextEntitiesCountsRecursively(
                                 labeledEntity.Children,
                                 childPredictedEntity,
-                                utteranceStats,
+                                queryStats,
                                 falseNegativeEntities,
                                 labeledEntityFullName,
                                 predictedEntityFullName);
@@ -354,7 +354,7 @@ namespace Microsoft.LuisModelEvaluation.Services
             {
                 AddFalsePositivesRecursively(
                     predictedEntity,
-                    utteranceStats,
+                    queryStats,
                     setChildrenAsFalse,
                     predictedEntityPrefix);
             }
@@ -366,13 +366,13 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// </summary>
         private void AddFalsePositivesRecursively(
             Entity predictedEntity,
-            UtteranceStats utteranceStats,
+            QueryStats queryStats,
             bool alsoAddChildren,
             string predictedEntityPrefix = "")
         {
             var predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
 
-            utteranceStats.FalsePositiveEntities.Add(new EntityNameAndLocation
+            queryStats.FalsePositiveEntities.Add(new EntityNameAndLocation
             {
                 EntityName = predictedEntityFullName,
                 StartPosition = predictedEntity.StartPosition,
@@ -385,7 +385,7 @@ namespace Microsoft.LuisModelEvaluation.Services
                 {
                     AddFalsePositivesRecursively(
                         childPredictedEntity,
-                        utteranceStats,
+                        queryStats,
                         alsoAddChildren,
                         predictedEntityFullName);
                 }
@@ -393,16 +393,16 @@ namespace Microsoft.LuisModelEvaluation.Services
         }
 
         /// <summary>
-        /// Add intents and entities to the stats data structues
+        /// Add classes and entities to the stats data structues
         /// This will help models that never appeared in the labeled or the predicted to also be indicated in the results
         /// </summary>
-        private void InitIntentAndEntityStats(IEnumerable<Model> entities, IEnumerable<Model> classes)
+        private void InitClassificationAndEntityStats(IEnumerable<Model> entities, IEnumerable<Model> classes)
         {
             if (classes != null)
             {
                 foreach (var e in classes)
                 {
-                    IntentsStats[e.Name] = new ConfusionMatrix
+                    ClassificationStats[e.Name] = new ConfusionMatrix
                     {
                         ModelName = e.Name,
                         ModelType = e.Type
@@ -423,7 +423,7 @@ namespace Microsoft.LuisModelEvaluation.Services
         }
 
         /// <summary>
-        /// Given an intent or entity display name returns the corresponding model type string
+        /// Given a class or entity display name returns the corresponding model type string
         /// </summary>
         private string GetModelTypeString(string entityDisplayName)
         {

@@ -101,18 +101,18 @@ namespace Microsoft.LuisModelEvaluation.Tests
         {
             var result = _evaluationController.EvaluateModel(testData);
             Assert.Equal(entityCount, result.EntityModelsStats.Count);
-            Assert.Equal(classCount, result.IntentModelsStats.Count);
+            Assert.Equal(classCount, result.ClassificationModelsStats.Count);
             foreach (var entityStats in result.EntityModelsStats)
             {
                 Assert.Equal(score, entityStats.Precision);
                 Assert.Equal(score, entityStats.Recall);
                 Assert.Equal(score, entityStats.FScore);
             }
-            foreach (var intentStats in result.IntentModelsStats)
+            foreach (var classificationStats in result.ClassificationModelsStats)
             {
-                Assert.Equal(score, intentStats.Precision);
-                Assert.Equal(score, intentStats.Recall);
-                Assert.Equal(score, intentStats.FScore);
+                Assert.Equal(score, classificationStats.Precision);
+                Assert.Equal(score, classificationStats.Recall);
+                Assert.Equal(score, classificationStats.FScore);
             }
             return;
         }

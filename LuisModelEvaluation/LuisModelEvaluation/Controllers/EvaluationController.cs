@@ -22,32 +22,32 @@ namespace Microsoft.LuisModelEvaluation.Controllers
 
             foreach (var testCase in testData)
             {
-                // Intent model stats aggregation
-                evaluationService.AggregateIntentStats(testCase.LabeledData.Classification, testCase.PredictedData.Classification);
+                // classification model stats aggregation
+                evaluationService.AggregateClassificationStats(testCase.LabeledData.Classification, testCase.PredictedData.Classification);
 
-                // Prepare utterance stats
-                var utteranceStats = new UtteranceStats
+                // Prepare query stats
+                var queryStats = new QueryStats
                 {
-                    UtteranceText = testCase.Text,
-                    LabeledIntentNames = testCase.LabeledData.Classification,
-                    PredictedIntentNames = testCase.PredictedData.Classification
+                    QueryText = testCase.Text,
+                    LabeledClassNames = testCase.LabeledData.Classification,
+                    PredictedClassNames = testCase.PredictedData.Classification
                 };
 
                 // Populate False entities and Aggregate Entity MUC model stats
-                evaluationService.PopulateUtteranceAndEntityStats(testCase.LabeledData.Entities, testCase.PredictedData.Entities, utteranceStats);
+                evaluationService.PopulateQueryAndEntityStats(testCase.LabeledData.Entities, testCase.PredictedData.Entities, queryStats);
             }
 
-            // Calculate precision, recall and fScore for Intent models
-            var intentModelsStats = new List<ModelStats>(evaluationService.IntentsStats.Count);
-            foreach (var intentConfusion in evaluationService.IntentsStats.Values)
+            // Calculate precision, recall and fScore for Classification models
+            var classificationModelsStats = new List<ModelStats>(evaluationService.ClassificationStats.Count);
+            foreach (var classificationConfusionMatrix in evaluationService.ClassificationStats.Values)
             {
-                intentModelsStats.Add(new ModelStats
+                classificationModelsStats.Add(new ModelStats
                 {
-                    ModelName = intentConfusion.ModelName,
-                    ModelType = intentConfusion.ModelType,
-                    Precision = intentConfusion.CalculatePrecision(),
-                    Recall = intentConfusion.CalculateRecall(),
-                    FScore = intentConfusion.CalculateFScore(),
+                    ModelName = classificationConfusionMatrix.ModelName,
+                    ModelType = classificationConfusionMatrix.ModelType,
+                    Precision = classificationConfusionMatrix.CalculatePrecision(),
+                    Recall = classificationConfusionMatrix.CalculateRecall(),
+                    FScore = classificationConfusionMatrix.CalculateFScore(),
                     EntityTextFScore = null,
                     EntityTypeFScore = null
                 });
@@ -71,9 +71,9 @@ namespace Microsoft.LuisModelEvaluation.Controllers
 
             return new BatchTestResponse
             {
-                IntentModelsStats = intentModelsStats,
+                ClassificationModelsStats = classificationModelsStats,
                 EntityModelsStats = entityModelsStats,
-                UtterancesStats = evaluationService.UtterancesStats
+                QueryStats = evaluationService.QueryStats
             };
         }
 
