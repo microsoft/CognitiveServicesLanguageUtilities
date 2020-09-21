@@ -37,11 +37,11 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// Incrementally aggregates the confusion results for classes
         /// </summary>
         public void AggregateClassificationStats(
-            List<string> actualClassNames,
-            List<string> predictedClassNames)
+            HashSet<string> actualClassNamesSet,
+            HashSet<string> predictedClassNamesSet)
         {
             // initialize actualClassName in ClassificationStats
-            actualClassNames.ForEach(actualClassName =>
+            actualClassNamesSet.Select(actualClassName =>
             {
                 if (!ClassificationStats.TryGetValue(actualClassName, out ConfusionMatrix labeledConfusionCount))
                 {
@@ -52,13 +52,12 @@ namespace Microsoft.LuisModelEvaluation.Services
                         ModelType = GetModelTypeString(actualClassName)
                     };
                 }
+                return 0;
             });
-            var actualClassNamesSet = new HashSet<string>(actualClassNames);
-            var predictedClassNamesSet = new HashSet<string>(predictedClassNames);
             // calculate false positives
-            predictedClassNames.ForEach(predictedClassName =>
+            predictedClassNamesSet.Select(predictedClassName =>
             {
-                if (actualClassNames.Contains(predictedClassName))
+                if (actualClassNamesSet.Contains(predictedClassName))
                 {
                     ClassificationStats[predictedClassName].TruePositives++;
                 }
@@ -74,14 +73,16 @@ namespace Microsoft.LuisModelEvaluation.Services
                     }
                     predictedConfusionCount.FalsePositives++;
                 }
+                return 0;
             });
             // calculate false negatives
-            actualClassNames.ForEach(actualClassName =>
+            actualClassNamesSet.Select(actualClassName =>
             {
                 if (!predictedClassNamesSet.Contains(actualClassName))
                 {
                     ClassificationStats[actualClassName].FalseNegatives++;
                 }
+                return 0;
             });
         }
 
