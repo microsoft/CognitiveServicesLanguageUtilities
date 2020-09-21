@@ -179,19 +179,12 @@ namespace Microsoft.LuisModelEvaluation.Services
             Dictionary<string, Entity> falseNegativeEntities,
             string labeledEntityPrefix = "")
         {
-            var labeledEntityFullName = GetEntityFullName(labeledEntityPrefix, labeledEntity.Name);
+            // get or create entity stats
+            string labeledEntityFullName;
+            MucEntityConfusionMatrix labeledEntityEvalObj;
+            GetOrAddEntityStatObject(labeledEntity, labeledEntityPrefix, out labeledEntityFullName, out labeledEntityEvalObj);
 
-            // Add up MUC actual/labeled count
-            if (!EntityStats.TryGetValue(labeledEntityFullName, out MucEntityConfusionMatrix labeledEntityEvalObj))
-            {
-                // Create if not exists in dictionary
-                labeledEntityEvalObj = EntityStats[labeledEntityFullName] = new MucEntityConfusionMatrix
-                {
-                    ModelName = labeledEntityFullName,
-                    ModelType = GetModelTypeString(labeledEntityFullName)
-                };
-            }
-
+            // init possible count
             labeledEntityEvalObj.ActualCount++;
 
             // Add all labeled as false negatives now and remove entities that match while evaluating entities
@@ -242,18 +235,12 @@ namespace Microsoft.LuisModelEvaluation.Services
             Entity predictedEntity,
             string predictedEntityPrefix = "")
         {
-            var predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
+            // get or create entity stats
+            string predictedEntityFullName;
+            MucEntityConfusionMatrix predictedEntityEvalObj;
+            GetOrAddEntityStatObject(predictedEntity, predictedEntityPrefix, out predictedEntityFullName, out predictedEntityEvalObj);
 
-            // Add up MUC possible/guessed count
-            if (!EntityStats.TryGetValue(predictedEntityFullName, out MucEntityConfusionMatrix predictedEntityEvalObj))
-            {
-                // Create if not exists in dictionary
-                predictedEntityEvalObj = EntityStats[predictedEntityFullName] = new MucEntityConfusionMatrix
-                {
-                    ModelName = predictedEntityFullName,
-                    ModelType = GetModelTypeString(predictedEntityFullName)
-                };
-            }
+            // init possible count
             predictedEntityEvalObj.PossibleCount++;
 
             if (predictedEntity.Children != null)
@@ -278,17 +265,10 @@ namespace Microsoft.LuisModelEvaluation.Services
             string labeledEntityPrefix = "",
             string predictedEntityPrefix = "")
         {
-            var predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
-
-            if (!EntityStats.TryGetValue(predictedEntityFullName, out MucEntityConfusionMatrix predictedEntityEvalObj))
-            {
-                // Create if not exists in dictionary
-                predictedEntityEvalObj = EntityStats[predictedEntityFullName] = new MucEntityConfusionMatrix
-                {
-                    ModelName = predictedEntityFullName,
-                    ModelType = GetModelTypeString(predictedEntityFullName)
-                };
-            }
+            // get or create entity stats
+            string predictedEntityFullName;
+            MucEntityConfusionMatrix predictedEntityEvalObj;
+            GetOrAddEntityStatObject(predictedEntity, predictedEntityPrefix, out predictedEntityFullName, out predictedEntityEvalObj);
 
             // A boolean to keep track if the guessed entity matches with any labeled entity
             var isFalsePositive = true;
@@ -437,6 +417,22 @@ namespace Microsoft.LuisModelEvaluation.Services
         public static string GetFormattedHierarchicalChildName(string parentName, string childName)
         {
             return $"{parentName}{ModelHierarchySeparator}{childName}";
+        }
+
+        private void GetOrAddEntityStatObject(Entity entity, string entityPrefix, out string entityFullName, out MucEntityConfusionMatrix entityEvalObj)
+        {
+            entityFullName = GetEntityFullName(entityPrefix, entity.Name);
+
+            // Add up MUC possible/guessed count
+            if (!EntityStats.TryGetValue(entityFullName, out entityEvalObj))
+            {
+                // Create if not exists in dictionary
+                entityEvalObj = EntityStats[entityFullName] = new MucEntityConfusionMatrix
+                {
+                    ModelName = entityFullName,
+                    ModelType = GetModelTypeString(entityFullName)
+                };
+            }
         }
     }
 }
