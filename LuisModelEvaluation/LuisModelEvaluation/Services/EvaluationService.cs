@@ -398,9 +398,9 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// </summary>
         private void InitIntentAndEntityStats(IEnumerable<Model> entities, IEnumerable<Model> classes)
         {
-            if (entities != null)
+            if (classes != null)
             {
-                foreach (var e in entities)
+                foreach (var e in classes)
                 {
                     IntentsStats[e.Name] = new ConfusionMatrix
                     {
@@ -409,9 +409,9 @@ namespace Microsoft.LuisModelEvaluation.Services
                     };
                 }
             }
-            if (classes != null)
+            if (entities != null)
             {
-                foreach (var c in classes)
+                foreach (var c in entities)
                 {
                     EntityStats[c.Name] = new MucEntityConfusionMatrix
                     {
