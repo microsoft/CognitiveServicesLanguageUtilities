@@ -95,10 +95,10 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                     Line previousLine = i > 0 ? rr.Lines[i - 1] : null;
                     AppendLineToChunk(charLimit, currentParagraph, pageText, resultPages, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l, previousLine, nextLine, indentLength, medianLineStart, medianLineEnd);
                 }
-                // special case: if last page add any text in the current paragraph to the page
-                if (currentParagraph.Length > 0 && ++currentPage == totalPageCount)
+                // special case: if last page add text in the current paragraph to the page
+                if (++currentPage == totalPageCount && currentParagraph.Length > 0)
                 {
-                    pageText.Append(currentParagraph.ToString());
+                    HandleEndOfParagraph(charLimit, currentParagraph, pageText, resultPages, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, parsingResult.RecognitionResults.Count);
                 }
                 // add pageText to list of pages after concatenating all paragraphs
                 if (pageText.Length > 0)
@@ -147,9 +147,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                 }
             }
             // Add remaining text after loop ends
-            if (currentParagraph.Length > 0 || currentChunk.Length > 0)
+            if (currentParagraph.Length > 0)
             {
-                currentChunk.Append(currentParagraph.ToString());
+                HandleEndOfParagraph(charLimit, currentParagraph, currentChunk, resultChunks, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, parsingResult.RecognitionResults.Count);
+            }
+            if (currentChunk.Length > 0)
+            {
                 var text = currentChunk.ToString().Trim();
                 var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
                 resultChunks.Add(chunkInfo);
@@ -246,11 +249,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private double GetBoundingBoxTopLeftY(Line line)
         {
             return line.BoundingBox[1];
-        }
-
-        private double GetBoundingBoxBottomLeftY(Line line)
-        {
-            return line.BoundingBox[5];
         }
 
         public List<ChunkInfo> Chunk(string text, int charLimit)
