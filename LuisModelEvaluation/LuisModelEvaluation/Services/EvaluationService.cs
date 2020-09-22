@@ -23,7 +23,7 @@ namespace Microsoft.LuisModelEvaluation.Services
     /// </summary>
     public class EvaluationService
     {
-        public EvaluationService(IEnumerable<Model> entities, IEnumerable<Model> classes)
+        public EvaluationService(IReadOnlyList<Model> entities, IReadOnlyList<Model> classes)
         {
             InitClassificationAndEntityStats(entities, classes);
         }
@@ -90,7 +90,7 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// </summary>
         public void PopulateQueryAndEntityStats(
             IReadOnlyList<Entity> labeledEntities,
-            IEnumerable<Entity> predictedEntities,
+            IReadOnlyList<Entity> predictedEntities,
             QueryStats queryStats)
         {
             /*
@@ -375,7 +375,7 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// Add classes and entities to the stats data structues
         /// This will help models that never appeared in the labeled or the predicted to also be indicated in the results
         /// </summary>
-        private void InitClassificationAndEntityStats(IEnumerable<Model> entities, IEnumerable<Model> classes)
+        private void InitClassificationAndEntityStats(IReadOnlyList<Model> entities, IReadOnlyList<Model> classes)
         {
             if (classes != null)
             {

@@ -119,7 +119,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
 
         public static TheoryData InvalidInputTestData()
         {
-            return new TheoryData<IEnumerable<TestingExample>>
+            return new TheoryData<IReadOnlyList<TestingExample>>
             {
                 {
                     null
@@ -144,7 +144,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
 
         [Theory]
         [MemberData(nameof(InvalidInputTestData))]
-        public void InvalidInputTest(IEnumerable<TestingExample> testData)
+        public void InvalidInputTest(IReadOnlyList<TestingExample> testData)
         {
             var evaluation = new EvaluationController();
             Assert.Throws<InvalidInputException>(() => evaluation.EvaluateModel(testData));

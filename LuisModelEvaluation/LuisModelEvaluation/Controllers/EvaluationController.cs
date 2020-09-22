@@ -10,10 +10,10 @@ namespace Microsoft.LuisModelEvaluation.Controllers
     public class EvaluationController
     {
         public BatchTestResponse EvaluateModel(
-            IEnumerable<TestingExample> testData,
+            IReadOnlyList<TestingExample> testData,
             bool verbose = false,
-            IEnumerable<Model> entities = null,
-            IEnumerable<Model> classes = null)
+            IReadOnlyList<Model> entities = null,
+            IReadOnlyList<Model> classes = null)
         {
             ValidateInput(testData);
 
@@ -77,7 +77,7 @@ namespace Microsoft.LuisModelEvaluation.Controllers
             };
         }
 
-        private void ValidateInput(IEnumerable<TestingExample> testData)
+        private void ValidateInput(IReadOnlyList<TestingExample> testData)
         {
             if (testData == null || testData.Count() == 0)
             {
