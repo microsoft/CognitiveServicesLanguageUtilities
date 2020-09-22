@@ -81,7 +81,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                var predictionConfigs = configService.GetPredictionConfigModel();
+                var predictionConfigs = configService.GetCustomTextConfigModel();
                 return new CustomTextService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
                     predictionConfigs.AppId);
             }).As<ICustomTextService>();

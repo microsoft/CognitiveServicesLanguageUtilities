@@ -8,12 +8,12 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs
 {
     public interface IConfigsLoader
     {
-        BlobStorageConfigModel GetBlobConfigModel();
-        ChunkerConfigModel GetChunkerConfigModel();
-        LocalStorageConfigModel GetLocalConfigModel();
-        MSReadConfigModel GetMSReadConfigModel();
-        CustomTextConfigModel GetPredictionConfigModel();
-        StorageConfigModel GetStorageConfigModel();
-        TextAnalyticsConfigModel GetTextAnalyticsConfigModel();
+        public BlobStorageConfigModel GetBlobConfigModel();
+        public ChunkerConfigModel GetChunkerConfigModel();
+        public LocalStorageConfigModel GetLocalConfigModel();
+        public MSReadConfigModel GetMSReadConfigModel();
+        public CustomTextConfigModel GetCustomTextConfigModel();
+        public StorageConfigModel GetStorageConfigModel();
+        public TextAnalyticsConfigModel GetTextAnalyticsConfigModel();
     }
 }
