@@ -125,19 +125,19 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.Log("Updated Local Storage configs");
         }
 
-        public async Task SetPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId)
+        public async Task SetCustomTextConfigsAsync(string customTextKey, string endpointUrl, string appId)
         {
             if (!string.IsNullOrEmpty(customTextKey))
             {
-                _configModel.Prediction.CustomTextKey = customTextKey;
+                _configModel.CustomText.CustomTextKey = customTextKey;
             }
             if (!string.IsNullOrEmpty(endpointUrl))
             {
-                _configModel.Prediction.EndpointUrl = endpointUrl;
+                _configModel.CustomText.EndpointUrl = endpointUrl;
             }
             if (!string.IsNullOrEmpty(appId))
             {
-                _configModel.Prediction.AppId = appId;
+                _configModel.CustomText.AppId = appId;
             }
             await StoreConfigsModelAsync();
             _loggerService.Log("Updated Custom Text prediction configs");
@@ -184,9 +184,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var configString = JsonConvert.SerializeObject(_configModel.Storage.Blob, Formatting.Indented);
             _loggerService.Log(configString);
         }
-        public void ShowPredictionConfigs()
+        public void ShowCustomTextConfigs()
         {
-            var configString = JsonConvert.SerializeObject(_configModel.Prediction, Formatting.Indented);
+            var configString = JsonConvert.SerializeObject(_configModel.CustomText, Formatting.Indented);
             _loggerService.Log(configString);
         }
     }
