@@ -44,10 +44,10 @@ namespace Microsoft.LuisModelEvaluation.Services
             // initialize actualClassName in ClassificationStats
             foreach (var actualClassName in actualClassNamesSet)
             {
-                if (!ClassificationStats.TryGetValue(actualClassName, out ConfusionMatrix labeledConfusionCount))
+                if (!ClassificationStats.ContainsKey(actualClassName))
                 {
                     // Initialize if not in dictionary to avoid null errors
-                    labeledConfusionCount = ClassificationStats[actualClassName] = new ConfusionMatrix
+                    ClassificationStats[actualClassName] = new ConfusionMatrix
                     {
                         ModelName = actualClassName,
                         ModelType = Constants.ModelNotFoundMessage
