@@ -23,7 +23,7 @@ namespace Microsoft.LuisModelEvaluation.Controllers
             foreach (var testCase in testData)
             {
                 // classification model stats aggregation
-                evaluationService.AggregateClassificationStats(new HashSet<string> ( testCase.LabeledData.Classification ), new HashSet<string> ( testCase.PredictedData.Classification ) );
+                evaluationService.AggregateClassificationStats(new HashSet<string>(testCase.LabeledData.Classification), new HashSet<string>(testCase.PredictedData.Classification));
 
                 // Prepare query stats
                 var queryStats = new QueryStats

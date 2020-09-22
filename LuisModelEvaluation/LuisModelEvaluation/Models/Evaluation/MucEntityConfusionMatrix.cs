@@ -40,7 +40,7 @@
 
         public double CalculatePrecision()
         {
-            return ActualCount == 0 ? 0: ((double)CorrectTextCount + CorrectTypeCount) / (2 * ActualCount);
+            return ActualCount == 0 ? 0 : ((double)CorrectTextCount + CorrectTypeCount) / (2 * ActualCount);
         }
 
         public double CalculateRecall()
@@ -52,7 +52,7 @@
         {
             double precision = CalculatePrecision();
             double recall = CalculateRecall();
-            return (precision + recall) == 0 ? 0: (2 * precision * recall) / (precision + recall);
+            return (precision + recall) == 0 ? 0 : (2 * precision * recall) / (precision + recall);
         }
 
         public double CalculateTextPrecision()
