@@ -42,7 +42,7 @@ namespace Microsoft.LuisModelEvaluation.Services
             HashSet<string> predictedClassNamesSet)
         {
             // initialize actualClassName in ClassificationStats
-            actualClassNamesSet.Select(actualClassName =>
+            foreach (var actualClassName in actualClassNamesSet)
             {
                 if (!ClassificationStats.TryGetValue(actualClassName, out ConfusionMatrix labeledConfusionCount))
                 {
@@ -53,10 +53,9 @@ namespace Microsoft.LuisModelEvaluation.Services
                         ModelType = Constants.ModelNotFoundMessage
                     };
                 }
-                return 0;
-            });
+            }
             // calculate false positives
-            predictedClassNamesSet.Select(predictedClassName =>
+            foreach (var predictedClassName in predictedClassNamesSet)
             {
                 if (actualClassNamesSet.Contains(predictedClassName))
                 {
@@ -74,17 +73,15 @@ namespace Microsoft.LuisModelEvaluation.Services
                     }
                     predictedConfusionCount.FalsePositives++;
                 }
-                return 0;
-            });
+            }
             // calculate false negatives
-            actualClassNamesSet.Select(actualClassName =>
+            foreach (var actualClassName in actualClassNamesSet)
             {
                 if (!predictedClassNamesSet.Contains(actualClassName))
                 {
                     ClassificationStats[actualClassName].FalseNegatives++;
                 }
-                return 0;
-            });
+            }
         }
 
         /// <summary>
