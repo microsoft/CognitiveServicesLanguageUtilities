@@ -401,11 +401,9 @@ namespace Microsoft.LuisModelEvaluation.Services
             }
         }
 
-        static string ModelHierarchySeparator = "::";
-
         public static string GetFormattedHierarchicalChildName(string parentName, string childName)
         {
-            return $"{parentName}{ModelHierarchySeparator}{childName}";
+            return $"{parentName}{Constants.ModelHierarchySeparator}{childName}";
         }
 
         private void GetOrAddEntityStatObject(Entity entity, string entityPrefix, out string entityFullName, out MucEntityConfusionMatrix entityEvalObj)
