@@ -1,4 +1,5 @@
-﻿using Microsoft.LuisModelEvaluation.Models.Evaluation;
+﻿using Microsoft.LuisModelEvaluation.Configs;
+using Microsoft.LuisModelEvaluation.Models.Evaluation;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Microsoft.LuisModelEvaluation.Models.Result;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace Microsoft.LuisModelEvaluation.Services
                     labeledConfusionCount = ClassificationStats[actualClassName] = new ConfusionMatrix
                     {
                         ModelName = actualClassName,
-                        ModelType = GetModelTypeString(actualClassName)
+                        ModelType = Constants.ModelNotFoundMessage
                     };
                 }
                 return 0;
@@ -68,7 +69,7 @@ namespace Microsoft.LuisModelEvaluation.Services
                         predictedConfusionCount = ClassificationStats[predictedClassName] = new ConfusionMatrix
                         {
                             ModelName = predictedClassName,
-                            ModelType = GetModelTypeString(predictedClassName)
+                            ModelType = Constants.ModelNotFoundMessage
                         };
                     }
                     predictedConfusionCount.FalsePositives++;
@@ -403,15 +404,6 @@ namespace Microsoft.LuisModelEvaluation.Services
             }
         }
 
-        /// <summary>
-        /// Given a class or entity display name returns the corresponding model type string
-        /// </summary>
-        private string GetModelTypeString(string entityDisplayName)
-        {
-            // TODO: Check with Amr that this is correct
-            return "Unknown Model Type";
-        }
-
         static string ModelHierarchySeparator = "::";
 
         public static string GetFormattedHierarchicalChildName(string parentName, string childName)
@@ -430,7 +422,7 @@ namespace Microsoft.LuisModelEvaluation.Services
                 entityEvalObj = EntityStats[entityFullName] = new MucEntityConfusionMatrix
                 {
                     ModelName = entityFullName,
-                    ModelType = GetModelTypeString(entityFullName)
+                    ModelType = Constants.ModelNotFoundMessage
                 };
             }
         }
