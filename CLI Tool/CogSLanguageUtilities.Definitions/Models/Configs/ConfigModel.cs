@@ -18,8 +18,8 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
         [JsonProperty("chunker")]
         public ChunkerConfigModel Chunker { get; set; }
 
-        [JsonProperty("prediction")]
-        public CustomTextConfigModel Prediction { get; set; }
+        [JsonProperty("customtext")]
+        public CustomTextConfigModel CustomText { get; set; }
 
         [JsonProperty("textanalytics")]
         public TextAnalyticsConfigModel TextAnalytics { get; set; }
@@ -29,7 +29,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
             Storage = new StorageConfigModel();
             Parser = new ParserConfigModel();
             Chunker = new ChunkerConfigModel();
-            Prediction = new CustomTextConfigModel();
+            CustomText = new CustomTextConfigModel();
             TextAnalytics = new TextAnalyticsConfigModel();
         }
     }

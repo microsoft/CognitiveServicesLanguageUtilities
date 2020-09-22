@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\a-noyass\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\a-noyass\\.nuget\\packages"
+    ]
+  }
+}

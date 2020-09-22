@@ -1,0 +1,9 @@
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.deps.json
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.dll
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.pdb
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\obj\Debug\netstandard2.0\LuisModelEvaluation.AssemblyInfoInputs.cache
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\obj\Debug\netstandard2.0\LuisModelEvaluation.AssemblyInfo.cs
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\obj\Debug\netstandard2.0\LuisModelEvaluation.csproj.CoreCompileInputs.cache
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\obj\Debug\netstandard2.0\LuisModelEvaluation.dll
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\obj\Debug\netstandard2.0\LuisModelEvaluation.pdb
+C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\LuisModelEvaluation\LuisModelEvaluation\obj\Debug\netstandard2.0\LuisModelEvaluation.csprojAssemblyReference.cache

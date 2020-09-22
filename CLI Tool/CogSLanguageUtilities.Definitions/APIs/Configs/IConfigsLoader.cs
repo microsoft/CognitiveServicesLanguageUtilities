@@ -12,7 +12,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs
         ChunkerConfigModel GetChunkerConfigModel();
         LocalStorageConfigModel GetLocalConfigModel();
         MSReadConfigModel GetMSReadConfigModel();
-        CustomTextConfigModel GetPredictionConfigModel();
+        CustomTextConfigModel GetCustomTextConfigModel();
         StorageConfigModel GetStorageConfigModel();
         TextAnalyticsConfigModel GetTextAnalyticsConfigModel();
     }

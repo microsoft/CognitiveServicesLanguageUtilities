@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("prediction", Description = "sets configs for prediction")]
-    public class ConfigSetPredictionCommand
+    [Command("customtext", Description = "sets configs for Custom Text")]
+    public class ConfigSetCustomTextCommand
     {
         [Option(CommandOptionTemplate.CustomTextAzureResourceKey, Description = "custom text app prediction resource key")]
         public string CustomTextKey { get; }
@@ -26,7 +26,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigsController>();
-                await controller.SetPredictionConfigsAsync(CustomTextKey, EndpointUrl, AppId);
+                await controller.SetCustomTextConfigsAsync(CustomTextKey, EndpointUrl, AppId);
             }
         }
     }

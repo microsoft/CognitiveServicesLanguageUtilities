@@ -7,7 +7,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
         typeof(ConfigSetStorageCommand),
         typeof(ConfigSetParserCommand),
         typeof(ConfigSetChunkerCommand),
-        typeof(ConfigSetPredictionCommand),
+        typeof(ConfigSetCustomTextCommand),
         typeof(ConfigSetTextAnalyticsCommand))]
     public class ConfigSetCommand
     {

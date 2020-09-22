@@ -10,7 +10,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
         typeof(ConfigShowParserCommand),
         typeof(ConfigShowStorageCommand),
         typeof(ConfigShowChunkerCommand),
-        typeof(ConfigShowPredictionCommand),
+        typeof(ConfigShowCustomTextCommand),
         typeof(ConfigShowTextAnalyticsCommand))]
     public class ConfigShowCommand
     {

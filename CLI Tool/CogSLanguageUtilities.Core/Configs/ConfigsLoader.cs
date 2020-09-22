@@ -50,9 +50,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return _configModel.Parser.MsRead;
         }
 
-        public CustomTextConfigModel GetPredictionConfigModel()
+        public CustomTextConfigModel GetCustomTextConfigModel()
         {
-            return _configModel.Prediction;
+            return _configModel.CustomText;
         }
 
         public StorageConfigModel GetStorageConfigModel()
