@@ -3,7 +3,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Evaluation
 {
     public class EvaluationConfigModel
     {
-        [JsonProperty("labeled-examples-app")]
+        [JsonProperty("labeledExamplesApp")]
         public LabeledExamplesAppConfigModel LabeledExamplesApp { get; set; }
 
         public EvaluationConfigModel()

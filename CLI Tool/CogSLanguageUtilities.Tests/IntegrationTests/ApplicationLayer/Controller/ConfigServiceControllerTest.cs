@@ -166,9 +166,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
             return new TheoryData<string, string, string>
             {
                 {
-                "testKey",
-                "testEndpoint",
-                "asdouihaswd"
+                    "testKey",
+                    "testEndpoint",
+                    "asdouihaswd"
                 }
             };
         }

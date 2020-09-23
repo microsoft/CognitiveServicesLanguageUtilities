@@ -24,7 +24,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
 
         [JsonProperty("textanalytics")]
         public TextAnalyticsConfigModel TextAnalytics { get; set; }
-        
+
         [JsonProperty("evaluation")]
         public EvaluationConfigModel Evaluation { get; set; }
 

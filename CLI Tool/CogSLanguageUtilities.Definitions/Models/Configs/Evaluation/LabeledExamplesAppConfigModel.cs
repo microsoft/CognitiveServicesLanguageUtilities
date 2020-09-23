@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Evaluation
 {
