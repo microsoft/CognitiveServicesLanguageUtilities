@@ -1,18 +1,18 @@
-using Microsoft.LuisModelEvaluation.Controllers;
 using Microsoft.LuisModelEvaluation.Exceptions;
 using Microsoft.LuisModelEvaluation.Models.Input;
+using Microsoft.LuisModelEvaluation.Orchestrators;
 using System.Collections.Generic;
 using Xunit;
 
 namespace Microsoft.LuisModelEvaluation.Tests
 {
-    public class EvaluationControllerTest
+    public class EvaluationOrchestratorTest
     {
-        EvaluationController _evaluationController;
+        EvaluationOrchestrator _evaluationOrchestrator;
 
-        public EvaluationControllerTest()
+        public EvaluationOrchestratorTest()
         {
-            _evaluationController = new EvaluationController();
+            _evaluationOrchestrator = new EvaluationOrchestrator();
         }
 
         public static TheoryData EvaluateModelTestData()
@@ -99,7 +99,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
         [MemberData(nameof(EvaluateModelTestData))]
         public void EvaluateModelTest(List<TestingExample> testData, double score, int entityCount, int classCount)
         {
-            var result = _evaluationController.EvaluateModel(testData);
+            var result = _evaluationOrchestrator.EvaluateModel(testData);
             Assert.Equal(entityCount, result.EntityModelsStats.Count);
             Assert.Equal(classCount, result.ClassificationModelsStats.Count);
             foreach (var entityStats in result.EntityModelsStats)
@@ -146,7 +146,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
         [MemberData(nameof(InvalidInputTestData))]
         public void InvalidInputTest(IReadOnlyList<TestingExample> testData)
         {
-            var evaluation = new EvaluationController();
+            var evaluation = new EvaluationOrchestrator();
             Assert.Throws<InvalidInputException>(() => evaluation.EvaluateModel(testData));
         }
     }

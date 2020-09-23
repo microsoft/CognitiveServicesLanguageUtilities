@@ -5,9 +5,9 @@ using Microsoft.LuisModelEvaluation.Services;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.LuisModelEvaluation.Controllers
+namespace Microsoft.LuisModelEvaluation.Orchestrators
 {
-    public class EvaluationController
+    public class EvaluationOrchestrator
     {
         /// <summary>
         /// Evaluate trained application performance against labeled data using fscore for classes and MUC Evaluation for entities
