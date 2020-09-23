@@ -23,5 +23,12 @@
     "customtext-key": "testKey",
     "customtext-endpoint": "https://test.cognitiveservices.azure.com",
     "app-id": "testId"
+  },
+  "evaluation": {
+    "labeled-examples-app": {
+      "azure-resource-key": "cc0c5afc3ddc475e96cbdccd4fceef40",
+      "azure-resource-endpoint": "https://nayergroup.cognitiveservices.azure.com/",
+      "app-id": "3ecf7b65-2b06-4c8a-a928-8ff2dfd48389"
+    }
   }
 }

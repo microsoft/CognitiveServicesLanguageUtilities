@@ -30,10 +30,26 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             }
         }
 
+        public void ShowEvaluationConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.Evaluation.LabeledExamplesApp, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
         public void ShowTextAnalyticsConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel.TextAnalytics, Formatting.Indented);
             _loggerService.Log(configString);
+        }
+
+        public async Task SetEvaluationConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string appId)
+        {
+            _configModel.Evaluation.LabeledExamplesApp.AzureResourceKey = azureResourceKey ?? _configModel.Evaluation.LabeledExamplesApp.AzureResourceKey;
+            _configModel.Evaluation.LabeledExamplesApp.AzureResourceEndpoint = azureResourceEndpoint ?? _configModel.Evaluation.LabeledExamplesApp.AzureResourceEndpoint;
+            _configModel.Evaluation.LabeledExamplesApp.AppId = appId ?? _configModel.Evaluation.LabeledExamplesApp.AppId;
+
+            await StoreConfigsModelAsync();
+            _loggerService.Log("Updated Custom Text prediction configs");
         }
 
         private async Task ReadConfigsFromFile(string filePath)

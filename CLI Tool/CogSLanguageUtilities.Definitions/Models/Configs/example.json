@@ -33,5 +33,12 @@
       "ner": false,
       "keyphrase": true
     }
+  },
+  "evaluation": {
+    "labeledExamplesApp": {
+      "azure-resource-key": "",
+      "azure-resource-endpoint": "",
+      "app-id": ""
+    }
   }
 }

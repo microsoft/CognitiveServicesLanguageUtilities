@@ -33,5 +33,11 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
         public const string TextAnalyticsEnableSentiment = "--" + ConfigKeys.TextAnalyticsSentiment + " <BOOL>";
         public const string TextAnalyticsEnableNer = "--" + ConfigKeys.TextAnalyticsNer + " <BOOL>";
         public const string TextAnalyticsEnableKeyphrase = "--" + ConfigKeys.TextAnalyticsKeyphrase + " <BOOL>";
+
+        // evaluation
+        public const string EvaluationLabeledExamplesAppAzureResourceKey = "--" + ConfigKeys.EvaluationLabeledExamplesAppAzureResourceKey + " <RESOURCE_KEY>";
+        public const string EvaluationLabeledExamplesAppAzureResourceEndpoint = "--" + ConfigKeys.EvaluationLabeledExamplesAppAzureResourceEndpoint + " <ENDPOINT_URL>";
+        public const string EvaluationLabeledExamplesAppId = "--" + ConfigKeys.EvaluationLabeledExamplesAppId + " <APP_ID>";
+
     }
 }
