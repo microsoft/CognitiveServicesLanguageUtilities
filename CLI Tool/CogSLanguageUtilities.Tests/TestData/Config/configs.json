@@ -11,7 +11,7 @@
     }
   },
   "parser": {
-    "MSRead": {
+    "msread": {
       "cognitive-services-endpoint": "https://test.api.cognitive.microsoft.com/",
       "cognitive-services-key": "test"
     }

@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Newtonsoft.Json;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Evaluation
 {
     public class LabeledExamplesAppConfigModel
     {
-        [JsonProperty("azure-resource-key")]
+        [JsonProperty(ConfigKeys.EvaluationLabeledExamplesAppAzureResourceKey)]
         public string AzureResourceKey { get; set; }
 
-        [JsonProperty("azure-resource-endpoint")]
+        [JsonProperty(ConfigKeys.EvaluationLabeledExamplesAppAzureResourceEndpoint)]
         public string AzureResourceEndpoint { get; set; }
 
-        [JsonProperty("app-id")]
+        [JsonProperty(ConfigKeys.EvaluationLabeledExamplesAppId)]
         public string AppId { get; set; }
     }
 }
