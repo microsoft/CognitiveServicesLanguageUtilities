@@ -73,7 +73,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult, int charLimit)
         {
             var resultPages = new List<ChunkInfo>();
-            var maxLineLength = CaluculateMaxLineLength(parsingResult);
+            var medianLineStart = CalculateMedianLineStart(parsingResult);
+            var medianLineEnd = CalculateMedianLineEnd(parsingResult);
+            var indentLength = CalculateIndentLength(parsingResult);
             var currentParagraph = new StringBuilder();
             StringBuilder pageText = new StringBuilder();
             var currentPage = 0;
@@ -86,14 +88,17 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             {
                 // update paragraphPageStart if no overflowing paragraph in new page
                 currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
-                foreach (Line l in rr.Lines)
+                for (int i = 0; i < rr.Lines.Count; i++)
                 {
-                    AppendLineToChunk(charLimit, currentParagraph, pageText, resultPages, maxLineLength, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l);
+                    Line l = rr.Lines[i];
+                    Line nextLine = i < rr.Lines.Count - 1 ? rr.Lines[i + 1] : null;
+                    Line previousLine = i > 0 ? rr.Lines[i - 1] : null;
+                    AppendLineToChunk(charLimit, currentParagraph, pageText, resultPages, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l, previousLine, nextLine, indentLength, medianLineStart, medianLineEnd);
                 }
-                // special case: if last page add any text in the current paragraph to the page
-                if (currentParagraph.Length > 0 && ++currentPage == totalPageCount)
+                // special case: if last page add text in the current paragraph to the page
+                if (++currentPage == totalPageCount && currentParagraph.Length > 0)
                 {
-                    pageText.Append(currentParagraph.ToString());
+                    HandleEndOfParagraph(charLimit, currentParagraph, pageText, resultPages, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, parsingResult.RecognitionResults.Count);
                 }
                 // add pageText to list of pages after concatenating all paragraphs
                 if (pageText.Length > 0)
@@ -123,7 +128,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             StringBuilder currentParagraph = new StringBuilder();
             StringBuilder currentChunk = new StringBuilder();
             List<ChunkInfo> resultChunks = new List<ChunkInfo>();
-            var maxLineLength = CaluculateMaxLineLength(parsingResult);
+            var medianLineStart = CalculateMedianLineStart(parsingResult);
+            var medianLineEnd = CalculateMedianLineEnd(parsingResult);
+            var indentLength = CalculateIndentLength(parsingResult);
             var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
             var chunkCounter = 1;
@@ -131,15 +138,21 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             {
                 // update paragraphPageStart if no overflowing paragraph in new page
                 currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
-                foreach (Line l in rr.Lines)
+                for (int i = 0; i < rr.Lines.Count; i++)
                 {
-                    AppendLineToChunk(charLimit, currentParagraph, currentChunk, resultChunks, maxLineLength, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l);
+                    Line l = rr.Lines[i];
+                    Line nextLine = i < rr.Lines.Count - 1 ? rr.Lines[i + 1] : null;
+                    Line previousLine = i > 0 ? rr.Lines[i - 1] : null;
+                    AppendLineToChunk(charLimit, currentParagraph, currentChunk, resultChunks, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, (int)rr.Page, l, previousLine, nextLine, indentLength, medianLineStart, medianLineEnd);
                 }
             }
             // Add remaining text after loop ends
-            if (currentParagraph.Length > 0 || currentChunk.Length > 0)
+            if (currentParagraph.Length > 0)
             {
-                currentChunk.Append(currentParagraph.ToString());
+                HandleEndOfParagraph(charLimit, currentParagraph, currentChunk, resultChunks, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, parsingResult.RecognitionResults.Count);
+            }
+            if (currentChunk.Length > 0)
+            {
                 var text = currentChunk.ToString().Trim();
                 var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
                 resultChunks.Add(chunkInfo);
@@ -147,7 +160,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             return resultChunks;
         }
 
-        private void AppendLineToChunk(int charLimit, StringBuilder currentParagraph, StringBuilder currentChunk, List<ChunkInfo> resultChunks, double maxLineLength, ref int currentChunkPageStart, ref int currentParagraphPageStart, ref int chunkCounter, int currentPage, Line l)
+        private void AppendLineToChunk(int charLimit, StringBuilder currentParagraph, StringBuilder currentChunk, List<ChunkInfo> resultChunks, ref int currentChunkPageStart, ref int currentParagraphPageStart, ref int chunkCounter, int currentPage, Line l, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
         {
             // Special case: paragraph length is bigger that character limit
             if (currentParagraph.Length + l.Text.Length > charLimit)
@@ -157,7 +170,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             // concatenate line to current paragraph
             currentParagraph.Append($"{l.Text} ");
             // end of paragraph
-            if (IsLineEndOfParagraph(l, maxLineLength))
+            if (IsLineEndOfParagraph(l, previousLine, nextLine, indentLength, medianLineStart, medianLineEnd))
             {
                 HandleEndOfParagraph(charLimit, currentParagraph, currentChunk, resultChunks, ref currentChunkPageStart, ref currentParagraphPageStart, ref chunkCounter, currentPage);
             }
@@ -167,6 +180,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         {
             // if adding the paragraph to the chunk exceeds the character limit
             // current chunk will be added to result and the paragraph will be added to the next chunk
+            currentParagraph.Append(Environment.NewLine);
             if (currentChunk.Length + currentParagraph.Length > charLimit)
             {
                 var text = currentChunk.ToString().Trim();
@@ -196,16 +210,30 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             currentParagraphPageStart = currentPage;
         }
 
-        private double CaluculateMaxLineLength(MsReadParseResult parsingResult)
+        private double CalculateIndentLength(MsReadParseResult parsingResult)
         {
             var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => GetBoundingBoxTopRightX(l) - GetBoundingBoxTopLeftX(l)).OrderBy(l => l).ToArray();
-            var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
-            return maxLineLength;
+            return linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.IndentPercentageOfLine;
         }
 
-        private bool IsLineEndOfParagraph(Line line, double maxLineLength)
+        private double CalculateMedianLineStart(MsReadParseResult parsingResult)
         {
-            return GetBoundingBoxTopRightX(line) - GetBoundingBoxTopLeftX(line) < maxLineLength;
+            var linesArraySortedByStart = parsingResult.RecognitionResults.SelectMany(p => p.Lines).OrderBy(l => GetBoundingBoxTopLeftX(l)).ToArray();
+            return GetBoundingBoxTopLeftX(linesArraySortedByStart[linesArraySortedByStart.Length / 2]);
+        }
+
+        private double CalculateMedianLineEnd(MsReadParseResult parsingResult)
+        {
+            var linesArraySortedByEnd = parsingResult.RecognitionResults.SelectMany(p => p.Lines).OrderBy(l => GetBoundingBoxTopRightX(l)).ToArray();
+            return GetBoundingBoxTopRightX(linesArraySortedByEnd[linesArraySortedByEnd.Length / 2]);
+        }
+
+        private bool IsLineEndOfParagraph(Line line, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
+        {
+            var verticalSpaceEndOfLine = nextLine != null && previousLine != null && Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine)) > Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine)) * Constants.EndOfParagraphVerticalSpaceFactor;
+            var nextLineIndented = nextLine != null && GetBoundingBoxTopLeftX(nextLine) > medianLineStart + indentLength;
+            var lineLengthSmallerThanMinLine = GetBoundingBoxTopRightX(line) < (medianLineEnd - Constants.MaxNumberOfIndentsAfterLine * indentLength);
+            return verticalSpaceEndOfLine || nextLineIndented || lineLengthSmallerThanMinLine;
         }
 
         private double GetBoundingBoxTopLeftX(Line line)
@@ -216,6 +244,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private double GetBoundingBoxTopRightX(Line line)
         {
             return line.BoundingBox[2];
+        }
+
+        private double GetBoundingBoxTopLeftY(Line line)
+        {
+            return line.BoundingBox[1];
         }
 
         public List<ChunkInfo> Chunk(string text, int charLimit)
