@@ -4,7 +4,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser
 {
     public class ParserConfigModel
     {
-        [JsonProperty("MSRead")]
+        [JsonProperty("msread")]
         public MSReadConfigModel MsRead { get; set; }
 
         public ParserConfigModel()
