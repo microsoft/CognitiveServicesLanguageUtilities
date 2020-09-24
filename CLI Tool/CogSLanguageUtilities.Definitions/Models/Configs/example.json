@@ -35,7 +35,7 @@
     }
   },
   "evaluation": {
-    "labeledExamplesApp": {
+    "labeled-examples-app": {
       "azure-resource-key": "",
       "azure-resource-endpoint": "",
       "app-id": ""
