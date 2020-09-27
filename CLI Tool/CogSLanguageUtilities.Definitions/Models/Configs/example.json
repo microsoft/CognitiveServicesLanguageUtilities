@@ -20,9 +20,16 @@
     "char-limit": 5000
   },
   "customtext": {
-    "azure-resource-endpoint": "",
-    "azure-resource-key": "",
-    "app-id": ""
+    "authoring": {
+      "azure-resource-key": "",
+      "azure-resource-endpoint": "",
+      "app-id": ""
+    },
+    "prediction": {
+      "azure-resource-endpoint": "",
+      "azure-resource-key": "",
+      "app-id": ""
+    }
   },
   "textanalytics": {
     "azure-resource-endpoint": "",
@@ -32,13 +39,6 @@
       "sentiment": true,
       "ner": false,
       "keyphrase": true
-    }
-  },
-  "evaluation": {
-    "labeled-examples-app": {
-      "azure-resource-key": "",
-      "azure-resource-endpoint": "",
-      "app-id": ""
     }
   }
 }

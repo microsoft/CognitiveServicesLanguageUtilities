@@ -30,26 +30,10 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             }
         }
 
-        public void ShowEvaluationConfigs()
-        {
-            var configString = JsonConvert.SerializeObject(_configModel.Evaluation.LabeledExamplesApp, Formatting.Indented);
-            _loggerService.Log(configString);
-        }
-
         public void ShowTextAnalyticsConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel.TextAnalytics, Formatting.Indented);
             _loggerService.Log(configString);
-        }
-
-        public async Task SetEvaluationConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string appId)
-        {
-            _configModel.Evaluation.LabeledExamplesApp.AzureResourceKey = azureResourceKey ?? _configModel.Evaluation.LabeledExamplesApp.AzureResourceKey;
-            _configModel.Evaluation.LabeledExamplesApp.AzureResourceEndpoint = azureResourceEndpoint ?? _configModel.Evaluation.LabeledExamplesApp.AzureResourceEndpoint;
-            _configModel.Evaluation.LabeledExamplesApp.AppId = appId ?? _configModel.Evaluation.LabeledExamplesApp.AppId;
-
-            await StoreConfigsModelAsync();
-            _loggerService.Log("Updated Custom Text prediction configs");
         }
 
         private async Task ReadConfigsFromFile(string filePath)
@@ -141,22 +125,40 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.Log("Updated Local Storage configs");
         }
 
-        public async Task SetCustomTextConfigsAsync(string customTextKey, string endpointUrl, string appId)
+        public async Task SetCustomTextPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId)
         {
             if (!string.IsNullOrEmpty(customTextKey))
             {
-                _configModel.CustomText.CustomTextKey = customTextKey;
+                _configModel.CustomText.Prediction.AzureResourceKey = customTextKey;
             }
             if (!string.IsNullOrEmpty(endpointUrl))
             {
-                _configModel.CustomText.EndpointUrl = endpointUrl;
+                _configModel.CustomText.Prediction.AzureResourceEndpoint = endpointUrl;
             }
             if (!string.IsNullOrEmpty(appId))
             {
-                _configModel.CustomText.AppId = appId;
+                _configModel.CustomText.Prediction.AppId = appId;
             }
             await StoreConfigsModelAsync();
             _loggerService.Log("Updated Custom Text prediction configs");
+        }
+
+        public async Task SetCustomTextAuthoringConfigsAsync(string customTextKey, string endpointUrl, string appId)
+        {
+            if (!string.IsNullOrEmpty(customTextKey))
+            {
+                _configModel.CustomText.Authoring.AzureResourceKey = customTextKey;
+            }
+            if (!string.IsNullOrEmpty(endpointUrl))
+            {
+                _configModel.CustomText.Authoring.AzureResourceEndpoint = endpointUrl;
+            }
+            if (!string.IsNullOrEmpty(appId))
+            {
+                _configModel.CustomText.Authoring.AppId = appId;
+            }
+            await StoreConfigsModelAsync();
+            _loggerService.Log("Updated Custom Text authoring configs");
         }
 
         public void ShowAllConfigs()
@@ -203,6 +205,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         public void ShowCustomTextConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel.CustomText, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+        public void ShowCustomTextPredictionConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.CustomText.Prediction, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+        public void ShowCustomTextAuthoringConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.CustomText.Authoring, Formatting.Indented);
             _loggerService.Log(configString);
         }
     }

@@ -149,19 +149,19 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
         }
 
         [Fact]
-        public async Task EvaluationConfigShowTestAsync()
+        public async Task CustomTextAuthoringConfigShowTest()
         {
             // act
-            _controller.ShowEvaluationConfigs();
+            _controller.ShowCustomTextAuthoringConfigs();
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
-            var expectedString = JsonConvert.SerializeObject(configModel.Evaluation.LabeledExamplesApp, Formatting.Indented);
+            var expectedString = JsonConvert.SerializeObject(configModel.CustomText.Authoring, Formatting.Indented);
             Assert.Equal(expectedString, _stringWriter.ToString().Trim());
         }
 
-        public static TheoryData EvaluationSetTestData()
+        public static TheoryData CustomTextAuthoringConfigSetTestData()
         {
             return new TheoryData<string, string, string>
             {
@@ -174,18 +174,18 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
         }
 
         [Theory]
-        [MemberData(nameof(EvaluationSetTestData))]
-        public async Task EvaluationSetTestAsync(string azureResourceKey, string azureResourceEndpoint, string appId)
+        [MemberData(nameof(CustomTextAuthoringConfigSetTestData))]
+        public async Task CustomTextAuthoringConfigSetTest(string azureResourceKey, string azureResourceEndpoint, string appId)
         {
-            await _controller.SetEvaluationConfigsAsync(azureResourceKey, azureResourceEndpoint, appId);
-            await _controller.SetEvaluationConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetCustomTextAuthoringConfigsAsync(azureResourceKey, azureResourceEndpoint, appId);
+            await _controller.SetCustomTextAuthoringConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
-            Assert.Equal(azureResourceKey, configModel.Evaluation.LabeledExamplesApp.AzureResourceKey);
-            Assert.Equal(azureResourceEndpoint, configModel.Evaluation.LabeledExamplesApp.AzureResourceEndpoint);
-            Assert.Equal(appId, configModel.Evaluation.LabeledExamplesApp.AppId);
+            Assert.Equal(azureResourceKey, configModel.CustomText.Authoring.AzureResourceKey);
+            Assert.Equal(azureResourceEndpoint, configModel.CustomText.Authoring.AzureResourceEndpoint);
+            Assert.Equal(appId, configModel.CustomText.Authoring.AppId);
         }
 
         public static TheoryData MsReadConfigSetTestData()
@@ -281,15 +281,15 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
         [MemberData(nameof(PredictionConfigSetTestData))]
         public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId)
         {
-            await _controller.SetCustomTextConfigsAsync(customTextKey, customTextEndpoint, appId);
-            await _controller.SetCustomTextConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetCustomTextPredictionConfigsAsync(customTextKey, customTextEndpoint, appId);
+            await _controller.SetCustomTextPredictionConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
-            Assert.Equal(customTextKey, configModel.CustomText.CustomTextKey);
-            Assert.Equal(customTextEndpoint, configModel.CustomText.EndpointUrl);
-            Assert.Equal(appId, configModel.CustomText.AppId);
+            Assert.Equal(customTextKey, configModel.CustomText.Prediction.AzureResourceKey);
+            Assert.Equal(customTextEndpoint, configModel.CustomText.Prediction.AzureResourceEndpoint);
+            Assert.Equal(appId, configModel.CustomText.Prediction.AppId);
         }
 
         public static TheoryData ChunkerConfigSetTestData()

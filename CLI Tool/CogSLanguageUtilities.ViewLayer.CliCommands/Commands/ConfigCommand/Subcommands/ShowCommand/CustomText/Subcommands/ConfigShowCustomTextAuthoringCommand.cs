@@ -5,11 +5,8 @@ using Microsoft.CustomTextCliUtils.Configs;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("customtext", Description = "shows configs for Custom Text")]
-    [Subcommand(
-        typeof(ConfigShowCustomTextAuthoringCommand),
-        typeof(ConfigShowCustomTextPredictionCommand))]
-    public class ConfigShowCustomTextCommand
+    [Command("authoring", Description = "shows configs for Custom Text Authoring")]
+    public class ConfigShowCustomTextAuthoringCommand
     {
         private void OnExecute(CommandLineApplication app)
         {
@@ -20,7 +17,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigsController>();
-                controller.ShowCustomTextConfigs();
+                controller.ShowCustomTextAuthoringConfigs();
             }
         }
     }
