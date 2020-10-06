@@ -31,14 +31,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             }
         }
 
-        public List<ChunkInfo> Chunk(string text, int charLimit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ValidateFileType(string fileName)
-        { }
-
         /*
          *  Join all elements into a single string
          */

@@ -5,6 +5,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -141,7 +142,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                 Elements = elements
             };
         }
-
 
         private void HandleNewLine(StringBuilder currentParagraph, List<DocumentElement> elements, int currentPage, ref int currentParagraphPageStart, Line l, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
         {
