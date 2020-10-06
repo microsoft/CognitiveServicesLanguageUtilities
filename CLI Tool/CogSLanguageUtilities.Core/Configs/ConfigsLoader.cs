@@ -4,7 +4,6 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalytics;
@@ -51,9 +50,14 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return _configModel.Parser.MsRead;
         }
 
-        public CustomTextConfigModel GetCustomTextConfigModel()
+        public CustomTextAppConfigModel GetCustomTextPredictionConfigModel()
         {
-            return _configModel.CustomText;
+            return _configModel.CustomText.Prediction;
+        }
+
+        public CustomTextAppConfigModel GetCustomTextAuthoringConfigModel()
+        {
+            return _configModel.CustomText.Authoring;
         }
 
         public StorageConfigModel GetStorageConfigModel()
@@ -64,11 +68,6 @@ namespace Microsoft.CustomTextCliUtils.Configs
         public TextAnalyticsConfigModel GetTextAnalyticsConfigModel()
         {
             return _configModel.TextAnalytics;
-        }
-
-        public LabeledExamplesAppConfigModel GetLabeledExamplesAppConfigModel()
-        {
-            return _configModel.Evaluation.LabeledExamplesApp;
         }
     }
 }

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("evaluation", Description = "sets configs for evaluation labeled examples app")]
-    public class ConfigSetEvaluationCommand
+    [Command("authoring", Description = "sets configs for Custom Text Authoring")]
+    public class ConfigSetCustomTextAuthoringCommand
     {
-        [Option(CommandOptionTemplate.EvaluationLabeledExamplesAppAzureResourceKey, Description = "labeled examples app authoring resource key")]
-        public string AzureResourceKey { get; }
-        [Option(CommandOptionTemplate.EvaluationLabeledExamplesAppAzureResourceEndpoint, Description = "labeled examples app authoring resource endpoint url")]
-        public string AzureResourceEndpoint { get; }
-        [Option(CommandOptionTemplate.EvaluationLabeledExamplesAppId, Description = "labeled examples app id")]
+        [Option(CommandOptionTemplate.CustomTextAzureResourceKey, Description = "custom text app authoring resource key")]
+        public string CustomTextKey { get; }
+        [Option(CommandOptionTemplate.CustomTextAzureResourceEndpoint, Description = "custom text app authoring resource endpoint url")]
+        public string EndpointUrl { get; }
+        [Option(CommandOptionTemplate.CustomTextAppId, Description = "custom text app id")]
         public string AppId { get; }
 
         private async Task OnExecuteAsync(CommandLineApplication app)
@@ -26,7 +26,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigsController>();
-                await controller.SetEvaluationConfigsAsync(AzureResourceKey, AzureResourceEndpoint, AppId);
+                await controller.SetCustomTextAuthoringConfigsAsync(CustomTextKey, EndpointUrl, AppId);
             }
         }
     }

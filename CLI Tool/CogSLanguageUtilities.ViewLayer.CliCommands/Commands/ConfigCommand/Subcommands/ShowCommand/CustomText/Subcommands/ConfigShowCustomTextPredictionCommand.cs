@@ -5,8 +5,8 @@ using Microsoft.CustomTextCliUtils.Configs;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("evaluation", Description = "shows configs for evaluation labeled examples app")]
-    public class ConfigShowEvaluationCommand
+    [Command("prediction", Description = "shows configs for Custom Text Prediction")]
+    public class ConfigShowCustomTextPredictionCommand
     {
         private void OnExecute(CommandLineApplication app)
         {
@@ -17,7 +17,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigsController>();
-                controller.ShowEvaluationConfigs();
+                controller.ShowCustomTextPredictionConfigs();
             }
         }
     }

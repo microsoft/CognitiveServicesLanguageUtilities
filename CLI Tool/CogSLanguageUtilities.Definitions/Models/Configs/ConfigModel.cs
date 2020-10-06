@@ -1,6 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalytics;
@@ -25,9 +24,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
         [JsonProperty("textanalytics")]
         public TextAnalyticsConfigModel TextAnalytics { get; set; }
 
-        [JsonProperty("evaluation")]
-        public EvaluationConfigModel Evaluation { get; set; }
-
         public ConfigModel()
         {
             Storage = new StorageConfigModel();
@@ -35,7 +31,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
             Chunker = new ChunkerConfigModel();
             CustomText = new CustomTextConfigModel();
             TextAnalytics = new TextAnalyticsConfigModel();
-            Evaluation = new EvaluationConfigModel();
         }
     }
 }

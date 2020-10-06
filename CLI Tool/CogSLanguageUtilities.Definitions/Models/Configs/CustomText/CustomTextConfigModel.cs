@@ -1,17 +1,19 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText
 {
     public class CustomTextConfigModel
     {
-        [JsonProperty(ConfigKeys.CustomTextAzureResourceKey)]
-        public string CustomTextKey { get; set; }
+        [JsonProperty("authoring")]
+        public CustomTextAppConfigModel Authoring { get; set; }
 
-        [JsonProperty(ConfigKeys.CustomTextAzureResourceEndpoint)]
-        public string EndpointUrl { get; set; }
+        [JsonProperty("prediction")]
+        public CustomTextAppConfigModel Prediction { get; set; }
 
-        [JsonProperty(ConfigKeys.CustomTextAppId)]
-        public string AppId { get; set; }
+        public CustomTextConfigModel()
+        {
+            Authoring = new CustomTextAppConfigModel();
+            Prediction = new CustomTextAppConfigModel();
+        }
     }
 }
