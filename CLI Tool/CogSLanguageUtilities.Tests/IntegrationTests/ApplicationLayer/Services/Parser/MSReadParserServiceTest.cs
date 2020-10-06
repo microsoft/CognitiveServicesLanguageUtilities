@@ -102,8 +102,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
              * */
             if (expectedException == null)
             {
-                var tmp = parser.ParseFile(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
-                var actualResult = (MsReadParseResult)tmp;
+                var actualResult = parser.ParseFileInternal(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 // validate object values aren't null
                 actualResult.RecognitionResults.ToList().ForEach(page =>
                 {

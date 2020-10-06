@@ -5,6 +5,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System.Collections.Concurrent;
@@ -22,17 +23,20 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         private IStorageService _destinationStorageService;
         private readonly ILoggerService _loggerService;
         private readonly IChunkerService _chunkerService;
+        private readonly IParserService _parserService;
 
         public ChunkerController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
             ILoggerService loggerService,
-            IChunkerService chunkerService)
+            IChunkerService chunkerService,
+            IParserService parserService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;
             _loggerService = loggerService;
             _chunkerService = chunkerService;
+            _parserService = parserService;
         }
 
         private void InitializeStorage(StorageType sourceStorageType, StorageType destinationStorageType)
@@ -59,13 +63,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                 try
                 {
                     // validate types
-                    _chunkerService.ValidateFileType(fileName);
+                    _parserService.ValidateFileType(fileName);
                     // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                    string file = await _sourceStorageService.ReadFileAsStringAsync(fileName);
+                    var file = await _sourceStorageService.ReadFileAsync(fileName);
+                    // parse file
+                    var parsedFile = await _parserService.ParseFile(file);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(file, charLimit);
+                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(parsedFile, ChunkMethod.Char, charLimit);
                     // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))

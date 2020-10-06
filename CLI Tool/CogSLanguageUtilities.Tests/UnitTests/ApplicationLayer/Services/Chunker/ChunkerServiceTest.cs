@@ -11,15 +11,15 @@ using Xunit;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 {
-    public class MsReadChunkerServiceTest
+    public class ChunkerServiceTest
     {
         public static TheoryData NoChunkingTestData()
         {
             string inputString1 = File.ReadAllText(@"TestData\Chunker\loremipsum-4.json");
-            MsReadParseResult testInput1 = JsonConvert.DeserializeObject<MsReadParseResult>(inputString1);
+            ParsedDocument testInput1 = JsonConvert.DeserializeObject<ParsedDocument>(inputString1);
             string expectedString1 = File.ReadAllText(@"TestData\Chunker\NoChunking\loremipsum-4_chunks.json");
             IEnumerable<ChunkInfo> output1 = JsonConvert.DeserializeObject<IEnumerable<ChunkInfo>>(expectedString1);
-            return new TheoryData<ParseResult, IEnumerable<ChunkInfo>>
+            return new TheoryData<ParsedDocument, IEnumerable<ChunkInfo>>
             {
                 {
                     testInput1,
@@ -31,10 +31,10 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
         public static TheoryData PageChunkingTestData()
         {
             string inputString1 = File.ReadAllText(@"TestData\Chunker\loremipsum-4.json");
-            MsReadParseResult testInput1 = JsonConvert.DeserializeObject<MsReadParseResult>(inputString1);
+            ParsedDocument testInput1 = JsonConvert.DeserializeObject<ParsedDocument>(inputString1);
             string expectedString1 = File.ReadAllText(@"TestData\Chunker\PageChunking\loremipsum-4_chunks.json");
             IEnumerable<ChunkInfo> output1 = JsonConvert.DeserializeObject<IEnumerable<ChunkInfo>>(expectedString1);
-            return new TheoryData<ParseResult, IEnumerable<ChunkInfo>>
+            return new TheoryData<ParsedDocument, IEnumerable<ChunkInfo>>
             {
                 {
                     testInput1,
@@ -46,10 +46,10 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
         public static TheoryData CharChunkingTestData()
         {
             string inputString1 = File.ReadAllText(@"TestData\Chunker\loremipsum-4.json");
-            MsReadParseResult testInput1 = JsonConvert.DeserializeObject<MsReadParseResult>(inputString1);
+            ParsedDocument testInput1 = JsonConvert.DeserializeObject<ParsedDocument>(inputString1);
             string expectedString1 = File.ReadAllText(@"TestData\Chunker\CharChunking\loremipsum-4_chunks.json");
             IEnumerable<ChunkInfo> output1 = JsonConvert.DeserializeObject<IEnumerable<ChunkInfo>>(expectedString1);
-            return new TheoryData<ParseResult, IEnumerable<ChunkInfo>>
+            return new TheoryData<ParsedDocument, IEnumerable<ChunkInfo>>
             {
                 {
                     testInput1,
@@ -60,9 +60,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 
         [Theory]
         [MemberData(nameof(NoChunkingTestData))]
-        public void NoChunkingTest(ParseResult parseResult, List<ChunkInfo> expectedChunks)
+        public void NoChunkingTest(ParsedDocument parseResult, List<ChunkInfo> expectedChunks)
         {
-            IChunkerService msReadChunker = new MsReadChunkerService();
+            IChunkerService msReadChunker = new ChunkerService();
             List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.NoChunking, 0);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
@@ -70,9 +70,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 
         [Theory]
         [MemberData(nameof(PageChunkingTestData))]
-        public void PageChunkingTest(ParseResult parseResult, List<ChunkInfo> expectedChunks)
+        public void PageChunkingTest(ParsedDocument parseResult, List<ChunkInfo> expectedChunks)
         {
-            IChunkerService msReadChunker = new MsReadChunkerService();
+            IChunkerService msReadChunker = new ChunkerService();
             List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Page, Constants.CustomTextPredictionMaxCharLimit);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
@@ -80,9 +80,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 
         [Theory]
         [MemberData(nameof(CharChunkingTestData))]
-        public void CharChunkingTest(ParseResult parseResult, List<ChunkInfo> expectedChunks)
+        public void CharChunkingTest(ParsedDocument parseResult, List<ChunkInfo> expectedChunks)
         {
-            IChunkerService msReadChunker = new MsReadChunkerService();
+            IChunkerService msReadChunker = new ChunkerService();
             List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Char, 1000);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
