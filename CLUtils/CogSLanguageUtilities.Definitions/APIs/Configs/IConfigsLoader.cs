@@ -18,5 +18,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs
         public CustomTextAppConfigModel GetCustomTextAuthoringConfigModel();
         public StorageConfigModel GetStorageConfigModel();
         public TextAnalyticsConfigModel GetTextAnalyticsConfigModel();
+        public ParserConfigModel GetParserConfigModel();
     }
 }

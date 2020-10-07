@@ -11,6 +11,7 @@
         public static readonly string ConfigsFileName = "configs.json";
         // msread
         public static readonly string[] MsReadValidFileTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
+        public static readonly string[] OpenXMLValidFileTypes = { ".docx" };
         // chunker
         public const double MaxLineLengthPrecentile = 0.95;
         public const double MaxNumberOfIndentsAfterLine = 7;
