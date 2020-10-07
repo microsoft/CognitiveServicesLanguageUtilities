@@ -1,0 +1,14 @@
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.AssemblyInfoInputs.cache
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.AssemblyInfo.cs
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.csproj.CoreCompileInputs.cache
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.deps.json
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.dll
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.pdb
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\CogSLanguageUtilities.Definitions.dll
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\LuisModelEvaluation.dll
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\CogSLanguageUtilities.Definitions.pdb
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\bin\Debug\netcoreapp3.1\LuisModelEvaluation.pdb
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.csprojAssemblyReference.cache
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.csproj.CopyComplete
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.dll
+C:\Users\a-moshab\Desktop\CogSLanguageUtilities\CLUtils\CogSLanguageUtilities.Core\obj\Debug\netcoreapp3.1\CogSLanguageUtilities.Core.pdb

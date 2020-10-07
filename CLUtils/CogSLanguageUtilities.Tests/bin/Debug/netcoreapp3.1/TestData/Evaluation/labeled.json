@@ -1,0 +1,153 @@
+{
+  "Classification": [ "Introduction" ],
+  "Entities": [
+    {
+      "StartPosition": 55,
+      "EndPosition": 357,
+      "Children": [
+        {
+          "StartPosition": 55,
+          "EndPosition": 69,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 72,
+          "EndPosition": 86,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 87,
+          "EndPosition": 101,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 104,
+          "EndPosition": 118,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 121,
+          "EndPosition": 129,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 130,
+          "EndPosition": 167,
+          "Children": null,
+          "Name": "Contact"
+        },
+        {
+          "StartPosition": 168,
+          "EndPosition": 189,
+          "Children": null,
+          "Name": "Contact"
+        },
+        {
+          "StartPosition": 190,
+          "EndPosition": 219,
+          "Children": null,
+          "Name": "Contact"
+        },
+        {
+          "StartPosition": 220,
+          "EndPosition": 235,
+          "Children": null,
+          "Name": "Contact"
+        },
+        {
+          "StartPosition": 236,
+          "EndPosition": 254,
+          "Children": null,
+          "Name": "Affiliation"
+        },
+        {
+          "StartPosition": 276,
+          "EndPosition": 296,
+          "Children": null,
+          "Name": "Affiliation"
+        },
+        {
+          "StartPosition": 256,
+          "EndPosition": 272,
+          "Children": [
+            {
+              "StartPosition": 265,
+              "EndPosition": 267,
+              "Children": null,
+              "Name": "State"
+            },
+            {
+              "StartPosition": 269,
+              "EndPosition": 272,
+              "Children": null,
+              "Name": "Country"
+            }
+          ],
+          "Name": "Address"
+        },
+        {
+          "StartPosition": 298,
+          "EndPosition": 317,
+          "Children": [
+            {
+              "StartPosition": 310,
+              "EndPosition": 312,
+              "Children": null,
+              "Name": "State"
+            },
+            {
+              "StartPosition": 314,
+              "EndPosition": 317,
+              "Children": null,
+              "Name": "Country"
+            }
+          ],
+          "Name": "Address"
+        }
+      ],
+      "Name": "Authors"
+    },
+    {
+      "StartPosition": 19737,
+      "EndPosition": 19845,
+      "Children": [
+        {
+          "StartPosition": 19737,
+          "EndPosition": 19742,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 19751,
+          "EndPosition": 19764,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 19785,
+          "EndPosition": 19791,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 19818,
+          "EndPosition": 19821,
+          "Children": null,
+          "Name": "Name"
+        },
+        {
+          "StartPosition": 19827,
+          "EndPosition": 19834,
+          "Children": null,
+          "Name": "Name"
+        }
+      ],
+      "Name": "Authors"
+    }
+  ]
+}

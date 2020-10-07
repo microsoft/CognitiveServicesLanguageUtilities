@@ -1,0 +1,134 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\CogSLanguageUtilities.Definitions\\CogSLanguageUtilities.Definitions.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\CogSLanguageUtilities.Definitions\\CogSLanguageUtilities.Definitions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\CogSLanguageUtilities.Definitions\\CogSLanguageUtilities.Definitions.csproj",
+        "projectName": "CogSLanguageUtilities.Definitions",
+        "projectPath": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\CogSLanguageUtilities.Definitions\\CogSLanguageUtilities.Definitions.csproj",
+        "packagesPath": "C:\\Users\\a-moshab\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\CogSLanguageUtilities.Definitions\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\a-moshab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\LuisModelEvaluation\\LuisModelEvaluation\\LuisModelEvaluation.csproj": {
+                "projectPath": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\LuisModelEvaluation\\LuisModelEvaluation\\LuisModelEvaluation.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Azure.AI.TextAnalytics": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Azure.CognitiveServices.Vision.ComputerVision": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\LuisModelEvaluation\\LuisModelEvaluation\\LuisModelEvaluation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\LuisModelEvaluation\\LuisModelEvaluation\\LuisModelEvaluation.csproj",
+        "projectName": "LuisModelEvaluation",
+        "projectPath": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\LuisModelEvaluation\\LuisModelEvaluation\\LuisModelEvaluation.csproj",
+        "packagesPath": "C:\\Users\\a-moshab\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\a-moshab\\Desktop\\CogSLanguageUtilities\\CLUtils\\LuisModelEvaluation\\LuisModelEvaluation\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "configFilePaths": [
+          "C:\\Users\\a-moshab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

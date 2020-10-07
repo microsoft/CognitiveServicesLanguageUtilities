@@ -1,0 +1,222 @@
+{
+  "classificationModelsStats": [
+    {
+      "modelName": "Introduction",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0
+    }
+  ],
+  "entityModelsStats": [
+    {
+      "modelName": "Authors",
+      "modelType": "Unknown Model Type",
+      "precision": 0.5,
+      "recall": 1.0,
+      "fScore": 0.6666666666666666,
+      "entityTextFScore": 0.6666666666666666,
+      "entityTypeFScore": 0.6666666666666666
+    },
+    {
+      "modelName": "Authors::Name",
+      "modelType": "Unknown Model Type",
+      "precision": 0.5,
+      "recall": 1.0,
+      "fScore": 0.6666666666666666,
+      "entityTextFScore": 0.6666666666666666,
+      "entityTypeFScore": 0.6666666666666666
+    },
+    {
+      "modelName": "Authors::Contact",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Affiliation",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Address",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Address::State",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Address::Country",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    }
+  ],
+  "documentsStats": [
+    {
+      "text": null,
+      "predictedClassNames": [ "Introduction" ],
+      "labeledClassNames": [ "Introduction" ],
+      "falsePositiveEntities": [
+        {
+          "entityName": "Authors::Address::State",
+          "startCharIndex": 265,
+          "endCharIndex": 267
+        },
+        {
+          "entityName": "Authors::Address::Country",
+          "startCharIndex": 269,
+          "endCharIndex": 272
+        },
+        {
+          "entityName": "Authors::Address::State",
+          "startCharIndex": 310,
+          "endCharIndex": 312
+        },
+        {
+          "entityName": "Authors::Address::Country",
+          "startCharIndex": 314,
+          "endCharIndex": 317
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 55,
+          "endCharIndex": 69
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 72,
+          "endCharIndex": 86
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 87,
+          "endCharIndex": 101
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 104,
+          "endCharIndex": 118
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 121,
+          "endCharIndex": 129
+        },
+        {
+          "entityName": "Authors::Contact",
+          "startCharIndex": 130,
+          "endCharIndex": 167
+        },
+        {
+          "entityName": "Authors::Contact",
+          "startCharIndex": 168,
+          "endCharIndex": 189
+        },
+        {
+          "entityName": "Authors::Contact",
+          "startCharIndex": 190,
+          "endCharIndex": 219
+        },
+        {
+          "entityName": "Authors::Contact",
+          "startCharIndex": 220,
+          "endCharIndex": 235
+        },
+        {
+          "entityName": "Authors::Affiliation",
+          "startCharIndex": 236,
+          "endCharIndex": 254
+        },
+        {
+          "entityName": "Authors::Affiliation",
+          "startCharIndex": 276,
+          "endCharIndex": 296
+        },
+        {
+          "entityName": "Authors::Address",
+          "startCharIndex": 256,
+          "endCharIndex": 272
+        },
+        {
+          "entityName": "Authors::Address::State",
+          "startCharIndex": 265,
+          "endCharIndex": 267
+        },
+        {
+          "entityName": "Authors::Address::Country",
+          "startCharIndex": 269,
+          "endCharIndex": 272
+        },
+        {
+          "entityName": "Authors::Address",
+          "startCharIndex": 298,
+          "endCharIndex": 317
+        },
+        {
+          "entityName": "Authors::Address::State",
+          "startCharIndex": 310,
+          "endCharIndex": 312
+        },
+        {
+          "entityName": "Authors::Address::Country",
+          "startCharIndex": 314,
+          "endCharIndex": 317
+        }
+      ],
+      "falseNegativeEntities": [
+        {
+          "entityName": "Authors",
+          "startCharIndex": 19737,
+          "endCharIndex": 19845
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19737,
+          "endCharIndex": 19742
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19751,
+          "endCharIndex": 19764
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19785,
+          "endCharIndex": 19791
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19818,
+          "endCharIndex": 19821
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19827,
+          "endCharIndex": 19834
+        }
+      ]
+    }
+  ]
+}
