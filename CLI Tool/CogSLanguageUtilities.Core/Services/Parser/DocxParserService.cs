@@ -1,5 +1,6 @@
 ﻿
 
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
@@ -27,8 +29,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             {
                 // traverse through elements in the document
                 var docElements = wordDoc.MainDocumentPart.Document.Body.ChildElements;
-                foreach (var e in docElements)
+                for (var i = 0; i < docElements.Count; i++)
                 {
+                    var e = docElements[i];
                     // skip empty elements
                     if (string.IsNullOrEmpty(e.InnerText)) { continue; }
 
@@ -38,10 +41,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                         Text = e.InnerText
                     };
 
-                    // handle type cases
-                    // case 1: element is a bullet point
-
-                    // case 2: element is a table
+                    // case 1: element is a table
                     if (e is Table)
                     {
                         newElement.Text = HandleTableElement(e as Table);
@@ -49,7 +49,13 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     }
                     else if (e is Paragraph)
                     {
-                        // case 3: element is a title
+                        // bulletpoints detection
+                        var bulletPointsId = e.Elements<ParagraphProperties>()?.FirstOrDefault()?
+                                .Elements<NumberingProperties>()?.FirstOrDefault()?
+                                .Elements<NumberingId>()?.FirstOrDefault()?
+                                .Val;
+
+                        // case 2: element is a title
                         if (e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val == "Title"))
                         {
                             newElement.Type = Definitions.Enums.Parser.ElementType.Title;
@@ -58,6 +64,19 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                         else if (e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val == "Heading1"))
                         {
                             newElement.Type = Definitions.Enums.Parser.ElementType.Heading;
+                        }
+                        // case 4: element is bullet points
+                        else if (bulletPointsId != null && e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val.ToString().IndexOf("heading", StringComparison.OrdinalIgnoreCase) >= 0) == false)
+                        {
+                            /*
+                             * TODO:
+                             * are there any other 'paragraph' elements in the open xml format that has the 'NumberId' property?
+                             * other than paragraphs which contain 'heading' attribute (which are already handled)
+                             * if so we should add this to the 'if' condition
+                             * in order to detect bulletpoints only
+                             */
+                            newElement.Text = HandleBulletPoints(docElements, ref i, bulletPointsId);
+                            newElement.Type = Definitions.Enums.Parser.ElementType.BulletedList;
                         }
                         // case 4: element is a usual paragraph
                         else
@@ -95,6 +114,28 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     return string.Join(" ", cells);
                 });
             return string.Join(Environment.NewLine, rows);
+        }
+
+        private static string HandleBulletPoints(OpenXmlElementList docElements, ref int i, int bulletPointsId)
+        {
+            var textResult = new List<string>();
+            var currElement = docElements[i];
+            int? currElementNumberingId = bulletPointsId;
+            while (currElement is Paragraph && currElementNumberingId == bulletPointsId && i < docElements.Count)
+            {
+                // add previous element
+                textResult.Add(currElement.InnerText);
+
+                // handle next element
+                currElement = docElements[++i];
+                var tmp = currElement.Elements<ParagraphProperties>()?.FirstOrDefault()?
+                    .Elements<NumberingProperties>()?.FirstOrDefault()?
+                    .Elements<NumberingId>()?.FirstOrDefault()?
+                    .Val;
+                currElementNumberingId = tmp == null ? null : (int?)tmp;
+            }
+            i--; // correct indexing
+            return string.Join(Environment.NewLine, textResult);
         }
     }
 }
