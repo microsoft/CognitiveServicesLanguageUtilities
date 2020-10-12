@@ -28,19 +28,19 @@ The config file is a json file with the following structure
 {
   "storage": {
     "blob": {
-      "connection-string": "",
-      "source-container": "",
-      "destination-container": ""
+      "connection-string": "DefaultEndpointsProtocol=https;AccountName=***;AccountKey=***;EndpointSuffix=core.windows.net",
+      "source-container": "***",
+      "destination-container": "***"
     },
     "local": {
-      "source-dir": "",
-      "destination-dir": ""
+      "source-dir": "***",
+      "destination-dir": "***"
     }
   },
   "parser": {
     "msread": {
-      "azure-resource-endpoint": "",
-      "azure-resource-key": ""
+      "azure-resource-endpoint": "https://eastus.api.cognitive.microsoft.com/",
+      "azure-resource-key": "***"
     }
   },
   "chunker": {
@@ -48,28 +48,27 @@ The config file is a json file with the following structure
   },
   "customText": {
     "authoring": {
-      "azure-resource-key": "",
-      "azure-resource-endpoint": "",
-      "app-id": ""
+      "azure-resource-key": "***",
+      "azure-resource-endpoint": "https://***.cognitiveservices.azure.com/",
+      "app-id": "***"
     },
     "prediction": {
-      "azure-resource-key": "",
-      "azure-resource-endpoint": "",
-      "app-id": ""
+      "azure-resource-key": "***",
+      "azure-resource-endpoint": "https://***.cognitiveservices.azure.com",
+      "app-id": "***"
     }
   },
   "textanalytics": {
-    "azure-resource-endpoint": "",
-    "azure-resource-key": "",
+    "azure-resource-endpoint": "https://***.cognitiveservices.azure.com",
+    "azure-resource-key": "***",
     "default-language": "en",
     "default_operations": {
-      "sentiment": false,
+      "sentiment": true,
       "ner": false,
-      "keyphrase": false
+      "keyphrase": true
     }
   }
 }
-
 ```
 ## Config Show
 
