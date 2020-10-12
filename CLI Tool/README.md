@@ -1,12 +1,12 @@
 # CogSLanguagueUtils
 
-The Cognitive Services Language Utilities is a CLI tool that provides some core functionalities to make the experience of Cognitive Language Services simpler (mainly Custom Text).
+The Cognitive Services Language Utilities is a CLI tool that provides some core functionalities to make the experience of using some of the Cognitive Language Services simpler (mainly Custom Text).
 
 
 ## Installation
 
-CLUtils is based on dotnet core and an open source fork of Microsoft's [CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils) for command line parsing.
-You need to download the executable and add it your PATH environment variable.
+You can download the executable [here](https://)
+If you would like to use the tool system wide, you can add it to your PATH environment variable.
 Run the tool to check your installation.
 
     $ clutils
@@ -38,7 +38,6 @@ The tool currently supports three main use cases
 
 
 # Commands Overview
-<!-- commands -->
 
 - config
     - load from file
