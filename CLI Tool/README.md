@@ -37,36 +37,17 @@ The tool currently supports three main use cases
 - So we integrated the testing pipeline (reading labeled examples, calling prediction apis, evaluating model performance, ..) into this simple command.
 
 
-# Commands
+# Commands Overview
 <!-- commands -->
-- help
-    - clutils --help
 
 - config
     - load from file
         - clutils config load --path <ABSOLUTE_PATH>
-    - msread
-        - clutils config show parser msread
-        - clutils config set parser msread --azure-resource-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
-    - storage
-        - clutils config show storage
-        - clutils config set storage local --source-dir <ABSOLUTE_PATH> --destination-dir <ABSOLUTE_PATH> 
-        - clutils config set storage blob --connection-string <CONNECTION_STRING> --source-container <CONTAINER_NAME> --destination-container <CONTAINER_NAME> 
-    - chunker
-        - clutils config show chunker
-        - clutils config set chunker --char-limit <NUMBER>
-    - customtext
-        - clutils config show customtext prediction
-        - clutils config set customtext prediction --azure-resource-endpoint <ENDPOINT_URL> --azure-resource-key <AZURE_RESOURCE_KEY> --app-id <APP_ID>
-        - clutils config set customtext authoring --azure-resource-endpoint <ENDPOINT_URL> --azure-resource-key <AZURE_RESOURCE_KEY> --app-id <APP_ID>
-    - textanalytics
-        - clutils config show textanalytics
-        - clutils config set textanalytics --azure-resource-key <AZURE_RESOURCE_KEY> --azure-resource-endpoint <ENDPOINT_URL> --default-language <LANGUAGE> --sentiment <BOOLEAN> --ner <BOOLEAN> --keyphrase <BOOLEAN>
 
 - parsing
     - clutils parse --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunk-type <PAGE/CHAR> ]
 
-- chunker
+- chunking
     - clutils chunk --source <BLOB/LOCAL> --destination <BLOB/LOCAL>
 
 - prediction
@@ -76,8 +57,9 @@ The tool currently supports three main use cases
     - clutils evaluate --cognitive-service <customtext/textanalytics/both> --source <BLOB/LOCAL> --destination <BLOB/LOCAL>
 
 
-[1]: ./CLI%20Tool/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ParseCommand/README.md
-[2]: ./CLI%20Tool/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/PredictCommand/README.md
-[3]: ./CLI%20Tool/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/EvaluateCommand/README.md
-[4]: ./CLI%20Tool/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ChunkCommand/README.md
-[5]: ./CLI%20Tool/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ConfigCommand/README.md
+
+[1]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ParseCommand/README.md
+[2]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/PredictCommand/README.md
+[3]: ./CogSLanguageUtilities.ViewLayer.CliComnds/EvaluateCommand/README.md
+[4]: ./CogSLanguageUtilities.ViewLayer.CliComnds/ChunkCommand/README.md
+[5]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ConfigCommand/README.md
