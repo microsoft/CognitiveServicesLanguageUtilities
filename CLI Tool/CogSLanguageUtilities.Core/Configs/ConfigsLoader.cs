@@ -23,6 +23,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             {
                 var configsFile = File.ReadAllText(filePath);
                 _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+                SetDefaults();
             }
             else
             {
@@ -68,6 +69,14 @@ namespace Microsoft.CustomTextCliUtils.Configs
         public TextAnalyticsConfigModel GetTextAnalyticsConfigModel()
         {
             return _configModel.TextAnalytics;
+        }
+
+        private void SetDefaults()
+        {
+            if (_configModel.Chunker.CharLimit == 0)
+            {
+                _configModel.Chunker.CharLimit = Constants.DefaultCharLimit;
+            }
         }
     }
 }
