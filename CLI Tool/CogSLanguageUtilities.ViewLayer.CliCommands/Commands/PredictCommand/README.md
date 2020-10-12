@@ -12,10 +12,22 @@ The predict command allows you to run the prediction API on your documents of di
         --chunk-type <page/char>                             [optional] indicates chunking type. if not set, no chunking will be used
         -?|-h|--help                                         Show help information
 
+## How To Use
+
+To run the predict command you need to follow these steps
+
+1. Prepare your storage
+    1. Move all the documents you want to run prediction on to a single directory or blob container
+    1. Create a directory or container to store the prediction results
+1. Specify the required configs as shown below
+1. Run the predict command
+
+
 ## Configure Services
 Define configurations using the config command before using the predict command
-1. Source Storage
-    - The storage service which contains the documents you want to parse
+1. Storage
+    - The source storage which contains the documents you want to parse
+    - The destination storage which will store the prediction result
     - It can be a Local Disk directory **OR** Blob Storage container
     - Configuration
         - Local Disk: Define absolute path of local disk directory to read from
@@ -28,7 +40,7 @@ Define configurations using the config command before using the predict command
     - Configuration
         - Microsoft Read: EndpointUrl and ResourceKey
 3. Chunking
-    - You can define the character limit
+    - You can define the character limit (default is 5000)
 4. Prediction
     - You can choose either CustomText or TextAnalytics or both to run predictions on your document
     - For Text Analytics Configuration:
@@ -39,6 +51,47 @@ Define configurations using the config command before using the predict command
         - Prediction Endpoint Url
         - Prediction Resource Key
 
+```
+{
+  "storage": {
+    "blob": {
+      "connection-string": "DefaultEndpointsProtocol=https;AccountName=***;AccountKey=***;EndpointSuffix=core.windows.net",
+      "source-container": "***",
+      "destination-container": "***"
+    },
+    "local": {
+      "source-dir": "***",
+      "destination-dir": "***"
+    }
+  },
+  "parser": {
+    "msread": {
+      "azure-resource-endpoint": "https://eastus.api.cognitive.microsoft.com/",
+      "azure-resource-key": "***"
+    }
+  },
+  "chunker": {
+    "char-limit": 5000
+  },
+  "customText": {
+    "prediction": {
+      "azure-resource-key": "***",
+      "azure-resource-endpoint": "https://***.cognitiveservices.azure.com",
+      "app-id": "***"
+    }
+  },
+  "textanalytics": {
+    "azure-resource-endpoint": "https://***.cognitiveservices.azure.com",
+    "azure-resource-key": "***",
+    "default-language": "en",
+    "default_operations": {
+      "sentiment": true,
+      "ner": false,
+      "keyphrase": true
+    }
+  }
+}
+```
 ## Prediction Pipeline
 Running the command goes through the following steps:
 1. Read documents
