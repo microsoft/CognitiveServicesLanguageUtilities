@@ -14,6 +14,7 @@
         public const double MaxNumberOfIndentsAfterLine = 7;
         public const double IndentPercentageOfLine = 0.05;
         public const double EndOfParagraphVerticalSpaceFactor = 1.5;
+        public const int DefaultCharLimit = 5000;
         // custom text
         public const int CustomTextPredictionMaxCharLimit = 25000;
         public const int MinAllowedCharLimit = 20;
