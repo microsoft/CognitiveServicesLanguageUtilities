@@ -18,7 +18,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
         {
             using (StreamReader sr = new StreamReader(file))
             {
-                var text = sr.ReadToEnd();
+                var text = await sr.ReadToEndAsync();
                 var element = new DocumentElement
                 {
                     Text = text,

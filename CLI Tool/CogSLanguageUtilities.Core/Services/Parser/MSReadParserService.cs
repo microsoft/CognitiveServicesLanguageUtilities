@@ -153,15 +153,27 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 
         private double CalculateMedianLineEnd(ReadOperationResult parsingResult)
         {
-            var linesArraySortedByEnd = parsingResult.RecognitionResults.SelectMany(p => p.Lines).OrderBy(l => GetBoundingBoxTopRightX(l)).ToArray();
-            return GetBoundingBoxTopRightX(linesArraySortedByEnd[linesArraySortedByEnd.Length / 2]);
+            // get the top-right x co-ordinate of each line's bounding box -> ascendingly
+            var linesArraySortedByEnd = parsingResult.RecognitionResults.SelectMany(p => p.Lines.Select(l => GetBoundingBoxTopRightX(l))).OrderBy(x => x).ToArray();
+            // return the median element
+            return linesArraySortedByEnd[linesArraySortedByEnd.Length / 2];
         }
 
         private bool IsLineEndOfParagraph(Line line, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
         {
-            var verticalSpaceEndOfLine = nextLine != null && previousLine != null && Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine)) > Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine)) * Constants.EndOfParagraphVerticalSpaceFactor;
+            // detect end of paragraph: line spacing
+            var previousLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine));
+            var nextLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine));
+            var nextLineSpacingIsWayBiggerThanPreviousLine = nextLineSpacing > previousLineSpacing * Constants.EndOfParagraphVerticalSpaceFactor;
+            var verticalSpaceEndOfLine = (nextLine != null && previousLine != null) && nextLineSpacingIsWayBiggerThanPreviousLine;
+
+            // detect end of paragraph: next line indentation
             var nextLineIndented = nextLine != null && GetBoundingBoxTopLeftX(nextLine) > medianLineStart + indentLength;
+
+            // detect end of paragraph: current line length
             var lineLengthSmallerThanMinLine = GetBoundingBoxTopRightX(line) < (medianLineEnd - Constants.MaxNumberOfIndentsAfterLine * indentLength);
+            
+            // return condition
             return verticalSpaceEndOfLine || nextLineIndented || lineLengthSmallerThanMinLine;
         }
 
