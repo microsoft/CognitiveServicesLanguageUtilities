@@ -5,6 +5,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
@@ -155,7 +156,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         /// <param name="paragraphText"></param>
         /// <param name="charLimit"></param>
         /// <param name="delimiter"></param>
-        /// <returns></returns>
+        /// <returns>paragraph split into strings</returns>
         private List<string> SplitTextToBlocks(string paragraphText, int charLimit, string delimiter)
         {
             var blocks = new List<string>();

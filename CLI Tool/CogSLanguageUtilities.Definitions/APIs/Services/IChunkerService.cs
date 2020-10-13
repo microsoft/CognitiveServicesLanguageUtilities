@@ -8,9 +8,5 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
     public interface IChunkerService
     {
         public List<ChunkInfo> Chunk(ParsedDocument parseResult, ChunkMethod chunkMethod, int charLimit);
-
-        public List<ChunkInfo> Chunk(string text, int charLimit);
-
-        public void ValidateFileType(string fileName);
     }
 }
