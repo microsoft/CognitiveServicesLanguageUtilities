@@ -15,17 +15,59 @@ using System.Threading.Tasks;
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 {
     /// <summary>
-    ///  This class parses documents to a list of paragraphs using MsRead API
-    ///  Data structure: 
-    ///      MsReadParseResult is a list of pages and each page contains a list of lines
-    ///      Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
-    ///  
-    ///           [0, 1] ------------------ [2, 3]
-    ///                 -                  -
-    ///                 -                  -
-    ///                 -                  -
-    ///           [4, 5] ------------------ [6, 7]
-    /// 
+    ///   1) What this class does
+    ///       - api
+    ///           - Function
+    ///               - ParseFile(Stream file)
+    ///               - Returns: ParsedDocument
+    ///       - calls MSRead SDk to parse given document
+    ///       - then maps the result to our ParsedDocument model
+    ///   
+    ///   
+    ///   2) MSRead Return Type
+    ///       - list<pages>
+    ///           - list<lines>
+    ///               - BoundingBox
+    ///   
+    ///       - BoundingBox representation
+    ///           - Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
+    ///              [0, 1] ------------------ [2, 3]
+    ///                    -                  -
+    ///                    -                  -
+    ///                    -                  -
+    ///              [4, 5] ------------------ [6, 7]
+    ///   
+    ///   
+    ///   3) Mapping Logic
+    ///   - map MSRead result to intermediary object
+    ///       - ParsedDocument
+    ///           - List<DocumentElement>
+    ///               - DocumentElement
+    ///                   - Text
+    ///                   - Type (Title, Heading, Paragraph, Table, BulletPoints)
+    ///   - we can only detect paragraphs
+    ///   - our goal is to honor paragraphs and not cut through them2) Our target
+    ///   
+    ///   
+    ///   4) pargraph extraction
+    ///   - to construct paragraph
+    ///     we keep on adding lines until we find ending line of the paragraph
+    ///   
+    ///   
+    ///   5) Finding EndofParagarph heurestics
+    ///   - case 1: next line spacing > previous line spacing
+    ///       - nextLineSpacing > previousLineSpacing * EndOfParagraphVerticalSpaceFactor;
+    ///       - EndOfParagraphVerticalSpaceFactor = arbitrary value (1.5)
+    ///   - case 2: next line is indented
+    ///       - Equation: X Co-ordinate of the top left bounding box of the next line > medianLineStart + indentLength
+    ///       - medianLineStart = median x coordinate of lines' start
+    ///       - indentLength
+    ///           - is the 'min' indent length of every line
+    ///           - sort lines according to length
+    ///           - full line length = 95th percentile
+    ///           - indentLength = 0.05 * (full line length)
+    ///   - case 3: last line is smaller than the average line 
+    ///       - GetBoundingBoxTopRightX(line) < (medianLineEnd - Constants.MaxNumberOfIndentsAfterLine * indentLength);
     /// </summary>
     public class MSReadParserService : IParserService
     {
@@ -141,6 +183,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 
         private double CalculateIndentLength(ReadOperationResult parsingResult)
         {
+            // sort lines by width
             var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => GetBoundingBoxTopRightX(l) - GetBoundingBoxTopLeftX(l)).OrderBy(l => l).ToArray();
             return linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.IndentPercentageOfLine;
         }
@@ -162,11 +205,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
         private bool IsLineEndOfParagraph(Line line, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
         {
             // detect end of paragraph: line spacing
-            var previousLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine));
-            var nextLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine));
-            var nextLineSpacingIsWayBiggerThanPreviousLine = nextLineSpacing > previousLineSpacing * Constants.EndOfParagraphVerticalSpaceFactor;
-            var verticalSpaceEndOfLine = (nextLine != null && previousLine != null) && nextLineSpacingIsWayBiggerThanPreviousLine;
-
+            var verticalSpaceEndOfLine = false;
+            if (nextLine != null && previousLine != null)
+            {
+                var previousLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine));
+                var nextLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine));
+                verticalSpaceEndOfLine = nextLineSpacing > previousLineSpacing * Constants.EndOfParagraphVerticalSpaceFactor;
+            }
+            
             // detect end of paragraph: next line indentation
             var nextLineIndented = nextLine != null && GetBoundingBoxTopLeftX(nextLine) > medianLineStart + indentLength;
 

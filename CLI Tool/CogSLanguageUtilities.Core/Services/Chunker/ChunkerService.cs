@@ -5,12 +5,17 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 {
     public class ChunkerService : IChunkerService
     {
+        
+        private readonly string _primaryDelimiter = ".";
+        private readonly string _secondaryDelimiter = " ";
+
         public List<ChunkInfo> Chunk(ParsedDocument parseResult, ChunkMethod chunkMethod, int charLimit)
         {
             switch (chunkMethod)
@@ -134,13 +139,24 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 
         private void HandleParagraphLengthGreaterThanCharLimit(string paragraphText, int charLimit, ref int currentChunkNumber, List<ChunkInfo> chunks, int? pageNumber)
         {
-            var blocks = SplitTextToBlocks(paragraphText, charLimit, delimiter: ".");
+            var blocks = SplitTextToBlocks(paragraphText, charLimit, delimiter: _primaryDelimiter);
             foreach (var block in blocks)
             {
                 chunks.Add(new ChunkInfo(currentChunkNumber++, block, pageNumber, pageNumber));
             }
         }
 
+        /// <summary>
+        /// This method is called when the paragraph itself exceeds the character limit
+        /// so we need to properly split the paragraph
+        /// first: we split the text by _primaryDelimiter = "."
+        /// and if any of the resulting sentences exceeds char limit, we split that sentence by _secondaryDelimiter = " "
+        /// and if any of the resulting words exceeds the char limit, we split by char length (get substring)
+        /// </summary>
+        /// <param name="paragraphText"></param>
+        /// <param name="charLimit"></param>
+        /// <param name="delimiter"></param>
+        /// <returns>paragraph split into strings</returns>
         private List<string> SplitTextToBlocks(string paragraphText, int charLimit, string delimiter)
         {
             var blocks = new List<string>();
@@ -156,12 +172,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                 if (line.Length > charLimit)
                 {
                     // handle infinite loop
-                    if (delimiter == " ")
+                    if (delimiter == _secondaryDelimiter)
                     {
                         var blocksByLength = SplitStringByLength(line, charLimit);
                         blocks.AddRange(blocksByLength);
                     }
-                    var blocksByWords = SplitTextToBlocks(line, charLimit, " ");
+                    var blocksByWords = SplitTextToBlocks(line, charLimit, _secondaryDelimiter);
                     blocks.AddRange(blocksByWords);
                 }
                 else
@@ -180,7 +196,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         {
             if (string.IsNullOrEmpty(str) || length < 1)
             {
-                throw new ArgumentException();
+                return new List<string> { str };
             }
             return Enumerable.Range(0, str.Length / length)
                             .Select(i => str.Substring(i * length, length)).ToList();
