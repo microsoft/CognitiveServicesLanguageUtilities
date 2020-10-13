@@ -142,6 +142,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             };
         }
 
+
         private void HandleNewLine(StringBuilder currentParagraph, List<DocumentElement> elements, int currentPage, ref int currentParagraphPageStart, Line l, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
         {
             // concatenate line to current paragraph

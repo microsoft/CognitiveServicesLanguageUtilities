@@ -31,6 +31,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             }
         }
 
+        public List<ChunkInfo> Chunk(string text, int charLimit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidateFileType(string fileName)
+        { }
+
         /*
          *  Join all elements into a single string
          */
@@ -156,7 +164,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         /// <param name="paragraphText"></param>
         /// <param name="charLimit"></param>
         /// <param name="delimiter"></param>
-        /// <returns>paragraph split into strings</returns>
+        /// <returns></returns>
         private List<string> SplitTextToBlocks(string paragraphText, int charLimit, string delimiter)
         {
             var blocks = new List<string>();
