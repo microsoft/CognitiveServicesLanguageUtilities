@@ -34,14 +34,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             var finalText = new StringBuilder();
             foreach (var element in parsingResult.Elements)
             {
-                finalText.Append(element.Text + Environment.NewLine);
+                finalText.Append(element.Text);
+                finalText.Append(Environment.NewLine);
             }
             var text = finalText.ToString().Trim();
             var firstPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
             var lastPage = parsingResult.Elements.LastOrDefault()?.PageNumber;
             return new List<ChunkInfo>
             {
-                new ChunkInfo(1, text, firstPage, lastPage)
+                new ChunkInfo(chunkNumber: 1, text, firstPage, lastPage)
             };
         }
 
@@ -75,7 +76,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                 }
                 else
                 {
-                    currentChunk.Append(e.Text + Environment.NewLine);
+                    currentChunk.Append(e.Text);
+                    currentChunk.Append(Environment.NewLine);
                 }
             });
             // handle last page
@@ -118,7 +120,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                 }
                 else
                 {
-                    currentChunk.Append(e.Text + Environment.NewLine);
+                    currentChunk.Append(e.Text);
+                    currentChunk.Append(Environment.NewLine);
                 }
             });
             // handle remaining text
@@ -131,7 +134,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 
         private void HandleParagraphLengthGreaterThanCharLimit(string paragraphText, int charLimit, ref int currentChunkNumber, List<ChunkInfo> chunks, int? pageNumber)
         {
-            var blocks = SplitTextToBlocks(paragraphText, charLimit, ".");
+            var blocks = SplitTextToBlocks(paragraphText, charLimit, delimiter: ".");
             foreach (var block in blocks)
             {
                 chunks.Add(new ChunkInfo(currentChunkNumber++, block, pageNumber, pageNumber));
