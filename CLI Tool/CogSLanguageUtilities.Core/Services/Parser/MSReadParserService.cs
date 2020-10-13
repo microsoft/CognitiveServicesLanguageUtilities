@@ -82,22 +82,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             _validTypesSet = new HashSet<string>(Constants.MsReadValidFileTypes, StringComparer.OrdinalIgnoreCase);
         }
 
-        private async Task TestConnectionAsync()
-        {
-            try
-            {
-                var file = new MemoryStream();
-                var response = await _client.BatchReadFileInStreamAsync(file);
-            }
-            catch (ComputerVisionErrorException e)
-            {
-                if (!e.Message.Contains("BadRequest"))
-                {
-                    throw new MsReadConnectionException(e.Message);
-                }
-            }
-        }
-
         public async Task<ParsedDocument> ParseFile(Stream file)
         {
             var result = await ParseFileInternal(file);
@@ -158,6 +142,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             };
         }
 
+
         private void HandleNewLine(StringBuilder currentParagraph, List<DocumentElement> elements, int currentPage, ref int currentParagraphPageStart, Line l, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
         {
             // concatenate line to current paragraph
@@ -181,6 +166,27 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             currentParagraph.Clear();
         }
 
+        private bool IsLineEndOfParagraph(Line line, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
+        {
+            // detect end of paragraph: line spacing
+            var verticalSpaceEndOfLine = false;
+            if (nextLine != null && previousLine != null)
+            {
+                var previousLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine));
+                var nextLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine));
+                verticalSpaceEndOfLine = nextLineSpacing > previousLineSpacing * Constants.EndOfParagraphVerticalSpaceFactor;
+            }
+
+            // detect end of paragraph: next line indentation
+            var nextLineIndented = nextLine != null && GetBoundingBoxTopLeftX(nextLine) > medianLineStart + indentLength;
+
+            // detect end of paragraph: current line length
+            var lineLengthSmallerThanMinLine = GetBoundingBoxTopRightX(line) < (medianLineEnd - Constants.MaxNumberOfIndentsAfterLine * indentLength);
+
+            // return condition
+            return verticalSpaceEndOfLine || nextLineIndented || lineLengthSmallerThanMinLine;
+        }
+
         private double CalculateIndentLength(ReadOperationResult parsingResult)
         {
             // sort lines by width
@@ -200,27 +206,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             var linesArraySortedByEnd = parsingResult.RecognitionResults.SelectMany(p => p.Lines.Select(l => GetBoundingBoxTopRightX(l))).OrderBy(x => x).ToArray();
             // return the median element
             return linesArraySortedByEnd[linesArraySortedByEnd.Length / 2];
-        }
-
-        private bool IsLineEndOfParagraph(Line line, Line previousLine, Line nextLine, double indentLength, double medianLineStart, double medianLineEnd)
-        {
-            // detect end of paragraph: line spacing
-            var verticalSpaceEndOfLine = false;
-            if (nextLine != null && previousLine != null)
-            {
-                var previousLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(previousLine));
-                var nextLineSpacing = Math.Abs(GetBoundingBoxTopLeftY(line) - GetBoundingBoxTopLeftY(nextLine));
-                verticalSpaceEndOfLine = nextLineSpacing > previousLineSpacing * Constants.EndOfParagraphVerticalSpaceFactor;
-            }
-            
-            // detect end of paragraph: next line indentation
-            var nextLineIndented = nextLine != null && GetBoundingBoxTopLeftX(nextLine) > medianLineStart + indentLength;
-
-            // detect end of paragraph: current line length
-            var lineLengthSmallerThanMinLine = GetBoundingBoxTopRightX(line) < (medianLineEnd - Constants.MaxNumberOfIndentsAfterLine * indentLength);
-            
-            // return condition
-            return verticalSpaceEndOfLine || nextLineIndented || lineLengthSmallerThanMinLine;
         }
 
         private double GetBoundingBoxTopLeftX(Line line)
@@ -243,6 +228,22 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             if (!_validTypesSet.Contains(Path.GetExtension(fileName)))
             {
                 throw new UnsupportedFileTypeException(fileName, Path.GetExtension(fileName), Constants.MsReadValidFileTypes);
+            }
+        }
+
+        private async Task TestConnectionAsync()
+        {
+            try
+            {
+                var file = new MemoryStream();
+                var response = await _client.BatchReadFileInStreamAsync(file);
+            }
+            catch (ComputerVisionErrorException e)
+            {
+                if (!e.Message.Contains("BadRequest"))
+                {
+                    throw new MsReadConnectionException(e.Message);
+                }
             }
         }
     }
