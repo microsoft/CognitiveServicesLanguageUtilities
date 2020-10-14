@@ -89,35 +89,58 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
          */
         private List<ChunkInfo> ChunkByPage(DocumentTree documentTree, int charLimit)
         {
+            // prepare variables
             var pages = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var currentPageNumber = documentTree.Elements.FirstOrDefault()?.PageNumber;
+            var currentPageNumber = documentTree.DocumentSegments.FirstOrDefault()?.RootElement.PageNumber;
             var currentChunk = new StringBuilder();
-            documentTree.Elements.ForEach(e =>
+
+            // chunk document segments
+            documentTree.DocumentSegments.ForEach(segment =>
             {
-                if ((e.PageNumber != currentPageNumber || e.Text.Length + currentChunk.Length > charLimit) && currentChunk.Length > 0)
-                {
-                    pages.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), currentPageNumber, currentPageNumber));
-                    currentPageNumber = e.PageNumber;
-                    currentChunkNumber++;
-                    currentChunk.Clear();
-                }
-                if (e.Text.Length > charLimit)
-                {
-                    HandleParagraphLengthGreaterThanCharLimit(e.Text, charLimit, ref currentChunkNumber, pages, currentPageNumber);
-                }
-                else
-                {
-                    currentChunk.Append(e.Text);
-                    currentChunk.Append(Environment.NewLine);
-                }
+                ChunkByPageInternal(segment, charLimit, pages, ref currentChunkNumber, ref currentPageNumber, currentChunk);
             });
+
             // handle last page
             if (currentChunk.Length > 0)
             {
                 pages.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), currentPageNumber, currentPageNumber));
             }
             return pages;
+        }
+
+        private void ChunkByPageInternal(DocumentSegment segment, int charLimit, List<ChunkInfo> resultPages, ref int currentChunkNumber, ref int? currentPageNumber, StringBuilder currentChunkText)
+        {
+            // case 1: handle new page or page overflows char limit
+            if ((segment.RootElement.PageNumber != currentPageNumber || segment.RootElement.Text.Length + currentChunkText.Length > charLimit) && currentChunkText.Length > 0)
+            {
+                resultPages.Add(new ChunkInfo(currentChunkNumber, currentChunkText.ToString(), currentPageNumber, currentPageNumber));
+                currentPageNumber = segment.RootElement.PageNumber;
+                currentChunkNumber++;
+                currentChunkText.Clear();
+            }
+
+            // case 2: handle current segment text > char limit
+            if (segment.RootElement.Text.Length > charLimit)
+            {
+                HandleParagraphLengthGreaterThanCharLimit(segment.RootElement.Text, charLimit, ref currentChunkNumber, resultPages, currentPageNumber);
+            }
+
+            // case 3: current element can be added to current chunk/page
+            else
+            {
+                currentChunkText.Append(segment.RootElement.Text);
+                currentChunkText.Append(Environment.NewLine);
+            }
+
+            // handle child segments
+            if (segment.Children != null)
+            {
+                foreach (var childSegment in segment.Children)
+                {
+                    ChunkByPageInternal(childSegment, charLimit, resultPages, ref currentChunkNumber, ref currentPageNumber, currentChunkText);
+                }
+            }
         }
 
         /*
