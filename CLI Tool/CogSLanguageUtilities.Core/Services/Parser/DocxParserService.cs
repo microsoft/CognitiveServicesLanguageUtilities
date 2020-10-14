@@ -63,7 +63,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                         // case 3: element is a headings
                         else if (e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val == "Heading1"))
                         {
-                            newElement.Type = Definitions.Enums.Parser.ElementType.Heading;
+                            newElement.Type = Definitions.Enums.Parser.ElementType.Heading1;
+                        }
+                        else if (e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val == "Heading2"))
+                        {
+                            newElement.Type = Definitions.Enums.Parser.ElementType.Heading2;
+                        }
+                        else if (e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val == "Heading3"))
+                        {
+                            newElement.Type = Definitions.Enums.Parser.ElementType.Heading3;
                         }
                         // case 4: element is bullet points
                         else if (bulletPointsId != null && e.Elements<ParagraphProperties>().Any(p => p.ParagraphStyleId.Val.ToString().IndexOf("heading", StringComparison.OrdinalIgnoreCase) >= 0) == false)
