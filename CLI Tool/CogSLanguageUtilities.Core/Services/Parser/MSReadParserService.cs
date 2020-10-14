@@ -4,7 +4,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Document;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,7 +82,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             _validTypesSet = new HashSet<string>(Constants.MsReadValidFileTypes, StringComparer.OrdinalIgnoreCase);
         }
 
-        public async Task<ParsedDocument> ParseFile(Stream file)
+        public async Task<DocumentTree> ParseFile(Stream file)
         {
             var result = await ParseFileInternal(file);
             return MapMsReadResult(result);
@@ -107,7 +107,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
         /// Extract paragraphs from MsRead parse result using bounding box information.
         /// Paragraphs that span two pages are moved to the second page
         /// </summary>
-        public ParsedDocument MapMsReadResult(ReadOperationResult parsingResult)
+        public DocumentTree MapMsReadResult(ReadOperationResult parsingResult)
         {
             var elements = new List<DocumentElement>();
             var medianLineStart = CalculateMedianLineStart(parsingResult);
@@ -136,9 +136,18 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     HandleEndOfParagraph(currentParagraph, elements, parsingResult.RecognitionResults.Count, ref currentParagraphPageStart);
                 }
             }
-            return new ParsedDocument
+
+            // construct document tree
+            return new DocumentTree
             {
-                Elements = elements
+                DocumentSegments = elements.Select(docElement =>
+                {
+                    return new DocumentSegment
+                    {
+                        RootElement = docElement,
+                        Children = null
+                    };
+                }).ToList()
             };
         }
 
