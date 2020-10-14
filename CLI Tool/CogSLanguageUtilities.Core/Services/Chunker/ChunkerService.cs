@@ -1,7 +1,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Document;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +16,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private readonly string _primaryDelimiter = ".";
         private readonly string _secondaryDelimiter = " ";
 
-        public List<ChunkInfo> Chunk(ParsedDocument parseResult, ChunkMethod chunkMethod, int charLimit)
+        public List<ChunkInfo> Chunk(DocumentTree documentTree, ChunkMethod chunkMethod, int charLimit)
         {
             switch (chunkMethod)
             {
                 case ChunkMethod.NoChunking:
-                    return ApplyNoChunking(parseResult);
+                    return ApplyNoChunking(documentTree);
                 case ChunkMethod.Char:
-                    return ChunkByCharacterLimit(parseResult, charLimit);
+                    return ChunkByCharacterLimit(documentTree, charLimit);
                 case ChunkMethod.Page:
-                    return ChunkByPage(parseResult, charLimit);
+                    return ChunkByPage(documentTree, charLimit);
                 default:
                     throw new NotSupportedException($"The chunk type {chunkMethod} isn't supported.");
             }
@@ -42,21 +42,40 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         /*
          *  Join all elements into a single string
          */
-        private List<ChunkInfo> ApplyNoChunking(ParsedDocument parsingResult)
+        private List<ChunkInfo> ApplyNoChunking(DocumentTree documentTree)
         {
-            var finalText = new StringBuilder();
-            foreach (var element in parsingResult.Elements)
+            var resultText = new StringBuilder();
+            foreach (var docSegment in documentTree.DocumentSegments)
             {
-                finalText.Append(element.Text);
-                finalText.Append(Environment.NewLine);
+                var segmentText = ApplyNoChunkingInternal(docSegment);
+                resultText.Append(segmentText);
             }
-            var text = finalText.ToString().Trim();
-            var firstPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
-            var lastPage = parsingResult.Elements.LastOrDefault()?.PageNumber;
+            var text = resultText.ToString().Trim();
+            var firstPage = documentTree.DocumentSegments.FirstOrDefault()?.RootElement.PageNumber;
+            var lastPage = documentTree.DocumentSegments.LastOrDefault()?.RootElement.PageNumber;
             return new List<ChunkInfo>
             {
                 new ChunkInfo(chunkNumber: 1, text, firstPage, lastPage)
             };
+        }
+
+        private string ApplyNoChunkingInternal(DocumentSegment documentSegment)
+        {
+            var finalText = new StringBuilder();
+            // get root text
+            var rootText = documentSegment.RootElement.Text;
+            finalText.Append(rootText);
+            finalText.Append(Environment.NewLine);
+            // get children text
+            if (documentSegment.Children != null)
+            {
+                foreach (var childSegment in documentSegment.Children)
+                {
+                    var segmentText = ApplyNoChunkingInternal(childSegment);
+                    finalText.Append(segmentText);
+                }
+            }
+            return finalText.ToString();
         }
 
         /*
@@ -68,13 +87,13 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
          *      1- Element length bigger than character limit
          *          - Element will be split into different chunks
          */
-        private List<ChunkInfo> ChunkByPage(ParsedDocument parsingResult, int charLimit)
+        private List<ChunkInfo> ChunkByPage(DocumentTree documentTree, int charLimit)
         {
             var pages = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var currentPageNumber = parsingResult.Elements.FirstOrDefault()?.PageNumber;
+            var currentPageNumber = documentTree.Elements.FirstOrDefault()?.PageNumber;
             var currentChunk = new StringBuilder();
-            parsingResult.Elements.ForEach(e =>
+            documentTree.Elements.ForEach(e =>
             {
                 if ((e.PageNumber != currentPageNumber || e.Text.Length + currentChunk.Length > charLimit) && currentChunk.Length > 0)
                 {
@@ -110,14 +129,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
          *      1- Element length bigger than character limit
          *          - Element will be split into different chunks
          */
-        private List<ChunkInfo> ChunkByCharacterLimit(ParsedDocument parsingResult, int charLimit)
+        private List<ChunkInfo> ChunkByCharacterLimit(DocumentTree documentTree, int charLimit)
         {
             var characterChunks = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var chunkStartPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
-            var chunkEndPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
+            var chunkStartPage = documentTree.Elements.FirstOrDefault()?.PageNumber;
+            var chunkEndPage = documentTree.Elements.FirstOrDefault()?.PageNumber;
             var currentChunk = new StringBuilder();
-            parsingResult.Elements.ForEach(e =>
+            documentTree.Elements.ForEach(e =>
             {
                 if ((e.Text.Length + currentChunk.Length > charLimit) && currentChunk.Length > 0)
                 {
