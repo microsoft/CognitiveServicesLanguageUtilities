@@ -3,7 +3,11 @@
     public enum ElementType
     {
         Title,
-        Heading,
-        Paragraph
+        Heading1,
+        Heading2,
+        Heading3,
+        Paragraph,
+        BulletedList,
+        Table,
     }
 }
