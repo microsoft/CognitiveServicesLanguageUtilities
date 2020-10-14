@@ -28,7 +28,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Factories.Parser
             // create valid types array
             var list = new List<string>();
             list.AddRange(Constants.MsReadValidFileTypes);
-            list.AddRange(Constants.OpenXMLValidFileTypes);
+            list.AddRange(Constants.DocxValidFileTypes);
             _validDocTypes = list.ToArray();
         }
 
@@ -42,9 +42,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Factories.Parser
                 }
                 return _msreadParser;
             }
-            else if (Constants.OpenXMLValidFileTypes.Contains(fileType))
+            else if (Constants.DocxValidFileTypes.Contains(fileType))
             {
-                if (_msreadParser == null)
+                if (_docxParser == null)
                 {
                     _docxParser = new DocxParserService();
                 }
