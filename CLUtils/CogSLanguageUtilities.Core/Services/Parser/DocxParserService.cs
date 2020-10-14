@@ -31,9 +31,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 
         public Task<DocumentTree> ParseFile(Stream file)
         {
-            // result object
-            var resultElements = new List<DocumentElement>();
-
             // open a Wordprocessing document for editing.
             using (var wordDoc = WordprocessingDocument.Open(file, false))
             {
@@ -79,25 +76,30 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             var currentElementType = GetElementType(currentElement);
             while (IsLowerPrecedence(parentType, currentElementType))
             {
-                // check if current element is of simple type
-                List<DocumentSegment> children = null;
-                if (!IsSimpleTypeElement(currentElementType))
+                // skip unhadled elements (charts, images, ..) or empty paragraphs
+                if (currentElementType != ElementType.Other && !string.IsNullOrEmpty(currentElement.InnerText))
                 {
-                    // element is not simple type: i.e. can have nested children
-                    currentIndex++; // index of subsequent element
-                    children = GetNestedChildren(docElements, ref currentIndex, currentElementType);
-                }
-                // append element to result
-                var newSegment = new DocumentSegment
-                {
-                    Children = children,
-                    RootElement = new DocumentElement
+                    var currentElementText = GetElementText(docElements, ref currentIndex);
+                    // check if current element is of simple type
+                    List<DocumentSegment> children = null;
+                    if (!IsSimpleTypeElement(currentElementType))
                     {
-                        Text = GetElementText(docElements, ref currentIndex),
-                        Type = currentElementType
+                        // element is not simple type: i.e. can have nested children
+                        currentIndex++; // index of subsequent element
+                        children = GetNestedChildren(docElements, ref currentIndex, currentElementType);
                     }
-                };
-                result.Add(newSegment);
+                    // append element to result
+                    var newSegment = new DocumentSegment
+                    {
+                        Children = children,
+                        RootElement = new DocumentElement
+                        {
+                            Text = currentElementText,
+                            Type = currentElementType
+                        }
+                    };
+                    result.Add(newSegment);
+                }
 
                 // update next element
                 currentIndex++;
@@ -206,8 +208,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                 }
             }
 
-            // for unknown elements -> assume paragraph
-            return ElementType.Paragraph;
+            // for unknown elements
+            return ElementType.Other;
         }
 
         private static Int32Value GetBulletpointId(OpenXmlElement docElement)
@@ -237,7 +239,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             /* 
              * returns true if precedence (newElement  < baseElement)
              */
-            return newElement < baseElement;
+            return newElement > baseElement;
         }
     }
 }
