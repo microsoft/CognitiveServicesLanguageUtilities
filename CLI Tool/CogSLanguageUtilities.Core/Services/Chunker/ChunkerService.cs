@@ -44,14 +44,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private List<ChunkInfo> ApplyNoChunking(DocumentTree documentTree)
         {
             var resultText = new StringBuilder();
-            foreach (var docSegment in documentTree.DocumentSegments)
+            foreach (var docSegment in documentTree.RootSegment.Children)
             {
                 var segmentText = ApplyNoChunkingInternal(docSegment);
                 resultText.Append(segmentText);
             }
             var text = resultText.ToString().Trim();
-            var firstPage = documentTree.DocumentSegments.FirstOrDefault()?.RootElement.PageNumber;
-            var lastPage = documentTree.DocumentSegments.LastOrDefault()?.RootElement.PageNumber;
+            var firstPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
+            var lastPage = documentTree.RootSegment.Children.LastOrDefault()?.RootElement.PageNumber;
             return new List<ChunkInfo>
             {
                 new ChunkInfo(chunkNumber: 1, text, firstPage, lastPage)
@@ -91,11 +91,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             // prepare variables
             var pages = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var currentPageNumber = documentTree.DocumentSegments.FirstOrDefault()?.RootElement.PageNumber;
+            var currentPageNumber = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
             var currentChunk = new StringBuilder();
 
             // chunk document segments
-            documentTree.DocumentSegments.ForEach(segment =>
+            documentTree.RootSegment.Children.ForEach(segment =>
             {
                 ChunkByPageInternal(segment, charLimit, pages, ref currentChunkNumber, ref currentPageNumber, currentChunk);
             });
@@ -156,12 +156,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             // prepare variables
             var characterChunks = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var chunkStartPage = documentTree.DocumentSegments.FirstOrDefault()?.RootElement.PageNumber;
-            var chunkEndPage = documentTree.DocumentSegments.FirstOrDefault()?.RootElement.PageNumber;
+            var chunkStartPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
+            var chunkEndPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
             var currentChunk = new StringBuilder();
 
             // handle document segments
-            documentTree.DocumentSegments.ForEach(segment =>
+            documentTree.RootSegment.Children.ForEach(segment =>
             {
                 ChunkByCharacterLimitInternal(segment, charLimit, characterChunks, ref currentChunkNumber, ref chunkStartPage, ref chunkEndPage, currentChunk);
             });

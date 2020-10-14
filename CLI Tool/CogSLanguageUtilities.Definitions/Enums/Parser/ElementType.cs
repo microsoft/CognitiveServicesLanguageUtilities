@@ -2,6 +2,7 @@
 {
     public enum ElementType
     {
+        Root,
         Title,
         Heading1,
         Heading2,

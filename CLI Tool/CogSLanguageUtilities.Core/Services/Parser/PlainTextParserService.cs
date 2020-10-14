@@ -28,12 +28,19 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                 // construct document tree
                 return new DocumentTree
                 {
-                    DocumentSegments = new List<DocumentSegment>
+                    RootSegment = new DocumentSegment
                     {
-                        new DocumentSegment
+                        RootElement = new DocumentElement
                         {
-                            RootElement = element,
-                            Children = null
+                            Type = ElementType.Root
+                        },
+                        Children = new List<DocumentSegment>
+                        {
+                            new DocumentSegment
+                            {
+                                RootElement = element,
+                                Children = null
+                            }
                         }
                     }
                 };

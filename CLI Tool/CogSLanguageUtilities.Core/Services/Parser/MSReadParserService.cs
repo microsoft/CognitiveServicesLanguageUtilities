@@ -140,14 +140,21 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             // construct document tree
             return new DocumentTree
             {
-                DocumentSegments = elements.Select(docElement =>
+                RootSegment = new DocumentSegment
                 {
-                    return new DocumentSegment
+                    RootElement = new DocumentElement
                     {
-                        RootElement = docElement,
-                        Children = null
-                    };
-                }).ToList()
+                        Type = ElementType.Root
+                    },
+                    Children = elements.Select(docElement =>
+                    {
+                        return new DocumentSegment
+                        {
+                            RootElement = docElement,
+                            Children = null
+                        };
+                    }).ToList()
+                }
             };
         }
 

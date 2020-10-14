@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Document
+﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Document
 {
     public class DocumentTree
     {
-        public List<DocumentSegment> DocumentSegments { get; set; }
+        public DocumentSegment RootSegment { get; set; }
     }
 }

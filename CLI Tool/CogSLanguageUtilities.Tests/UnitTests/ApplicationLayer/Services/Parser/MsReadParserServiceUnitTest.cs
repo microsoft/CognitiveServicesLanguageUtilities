@@ -46,7 +46,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.ApplicationLayer.Servi
         {
             public bool Equals(DocumentTree x, DocumentTree y)
             {
-                var list = x.DocumentSegments.Zip(y.DocumentSegments, (e1, e2) => new { e1, e2 });
+                var list = x.RootSegment.Children.Zip(y.RootSegment.Children, (e1, e2) => new { e1, e2 });
                 foreach (var entry in list)
                 {
                     if (!EqualsInternal(entry.e1, entry.e2))
