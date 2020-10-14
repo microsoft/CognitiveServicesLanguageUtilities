@@ -14,4 +14,29 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser
         Table = 7,
         Other
     }
+
+    public static class ElementTypeExtension
+    {
+        /// <summary>
+        ///  by simple types we mean elements that can't have children
+        ///  paragraphs, tables, bulleted lists
+        /// </summary>
+        /// <returns>returns true if element type is a simple type</returns>
+        public static bool IsSimpleTypeElement(this ElementType elementType)
+        {
+            if (elementType == ElementType.Paragraph || elementType == ElementType.BulletedList || elementType == ElementType.Table)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// returns true if precedence (newElement  < baseElement)
+        /// </summary>
+        public static bool IsLowerPrecedence(this ElementType newElement, ElementType baseElement)
+        {
+            return newElement > baseElement;
+        }
+    }
 }
