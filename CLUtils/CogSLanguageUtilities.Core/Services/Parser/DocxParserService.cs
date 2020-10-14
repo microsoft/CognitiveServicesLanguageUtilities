@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
@@ -17,7 +18,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 {
     class DocxParserService : IParserService
     {
-        private HashSet<string> _validTypesSet = new HashSet<string>(Constants.OpenXMLValidFileTypes, StringComparer.OrdinalIgnoreCase);
+        private HashSet<string> _validTypesSet = new HashSet<string>(Constants.DocxValidFileTypes, StringComparer.OrdinalIgnoreCase);
 
         public void ValidateFileType(string fileName)
         {
@@ -78,13 +79,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                 if (currentElementType != ElementType.Other && !string.IsNullOrEmpty(currentElement.InnerText))
                 {
                     var currentElementText = GetElementText(docElements, ref currentIndex);
-                    // check if current element is of simple type
                     List<DocumentSegment> children = null;
+                    // check if current element is of simple type
                     if (!currentElementType.IsSimpleTypeElement())
                     {
                         // element is not simple type: i.e. can have nested children
                         currentIndex++; // index of subsequent element
                         children = GetNestedChildren(docElements, ref currentIndex, currentElementType);
+                        currentIndex--; // decrement index because it will be incremented again
                     }
                     // append element to result
                     var newSegment = new DocumentSegment
