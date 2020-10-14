@@ -11,6 +11,7 @@
         Heading3 = 4,
         Paragraph = 5,
         BulletedList = 6,
-        Table = 7
+        Table = 7,
+        Other
     }
 }
