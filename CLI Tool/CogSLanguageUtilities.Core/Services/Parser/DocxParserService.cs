@@ -1,6 +1,4 @@
-﻿
-
-using DocumentFormat.OpenXml;
+﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
@@ -12,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
@@ -74,7 +71,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             // loop over elements
             var currentElement = docElements[currentIndex];
             var currentElementType = GetElementType(currentElement);
-            while (IsLowerPrecedence(parentType, currentElementType))
+            while (currentElementType.IsLowerPrecedence(parentType))
             {
                 // skip unhadled elements (charts, images, ..) or empty paragraphs
                 if (currentElementType != ElementType.Other && !string.IsNullOrEmpty(currentElement.InnerText))
@@ -82,7 +79,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     var currentElementText = GetElementText(docElements, ref currentIndex);
                     // check if current element is of simple type
                     List<DocumentSegment> children = null;
-                    if (!IsSimpleTypeElement(currentElementType))
+                    if (!currentElementType.IsSimpleTypeElement())
                     {
                         // element is not simple type: i.e. can have nested children
                         currentIndex++; // index of subsequent element
@@ -219,27 +216,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     .Elements<NumberingProperties>()?.FirstOrDefault()?
                     .Elements<NumberingId>()?.FirstOrDefault()?
                     .Val;
-        }
-
-        private bool IsSimpleTypeElement(ElementType elementType)
-        {
-            /*
-             * by simple types we mean elements that can't have children
-             * paragraphs, tables, bulleted lists
-             */
-            if (elementType == ElementType.Paragraph || elementType == ElementType.BulletedList || elementType == ElementType.Table)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsLowerPrecedence(ElementType baseElement, ElementType newElement)
-        {
-            /* 
-             * returns true if precedence (newElement  < baseElement)
-             */
-            return newElement > baseElement;
         }
     }
 }
