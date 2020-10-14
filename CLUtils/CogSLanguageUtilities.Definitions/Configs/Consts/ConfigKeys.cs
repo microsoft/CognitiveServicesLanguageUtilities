@@ -19,6 +19,7 @@
 
         // chunker
         public const string ChunkerCharLimit = "char-limit";
+        public const string ChunkerSectionLevel = "chunk-section-level";
 
         // prediction
         public const string CustomTextAzureResourceKey = "azure-resource-key";
