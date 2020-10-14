@@ -5,14 +5,13 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 {
     public class ChunkerService : IChunkerService
     {
-        
+
         private readonly string _primaryDelimiter = ".";
         private readonly string _secondaryDelimiter = " ";
 

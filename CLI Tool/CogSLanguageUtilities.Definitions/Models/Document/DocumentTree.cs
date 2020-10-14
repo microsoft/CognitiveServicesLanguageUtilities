@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Document
 {
     public class DocumentTree
     {
-        public List<DocumentSegment> DocumentSegments { get; set; } 
+        public List<DocumentSegment> DocumentSegments { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Document;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +14,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
     {
         private HashSet<string> _validTypesSet = new HashSet<string>(Constants.PlainTextValidFileTypes, StringComparer.OrdinalIgnoreCase);
 
-        public async Task<ParsedDocument> ParseFile(Stream file)
+        public async Task<DocumentTree> ParseFile(Stream file)
         {
             using (StreamReader sr = new StreamReader(file))
             {
@@ -24,10 +24,18 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     Text = text,
                     Type = ElementType.Paragraph
                 };
-                var elements = new List<DocumentElement> { element };
-                return new ParsedDocument
+
+                // construct document tree
+                return new DocumentTree
                 {
-                    Elements = elements
+                    DocumentSegments = new List<DocumentSegment>
+                    {
+                        new DocumentSegment
+                        {
+                            RootElement = element,
+                            Children = null
+                        }
+                    }
                 };
             }
         }

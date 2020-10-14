@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using Newtonsoft.Json;
 using System.Collections.Generic;
