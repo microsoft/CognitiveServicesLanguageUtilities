@@ -19,12 +19,6 @@ steps:
     versionSpec: 4.9.2
     checkLatest: true
 
-- task: NuGetCommand@2
-  displayName: 'NuGet restore'
-  inputs:
-    restoreSolution: 'CLI Tool\CogSLanguageUtilities.sln'
-    vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
-
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
