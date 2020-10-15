@@ -3,7 +3,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Enums.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Newtonsoft.Json;
 using System.IO;
@@ -72,13 +72,13 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             await _storageService.StoreDataAsync(configString, Constants.ConfigsFileName);
         }
 
-        public async Task SetChunkerConfigsAsync(int? charLimit, ChunkSectionLevel chunkSectionLevel)
+        public async Task SetChunkerConfigsAsync(int? charLimit, ElementType chunkSectionLevel)
         {
             if (charLimit != null)
             {
                 _configModel.Chunker.CharLimit = (int)charLimit;
             }
-            if (chunkSectionLevel != ChunkSectionLevel.NotSet)
+            if (chunkSectionLevel != ElementType.Other)
             {
                 _configModel.Chunker.ChunkSectionLevel = chunkSectionLevel;
             }

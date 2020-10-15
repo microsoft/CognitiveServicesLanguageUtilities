@@ -3,7 +3,7 @@
 ﻿using Autofac;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
-using Microsoft.CogSLanguageUtilities.Definitions.Enums.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +19,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
         public int CharLimit { get; }
 
         [Option(CommandOptionTemplate.ChunkerSectionLevel, Description = "logical section level (i.e. chunk document by title, h1, h2, h3)")]
-        public ChunkSectionLevel ChunkSectionLevel { get; } = ChunkSectionLevel.NotSet;
+        public ElementType ChunkSectionLevel { get; } = ElementType.Other;
 
         private async Task OnExecuteAsync(CommandLineApplication app)
         {
