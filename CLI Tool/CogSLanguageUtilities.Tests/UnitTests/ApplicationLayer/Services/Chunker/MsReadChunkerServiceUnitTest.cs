@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 {
-    public class MsReadChunkerServiceTest
+    public class MsReadChunkerServiceUnitTest
     {
         public static TheoryData NoChunkingTestData()
         {

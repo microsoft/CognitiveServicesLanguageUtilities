@@ -67,17 +67,6 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
         [MemberData(nameof(TestParsingData))]
         public async Task TestPredictionAsync(string customTextKey, string endpointUrl, string appId, string inputText, CliException expectedException)
         {
-            /* TEST NOTES
-             * *************
-             * we only care about prediction result
-             * i.e. prediction results maps to our object correctly
-             * 
-             * we don't care about the actual values in the object
-             * because the service provider (in this case CustomText team)
-             * may optimize their engine
-             * rendering the values in our "ExpectedResult" object in correct
-             * */
-
             // arrange
             var mockHttpHandler = new Mock<IHttpHandler>();
             // mock post submit prediction request
