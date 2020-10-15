@@ -3,6 +3,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Document;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
@@ -65,7 +66,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
         public void NoChunkingTest(DocumentTree parseResult, List<ChunkInfo> expectedChunks)
         {
             IChunkerService msReadChunker = new ChunkerService();
-            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.NoChunking, 0);
+            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.NoChunking, 0, ElementType.Other);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
         }
@@ -75,7 +76,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
         public void PageChunkingTest(DocumentTree parseResult, List<ChunkInfo> expectedChunks)
         {
             IChunkerService msReadChunker = new ChunkerService();
-            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Page, Constants.CustomTextPredictionMaxCharLimit);
+            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Page, Constants.CustomTextPredictionMaxCharLimit, ElementType.Other);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
         }
@@ -85,7 +86,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
         public void CharChunkingTest(DocumentTree parseResult, List<ChunkInfo> expectedChunks)
         {
             IChunkerService msReadChunker = new ChunkerService();
-            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Char, 1000);
+            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.Char, 1000, ElementType.Other);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
         }

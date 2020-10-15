@@ -146,6 +146,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                 {
                     RootElement = new DocumentElement
                     {
+                        Text = string.Empty,
                         Type = ElementType.Root
                     },
                     Children = elements.Select(docElement =>

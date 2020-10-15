@@ -4,6 +4,7 @@
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
@@ -73,7 +74,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     var parsedFile = await _parserService.ParseFile(file);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(parsedFile, ChunkMethod.Char, charLimit);
+                    List<ChunkInfo> chunkedText = _chunkerService.Chunk(parsedFile, ChunkMethod.Char, charLimit, ElementType.Other);
                     // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))

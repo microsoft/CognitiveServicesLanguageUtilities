@@ -17,7 +17,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private readonly string _primaryDelimiter = ".";
         private readonly string _secondaryDelimiter = " ";
 
-        public List<ChunkInfo> Chunk(DocumentTree documentTree, ChunkMethod chunkMethod, int charLimit)
+        public List<ChunkInfo> Chunk(DocumentTree documentTree, ChunkMethod chunkMethod, int charLimit, ElementType chunkLevel)
         {
             switch (chunkMethod)
             {
@@ -27,6 +27,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                     return ChunkByCharacterLimit(documentTree, charLimit);
                 case ChunkMethod.Page:
                     return ChunkByPage(documentTree, charLimit);
+                case ChunkMethod.Section:
+                    return ChunkBySection(documentTree, chunkLevel, charLimit);
                 default:
                     throw new NotSupportedException($"The chunk type {chunkMethod} isn't supported.");
             }
@@ -156,7 +158,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private List<ChunkInfo> ChunkByCharacterLimit(DocumentTree documentTree, int charLimit)
         {
             // prepare variables
-            var characterChunks = new List<ChunkInfo>();
+            var resultChunks = new List<ChunkInfo>();
             var currentChunkNumber = 1;
             var chunkStartPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
             var chunkEndPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
@@ -165,15 +167,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             // handle document segments
             documentTree.RootSegment.Children.ForEach(segment =>
             {
-                ChunkByCharacterLimitInternal(segment, charLimit, characterChunks, ref currentChunkNumber, ref chunkStartPage, ref chunkEndPage, currentChunk);
+                ChunkByCharacterLimitInternal(segment, charLimit, resultChunks, ref currentChunkNumber, ref chunkStartPage, ref chunkEndPage, currentChunk);
             });
 
             // handle remaining text
             if (currentChunk.Length > 0)
             {
-                characterChunks.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), chunkStartPage, chunkEndPage));
+                resultChunks.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), chunkStartPage, chunkEndPage));
             }
-            return characterChunks;
+            return resultChunks;
         }
 
         private void ChunkByCharacterLimitInternal(DocumentSegment segment, int charLimit, List<ChunkInfo> resultChunks, ref int currentChunkNumber, ref int? currentChunkStartPage, ref int? currentChunkEndPage, StringBuilder currentChunkText)
@@ -206,6 +208,52 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
                 foreach (var childSegment in segment.Children)
                 {
                     ChunkByCharacterLimitInternal(childSegment, charLimit, resultChunks, ref currentChunkNumber, ref currentChunkStartPage, ref currentChunkEndPage, currentChunkText);
+                }
+            }
+        }
+
+        private List<ChunkInfo> ChunkBySection(DocumentTree documentTree, ElementType chunkLevel, int charLimit)
+        {
+            var resultChunks = new List<ChunkInfo>();
+            var currentChunkText = new StringBuilder();
+            var canEndChunk = false; // true if current chunk contains a simple element
+            var currentChunkNumber = 1;
+            var currentChunkStartPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
+            var currentChunkEndPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
+            ChunkBySectionInternal(documentTree.RootSegment, currentChunkText, resultChunks, ref canEndChunk, chunkLevel, charLimit, ref currentChunkNumber, ref currentChunkStartPage, ref currentChunkEndPage);
+
+            // handle remaining text
+            if (currentChunkText.Length > 0)
+            {
+                resultChunks.Add(new ChunkInfo(currentChunkNumber, currentChunkText.ToString(), currentChunkStartPage, currentChunkEndPage));
+            }
+            return resultChunks;
+        }
+
+        private void ChunkBySectionInternal(DocumentSegment currentSegment, StringBuilder currentChunkText, List<ChunkInfo> resultChunks, ref bool canEndChunk, ElementType chunkLevel, int charLimit, ref int currentChunkNumber, ref int? currentChunkStartPage, ref int? currentChunkEndPage)
+        {
+            // End chunk If
+            // current chunk contains a simple element and the current element is of the same or higher level than chunkLevel
+            // or adding current element to the chunk exceeds charLimit
+            var endChunkCondition = canEndChunk && currentSegment.RootElement.Type.IsHigherOrEqualPrecedence(chunkLevel) || currentSegment.RootElement.Text.Length + currentChunkText.Length > charLimit;
+            if (endChunkCondition)
+            {
+                resultChunks.Add(new ChunkInfo(currentChunkNumber, currentChunkText.ToString(), currentChunkStartPage, currentChunkEndPage));
+                currentChunkText.Clear();
+                currentChunkStartPage = currentSegment.RootElement.PageNumber;
+                currentChunkNumber++;
+            }
+            currentChunkText.Append(currentSegment.RootElement.Text);
+            currentChunkText.Append(Environment.NewLine);
+            canEndChunk = currentSegment.RootElement.Type.IsSimpleTypeElement();
+            currentChunkEndPage = currentSegment.RootElement.PageNumber;
+
+            // DFS traversal of children 
+            if (currentSegment.Children != null)
+            {
+                foreach (var childSegment in currentSegment.Children)
+                {
+                    ChunkBySectionInternal(childSegment, currentChunkText, resultChunks, ref canEndChunk, chunkLevel, charLimit, ref currentChunkNumber, ref currentChunkStartPage, ref currentChunkEndPage);
                 }
             }
         }

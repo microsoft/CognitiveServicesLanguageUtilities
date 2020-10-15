@@ -46,6 +46,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                             Children = children,
                             RootElement = new DocumentElement
                             {
+                                Text = string.Empty,
                                 Type = currentElementType
                             }
                         }

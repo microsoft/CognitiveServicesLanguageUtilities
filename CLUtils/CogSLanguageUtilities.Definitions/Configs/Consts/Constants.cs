@@ -18,6 +18,8 @@
         public const double IndentPercentageOfLine = 0.05;
         public const double EndOfParagraphVerticalSpaceFactor = 1.5;
         public const int DefaultCharLimit = 5000;
+        public const ElementType minAllowdChunkSectionLevel = ElementType.Title;
+        public const ElementType maxAllowdChunkSectionLevel = ElementType.Heading3;
         // custom text
         public const int CustomTextPredictionMaxCharLimit = 25000;
         public const int MinAllowedCharLimit = 20;

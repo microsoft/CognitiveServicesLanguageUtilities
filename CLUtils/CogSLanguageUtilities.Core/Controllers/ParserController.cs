@@ -54,6 +54,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
+            var chunkLevel = _configurationService.GetChunkerConfigModel().ChunkSectionLevel;
             var convertedFiles = new ConcurrentBag<string>();
             var failedFiles = new ConcurrentDictionary<string, string>();
 
@@ -75,7 +76,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     var parseResult = await parsingService.ParseFile(file);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
-                    var chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
+                    var chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit, chunkLevel);
                     // store file
                     _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     foreach (var item in chunkedText.Select((value, i) => (value, i)))

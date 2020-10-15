@@ -9,6 +9,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface IChunkerService
     {
-        public List<ChunkInfo> Chunk(DocumentTree documentTree, ChunkMethod chunkMethod, int charLimit);
+        public List<ChunkInfo> Chunk(DocumentTree documentTree, ChunkMethod chunkMethod, int charLimit, ElementType chunkLevel);
     }
 }

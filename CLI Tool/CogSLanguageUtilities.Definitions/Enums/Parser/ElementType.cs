@@ -38,5 +38,13 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser
         {
             return newElement > baseElement;
         }
+
+        /// <summary>
+        /// returns true if precedence (newElement  >= baseElement)
+        /// </summary>
+        public static bool IsHigherOrEqualPrecedence(this ElementType newElement, ElementType baseElement)
+        {
+            return newElement <= baseElement;
+        }
     }
 }

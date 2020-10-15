@@ -18,6 +18,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
         [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "character limit for chunk")]
         public int CharLimit { get; }
 
+        [Range((int)Definitions.Configs.Consts.Constants.minAllowdChunkSectionLevel, (int)Definitions.Configs.Consts.Constants.maxAllowdChunkSectionLevel)]
         [Option(CommandOptionTemplate.ChunkerSectionLevel, Description = "logical section level (i.e. chunk document by title, h1, h2, h3)")]
         public ElementType ChunkSectionLevel { get; } = ElementType.Other;
 
