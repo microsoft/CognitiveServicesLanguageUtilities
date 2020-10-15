@@ -13,12 +13,6 @@ pr:
 - dev
 
 steps:
-- task: NuGetToolInstaller@1
-  displayName: 'Use NuGet 4.9.2'
-  inputs:
-    versionSpec: 4.9.2
-    checkLatest: true
-
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
