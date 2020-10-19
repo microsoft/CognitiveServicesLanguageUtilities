@@ -25,10 +25,10 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     Type = ElementType.Paragraph
                 };
                 var elements = new List<DocumentElement> { element };
-                return await Task.FromResult(new ParsedDocument
+                return new ParsedDocument
                 {
                     Elements = elements
-                });
+                };
             }
         }
 
