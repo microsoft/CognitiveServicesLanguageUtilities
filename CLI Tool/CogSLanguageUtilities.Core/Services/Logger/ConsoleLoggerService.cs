@@ -18,6 +18,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Logger
             }
         }
 
+        public void LogOperation(OperationType operationType)
+        {
+            LogOperation(operationType, string.Empty);
+        }
+
         public void LogOperation(OperationType operationType, string message)
         {
             lock (_lock)

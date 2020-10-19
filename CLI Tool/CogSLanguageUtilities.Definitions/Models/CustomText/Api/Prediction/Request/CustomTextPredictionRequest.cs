@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Request
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Request
 {
     public class CustomTextPredictionRequest
     {

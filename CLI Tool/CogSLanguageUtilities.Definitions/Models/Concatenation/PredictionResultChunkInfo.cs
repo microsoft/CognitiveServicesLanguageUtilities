@@ -1,12 +1,13 @@
 ﻿using Azure.AI.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result;
 using Newtonsoft.Json;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation
 {
     public class PredictionResultChunkInfo
     {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ChunkInfo ChunkInfo;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public CustomTextPredictionResponse CustomTextResponse;

@@ -1,9 +1,9 @@
-﻿using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Status;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using Moq;
@@ -67,17 +67,6 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
         [MemberData(nameof(TestParsingData))]
         public async Task TestPredictionAsync(string customTextKey, string endpointUrl, string appId, string inputText, CliException expectedException)
         {
-            /* TEST NOTES
-             * *************
-             * we only care about prediction result
-             * i.e. prediction results maps to our object correctly
-             * 
-             * we don't care about the actual values in the object
-             * because the service provider (in this case CustomText team)
-             * may optimize their engine
-             * rendering the values in our "ExpectedResult" object in correct
-             * */
-
             // arrange
             var mockHttpHandler = new Mock<IHttpHandler>();
             // mock post submit prediction request
@@ -106,7 +95,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             // act
             if (expectedException == null)
             {
-                var predictionService = new CustomTextService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
+                var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                 var actualResult = await predictionService.GetPredictionAsync(inputText);
                 // validate object values aren't null
                 Assert.NotNull(actualResult.Prediction.PositiveClassifiers);
@@ -117,7 +106,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    var predictionService = new CustomTextService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
+                    var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                     await predictionService.GetPredictionAsync(inputText);
                 });
             }

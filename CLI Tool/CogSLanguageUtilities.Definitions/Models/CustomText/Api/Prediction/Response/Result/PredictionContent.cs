@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result
 {
     public class PredictionContent
     {
@@ -11,7 +11,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Predicti
 
         [JsonProperty(PropertyName = "classifiers", Order = 1, NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, ClassifierV4Preview> Classifiers { get; set; }
-
 
         [JsonProperty(PropertyName = "extractors", Order = 2)]
         public JObject Extractors { get; set; }
