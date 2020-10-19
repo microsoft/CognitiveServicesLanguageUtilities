@@ -29,16 +29,6 @@ steps:
     configuration: '$(BuildConfiguration)'
     msbuildArchitecture: x64
     clean: true
-  
-- task: VSBuild@1
-  displayName: 'Build solution LuisModelEvaluation\LuisModelEvaluation.sln'
-  inputs:
-    solution: 'LuisModelEvaluation\LuisModelEvaluation.sln'
-    msbuildArgs: '/m /v:q'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    msbuildArchitecture: x64
-    clean: true
 
 - task: VSTest@2
   displayName: 'Run Tests'
