@@ -6,7 +6,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface IParserService
     {
-        public Task<ParseResult> ParseFile(Stream file);
+        public Task<ParsedDocument> ParseFile(Stream file);
 
         public void ValidateFileType(string fileType);
     }

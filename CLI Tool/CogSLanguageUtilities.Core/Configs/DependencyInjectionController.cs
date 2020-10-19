@@ -41,8 +41,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
             var builder = BuildCommonDependencies();
             builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
-            builder.RegisterType<PlainTextChunkerService>().As<IChunkerService>();
+            builder.RegisterType<ChunkerService>().As<IChunkerService>();
             builder.RegisterType<ChunkerController>();
+            builder.RegisterType<PlainTextParserService>().As<IParserService>();
             return builder.Build();
         }
 
@@ -140,7 +141,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
         {
             if (parserType.Equals(ParserType.MSRead))
             {
-                return new MsReadChunkerService();
+                return new ChunkerService();
             }
             else
             {

@@ -24,6 +24,8 @@
         // text analytics
         public const int TextAnalyticsPredictionMaxCharLimit = 5000;
         public const int TextAnaylticsApiCallDocumentLimit = 5;
+        // plain text parser
+        public static readonly string[] PlainTextValidFileTypes = { ".txt" };
         // evaluation
         public const string CustomTextEvaluationControllerOutputFileName = "CustomTextBatchTesting.json";
         public const string ModelHierarchySeparator = "::";
