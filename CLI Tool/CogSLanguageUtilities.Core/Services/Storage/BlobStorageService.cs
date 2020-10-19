@@ -104,5 +104,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
                 return _blobContainerClient.GetBlobClient(fileName).Exists();
             });
         }
+
+        public Task CreateDirectoryAsync(string directoryName)
+        {
+            return Task.CompletedTask;
+        }
+
+        public async Task StoreDataToDirectoryAsync(string data, string directoryName, string fileName)
+        {
+            var relativePath = Path.Combine(directoryName, fileName);
+            await StoreDataAsync(data, relativePath);
+        }
     }
 }

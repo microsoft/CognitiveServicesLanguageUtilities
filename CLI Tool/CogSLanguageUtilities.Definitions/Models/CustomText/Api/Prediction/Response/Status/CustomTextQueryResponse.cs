@@ -1,7 +1,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 using Newtonsoft.Json;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Status
 {
     public class CustomTextQueryResponse
     {

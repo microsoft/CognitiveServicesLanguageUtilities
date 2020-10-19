@@ -15,11 +15,11 @@ Like extracting text from documents, chunking text files, and integrating with p
     - load from file
         - clutils config load --path <ABSOLUTE_PATH>
     - msread
-        - clutils config show msread
-        - clutils config set msread --azure-resource-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
+        - clutils config show parser msread
+        - clutils config set parser msread --azure-resource-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
     - tika (Not Supported Yet)
-        - clutils config show tika
-        - clutils config set tika --enable-ocr <BOOLEAN> --detect-titlted-text <BOOLEAN> --sort-by-position <BOOLEAN>
+        - clutils config show parser tika
+        - clutils config set parser tika --enable-ocr <BOOLEAN> --detect-titlted-text <BOOLEAN> --sort-by-position <BOOLEAN>
     - storage
         - clutils config show storage
         - clutils config set storage local --source-dir <ABSOLUTE_PATH> --destination-dir <ABSOLUTE_PATH> 
@@ -42,3 +42,6 @@ Like extracting text from documents, chunking text files, and integrating with p
 
 - prediction
     - clutils predict --cognitive-service <customtext/textanalytics/both> --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunk-type <PAGE/CHAR> ]
+
+- evaluation
+    - clutils evaluate --cognitive-service <customtext/textanalytics/both> --source <BLOB/LOCAL> --destination <BLOB/LOCAL>

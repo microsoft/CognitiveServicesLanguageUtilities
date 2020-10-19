@@ -1,5 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
-using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
+using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
@@ -59,7 +59,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.Prediction
             // act
             if (expectedException == null)
             {
-                var predictionService = new CustomTextService(httpHandler, customTextKey, endpointUrl, appId);
+                var predictionService = new CustomTextPredictionService(httpHandler, customTextKey, endpointUrl, appId);
                 var actualResult = await predictionService.GetPredictionAsync(inputText);
                 // validate object values aren't null
                 Assert.NotNull(actualResult.Prediction.PositiveClassifiers);
@@ -70,7 +70,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.Prediction
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    var predictionService = new CustomTextService(httpHandler, customTextKey, endpointUrl, appId);
+                    var predictionService = new CustomTextPredictionService(httpHandler, customTextKey, endpointUrl, appId);
                     await predictionService.GetPredictionAsync(inputText);
                 });
             }

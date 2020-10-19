@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand
 {
-    [Command("predict", Description = "")]
+    [Command("predict", Description = "Call the prediction API for the Custom Text or Text Analytics")]
     public class PredictCommand
     {
         [Required]

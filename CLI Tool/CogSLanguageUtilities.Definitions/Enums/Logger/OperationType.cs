@@ -7,6 +7,8 @@
         ParsingFile,
         ChunkingFile,
         DisplayingResult,
-        RunningPrediction
+        RunningPrediction,
+        EvaluatingResults,
+        GeneratingTestSet
     }
 }

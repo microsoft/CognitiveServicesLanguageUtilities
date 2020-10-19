@@ -24,5 +24,11 @@
         // text analytics
         public const int TextAnalyticsPredictionMaxCharLimit = 5000;
         public const int TextAnaylticsApiCallDocumentLimit = 5;
+        // evaluation
+        public const string CustomTextEvaluationControllerOutputFileName = "CustomTextBatchTesting.json";
+        public const string ModelHierarchySeparator = "::";
+        public const int CustomTextExamplesPageSize = 100;
+        public const string EvaluationCommandPredictionOutputDirectoryName = "prediction_output";
+
     }
 }

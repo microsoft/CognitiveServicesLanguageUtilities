@@ -1,9 +1,9 @@
-﻿using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Status;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using Moq;
@@ -95,7 +95,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             // act
             if (expectedException == null)
             {
-                var predictionService = new CustomTextService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
+                var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                 var actualResult = await predictionService.GetPredictionAsync(inputText);
                 // validate object values aren't null
                 Assert.NotNull(actualResult.Prediction.PositiveClassifiers);
@@ -106,7 +106,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    var predictionService = new CustomTextService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
+                    var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                     await predictionService.GetPredictionAsync(inputText);
                 });
             }

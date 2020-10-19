@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	<RootNamespace>Microsoft.CogSLanguageUtilities.Core</RootNamespace>
+    <RootNamespace>Microsoft.CogSLanguageUtilities.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
-    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.0.0" />
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.1.0-beta.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.ComputerVision" Version="5.0.0" />
@@ -16,6 +16,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LuisModelEvaluation">
+      <HintPath>..\..\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

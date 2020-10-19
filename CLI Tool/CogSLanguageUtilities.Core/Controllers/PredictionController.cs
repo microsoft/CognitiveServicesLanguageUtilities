@@ -25,7 +25,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         private readonly ILoggerService _loggerService;
         private readonly IChunkerService _chunkerService;
         private readonly ITextAnalyticsService _textAnalyticsPredictionService;
-        private readonly ICustomTextService _customTextPredictionService;
+        private readonly ICustomTextPredictionService _customTextPredictionService;
         private readonly IConcatenationService _concatenationService;
 
         public PredictionController(
@@ -35,7 +35,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             ILoggerService loggerService,
             IChunkerService chunkerService,
             ITextAnalyticsService textAnalyticsPredictionService,
-            ICustomTextService CustomTextPredictionService,
+            ICustomTextPredictionService CustomTextPredictionService,
             IConcatenationService concatenationService)
         {
             _configurationService = configurationService;
@@ -97,6 +97,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     var concatenatedResponse = _concatenationService.ConcatPredictionResult(chunkedText.ToArray(), customTextresponse, sentimentResponse, nerResponse, keyphraseResponse);
                     var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
                     // store file
+                    _loggerService.LogOperation(OperationType.StoringResult, fileName);
                     var newFileName = Path.GetFileNameWithoutExtension(fileName) + ".json";
                     await _destinationStorageService.StoreDataAsync(responseAsJson, newFileName);
                     convertedFiles.Add(fileName);
