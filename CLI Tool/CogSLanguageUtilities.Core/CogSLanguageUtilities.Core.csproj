@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -16,12 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LuisModelEvaluation">
-      <HintPath>..\..\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\LuisModelEvaluation\LuisModelEvaluation\LuisModelEvaluation.csproj" />
   </ItemGroup>
 
 </Project>
