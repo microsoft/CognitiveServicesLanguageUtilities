@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.LuisModelEvaluation.Controllers;
 using Microsoft.LuisModelEvaluation.Models.Input;

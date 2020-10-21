@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 using Microsoft.LuisModelEvaluation.Controllers;
 using Microsoft.LuisModelEvaluation.Exceptions;
 using Microsoft.LuisModelEvaluation.Models.Input;
