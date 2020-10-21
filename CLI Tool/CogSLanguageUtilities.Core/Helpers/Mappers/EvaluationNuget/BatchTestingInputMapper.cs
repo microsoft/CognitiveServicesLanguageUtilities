@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;

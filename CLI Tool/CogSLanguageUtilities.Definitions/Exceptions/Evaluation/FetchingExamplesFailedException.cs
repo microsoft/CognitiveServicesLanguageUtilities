@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Evaluation
 {
     public class FetchingExamplesFailedException : CliException

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs;

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System.IO;
 using System.Threading.Tasks;

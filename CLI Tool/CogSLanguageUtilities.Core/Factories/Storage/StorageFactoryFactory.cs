@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System;

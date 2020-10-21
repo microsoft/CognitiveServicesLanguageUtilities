@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;

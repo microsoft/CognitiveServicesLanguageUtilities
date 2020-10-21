@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;

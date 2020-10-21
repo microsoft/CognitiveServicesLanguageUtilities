@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Autofac;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;

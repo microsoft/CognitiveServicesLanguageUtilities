@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
