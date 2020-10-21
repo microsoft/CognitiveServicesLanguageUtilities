@@ -1,0 +1,7 @@
+.vs/
+obj/
+bin/
+launchSettings.json
+*.pubxml.user
+*.csproj.user
+StyleCop.Cache
