@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
+
+namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
 {
     public class Constants
     {
