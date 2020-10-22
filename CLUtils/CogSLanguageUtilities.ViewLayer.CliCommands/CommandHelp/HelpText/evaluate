@@ -1,0 +1,15 @@
+﻿EVALUATE
+
+  The `clutils evaluate` command is used to evaluate trained model against labeled data.
+
+USAGE: clutils parse [...]
+
+  STORAGE
+    --source <local/blob>                       (Required: storage to read documents (test data) from)
+    --destination <local/blob>                  (Required: storage to write evaluation result to)
+
+
+SEE ALSO
+
+  clutils help parse examples
+  clutils help parse documentation

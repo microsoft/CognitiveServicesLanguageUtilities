@@ -15,12 +15,12 @@ HELP
 
 COMMANDs
 
-  clutils config [...]				(see: clutils help config)
+  clutils config [...]				(see: clutils config --help)
 
-  clutils parse [...]				(see: clutils help recognize)
-  clutils chunk [...]				(see: clutils help synthesize)
-  clutils predict [...]				(see: clutils help translate)
-  clutils evaluate [...]			(see: clutils help batch)
+  clutils parse [...]				(see: clutils parse --help)
+  clutils chunk [...]				(see: clutils chunk --help)
+  clutils predict [...]				(see: clutils predict --help)
+  clutils evaluate [...]			(see: clutils evaluate --help)
 
 ADDITIONAL TOPICs
 

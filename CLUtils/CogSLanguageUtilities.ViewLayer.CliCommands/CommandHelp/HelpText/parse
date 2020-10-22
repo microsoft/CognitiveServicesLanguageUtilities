@@ -1,0 +1,19 @@
+﻿PARSE
+
+  The `clutils parse` command is used to extract text from documents
+  in source storage and stores result in destination storage.
+
+USAGE: clutils parse [...]
+
+  STORAGE
+    --source <local/blob>                       (Required: storage to read documents from)
+    --destination <local/blob>                  (Required: storage to write parsed documents to)
+
+  CHUNKING
+    --chunk-type <char/page/section>            (Optional: select document chunking method)
+
+
+SEE ALSO
+
+  clutils help parse examples
+  clutils help parse documentation

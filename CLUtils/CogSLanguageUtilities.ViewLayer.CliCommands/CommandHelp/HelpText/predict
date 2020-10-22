@@ -1,0 +1,22 @@
+﻿PREDICT
+
+  The `clutils predict` command is used to call the prediction API
+  for Custom Text or Text Analytics on documents
+  in source storage and stores the prediction result in destination storage.
+
+USAGE: clutils predict [...]
+
+  STORAGE
+    --source <local/blob>                                   (Required: storage to read documents from)
+    --destination <local/blob>                              (Required: storage to write prediction result to)
+
+  PREDICTION SERVICE
+    --cognitive-service <customtext/textanalytics/both>     (Required: cognitive service used for prediction)
+  CHUNKING
+    --chunk-type <char/page/section>                        (Optional: select document chunking method)
+
+
+SEE ALSO
+
+  clutils help predict examples
+  clutils help predict documentation

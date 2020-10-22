@@ -1,0 +1,16 @@
+﻿CHUNK
+
+  The `clutils chunk` command is used to chunk down text documents
+  by char limit set in configs file.
+
+USAGE: clutils chunk [...]
+
+  STORAGE
+    --source <local/blob>                       (Required: storage to read documents from)
+    --destination <local/blob>                  (Required: storage to write chunked text documents to)
+
+
+SEE ALSO
+
+  clutils help chunk examples
+  clutils help chunk documentation
