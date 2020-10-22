@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser;

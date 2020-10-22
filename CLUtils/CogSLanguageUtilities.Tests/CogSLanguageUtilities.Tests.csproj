@@ -21,18 +21,13 @@
   <ItemGroup>
     <ProjectReference Include="..\CogSLanguageUtilities.Core\CogSLanguageUtilities.Core.csproj" />
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
+    <ProjectReference Include="..\LuisModelEvaluation\LuisModelEvaluation\LuisModelEvaluation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="TestData\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LuisModelEvaluation">
-      <HintPath>..\..\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

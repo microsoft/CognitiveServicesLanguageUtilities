@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget;
 using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Evaluation;
