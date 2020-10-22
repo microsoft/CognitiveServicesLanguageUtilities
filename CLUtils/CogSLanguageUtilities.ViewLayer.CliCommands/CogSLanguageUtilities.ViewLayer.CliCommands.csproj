@@ -18,4 +18,14 @@
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="CommandHelp\HelpText\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="CommandHelp\HelpText\predict" />
+	</ItemGroup>
+
 </Project>

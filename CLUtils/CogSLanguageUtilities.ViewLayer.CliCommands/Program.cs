@@ -5,6 +5,7 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.CommandHelp;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
@@ -33,6 +34,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
         private int OnExecute(CommandLineApplication app)
         {
             // this shows help even if the --help option isn't specified
+            app.HelpTextGenerator = new CustomHelpTextGenerator();
             app.ShowHelp();
             return 1;
         }

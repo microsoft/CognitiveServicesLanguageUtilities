@@ -1,0 +1,28 @@
+﻿ ######  ##       ##     ## ######## #### ##        ######  
+##    ## ##       ##     ##    ##     ##  ##       ##    ## 
+##       ##       ##     ##    ##     ##  ##       ##       
+##       ##       ##     ##    ##     ##  ##        ######  
+##       ##       ##     ##    ##     ##  ##             ## 
+##    ## ##       ##     ##    ##     ##  ##       ##    ## 
+ ######  ########  #######     ##    #### ########  ######
+
+
+USAGE: clutils <command> [...]
+
+HELP
+
+  clutils help
+
+COMMANDs
+
+  clutils config [...]				(see: clutils help config)
+
+  clutils parse [...]				(see: clutils help recognize)
+  clutils chunk [...]				(see: clutils help synthesize)
+  clutils predict [...]				(see: clutils help translate)
+  clutils evaluate [...]			(see: clutils help batch)
+
+ADDITIONAL TOPICs
+
+  clutils help examples
+  clutils help documentation
