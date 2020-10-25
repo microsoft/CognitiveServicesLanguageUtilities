@@ -4,8 +4,9 @@
 {
     public enum CognitiveServiceType
     {
-        CustomText,
-        TextAnalytics,
-        Both
+        NotSpecified = 0,
+        CustomText = 1,
+        TextAnalytics = 2,
+        Both = 3
     }
 }
