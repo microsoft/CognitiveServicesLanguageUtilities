@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand
 {
     [Command("chunk")]
+    [SuppressDefaultHelpOption]
     public class ChunkCommand
     {
         [Option("--source <local/blob>")]

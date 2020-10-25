@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand
 {
     [Command("parse")]
+    [SuppressDefaultHelpOption]
     public class ParseCommand
     {
         [Option("--parser <msread/tika>")]

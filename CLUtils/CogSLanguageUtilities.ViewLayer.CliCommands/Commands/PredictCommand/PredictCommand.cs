@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand
 {
     [Command("predict")]
+    [SuppressDefaultHelpOption]
     public class PredictCommand
     {
         [Option("--cognitive-service <customtext/textanalytics/both>")]

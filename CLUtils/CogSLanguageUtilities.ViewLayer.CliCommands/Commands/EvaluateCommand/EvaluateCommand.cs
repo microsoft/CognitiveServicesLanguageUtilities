@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand
 {
     [Command("evaluate")]
+    [SuppressDefaultHelpOption]
     public class EvaluateCommand
     {
         [Option("--source <local/blob>")]
