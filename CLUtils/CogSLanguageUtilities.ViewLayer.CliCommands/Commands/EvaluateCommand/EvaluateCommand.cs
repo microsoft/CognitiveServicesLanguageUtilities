@@ -20,7 +20,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Evaluat
         public StorageType Source { get; } = StorageType.Blob;
         [Option("--destination <local/blob>")]
         public StorageType Destination { get; }
-        [Option("--help")]
+        [Option("-h|--help")]
         public bool Help { get; } = false;
 
         private async Task OnExecute(CommandLineApplication app)

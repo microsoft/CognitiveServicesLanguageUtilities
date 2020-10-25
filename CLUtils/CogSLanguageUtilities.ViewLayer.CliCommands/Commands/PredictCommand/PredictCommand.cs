@@ -29,7 +29,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
         public StorageType Destination { get; }
         [Option("--chunk-type <page/char>")]
         public ChunkMethod ChunkType { get; } = ChunkMethod.NotSpecified;
-        [Option("--help")]
+        [Option("-h|--help")]
         public bool Help { get; } = false;
 
         private async Task OnExecute(CommandLineApplication app)

@@ -26,7 +26,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Utiliti
         public StorageType Destination { get; } = StorageType.NotSpecified;
         [Option("--chunk-type <page/char>")]
         public ChunkMethod ChunkType { get; } = ChunkMethod.NotSpecified;
-        [Option("--help")]
+        [Option("-h|--help")]
         public bool Help { get; } = false;
 
         private async Task OnExecuteAsync(CommandLineApplication app)
