@@ -40,7 +40,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Utiliti
             }
 
             // validate required args
-            ValidateRequiredArgs();
+            ValidateArguments();
 
             // build dependencies
             var container = DependencyInjectionController.BuildParseCommandDependencies(Parser);
@@ -55,25 +55,23 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Utiliti
 
         private bool CheckHelpRequested()
         {
-            var emptyArgs =
+            // in case no arguments passed or --help specified
+            // but according to Demorgan laws, --help won't matter (noOptions && noHelp) || (noOptions && help)
+            return
                 Parser == ParserType.NotSpecified
                 && Source == StorageType.NotSpecified
                 && Destination == StorageType.NotSpecified
                 && ChunkType == ChunkMethod.NotSpecified;
-
-            // case 1: no options passed alongside main argument
-            var case1 = emptyArgs && Help == false;
-            
-            // case 2: only help option passed
-            var case2 = emptyArgs && Help == true;
-
-            // return 
-            return case1 || case2;
         }
 
-        private void ValidateRequiredArgs()
+        private void ValidateArguments()
         {
-            if(Source == StorageType.NotSpecified)
+            if (Help == true)
+            {
+                throw new InvalidArgumentException("--help");
+            }
+
+            if (Source == StorageType.NotSpecified)
             {
                 throw new RequiredArgumentException("--source");
             }
