@@ -14,8 +14,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand
 {
-    [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
-    [SuppressDefaultHelpOption]
+    [Command("parse")]
     public class ParseCommand
     {
         [Option("--parser <msread/tika>")]
