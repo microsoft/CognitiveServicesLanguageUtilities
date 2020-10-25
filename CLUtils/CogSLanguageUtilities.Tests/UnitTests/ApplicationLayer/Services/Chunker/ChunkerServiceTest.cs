@@ -65,7 +65,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
         public void NoChunkingTest(ParsedDocument parseResult, List<ChunkInfo> expectedChunks)
         {
             IChunkerService msReadChunker = new ChunkerService();
-            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.NoChunking, 0);
+            List<ChunkInfo> actualChunks = msReadChunker.Chunk(parseResult, ChunkMethod.NotSpecified, 0);
             Assert.Equal(expectedChunks.Count, actualChunks.Count);
             Assert.Equal(expectedChunks, actualChunks, new ChunkInfoComparer());
         }

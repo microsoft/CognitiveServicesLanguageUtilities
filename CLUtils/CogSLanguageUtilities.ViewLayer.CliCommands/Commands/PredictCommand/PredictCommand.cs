@@ -29,7 +29,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
         [Option("--destination <local/blob>", Description = "[required] indicates destination storage type")]
         public StorageType Destination { get; }
         [Option("--chunk-type <page/char>", Description = "[optional] indicates chunking type. if not set, no chunking will be used")]
-        public ChunkMethod ChunkType { get; } = ChunkMethod.NoChunking;
+        public ChunkMethod ChunkType { get; } = ChunkMethod.NotSpecified;
 
         private async Task OnExecute(CommandLineApplication app)
         {

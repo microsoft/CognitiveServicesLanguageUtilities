@@ -22,7 +22,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         {
             switch (chunkMethod)
             {
-                case ChunkMethod.NoChunking:
+                case ChunkMethod.NotSpecified:
                     return ApplyNoChunking(parseResult);
                 case ChunkMethod.Char:
                     return ChunkByCharacterLimit(parseResult, charLimit);

@@ -4,7 +4,8 @@
 {
     public enum ParserType
     {
-        MSRead,
-        Tika
+        NotSpecified = 0,
+        MSRead = 1,
+        Tika = 2
     }
 }

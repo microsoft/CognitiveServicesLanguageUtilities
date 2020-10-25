@@ -4,8 +4,9 @@
 {
     public enum StorageType
     {
-        Local,
-        Blob
+        NotSpecified = 0, // DON'T CHANGE! must be 0, as default value for storage.
+        Local = 1,
+        Blob = 2
     }
 }
 
