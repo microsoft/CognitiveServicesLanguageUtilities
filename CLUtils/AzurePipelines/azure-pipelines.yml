@@ -6,10 +6,6 @@ pool:
   - visualstudio
   - vstest
 
-trigger:
-- main
-- dev
-
 pr:
 - main
 - dev
@@ -19,13 +15,13 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: restore
-    projects: 'CLI Tool\CogSLanguageUtilities.sln'
+    projects: 'CLUtils\CogSLanguageUtilities.sln'
     vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
 
 - task: VSBuild@1
-  displayName: 'Build solution CLI Tool\CogSLanguageUtilities.sln'
+  displayName: 'Build solution CLUtils\CogSLanguageUtilities.sln'
   inputs:
-    solution: 'CLI Tool\CogSLanguageUtilities.sln'
+    solution: 'CLUtils\CogSLanguageUtilities.sln'
     msbuildArgs: '/m /v:q'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
@@ -37,8 +33,8 @@ steps:
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      CLI Tool\CogSLanguageUtilities.Tests\bin\Release\**\CogSLanguageUtilities.Tests.dll
-      CLI Tool\LuisModelEvaluation\LuisModelEvaluation.Tests\bin\Release\**\LuisModelEvaluation.Tests.dll
+      CLUtils\CogSLanguageUtilities.Tests\bin\Release\**\CogSLanguageUtilities.Tests.dll
+      CLUtils\LuisModelEvaluation\LuisModelEvaluation.Tests\bin\Release\**\LuisModelEvaluation.Tests.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'FullyQualifiedName~Unit'
     runInParallel: false
