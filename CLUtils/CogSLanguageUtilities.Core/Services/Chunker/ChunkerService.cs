@@ -1,33 +1,32 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Document;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 {
     public class ChunkerService : IChunkerService
     {
-        
+
         private readonly string _primaryDelimiter = ".";
         private readonly string _secondaryDelimiter = " ";
 
-        public List<ChunkInfo> Chunk(ParsedDocument parseResult, ChunkMethod chunkMethod, int charLimit)
+        public List<ChunkInfo> Chunk(DocumentTree documentTree, ChunkMethod chunkMethod, int charLimit)
         {
             switch (chunkMethod)
             {
-                case ChunkMethod.NotSpecified:
-                    return ApplyNoChunking(parseResult);
+                case ChunkMethod.NoChunking:
+                    return ApplyNoChunking(documentTree);
                 case ChunkMethod.Char:
-                    return ChunkByCharacterLimit(parseResult, charLimit);
+                    return ChunkByCharacterLimit(documentTree, charLimit);
                 case ChunkMethod.Page:
-                    return ChunkByPage(parseResult, charLimit);
+                    return ChunkByPage(documentTree, charLimit);
                 default:
                     throw new NotSupportedException($"The chunk type {chunkMethod} isn't supported.");
             }
@@ -44,21 +43,40 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         /*
          *  Join all elements into a single string
          */
-        private List<ChunkInfo> ApplyNoChunking(ParsedDocument parsingResult)
+        private List<ChunkInfo> ApplyNoChunking(DocumentTree documentTree)
         {
-            var finalText = new StringBuilder();
-            foreach (var element in parsingResult.Elements)
+            var resultText = new StringBuilder();
+            foreach (var docSegment in documentTree.RootSegment.Children)
             {
-                finalText.Append(element.Text);
-                finalText.Append(Environment.NewLine);
+                var segmentText = ApplyNoChunkingInternal(docSegment);
+                resultText.Append(segmentText);
             }
-            var text = finalText.ToString().Trim();
-            var firstPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
-            var lastPage = parsingResult.Elements.LastOrDefault()?.PageNumber;
+            var text = resultText.ToString().Trim();
+            var firstPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
+            var lastPage = documentTree.RootSegment.Children.LastOrDefault()?.RootElement.PageNumber;
             return new List<ChunkInfo>
             {
                 new ChunkInfo(chunkNumber: 1, text, firstPage, lastPage)
             };
+        }
+
+        private string ApplyNoChunkingInternal(DocumentSegment documentSegment)
+        {
+            var finalText = new StringBuilder();
+            // get root text
+            var rootText = documentSegment.RootElement.Text;
+            finalText.Append(rootText);
+            finalText.Append(Environment.NewLine);
+            // get children text
+            if (documentSegment.Children != null)
+            {
+                foreach (var childSegment in documentSegment.Children)
+                {
+                    var segmentText = ApplyNoChunkingInternal(childSegment);
+                    finalText.Append(segmentText);
+                }
+            }
+            return finalText.ToString();
         }
 
         /*
@@ -70,37 +88,60 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
          *      1- Element length bigger than character limit
          *          - Element will be split into different chunks
          */
-        private List<ChunkInfo> ChunkByPage(ParsedDocument parsingResult, int charLimit)
+        private List<ChunkInfo> ChunkByPage(DocumentTree documentTree, int charLimit)
         {
+            // prepare variables
             var pages = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var currentPageNumber = parsingResult.Elements.FirstOrDefault()?.PageNumber;
+            var currentPageNumber = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
             var currentChunk = new StringBuilder();
-            parsingResult.Elements.ForEach(e =>
+
+            // chunk document segments
+            documentTree.RootSegment.Children.ForEach(segment =>
             {
-                if ((e.PageNumber != currentPageNumber || e.Text.Length + currentChunk.Length > charLimit) && currentChunk.Length > 0)
-                {
-                    pages.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), currentPageNumber, currentPageNumber));
-                    currentPageNumber = e.PageNumber;
-                    currentChunkNumber++;
-                    currentChunk.Clear();
-                }
-                if (e.Text.Length > charLimit)
-                {
-                    HandleParagraphLengthGreaterThanCharLimit(e.Text, charLimit, ref currentChunkNumber, pages, currentPageNumber);
-                }
-                else
-                {
-                    currentChunk.Append(e.Text);
-                    currentChunk.Append(Environment.NewLine);
-                }
+                ChunkByPageInternal(segment, charLimit, pages, ref currentChunkNumber, ref currentPageNumber, currentChunk);
             });
+
             // handle last page
             if (currentChunk.Length > 0)
             {
                 pages.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), currentPageNumber, currentPageNumber));
             }
             return pages;
+        }
+
+        private void ChunkByPageInternal(DocumentSegment segment, int charLimit, List<ChunkInfo> resultPages, ref int currentChunkNumber, ref int? currentPageNumber, StringBuilder currentChunkText)
+        {
+            // case 1: handle new page or page overflows char limit
+            if ((segment.RootElement.PageNumber != currentPageNumber || segment.RootElement.Text.Length + currentChunkText.Length > charLimit) && currentChunkText.Length > 0)
+            {
+                resultPages.Add(new ChunkInfo(currentChunkNumber, currentChunkText.ToString(), currentPageNumber, currentPageNumber));
+                currentPageNumber = segment.RootElement.PageNumber;
+                currentChunkNumber++;
+                currentChunkText.Clear();
+            }
+
+            // case 2: handle current segment text > char limit
+            if (segment.RootElement.Text.Length > charLimit)
+            {
+                HandleParagraphLengthGreaterThanCharLimit(segment.RootElement.Text, charLimit, ref currentChunkNumber, resultPages, currentPageNumber);
+            }
+
+            // case 3: current element can be added to current chunk/page
+            else
+            {
+                currentChunkText.Append(segment.RootElement.Text);
+                currentChunkText.Append(Environment.NewLine);
+            }
+
+            // handle child segments
+            if (segment.Children != null)
+            {
+                foreach (var childSegment in segment.Children)
+                {
+                    ChunkByPageInternal(childSegment, charLimit, resultPages, ref currentChunkNumber, ref currentPageNumber, currentChunkText);
+                }
+            }
         }
 
         /*
@@ -112,33 +153,21 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
          *      1- Element length bigger than character limit
          *          - Element will be split into different chunks
          */
-        private List<ChunkInfo> ChunkByCharacterLimit(ParsedDocument parsingResult, int charLimit)
+        private List<ChunkInfo> ChunkByCharacterLimit(DocumentTree documentTree, int charLimit)
         {
+            // prepare variables
             var characterChunks = new List<ChunkInfo>();
             var currentChunkNumber = 1;
-            var chunkStartPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
-            var chunkEndPage = parsingResult.Elements.FirstOrDefault()?.PageNumber;
+            var chunkStartPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
+            var chunkEndPage = documentTree.RootSegment.Children.FirstOrDefault()?.RootElement.PageNumber;
             var currentChunk = new StringBuilder();
-            parsingResult.Elements.ForEach(e =>
+
+            // handle document segments
+            documentTree.RootSegment.Children.ForEach(segment =>
             {
-                if ((e.Text.Length + currentChunk.Length > charLimit) && currentChunk.Length > 0)
-                {
-                    characterChunks.Add(new ChunkInfo(currentChunkNumber, currentChunk.ToString(), chunkStartPage, chunkEndPage));
-                    currentChunkNumber++;
-                    chunkStartPage = e.PageNumber;
-                    currentChunk.Clear();
-                }
-                chunkEndPage = e.PageNumber;
-                if (e.Text.Length > charLimit)
-                {
-                    HandleParagraphLengthGreaterThanCharLimit(e.Text, charLimit, ref currentChunkNumber, characterChunks, e.PageNumber);
-                }
-                else
-                {
-                    currentChunk.Append(e.Text);
-                    currentChunk.Append(Environment.NewLine);
-                }
+                ChunkByCharacterLimitInternal(segment, charLimit, characterChunks, ref currentChunkNumber, ref chunkStartPage, ref chunkEndPage, currentChunk);
             });
+
             // handle remaining text
             if (currentChunk.Length > 0)
             {
@@ -147,12 +176,46 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             return characterChunks;
         }
 
-        private void HandleParagraphLengthGreaterThanCharLimit(string paragraphText, int charLimit, ref int currentChunkNumber, List<ChunkInfo> chunks, int? pageNumber)
+        private void ChunkByCharacterLimitInternal(DocumentSegment segment, int charLimit, List<ChunkInfo> resultChunks, ref int currentChunkNumber, ref int? currentChunkStartPage, ref int? currentChunkEndPage, StringBuilder currentChunkText)
+        {
+            // case 1: handle chunk reached char limit
+            if ((segment.RootElement.Text.Length + currentChunkText.Length > charLimit) && currentChunkText.Length > 0)
+            {
+                resultChunks.Add(new ChunkInfo(currentChunkNumber, currentChunkText.ToString(), currentChunkStartPage, currentChunkEndPage));
+                currentChunkNumber++;
+                currentChunkStartPage = segment.RootElement.PageNumber;
+                currentChunkText.Clear();
+            }
+            currentChunkEndPage = segment.RootElement.PageNumber;
+
+            // case 2: handle current element text > char limit
+            if (segment.RootElement.Text.Length > charLimit)
+            {
+                HandleParagraphLengthGreaterThanCharLimit(segment.RootElement.Text, charLimit, ref currentChunkNumber, resultChunks, segment.RootElement.PageNumber);
+            }
+
+            // case 3: current element can be added to current chunk
+            else
+            {
+                currentChunkText.Append(segment.RootElement.Text);
+                currentChunkText.Append(Environment.NewLine);
+            }
+            // handle child segments
+            if (segment.Children != null)
+            {
+                foreach (var childSegment in segment.Children)
+                {
+                    ChunkByCharacterLimitInternal(childSegment, charLimit, resultChunks, ref currentChunkNumber, ref currentChunkStartPage, ref currentChunkEndPage, currentChunkText);
+                }
+            }
+        }
+
+        private void HandleParagraphLengthGreaterThanCharLimit(string paragraphText, int charLimit, ref int currentChunkNumber, List<ChunkInfo> resultChunks, int? pageNumber)
         {
             var blocks = SplitTextToBlocks(paragraphText, charLimit, delimiter: _primaryDelimiter);
             foreach (var block in blocks)
             {
-                chunks.Add(new ChunkInfo(currentChunkNumber++, block, pageNumber, pageNumber));
+                resultChunks.Add(new ChunkInfo(currentChunkNumber++, block, pageNumber, pageNumber));
             }
         }
 

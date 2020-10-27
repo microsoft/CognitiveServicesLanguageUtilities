@@ -28,7 +28,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
         [Option("--destination <local/blob>")]
         public StorageType Destination { get; }
         [Option("--chunk-type <page/char>")]
-        public ChunkMethod ChunkType { get; } = ChunkMethod.NotSpecified;
+        public ChunkMethod ChunkType { get; } = ChunkMethod.NoChunking;
         [Option("-h|--help")]
         public bool Help { get; } = false;
 
@@ -65,7 +65,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
                 && Parser == ParserType.NotSpecified
                 && Source == StorageType.NotSpecified
                 && Destination == StorageType.NotSpecified
-                && ChunkType == ChunkMethod.NotSpecified;
+                && ChunkType == ChunkMethod.NoChunking;
         }
 
         private void ValidateArguments()

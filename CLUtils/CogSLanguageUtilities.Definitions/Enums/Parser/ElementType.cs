@@ -4,8 +4,13 @@
 {
     public enum ElementType
     {
+        Root,
         Title,
-        Heading,
-        Paragraph
+        Heading1,
+        Heading2,
+        Heading3,
+        Paragraph,
+        BulletedList,
+        Table,
     }
 }
