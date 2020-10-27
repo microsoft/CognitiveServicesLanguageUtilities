@@ -6,7 +6,9 @@ pool:
   - visualstudio
   - vstest
 
-trigger: none
+trigger:
+- main
+- dev
 
 pr:
 - main
