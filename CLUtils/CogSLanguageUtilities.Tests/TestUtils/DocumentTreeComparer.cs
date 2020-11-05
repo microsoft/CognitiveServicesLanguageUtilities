@@ -10,44 +10,35 @@ namespace Microsoft.CogSLanguageUtilities.Tests.TestUtils
     {
         public bool Equals(DocumentTree x, DocumentTree y)
         {
-            if(x == null && y == null)
-            {
-                return true;
-            }
-            else if (x == null || y == null)
-            {
-                return false;
-            }
-            var list = x.RootSegment.Children.Zip(y.RootSegment.Children, (e1, e2) => new { e1, e2 });
-            foreach (var entry in list)
-            {
-                if (!EqualsInternal(entry.e1, entry.e2))
-                {
-                    return false;
-                }
-            }
-            return true;
+            return EqualsInternal(x.RootSegment, y.RootSegment);
         }
 
         private bool EqualsInternal(DocumentSegment segment1, DocumentSegment segment2)
         {
+            // basic
+            if ( (segment1 == null && segment2 == null) || (segment1.Children == null && segment2.Children == null) )
+            {
+                return true;
+            }
+            if ( (segment1 == null || segment2 == null) || (segment1.Children == null || segment2.Children == null) )
+            {
+                return false;
+            }
+            if (segment1.Children.Count != segment2.Children.Count)
+            {
+                return false;
+            }
             if (segment1.RootElement.PageNumber != segment2.RootElement.PageNumber || segment1.RootElement.Text != segment2.RootElement.Text)
             {
                 return false;
             }
-            if (segment1.Children != null)
+            // recursive step
+            for (var i = 0; i < segment1.Children.Count; i++)
             {
-                if (segment2.Children == null || segment1.Children.Count != segment2.Children.Count)
+                // access time is O(1). List is implemented internally as dyanmic array
+                if (!EqualsInternal(segment1.Children[i], segment2.Children[i]))
                 {
                     return false;
-                }
-                var list = segment1.Children.Zip(segment2.Children, (e1, e2) => new { e1, e2 });
-                foreach (var entry in list)
-                {
-                    if (!EqualsInternal(entry.e1, entry.e2))
-                    {
-                        return false;
-                    }
                 }
             }
             return true;
