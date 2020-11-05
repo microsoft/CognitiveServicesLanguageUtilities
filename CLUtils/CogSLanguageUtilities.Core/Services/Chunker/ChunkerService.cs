@@ -236,7 +236,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             // End chunk If
             // current chunk contains a simple element and the current element is of the same or higher level than chunkLevel
             // or adding current element to the chunk exceeds charLimit
-            var endChunkCondition = canEndChunk && currentSegment.RootElement.Type.IsHigherOrEqualPrecedence(chunkLevel) || currentSegment.RootElement.Text.Length + currentChunkText.Length > charLimit;
+            var endChunkCondition = canEndChunk && currentSegment.RootElement.Type.IsHigherOrEqualPrecedence(chunkLevel) || (currentSegment.RootElement.Text.Length + currentChunkText.Length > charLimit);
             if (endChunkCondition)
             {
                 resultChunks.Add(new ChunkInfo(currentChunkNumber, currentChunkText.ToString(), currentChunkStartPage, currentChunkEndPage));
