@@ -33,7 +33,7 @@ Define configurations using the config command before using the parse command
         - Blob Storage: define ConnectionString, EndpointUrl, and Container to read from
 2. Parsing
     - Currently, we only support parsing the following document formats
-        - Pdf, Docx, Images (Jpeg, Bmp, Png)
+        - txt, Pdf, Docx, Images (Jpeg, Bmp, Png)
     - For Pdf and image documents, you need to configure a [Microsoft Read](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-recognizing-text) azure resource
     - But as for Docx, you don't need any configuration
     - Configuration
