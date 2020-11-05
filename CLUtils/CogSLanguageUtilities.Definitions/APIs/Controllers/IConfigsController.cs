@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using System.Threading.Tasks;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
+using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
 {
@@ -8,7 +9,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
     {
         Task LoadConfigsFromFile(string configsFilePath);
         Task SetBlobStorageConfigsAsync(string connectionString, string sourceContainer, string destinationContainer);
-        Task SetChunkerConfigsAsync(int? charLimit);
+        Task SetChunkerConfigsAsync(int? charLimit, ElementType chunkSectionLevel);
         Task SetCustomTextAuthoringConfigsAsync(string customTextKey, string endpointUrl, string appId);
         Task SetCustomTextPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId);
         Task SetLocalStorageConfigsAsync(string sourceDirectory, string destinationDirectory);
