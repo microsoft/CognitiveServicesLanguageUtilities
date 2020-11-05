@@ -28,8 +28,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Factories.Parser
             _allParsersConfigs = allParsersConfigs;
 
             // create valid types array
-            var list = new List<string>();
-            list.AddRange(Constants.MsReadValidFileTypes);
+            var list = Constants.MsReadValidFileTypes.ToList();
             list.AddRange(Constants.DocxValidFileTypes);
             _validDocTypes = list.ToArray();
         }
