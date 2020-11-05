@@ -34,7 +34,7 @@ Define configurations using the config command before using the predict command
         - Blob Storage: define ConnectionString, EndpointUrl, and Container to read from
 2. Parsing
     - Currently, we only support parsing the following document formats
-        - PDF, Docx, Images (jpeg, bmp, png)
+        - txt, PDF, Docx, Images (jpeg, bmp, png)
     - For PDF and image documents, you need to configure a [Microsoft Read](https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/concept-recognizing-text) azure resource
     - But as for Docx, you don't need any configuration
     - Configuration
