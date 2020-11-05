@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 {
-    class DocxParserService : IParserService
+    public class DocxParserService : IParserService
     {
         private HashSet<string> _validTypesSet = new HashSet<string>(Constants.DocxValidFileTypes, StringComparer.OrdinalIgnoreCase);
 

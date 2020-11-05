@@ -18,7 +18,7 @@
   },
   "chunker": {
     "char-limit": 5000,
-    "chunk-section-level": "asd"
+    "chunk-section-level": ""
   },
   "customtext": {
     "authoring": {
