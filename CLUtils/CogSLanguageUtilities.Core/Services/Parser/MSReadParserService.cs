@@ -92,16 +92,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 
         public async Task<ReadOperationResult> ParseFileInternal(Stream file)
         {
-            var response = await _client.BatchReadFileInStreamAsync(file);
+            var response = await _client.ReadInStreamAsync(file);
             const int NumberOfCharsInOperationId = 36;
             string operationId = response.OperationLocation.Substring(response.OperationLocation.Length - NumberOfCharsInOperationId);
 
             ReadOperationResult result;
             do
             {
-                result = await _client.GetReadOperationResultAsync(operationId);
+                result = await _client.GetReadResultAsync(Guid.Parse(operationId));
             }
-            while (result.Status == TextOperationStatusCodes.Running || result.Status == TextOperationStatusCodes.NotStarted);
+            while (result.Status == OperationStatusCodes.Running || result.Status == OperationStatusCodes.NotStarted);
             return result;
         }
 
@@ -118,9 +118,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             var currentParagraph = new StringBuilder();
             var currentPage = 0;
             int currentParagraphPageStart = 1;
-            var totalPageCount = parsingResult.RecognitionResults.Count;
+            var totalPageCount = parsingResult.AnalyzeResult.ReadResults.Count;
             // loop over each page to create list of pages
-            foreach (var rr in parsingResult.RecognitionResults)
+            foreach (var rr in parsingResult.AnalyzeResult.ReadResults)
             {
                 // update paragraphPageStart if no overflowing paragraph in new page
                 currentParagraphPageStart = currentParagraph.Length > 0 ? currentParagraphPageStart : (int)rr.Page;
@@ -135,7 +135,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                 // special case: if last page add text in the current paragraph to the elements
                 if (++currentPage == totalPageCount && currentParagraph.Length > 0)
                 {
-                    HandleEndOfParagraph(currentParagraph, elements, parsingResult.RecognitionResults.Count, ref currentParagraphPageStart);
+                    HandleEndOfParagraph(currentParagraph, elements, parsingResult.AnalyzeResult.ReadResults.Count, ref currentParagraphPageStart);
                 }
             }
 
@@ -208,37 +208,37 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
         private double CalculateIndentLength(ReadOperationResult parsingResult)
         {
             // sort lines by width
-            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => GetBoundingBoxTopRightX(l) - GetBoundingBoxTopLeftX(l)).OrderBy(l => l).ToArray();
+            var linesArray = parsingResult.AnalyzeResult.ReadResults.SelectMany(p => p.Lines).Select(l => GetBoundingBoxTopRightX(l) - GetBoundingBoxTopLeftX(l)).OrderBy(l => l).ToArray();
             return linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.IndentPercentageOfLine;
         }
 
         private double CalculateMedianLineStart(ReadOperationResult parsingResult)
         {
-            var linesArraySortedByStart = parsingResult.RecognitionResults.SelectMany(p => p.Lines).OrderBy(l => GetBoundingBoxTopLeftX(l)).ToArray();
+            var linesArraySortedByStart = parsingResult.AnalyzeResult.ReadResults.SelectMany(p => p.Lines).OrderBy(l => GetBoundingBoxTopLeftX(l)).ToArray();
             return GetBoundingBoxTopLeftX(linesArraySortedByStart[linesArraySortedByStart.Length / 2]);
         }
 
         private double CalculateMedianLineEnd(ReadOperationResult parsingResult)
         {
             // get the top-right x co-ordinate of each line's bounding box -> ascendingly
-            var linesArraySortedByEnd = parsingResult.RecognitionResults.SelectMany(p => p.Lines.Select(l => GetBoundingBoxTopRightX(l))).OrderBy(x => x).ToArray();
+            var linesArraySortedByEnd = parsingResult.AnalyzeResult.ReadResults.SelectMany(p => p.Lines.Select(l => GetBoundingBoxTopRightX(l))).OrderBy(x => x).ToArray();
             // return the median element
             return linesArraySortedByEnd[linesArraySortedByEnd.Length / 2];
         }
 
         private double GetBoundingBoxTopLeftX(Line line)
         {
-            return line.BoundingBox[0];
+            return (double)line.BoundingBox[0];
         }
 
         private double GetBoundingBoxTopRightX(Line line)
         {
-            return line.BoundingBox[2];
+            return (double)line.BoundingBox[2];
         }
 
         private double GetBoundingBoxTopLeftY(Line line)
         {
-            return line.BoundingBox[1];
+            return (double)line.BoundingBox[1];
         }
 
         public void ValidateFileType(string fileName)
@@ -254,7 +254,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
             try
             {
                 var file = new MemoryStream();
-                var response = await _client.BatchReadFileInStreamAsync(file);
+                var response = await _client.ReadInStreamAsync(file);
             }
             catch (ComputerVisionErrorException e)
             {
