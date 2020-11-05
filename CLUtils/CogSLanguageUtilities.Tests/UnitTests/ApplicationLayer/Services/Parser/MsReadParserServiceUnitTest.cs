@@ -6,9 +6,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Document;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using Microsoft.CogSLanguageUtilities.Tests.TestUtils;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Xunit;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.ApplicationLayer.Services.Parser
