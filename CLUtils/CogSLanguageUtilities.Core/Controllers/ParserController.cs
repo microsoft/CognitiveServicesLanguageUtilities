@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
@@ -10,6 +11,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,7 +21,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
     {
         private readonly IConfigsLoader _configurationService;
         private readonly IStorageFactoryFactory _storageFactoryFactory;
-        private readonly IParserService _parserService;
+        private readonly IParserPoolManager _parserPoolManager;
         private IStorageService _sourceStorageService;
         private IStorageService _destinationStorageService;
         private readonly ILoggerService _loggerService;
@@ -28,13 +30,13 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         public ParserController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
-            IParserService parserService,
+            IParserPoolManager parserPoolManager,
             ILoggerService loggerService,
             IChunkerService chunkerService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;
-            _parserService = parserService;
+            _parserPoolManager = parserPoolManager;
             _loggerService = loggerService;
             _chunkerService = chunkerService;
         }
@@ -62,14 +64,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             {
                 try
                 {
-                    // validate types
-                    _parserService.ValidateFileType(fileName);
+                    // select parser according to type
+                    var fileType = Path.GetExtension(fileName);
+                    var parsingService = _parserPoolManager.GetParser(fileType, fileName);
                     // read file
                     _loggerService.LogOperation(OperationType.ReadingFile, fileName);
                     var file = await _sourceStorageService.ReadFileAsync(fileName);
                     // parse file
                     _loggerService.LogOperation(OperationType.ParsingFile, fileName);
-                    var parseResult = await _parserService.ParseFile(file);
+                    var parseResult = await parsingService.ParseFile(file);
                     // chunk file
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
                     var chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
