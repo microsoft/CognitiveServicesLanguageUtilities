@@ -4,7 +4,6 @@
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.ComponentModel.DataAnnotations;
@@ -15,9 +14,6 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Utiliti
     [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
     public class ParseCommand
     {
-        [Required]
-        [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]
-        public ParserType Parser { get; }
         [Required]
         [Option("--source <local/blob>", Description = "[required] indicates source storage type")]
         public StorageType Source { get; }
@@ -30,7 +26,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Utiliti
         private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildParseCommandDependencies(Parser);
+            var container = DependencyInjectionController.BuildParseCommandDependencies();
 
             // run program
             using (var scope = container.BeginLifetimeScope())

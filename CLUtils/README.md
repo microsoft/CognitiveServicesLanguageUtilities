@@ -5,7 +5,7 @@ The Cognitive Services Language Utilities is a CLI tool that provides some core 
 
 ## Installation
 
-You can download the executable [here](https://)
+You can download the executable [here](https://github.com/microsoft/CogSLanguageUtilities/releases)
 If you would like to use the tool system wide, you can add it to your PATH environment variable.
 Run the tool to check your installation.
 
@@ -36,6 +36,18 @@ The tool currently supports three main use cases
 - In order for users to test app performance, we added support for the "evaluate" command. The reason being is that Text Analytics and Custom Text currently do not provide any means for testing application performance.
 - So we integrated the testing pipeline (reading labeled examples, calling prediction apis, evaluating model performance, ..) into this simple command.
 
+## Supported files
+The following file formats are currently supported
+- txt
+- PDF
+- Docx
+- Scanned documents and Images (jpeg, bmp, png)
+
+## Chunking Methods
+The tool supports different types of chunking. All chunking methods respect paragraph endings so that chunks do not start or end mid-paragraph. If paragraph endings are not available for the document being parsed, sentences marked by '.' are used as the building block of a chunk.
+- **Chunk by character limit**
+- **Chunk by page**
+- **Chunk by section** 
 
 # Commands Overview
 

@@ -4,7 +4,6 @@
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
@@ -20,9 +19,6 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
         [Option("--cognitive-service <customtext/textanalytics/both>", Description = "[required] indicates which cognitive service to use for prediction")]
         public CognitiveServiceType CognitiveService { get; }
         [Required]
-        [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]
-        public ParserType Parser { get; }
-        [Required]
         [Option("--source <local/blob>", Description = "[required] indicates source storage type")]
         public StorageType Source { get; }
         [Required]
@@ -34,7 +30,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
         private async Task OnExecute(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildPredictCommandDependencies(Parser);
+            var container = DependencyInjectionController.BuildPredictCommandDependencies();
 
             // run program
             using (var scope = container.BeginLifetimeScope())

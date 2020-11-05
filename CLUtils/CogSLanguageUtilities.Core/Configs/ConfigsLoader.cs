@@ -73,6 +73,11 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return _configModel.TextAnalytics;
         }
 
+        public ParserConfigModel GetParserConfigModel()
+        {
+            return _configModel.Parser;
+        }
+        
         private void SetDefaults()
         {
             if (_configModel.Chunker.CharLimit == 0)

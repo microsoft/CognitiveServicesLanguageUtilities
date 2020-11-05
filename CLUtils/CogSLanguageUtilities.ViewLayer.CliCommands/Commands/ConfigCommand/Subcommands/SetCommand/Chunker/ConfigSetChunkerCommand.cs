@@ -3,6 +3,7 @@
 ﻿using Autofac;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.ComponentModel.DataAnnotations;
@@ -13,10 +14,13 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
     [Command("chunker", Description = "sets configs for chunker")]
     public class ConfigSetChunkerCommand
     {
-        [Required]
         [Range(Definitions.Configs.Consts.Constants.MinAllowedCharLimit, Definitions.Configs.Consts.Constants.CustomTextPredictionMaxCharLimit)]
         [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "character limit for chunk")]
         public int CharLimit { get; }
+
+        [Range((int)Definitions.Configs.Consts.Constants.minAllowdChunkSectionLevel, (int)Definitions.Configs.Consts.Constants.maxAllowdChunkSectionLevel)]
+        [Option(CommandOptionTemplate.ChunkerSectionLevel, Description = "logical section level (i.e. chunk document by title, h1, h2, h3)")]
+        public ElementType ChunkSectionLevel { get; } = ElementType.Other;
 
         private async Task OnExecuteAsync(CommandLineApplication app)
         {
@@ -27,7 +31,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigsController>();
-                await controller.SetChunkerConfigsAsync(CharLimit);
+                await controller.SetChunkerConfigsAsync(CharLimit, ChunkSectionLevel);
             }
         }
     }

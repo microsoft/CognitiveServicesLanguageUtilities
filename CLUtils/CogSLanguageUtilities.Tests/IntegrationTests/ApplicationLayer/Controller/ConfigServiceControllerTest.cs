@@ -5,6 +5,7 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Newtonsoft.Json;
@@ -296,25 +297,27 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
 
         public static TheoryData ChunkerConfigSetTestData()
         {
-            return new TheoryData<int>
+            return new TheoryData<int, ElementType>
             {
                 {
-                    200
+                    200,
+                    ElementType.Title
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(ChunkerConfigSetTestData))]
-        public async Task ChunkerConfigSetTestAsync(int charLimit)
+        public async Task ChunkerConfigSetTestAsync(int charLimit, ElementType chunkSectionLevel)
         {
-            await _controller.SetChunkerConfigsAsync(charLimit);
-            await _controller.SetChunkerConfigsAsync(null); // Value not affected if user doesn't pass it
+            await _controller.SetChunkerConfigsAsync(charLimit, chunkSectionLevel);
+            await _controller.SetChunkerConfigsAsync(null, ElementType.Other); // Value not affected if user doesn't pass it
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(charLimit, configModel.Chunker.CharLimit);
+            Assert.Equal(chunkSectionLevel, configModel.Chunker.ChunkSectionLevel);
         }
 
         public static TheoryData TextAnalyticsConfigSetTestData()

@@ -4,6 +4,7 @@
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
+using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 using Xunit;
@@ -105,10 +106,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
             {
                 var actualResult = parser.ParseFileInternal(inputDocument).ConfigureAwait(false).GetAwaiter().GetResult();
                 // validate object values aren't null
-                actualResult.RecognitionResults.ToList().ForEach(page =>
+                actualResult.AnalyzeResult.ReadResults.ToList().ForEach(page =>
                 {
                     // check all properties
-                    Assert.NotNull(page.Page);
                     Assert.NotNull(page.Lines);
                     // check line objects
                     page.Lines.ToList().ForEach(line =>

@@ -1,0 +1,119 @@
+{
+  "RootSegment": {
+    "RootElement": {
+      "PageNumber": null,
+      "Type": 0,
+      "Text": ""
+    },
+    "Children": [
+      {
+        "RootElement": {
+          "PageNumber": null,
+          "Type": 2,
+          "Text": "Heading 1"
+        },
+        "Children": [
+          {
+            "RootElement": {
+              "PageNumber": null,
+              "Type": 5,
+              "Text": "Paragraph1"
+            },
+            "Children": null
+          },
+          {
+            "RootElement": {
+              "PageNumber": null,
+              "Type": 5,
+              "Text": "Paragraph2"
+            },
+            "Children": null
+          },
+          {
+            "RootElement": {
+              "PageNumber": null,
+              "Type": 3,
+              "Text": "Heading 2"
+            },
+            "Children": [
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 5,
+                  "Text": "Paragraph3"
+                },
+                "Children": null
+              },
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 5,
+                  "Text": "Paragraph4"
+                },
+                "Children": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "RootElement": {
+          "PageNumber": null,
+          "Type": 2,
+          "Text": "Heading 1"
+        },
+        "Children": [
+          {
+            "RootElement": {
+              "PageNumber": null,
+              "Type": 3,
+              "Text": "Heading2"
+            },
+            "Children": [
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 5,
+                  "Text": "Paragraph5"
+                },
+                "Children": null
+              },
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 5,
+                  "Text": "paragraph6"
+                },
+                "Children": null
+              },
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 6,
+                  "Text": "Lwlkdjlkcjsdlkjhclselj\r\nKuhkswdchksuhcjs\r\nWljhskxjslkjdleirjc\r\nKhsdlkjclijrlijcsd"
+                },
+                "Children": null
+              },
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 5,
+                  "Text": "Paragraph7"
+                },
+                "Children": null
+              },
+              {
+                "RootElement": {
+                  "PageNumber": null,
+                  "Type": 6,
+                  "Text": "Lkjlkjljdljc\r\nLfdghjk\r\nRtyuio\r\nmnbv"
+                },
+                "Children": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.Parser;
+
+namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
 {
     public class Constants
     {
@@ -11,12 +13,15 @@
         public static readonly string ConfigsFileName = "configs.json";
         // msread
         public static readonly string[] MsReadValidFileTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
+        public static readonly string[] DocxValidFileTypes = { ".docx" };
         // chunker
         public const double MaxLineLengthPrecentile = 0.95;
         public const double MaxNumberOfIndentsAfterLine = 7;
         public const double IndentPercentageOfLine = 0.05;
         public const double EndOfParagraphVerticalSpaceFactor = 1.5;
         public const int DefaultCharLimit = 5000;
+        public const ElementType minAllowdChunkSectionLevel = ElementType.Title;
+        public const ElementType maxAllowdChunkSectionLevel = ElementType.Heading3;
         // custom text
         public const int CustomTextPredictionMaxCharLimit = 25000;
         public const int MinAllowedCharLimit = 20;

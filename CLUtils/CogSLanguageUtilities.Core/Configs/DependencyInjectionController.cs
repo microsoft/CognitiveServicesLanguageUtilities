@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 ﻿using Autofac;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Factories.Parser;
 using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
@@ -13,23 +14,15 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
-using System;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
     public class DependencyInjectionController
     {
-        private static ContainerBuilder BuildCommonDependencies()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(new ConsoleLoggerService()).As<ILoggerService>();
-            return builder;
-        }
-
         public static IContainer BuildConfigCommandDependencies()
         {
             var builder = BuildCommonDependencies();
@@ -41,47 +34,38 @@ namespace Microsoft.CustomTextCliUtils.Configs
         public static IContainer BuildChunkerCommandDependencies()
         {
             var builder = BuildCommonDependencies();
-            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
             builder.RegisterType<ChunkerService>().As<IChunkerService>();
-            builder.RegisterType<ChunkerController>();
             builder.RegisterType<PlainTextParserService>().As<IParserService>();
+            builder.RegisterType<ChunkerController>();
             return builder.Build();
         }
 
-        public static IContainer BuildParseCommandDependencies(ParserType parserType)
+        public static IContainer BuildParseCommandDependencies()
         {
             var builder = BuildCommonDependencies();
-            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                return CreateParserService(parserType, configService);
-            }).As<IParserService>();
-            builder.Register(c =>
-            {
-                var configService = c.Resolve<IConfigsLoader>();
-                var loggerService = c.Resolve<ILoggerService>();
-                var parserservice = c.Resolve<IParserService>();
-                var chunkerService = CreateChunkerService(parserType);
-                return new ParserController(configService, new StorageFactoryFactory(), parserservice,
-                    loggerService, chunkerService);
-            }).As<ParserController>();
-            return builder.Build();
-        }
-
-        public static IContainer BuildPredictCommandDependencies(ParserType parserType)
-        {
-            var builder = BuildCommonDependencies();
-            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+                return new ParserPoolManager(configService.GetParserConfigModel());
+            }).As<IParserPoolManager>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
-            builder.RegisterInstance<IChunkerService>(CreateChunkerService(parserType));
+            builder.RegisterType<ChunkerService>().As<IChunkerService>();
+            builder.RegisterType<ParserController>();
+            return builder.Build();
+        }
+
+        public static IContainer BuildPredictCommandDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.RegisterType<ChunkerService>().As<IChunkerService>();
             builder.RegisterType<ConcatenationService>().As<IConcatenationService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                return CreateParserService(parserType, configService);
-            }).As<IParserService>();
+                return new ParserPoolManager(configService.GetParserConfigModel());
+            }).As<IParserPoolManager>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
@@ -126,29 +110,12 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return builder.Build();
         }
 
-        private static IParserService CreateParserService(ParserType parserType, IConfigsLoader configService)
+        private static ContainerBuilder BuildCommonDependencies()
         {
-            if (parserType.Equals(ParserType.MSRead))
-            {
-                var msReadConfig = configService.GetMSReadConfigModel();
-                return new MSReadParserService(msReadConfig.CognitiveServiceEndPoint, msReadConfig.CongnitiveServiceKey);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private static IChunkerService CreateChunkerService(ParserType parserType)
-        {
-            if (parserType.Equals(ParserType.MSRead))
-            {
-                return new ChunkerService();
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(new ConsoleLoggerService()).As<ILoggerService>();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            return builder;
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
 
         // chunker
         public const string ChunkerCharLimit = "--" + ConfigKeys.ChunkerCharLimit + " <INTEGER>";
+        public const string ChunkerSectionLevel = "--" + ConfigKeys.ChunkerSectionLevel + " <TITLE/H1/H2/H3>";
 
         // prediction
         public const string CustomTextAzureResourceKey = "--" + ConfigKeys.CustomTextAzureResourceKey + " <CUSTOM_TEXT_KEY>";
