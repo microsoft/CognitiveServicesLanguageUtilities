@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+	
+  <ItemGroup>
+	 <PackageReference Include="Azure.Storage.Blobs" Version="12.8.1" />
+	 <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+	 <PackageReference Include="protobuf-net" Version="3.0.101" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <ProjectReference Include="..\FuzzyMatching.Definitions\FuzzyMatching.Definitions.csproj" />
+  </ItemGroup>
+</Project>
