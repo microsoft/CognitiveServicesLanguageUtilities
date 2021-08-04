@@ -18,7 +18,7 @@ namespace FuzzyMatching.Core.Utilities.MatrixOperations
         private static float CalculateDotProduct(float[] v1, float[] v2, float v1Abs, float v2Abs)
         {
             var multiplicationSum = GetMultiplicationSum(v1, v2);
-            return v1Abs * v2Abs / multiplicationSum;
+            return multiplicationSum / (v1Abs * v2Abs);
         }
         private static float GetMultiplicationSum(float[] v1, float[] v2)
         {

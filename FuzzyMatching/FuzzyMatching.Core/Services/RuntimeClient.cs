@@ -31,14 +31,14 @@ namespace FuzzyMatching.Core.Services
             var similarityValues = DotProductCalculator.CalculateDotProduct(inputSentenceTFIDFVectorDataset, inputSentenceAbsoluteValue, processedDataset.TFIDFMatrix, processedDataset.TFIDFMatrixAbsoluteValues);
 
             // get most matching one (match string, score, index)
-            float minValue = similarityValues.Min();
-            int minIndex = similarityValues.ToList().IndexOf(minValue);
+            float maxValue = similarityValues.Max();
+            int minIndex = similarityValues.ToList().IndexOf(maxValue);
 
             // return
             return new MatchingResult
             {
                 MatchingIndex = minIndex,
-                MatchingScore = minValue,
+                MatchingScore = maxValue,
                 ClosestSentence = Dataset[minIndex]
             };
         }
