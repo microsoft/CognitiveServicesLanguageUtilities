@@ -1,7 +1,6 @@
 ﻿using FuzzyMatching.Core.Utilities.FeatureMatrixArithmetics;
 using FuzzyMatching.Core.Utilities.MatrixArithmetics;
 using FuzzyMatching.Core.Utilities.MatrixOperations;
-using FuzzyMatching.Core.Utilities.Normalizers;
 using FuzzyMatching.Definitions.Models;
 using FuzzyMatching.Definitions.Services;
 using System.Collections.Generic;
@@ -35,14 +34,11 @@ namespace FuzzyMatching.Core.Services
             float minValue = similarityValues.Min();
             int minIndex = similarityValues.ToList().IndexOf(minValue);
 
-            // normalize cosine similarity to 0 - 1 score
-            float normalizedScore = Normalizer.NormalizeSimilarity(minValue);
-
             // return
             return new MatchingResult
             {
                 MatchingIndex = minIndex,
-                MatchingScore = normalizedScore,
+                MatchingScore = minValue,
                 ClosestSentence = Dataset[minIndex]
             };
         }
