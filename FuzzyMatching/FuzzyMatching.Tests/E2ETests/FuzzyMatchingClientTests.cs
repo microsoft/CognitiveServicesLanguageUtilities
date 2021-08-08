@@ -58,8 +58,8 @@ namespace FuzzyMatching.Tests.E2ETests
            await fuzzyMatchingClient.PreprocessDatasetAsync(dataset, datasetName);
 
             // runtime
-            var result = fuzzyMatchingClient.MatchSentenceAsync(sentenceToMatch, datasetName).GetAwaiter().GetResult();
-
+            var resultList = fuzzyMatchingClient.MatchSentenceAsync(sentenceToMatch, datasetName, 0.8f).GetAwaiter().GetResult();
+            var result = resultList[0];
             // assert
             Assert.Equal(result.ClosestSentence, expected.ClosestSentence);
             Assert.Equal(result.MatchingIndex, expected.MatchingIndex);

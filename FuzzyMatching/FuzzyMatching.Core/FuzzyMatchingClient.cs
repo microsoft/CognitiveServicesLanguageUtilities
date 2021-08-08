@@ -37,7 +37,7 @@ namespace FuzzyMatching.Core
 
 
 
-        public async Task<MatchingResult> MatchSentenceAsync(string sentence, string datasetName, string relativeDirectory = "")
+        public async Task<List<MatchingResult>> MatchSentenceAsync(string sentence, string datasetName, float similarityThreshold = default, string relativeDirectory = "")
         {
             try
             {
@@ -46,7 +46,7 @@ namespace FuzzyMatching.Core
                 var dataset = StorageService.LoadBinaryObjectAsync<List<string>>(datasetName + "_Dataset", relativeDirectory).GetAwaiter().GetResult();
                 var processedDataset = ProcessedDatasetModelConverter.StoredToProcessed(storedDataset);
                 // run matching algorithm
-                return RuntimeClient.MatchSentence(sentence, processedDataset, dataset);
+                return RuntimeClient.MatchSentence(sentence, processedDataset, dataset, similarityThreshold);
             }
             catch (FileNotFoundException)
             {
@@ -59,7 +59,7 @@ namespace FuzzyMatching.Core
                     // load preprocessed
                     var preprocessedDataset = StorageService.LoadBinaryObjectAsync<ProcessedDataset>(datasetName + "_PreProcessed", relativeDirectory).GetAwaiter().GetResult();
                     // run matching algorithm
-                    return RuntimeClient.MatchSentence(sentence, preprocessedDataset, dataset);
+                    return RuntimeClient.MatchSentence(sentence, preprocessedDataset, dataset, similarityThreshold);
                 }
                 catch (FileNotFoundException)
                 {

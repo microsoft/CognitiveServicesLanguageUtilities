@@ -10,7 +10,7 @@ namespace FuzzyMatching.Core.Services
 {
     public class RuntimeClient : IRuntimeClient
     {
-        public MatchingResult MatchSentence(string sentence, ProcessedDataset processedDataset, List<string> Dataset, int ngramsLength = 3)
+        public List<MatchingResult> MatchSentence(string sentence, ProcessedDataset processedDataset, List<string> Dataset, float similarityThreshold, int ngramsLength = 3)
         {
             // calculate ngrams for the sentence
             var inputSentenceNGrams = NGramsCalculator.GetSentenceNGramsAsync(sentence, ngramsLength);
@@ -30,17 +30,45 @@ namespace FuzzyMatching.Core.Services
             // calculate similarity
             var similarityValues = DotProductCalculator.CalculateDotProduct(inputSentenceTFIDFVectorDataset, inputSentenceAbsoluteValue, processedDataset.TFIDFMatrix, processedDataset.TFIDFMatrixAbsoluteValues);
 
-            // get most matching one (match string, score, index)
-            float maxValue = similarityValues.Max();
-            int minIndex = similarityValues.ToList().IndexOf(maxValue);
 
-            // return
-            return new MatchingResult
+            if(similarityThreshold == default)
             {
-                MatchingIndex = minIndex,
-                MatchingScore = maxValue,
-                ClosestSentence = Dataset[minIndex]
-            };
+                // get most matching one (match string, score, index)
+                float maxValue = similarityValues.Max();
+                int minIndex = similarityValues.ToList().IndexOf(maxValue);
+
+                // return
+                return new List<MatchingResult>
+                {
+                    new MatchingResult{
+                        MatchingIndex = minIndex,
+                        MatchingScore = maxValue,
+                        ClosestSentence = Dataset[minIndex]
+                    }
+                };
+            }
+            else
+            {
+                //get any result with similarity > similarityThreshold
+
+                List<MatchingResult> results = new List<MatchingResult>();
+
+                //classic for loop to perform operation in one pass
+                for(int i =0; i <similarityValues.Length; i++)
+                {
+                    if (similarityValues[i] >= similarityThreshold)
+                    {
+                        results.Add(
+                            new MatchingResult {
+                                MatchingIndex = i,
+                                MatchingScore = similarityValues[i],
+                                ClosestSentence = Dataset[i]
+                            });
+                    }
+                }
+
+                return results;
+            }
         }
     }
 }
