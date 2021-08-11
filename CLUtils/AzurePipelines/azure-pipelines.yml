@@ -17,13 +17,13 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: restore
-    projects: 'CLUtils\CogSLanguageUtilities.sln'
+    projects: 'CustomTextAnalytics.CLUtils\Solution\CogSLanguageUtilities.sln'
     vstsFeed: '87f61c68-a88c-4f2d-a649-603761ef80ac'
 
 - task: VSBuild@1
-  displayName: 'Build solution CLUtils\CogSLanguageUtilities.sln'
+  displayName: 'Build solution CustomTextAnalytics.CLUtils\Solution\CogSLanguageUtilities.sln'
   inputs:
-    solution: 'CLUtils\CogSLanguageUtilities.sln'
+    solution: 'CustomTextAnalytics.CLUtils\Solution\CogSLanguageUtilities.sln'
     msbuildArgs: '/m /v:q'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
@@ -35,8 +35,8 @@ steps:
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      CLUtils\CogSLanguageUtilities.Tests\bin\Release\**\CogSLanguageUtilities.Tests.dll
-      CLUtils\LuisModelEvaluation\LuisModelEvaluation.Tests\bin\Release\**\LuisModelEvaluation.Tests.dll
+      CustomTextAnalytics.CLUtils\Solution\CogSLanguageUtilities.Tests\bin\Release\**\CogSLanguageUtilities.Tests.dll
+      CustomTextAnalytics.CLUtils\Solution\LuisModelEvaluation\LuisModelEvaluation.Tests\bin\Release\**\LuisModelEvaluation.Tests.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'FullyQualifiedName~Unit'
     runInParallel: false
