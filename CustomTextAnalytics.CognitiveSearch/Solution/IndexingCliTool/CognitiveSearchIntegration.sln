@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Core", "CognitiveSearchIntegration.Core\CognitiveSearchIntegration.Core.csproj", "{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Definitions", "CognitiveSearchIntegration.Definitions\CognitiveSearchIntegration.Definitions.csproj", "{E5856632-09B2-4C30-A104-22804A63A9A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.ViewLayer.Cli", "CognitiveSearchIntegration.ViewLayer.Cli\CognitiveSearchIntegration.ViewLayer.Cli.csproj", "{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5856632-09B2-4C30-A104-22804A63A9A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5856632-09B2-4C30-A104-22804A63A9A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5856632-09B2-4C30-A104-22804A63A9A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5856632-09B2-4C30-A104-22804A63A9A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B0A830C-CA65-4BDE-BD6B-3B43EED0D2A7}
+	EndGlobalSection
+EndGlobal

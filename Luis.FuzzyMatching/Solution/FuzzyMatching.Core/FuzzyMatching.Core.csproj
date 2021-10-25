@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+	<RootNamespace>Microsoft.Azure.CognitiveServices.Language.LUIS.Utilities.FuzzyMatching.Core</RootNamespace>
+  </PropertyGroup>
+
+	
+  <ItemGroup>
+	 <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <ProjectReference Include="..\FuzzyMatching.Definitions\FuzzyMatching.Definitions.csproj" />
+  </ItemGroup>
+</Project>

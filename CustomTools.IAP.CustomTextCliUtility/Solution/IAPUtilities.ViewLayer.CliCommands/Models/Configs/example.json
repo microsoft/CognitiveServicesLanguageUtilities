@@ -1,0 +1,11 @@
+{
+  "storage": {
+    "sourcePath": "",
+    "destinationPath": ""
+  },
+  "luis": {
+    "endpoint": "",
+    "key": "",
+    "appId": ""
+  }
+}

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.CognitiveSearchIntegration.Core</RootNamespace>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Search.Documents" Version="11.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CognitiveSearchIntegration.Definitions\CognitiveSearchIntegration.Definitions.csproj" />
+  </ItemGroup>
+
+</Project>

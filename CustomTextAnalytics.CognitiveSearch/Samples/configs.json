@@ -1,0 +1,19 @@
+{
+  "blobStorage": {
+    "connectionString": "",
+    "containerName": ""
+  },
+  "cognitiveSearch": {
+    "endpointUrl": "",
+    "apiKey": ""
+  },
+  "azureFunction": {
+    "functionUrl": ""
+  },
+  "customText": {
+    "endpointUrl": "",
+    "apiKey": "",
+    "projectName": "",
+    "deploymentName": ""
+  }
+}
