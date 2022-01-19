@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "CognitiveSearchIntegration.ViewLayer.Cli": {
-      "commandName": "Project",
-      "commandLineArgs": "index --schema \"C:\\Users\\v-moshaban\\Desktop\\CLutils Workspace\\configs and secrets\\cognitive-search\\CustomTextSchema.json\" --index-name \"devtest\""
-    }
-  }
-}

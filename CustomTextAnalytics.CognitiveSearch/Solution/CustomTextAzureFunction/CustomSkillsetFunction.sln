@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomSkillsetFunction", "CustomSkillsetFunction\CustomSkillsetFunction.csproj", "{10950310-068F-429D-88E6-F1A80069FB7B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomTextMiniSDK", "CustomTextMiniSDK", "{C72B7914-89E5-4BD9-B276-5DDEF137F1D9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomTextAnalytics.MiniSDK.Client", "CustomTextAnalytics.MiniSDK\CustomTextAnalytics.MiniSDK.Client\CustomTextAnalytics.MiniSDK.Client.csproj", "{119234F8-31A3-4597-B5AA-6CF33E5FEE4E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,16 +15,9 @@ Global
 		{10950310-068F-429D-88E6-F1A80069FB7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10950310-068F-429D-88E6-F1A80069FB7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10950310-068F-429D-88E6-F1A80069FB7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{119234F8-31A3-4597-B5AA-6CF33E5FEE4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{119234F8-31A3-4597-B5AA-6CF33E5FEE4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{119234F8-31A3-4597-B5AA-6CF33E5FEE4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{119234F8-31A3-4597-B5AA-6CF33E5FEE4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{119234F8-31A3-4597-B5AA-6CF33E5FEE4E} = {C72B7914-89E5-4BD9-B276-5DDEF137F1D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C96D3446-ECDF-47EE-BD44-B49A79B61A0F}

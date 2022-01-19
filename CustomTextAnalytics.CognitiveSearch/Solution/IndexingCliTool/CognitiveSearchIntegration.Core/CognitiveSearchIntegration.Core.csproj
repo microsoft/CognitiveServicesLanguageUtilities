@@ -10,11 +10,9 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Search.Documents" Version="11.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CognitiveSearchIntegration.Definitions\CognitiveSearchIntegration.Definitions.csproj" />
+    <ProjectReference Include="..\Utilities\CognitiveSearchIntegration.Common\CognitiveSearchIntegration.Common.csproj" />
+    <ProjectReference Include="..\Utilities\CognitiveSearchIntegration.RemoteServices\CognitiveSearchIntegration.RemoteServices.csproj" />
   </ItemGroup>
 
 </Project>

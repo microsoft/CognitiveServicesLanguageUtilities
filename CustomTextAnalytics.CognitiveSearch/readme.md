@@ -39,15 +39,11 @@ Using the indexing cli tool, run the 'index' command
 	 - Fill the [configs.json][configs_sample] file with your service secrets (that you already provisioned)
 	 - **This configs file needs to be placed next to the cli tool to read it**
 	 - Please refer to this [readme][validation_readme] on how to obtain the required secrets correctly.
- - Application Schema
-	 - Provide your Custom Text application [schema.json][schema_sample] in the same provided format
-	 - **Please note that current version of cognitive search does NOT support spaces in entity/extractor names**
-	 - Please refer to this [readme][validation_readme] for complete schema cognitve search guidelines.
  - Run the index command
 	- use the [indexer cli tool][indexer_cli_tool]
 	 - Run the index command, and wait till process finishes
 ```console
-indexer index --schema <path/to/your/schema> --index-name <name-your-index-here>
+indexer index --index-name <name-your-index-here>
 ```
 - Check process success
 	- Check your cognitive search resource for the created index, data source connection, skillset, and indexer, and make sure the indexer runs without errors (wait for it)
@@ -65,8 +61,6 @@ Use the SearchClient sdk to search your app (see docs [here](https://docs.micros
 [custom_skillset_azure_function]: https://github.com/microsoft/CognitiveServicesLanguageUtilities/tree/dev/CustomTextAnalytics.CognitiveSearch/Solution/CustomTextAzureFunction
 
 [configs_sample]: https://github.com/microsoft/CognitiveServicesLanguageUtilities/blob/dev/CustomTextAnalytics.CognitiveSearch/Samples/configs.json
-
-[schema_sample]: https://github.com/microsoft/CognitiveServicesLanguageUtilities/blob/dev/CustomTextAnalytics.CognitiveSearch/Samples/app-schema.json
 
 [indexer_cli_tool]: https://github.com/microsoft/CognitiveServicesLanguageUtilities/blob/dev/CustomTextAnalytics.CognitiveSearch/Samples/indexer.exe
 

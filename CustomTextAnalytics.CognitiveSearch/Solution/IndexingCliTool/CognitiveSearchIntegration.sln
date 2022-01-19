@@ -1,13 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30503.244
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Core", "CognitiveSearchIntegration.Core\CognitiveSearchIntegration.Core.csproj", "{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Cli", "CognitiveSearchIntegration.Cli\CognitiveSearchIntegration.Cli.csproj", "{FA20B42D-DC66-4BEF-877E-E4788E57EA43}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Definitions", "CognitiveSearchIntegration.Definitions\CognitiveSearchIntegration.Definitions.csproj", "{E5856632-09B2-4C30-A104-22804A63A9A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Runners", "CognitiveSearchIntegration.Runners\CognitiveSearchIntegration.Runners.csproj", "{D8F117AE-F357-4760-AC9D-F4D92D2741EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.ViewLayer.Cli", "CognitiveSearchIntegration.ViewLayer.Cli\CognitiveSearchIntegration.ViewLayer.Cli.csproj", "{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Definitions", "CognitiveSearchIntegration.Definitions\CognitiveSearchIntegration.Definitions.csproj", "{ABA97149-01A1-4998-8EDC-B25A0D4945F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Core", "CognitiveSearchIntegration.Core\CognitiveSearchIntegration.Core.csproj", "{63B4DA70-F792-434A-AD0A-96B75FF92837}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{3085FB1A-86BC-4AAD-80BD-5CB81E84435F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Common", "Utilities\CognitiveSearchIntegration.Common\CognitiveSearchIntegration.Common.csproj", "{C21C559F-D172-4BCE-8C6F-296DE930859D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.RemoteServices", "Utilities\CognitiveSearchIntegration.RemoteServices\CognitiveSearchIntegration.RemoteServices.csproj", "{D8F1C724-380C-4588-A82D-8FED263E8D7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5B9F5A4D-D996-4FDC-8596-7B7BCCF3E2A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveSearchIntegration.Tests", "Tests\CognitiveSearchIntegration.Tests\CognitiveSearchIntegration.Tests.csproj", "{0A10DB0D-42A7-43CC-A560-3D95E0F24FA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,23 +27,44 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FA40D2C-ED96-4D8C-AB55-59DCC8CAA506}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5856632-09B2-4C30-A104-22804A63A9A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5856632-09B2-4C30-A104-22804A63A9A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5856632-09B2-4C30-A104-22804A63A9A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5856632-09B2-4C30-A104-22804A63A9A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9017C5AE-9B42-4C47-B4EA-6AA43835E0A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA20B42D-DC66-4BEF-877E-E4788E57EA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA20B42D-DC66-4BEF-877E-E4788E57EA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA20B42D-DC66-4BEF-877E-E4788E57EA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA20B42D-DC66-4BEF-877E-E4788E57EA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8F117AE-F357-4760-AC9D-F4D92D2741EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F117AE-F357-4760-AC9D-F4D92D2741EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F117AE-F357-4760-AC9D-F4D92D2741EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F117AE-F357-4760-AC9D-F4D92D2741EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA97149-01A1-4998-8EDC-B25A0D4945F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA97149-01A1-4998-8EDC-B25A0D4945F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA97149-01A1-4998-8EDC-B25A0D4945F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA97149-01A1-4998-8EDC-B25A0D4945F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B4DA70-F792-434A-AD0A-96B75FF92837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B4DA70-F792-434A-AD0A-96B75FF92837}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B4DA70-F792-434A-AD0A-96B75FF92837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B4DA70-F792-434A-AD0A-96B75FF92837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C21C559F-D172-4BCE-8C6F-296DE930859D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21C559F-D172-4BCE-8C6F-296DE930859D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C21C559F-D172-4BCE-8C6F-296DE930859D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C21C559F-D172-4BCE-8C6F-296DE930859D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8F1C724-380C-4588-A82D-8FED263E8D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F1C724-380C-4588-A82D-8FED263E8D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F1C724-380C-4588-A82D-8FED263E8D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F1C724-380C-4588-A82D-8FED263E8D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A10DB0D-42A7-43CC-A560-3D95E0F24FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A10DB0D-42A7-43CC-A560-3D95E0F24FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A10DB0D-42A7-43CC-A560-3D95E0F24FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A10DB0D-42A7-43CC-A560-3D95E0F24FA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C21C559F-D172-4BCE-8C6F-296DE930859D} = {3085FB1A-86BC-4AAD-80BD-5CB81E84435F}
+		{D8F1C724-380C-4588-A82D-8FED263E8D7D} = {3085FB1A-86BC-4AAD-80BD-5CB81E84435F}
+		{0A10DB0D-42A7-43CC-A560-3D95E0F24FA9} = {5B9F5A4D-D996-4FDC-8596-7B7BCCF3E2A7}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6B0A830C-CA65-4BDE-BD6B-3B43EED0D2A7}
+		SolutionGuid = {3B66D241-8BA1-4960-A22C-C54D19FA5850}
 	EndGlobalSection
 EndGlobal

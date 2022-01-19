@@ -11,9 +11,23 @@
     "functionUrl": ""
   },
   "customText": {
-    "endpointUrl": "",
-    "apiKey": "",
-    "projectName": "",
-    "deploymentName": ""
+    "resource": {
+      "endpoint": "",
+      "key": ""
+    },
+    "projects": {
+      "entityRecognition": {
+        "projectName": "",
+        "deploymentName": ""
+      },
+      "singleClassification": {
+        "projectName": "",
+        "deploymentName": ""
+      },
+      "multiClassification": {
+        "projectName": "",
+        "deploymentName": ""
+      }
+    }
   }
 }

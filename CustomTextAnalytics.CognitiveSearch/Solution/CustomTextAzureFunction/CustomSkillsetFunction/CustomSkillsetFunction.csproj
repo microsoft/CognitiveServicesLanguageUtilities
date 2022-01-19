@@ -1,13 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.2.0-beta.2" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CustomTextAnalytics.MiniSDK\CustomTextAnalytics.MiniSDK.Client\CustomTextAnalytics.MiniSDK.Client.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
