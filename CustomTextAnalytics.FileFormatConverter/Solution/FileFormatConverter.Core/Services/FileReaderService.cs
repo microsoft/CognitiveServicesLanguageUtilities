@@ -1,4 +1,7 @@
-﻿namespace FileFormatConverter.Orchestrators
+﻿using System;
+using System.IO;
+
+namespace FileFormatConverter.Orchestrators
 {
     public class FileReaderService
     {

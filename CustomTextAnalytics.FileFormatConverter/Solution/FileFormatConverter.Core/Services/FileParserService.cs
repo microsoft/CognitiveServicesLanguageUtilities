@@ -1,5 +1,7 @@
 ﻿using FileFormatConverter.Models.Input.Jsonl;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
 
 namespace FileFormatConverter.Orchestrators
 {

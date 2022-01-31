@@ -1,4 +1,6 @@
-﻿namespace FileFormatConverter.Orchestrators
+﻿using System.IO;
+
+namespace FileFormatConverter.Orchestrators
 {
     internal class FileWriterService
     {
