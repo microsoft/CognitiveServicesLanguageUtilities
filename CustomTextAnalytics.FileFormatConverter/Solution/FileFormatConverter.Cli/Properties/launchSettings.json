@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CognitiveSearchIntegration.ViewLayer.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "index --index-name \"test-class-3\" --configs \"C:\\Users\\mshaban\\Desktop\\cognitive-search-stuff\\configs.json\""
+    }
+  }
+}
