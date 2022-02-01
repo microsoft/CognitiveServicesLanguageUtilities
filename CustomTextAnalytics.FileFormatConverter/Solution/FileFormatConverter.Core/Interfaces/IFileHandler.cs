@@ -2,7 +2,7 @@
 {
     public interface IFileHandler
     {
-        string ReadFile(string filePath);
-        bool WriteFile(string filePath, string content);
+        string ReadFileAsString(string filePath);
+        bool WriteFileAsString(string filePath, string content);
     }
 }

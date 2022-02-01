@@ -1,5 +1,4 @@
-﻿using FileFormatConverter.Orchestrators;
-using McMaster.Extensions.CommandLineUtils;
+﻿using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.CognitiveSearchIntegration.Cli.Commands

@@ -1,13 +1,14 @@
-﻿using FileFormatConverter.Models;
+﻿using FileFormatConverter.Core.Interfaces;
+using FileFormatConverter.Models;
 using FileFormatConverter.Models.Input.Jsonl;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FileFormatConverter.Orchestrators
 {
-    internal class ModelConversionService
+    public class JsonlModelConversionService : IModelConverter<JsonlFileModel, CustomEntitiesFileModel>
     {
-        public static CustomEntitiesFileModel ConvertModel(List<SingleLineContent> jsonlContent)
+        public CustomEntitiesFileModel ConvertModel(JsonlFileModel jsonlContent)
         {
             // extract entity names (distinct)
             var allEntityNames = ExtractEntityNames(jsonlContent);
@@ -26,15 +27,15 @@ namespace FileFormatConverter.Orchestrators
             };
         }
 
-        private static IEnumerable<string> ExtractEntityNames(List<SingleLineContent> jsonlContent)
+        private IEnumerable<string> ExtractEntityNames(JsonlFileModel jsonlContent)
         {
-            return jsonlContent.SelectMany(file =>
+            return jsonlContent.lines.SelectMany(file =>
             {
                 return file.Label.Select(label => label.Text);
             }).Distinct();
         }
 
-        private static Dictionary<string, int> CreateEntitiesMap(IEnumerable<string> allEntityNames)
+        private Dictionary<string, int> CreateEntitiesMap(IEnumerable<string> allEntityNames)
         {
             var allEntitiesMap = new Dictionary<string, int>();
             var tmp = allEntityNames.ToArray();
@@ -45,9 +46,9 @@ namespace FileFormatConverter.Orchestrators
             return allEntitiesMap;
         }
 
-        private static IEnumerable<EntityDocument> ConvertDocuments(List<SingleLineContent> jsonlContent, Dictionary<string, int> allEntitiesMap)
+        private IEnumerable<EntityDocument> ConvertDocuments(JsonlFileModel jsonlContent, Dictionary<string, int> allEntitiesMap)
         {
-            return jsonlContent.Select(inputDoc =>
+            return jsonlContent.lines.Select(inputDoc =>
             {
                 // map labels
                 var resLabels = inputDoc.Label.Select(label =>

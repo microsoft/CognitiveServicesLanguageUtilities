@@ -6,19 +6,34 @@ namespace FileFormatConverter.Services
 {
     public class LocalFileHandlerService : IFileHandler
     {
-        public string ReadFile(string filePath)
+        public string ReadFileAsString(string filePath)
         {
-            if (File.Exists(filePath))
+            try
             {
-                return File.ReadAllText(filePath);
+                var content = File.ReadAllText(filePath);
+                return content;
             }
-            throw new Exception("File not found!");
+            catch (FileNotFoundException)
+            {
+                throw new Exception("File not found!");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't read file content!");
+            }
         }
 
-        public bool WriteFile(string filePath, string content)
+        public bool WriteFileAsString(string filePath, string content)
         {
-            File.WriteAllText(filePath, content);
-            return true;
+            try
+            {
+                File.WriteAllText(filePath, content);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't write to file!");
+            }
         }
     }
 }

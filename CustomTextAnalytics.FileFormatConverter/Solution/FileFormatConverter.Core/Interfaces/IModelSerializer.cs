@@ -1,8 +1,8 @@
 ﻿namespace FileFormatConverter.Core.Interfaces
 {
-    public interface IModelSerializer
+    public interface IModelSerializer<TModel>
     {
-        T Deserialize<T>(string content);
-        string Serialize<T>(T model);
+        TModel Deserialize(string content);
+        string Serialize(TModel model);
     }
 }
