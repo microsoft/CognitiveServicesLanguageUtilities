@@ -19,8 +19,8 @@ namespace FileFormatConverter.Runner
             }
             catch (Exception e)
             {
-
                 _logger.LogUnhandledError(e);
+                throw e;
             }
         }
         private static void RunOperationInternal(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)

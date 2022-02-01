@@ -1,5 +1,6 @@
 ﻿using FileFormatConverter.Runner;
 using FileFormatConverter.Runner.DataStructures;
+using System;
 using Xunit;
 
 namespace FileFormatConverter.Tests
@@ -8,24 +9,37 @@ namespace FileFormatConverter.Tests
     {
         public static TheoryData BlobValidationServiceAsyncTestData()
         {
-            return new TheoryData<string, FileType, string, FileType>
+            return new TheoryData<string, FileType, string, FileType, bool>
             {
                 {
                     @"C:\Users\mshaban\Desktop\cli tool\file samples\source-labeled_datapoints.jsonl",
                     FileType.JSONL,
                     @"C:\Users\mshaban\Desktop\cli tool\file samples\test.json",
-                    FileType.CT_ENTITIES
-                }
+                    FileType.CT_ENTITIES,
+                    true
+                },
+                /*{
+                    @"kkausduabsdiuaieudasdasdasd",
+                    FileType.JSONL,
+                    @"bakjcajc laj clajs calscjasc",
+                    FileType.CT_ENTITIES,
+                    false
+                }*/
             };
         }
 
         [Theory]
         [MemberData(nameof(BlobValidationServiceAsyncTestData))]
-        public void TestOperationRunner(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
+        public void TestOperationRunner(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType, bool isValid)
         {
-
-
-            FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
+            if (isValid)
+            {
+                FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
+            }
+            else 
+            {
+                Assert.Throws<Exception>(() => FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType));
+            }
         }
     }
 }
