@@ -1,8 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using FileFormatConverter.Core.Models;
+using Newtonsoft.Json;
 
 namespace FileFormatConverter.Models.Input.Jsonl
 {
-    public class JsonlFileModel
+    public class JsonlFileModel : BaseFileModel
+    {
+        public SingleLineContent[] lines;
+    }
+
+    public class SingleLineContent
     {
         [JsonProperty("image_url")]
         public string ImageUrl { get; set; }

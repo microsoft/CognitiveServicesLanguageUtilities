@@ -4,7 +4,7 @@ using System.IO;
 
 namespace FileFormatConverter.Services
 {
-    public class LocalFileHandlerService : IFileHandlingService
+    public class LocalFileHandlerService : IFileHandler
     {
         public string ReadFile(string filePath)
         {

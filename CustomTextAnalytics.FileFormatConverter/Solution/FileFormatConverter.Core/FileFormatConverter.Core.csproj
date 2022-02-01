@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Orchestrators\" />
+    <Compile Remove="Orchestrators\**" />
+    <EmbeddedResource Remove="Orchestrators\**" />
+    <None Remove="Orchestrators\**" />
   </ItemGroup>
 
   <ItemGroup>

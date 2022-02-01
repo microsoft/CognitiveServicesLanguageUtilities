@@ -7,7 +7,7 @@ namespace FileFormatConverter.Orchestrators
 {
     internal class ModelConversionService
     {
-        public static CustomEntitiesFileModel ConvertModel(List<JsonlFileModel> jsonlContent)
+        public static CustomEntitiesFileModel ConvertModel(List<SingleLineContent> jsonlContent)
         {
             // extract entity names (distinct)
             var allEntityNames = ExtractEntityNames(jsonlContent);
@@ -26,7 +26,7 @@ namespace FileFormatConverter.Orchestrators
             };
         }
 
-        private static IEnumerable<string> ExtractEntityNames(List<JsonlFileModel> jsonlContent)
+        private static IEnumerable<string> ExtractEntityNames(List<SingleLineContent> jsonlContent)
         {
             return jsonlContent.SelectMany(file =>
             {
@@ -45,7 +45,7 @@ namespace FileFormatConverter.Orchestrators
             return allEntitiesMap;
         }
 
-        private static IEnumerable<EntityDocument> ConvertDocuments(List<JsonlFileModel> jsonlContent, Dictionary<string, int> allEntitiesMap)
+        private static IEnumerable<EntityDocument> ConvertDocuments(List<SingleLineContent> jsonlContent, Dictionary<string, int> allEntitiesMap)
         {
             return jsonlContent.Select(inputDoc =>
             {
