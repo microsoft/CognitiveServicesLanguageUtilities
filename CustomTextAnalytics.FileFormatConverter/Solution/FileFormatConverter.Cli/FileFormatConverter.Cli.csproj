@@ -20,7 +20,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\FileFormatConverter.Core\FileFormatConverter.Core.csproj" />
+    <ProjectReference Include="..\FileFormatConverter.Runner\FileFormatConverter.Runner.csproj" />
   </ItemGroup>
 
 </Project>

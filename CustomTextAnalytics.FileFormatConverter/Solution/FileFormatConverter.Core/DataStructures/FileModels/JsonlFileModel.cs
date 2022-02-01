@@ -2,7 +2,7 @@
 
 namespace FileFormatConverter.Core.DataStructures.FileModels
 {
-    public class JsonlFileModel
+    public class JsonlFileModel : BaseFileModel
     {
         public SingleLineContent[] lines;
     }

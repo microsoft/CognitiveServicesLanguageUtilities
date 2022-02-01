@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileFormatConverter.Cli", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileFormatConverter.Runner", "FileFormatConverter.Runner\FileFormatConverter.Runner.csproj", "{133633B2-B5D1-45F3-B8D6-5D4F908BFF3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileFormatConverter.Tests", "FileFormatConverter.Tests\FileFormatConverter.Tests.csproj", "{75B40705-FCF1-40F8-9A2A-6B503C950A12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{133633B2-B5D1-45F3-B8D6-5D4F908BFF3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{133633B2-B5D1-45F3-B8D6-5D4F908BFF3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{133633B2-B5D1-45F3-B8D6-5D4F908BFF3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B40705-FCF1-40F8-9A2A-6B503C950A12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B40705-FCF1-40F8-9A2A-6B503C950A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B40705-FCF1-40F8-9A2A-6B503C950A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B40705-FCF1-40F8-9A2A-6B503C950A12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

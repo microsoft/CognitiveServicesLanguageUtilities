@@ -1,4 +1,5 @@
-﻿using FileFormatConverter.Core.DataStructures.Enums;
+﻿using FileFormatConverter.Runner;
+using FileFormatConverter.Runner.DataStructures;
 using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,9 +25,7 @@ namespace Microsoft.FileFormatConverter.Cli.Commands
 
         public void OnExecute(CommandLineApplication app)
         {
-            var inputFilePath = @"C:\Users\mshaban\Desktop\cli tool\file samples\source-labeled_datapoints.jsonl";
-            var targetFilePath = @"C:\Users\mshaban\Desktop\cli tool\file samples\test.json";
-            //FileConversionOrchestrator.ConvertModelFile(inputFilePath, targetFilePath);
+            FileConversionOperationRunner.RunOperation(SourcePath, SourceType, TargetPath, TargetType);
         }
     }
 }
