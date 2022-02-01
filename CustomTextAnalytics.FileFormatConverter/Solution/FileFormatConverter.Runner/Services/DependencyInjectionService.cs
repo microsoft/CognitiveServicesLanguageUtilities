@@ -36,24 +36,35 @@ namespace FileFormatConverter.Runner.Services
 
         private static void RegisterModelConverter(ContainerBuilder builder, FileType sourceType, FileType targetType)
         {
-            builder.RegisterType<LocalFileHandlerService>().As<IModelConverter<JsonlFileModel, CustomEntitiesFileModel>>();
+
+            builder.RegisterType<JsonlModelConversionService>().As<IModelConverter<JsonlFileModel, CustomEntitiesFileModel>>();
         }
 
         private static void RegisterConversionOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
         {
+            var sourceFileType = GetModelType(sourceType);
+            var targetFileType = GetModelType(targetType);
+            var openType = typeof(FileConversionOrchestrator<,>);
+            var closedType = openType.MakeGenericType(sourceFileType, targetFileType);
+
+            builder.RegisterGeneric
+
             builder.Register(c =>
             {
-                return new FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>(
+                c.
+                var instance = Activator.CreateInstance(closedType,
                     c.Resolve<IFileHandler>(),
                     c.Resolve<IModelSerializer<JsonlFileModel>>(),
                     c.Resolve<IModelConverter<JsonlFileModel, CustomEntitiesFileModel>>(),
                     c.Resolve<IModelSerializer<CustomEntitiesFileModel>>()
-                );
+                    );
             }).As<IFileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>>();
         }
 
         private static Type GetModelType(FileType fileType)
         {
+
+
             switch (fileType)
             {
                 case FileType.JSONL:

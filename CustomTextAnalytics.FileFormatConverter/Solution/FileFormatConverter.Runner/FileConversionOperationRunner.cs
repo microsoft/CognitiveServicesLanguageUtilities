@@ -10,6 +10,7 @@ namespace FileFormatConverter.Runner
     public class FileConversionOperationRunner
     {
         private static LoggingService _logger;
+        private static DependencyInjectionService _configurationService;
         public static void RunOperation(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
         {
             try
@@ -32,13 +33,10 @@ namespace FileFormatConverter.Runner
                 orchestrator.ConvertFile(sourceFilePath, targetFilePath);
             }*/
 
-            var orchestrator = new FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>(
-                new LocalFileHandlerService(),
-                new JsonlModelSerializerService(),
-                new JsonlModelConversionService(),
-                new CustomTextEntitiesFileModelSerializer());
-
+            var orchestrator = CreateOperationOrchestrator(sourceFileType, targetFileType);
             orchestrator.ConvertFile(sourceFilePath, targetFilePath);
         }
+
+        
     }
 }
