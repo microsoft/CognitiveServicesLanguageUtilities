@@ -2,17 +2,29 @@
 
 namespace FileFormatConverter.Orchestrators
 {
-    public class FileConversionOrchestrator<TSourceModel, TTargetModel>
+    public class FileConversionOrchestrator<TSourceModel, TTargetModel> : IFileConversionOrchestrator<TSourceModel, TTargetModel>
     {
-        private static IFileHandler _fileReaderService;
-        private static IModelSerializer<TSourceModel> _sourceModelSerializerService;
-        private static IModelConverter<TSourceModel, TTargetModel> _modelConverterService;
-        private static IModelSerializer<TTargetModel> _targetModelSerializerService;
+        private IFileHandler _fileHandlingService;
+        private IModelSerializer<TSourceModel> _sourceModelSerializerService;
+        private IModelConverter<TSourceModel, TTargetModel> _modelConverterService;
+        private IModelSerializer<TTargetModel> _targetModelSerializerService;
 
-        public static void ConvertModelFile(string inputFilePath, string targetFilePath)
+        public FileConversionOrchestrator(        
+            IFileHandler fileReaderService,
+            IModelSerializer<TSourceModel> sourceModelSerializerService,
+            IModelConverter<TSourceModel, TTargetModel> modelConverterService,
+            IModelSerializer<TTargetModel> targetModelSerializerService)
+        {
+            _fileHandlingService = fileReaderService;
+            _sourceModelSerializerService = sourceModelSerializerService;
+            _modelConverterService = modelConverterService;
+            _targetModelSerializerService = targetModelSerializerService;
+        }
+
+        public void ConvertFile(string inputFilePath, string targetFilePath)
         {
             // read input file
-            var fileContent = _fileReaderService.ReadFileAsString(inputFilePath);
+            var fileContent = _fileHandlingService.ReadFileAsString(inputFilePath);
 
             // parse file
             var sourceModel = _sourceModelSerializerService.Deserialize(fileContent);
@@ -24,7 +36,7 @@ namespace FileFormatConverter.Orchestrators
             var serializedTargetModel = _targetModelSerializerService.Serialize(targetModel);
 
             // save output
-            _fileReaderService.WriteFileAsString(targetFilePath, serializedTargetModel);
+            _fileHandlingService.WriteFileAsString(targetFilePath, serializedTargetModel);
         }
     }
 }
