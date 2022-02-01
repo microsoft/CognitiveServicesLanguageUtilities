@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileFormatConverter.Core.Models
+namespace FileFormatConverter.Core.DataStructures.Enums
 {
     public enum FileType
     {

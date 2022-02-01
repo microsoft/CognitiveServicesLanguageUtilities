@@ -1,8 +1,8 @@
-﻿using FileFormatConverter.Core.Models;
+﻿using FileFormatConverter.Core.DataStructures.Enums;
 using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 
-namespace Microsoft.CognitiveSearchIntegration.Cli.Commands
+namespace Microsoft.FileFormatConverter.Cli.Commands
 {
     [Command("convert", Description = "")]
     public class ConvertFileCommand

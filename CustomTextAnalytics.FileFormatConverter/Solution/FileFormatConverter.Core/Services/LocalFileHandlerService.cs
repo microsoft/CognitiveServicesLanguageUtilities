@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace FileFormatConverter.Services
+namespace FileFormatConverter.Core.Services
 {
     public class LocalFileHandlerService : IFileHandler
     {

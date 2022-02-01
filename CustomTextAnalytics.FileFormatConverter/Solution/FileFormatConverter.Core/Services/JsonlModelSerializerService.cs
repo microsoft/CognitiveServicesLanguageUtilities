@@ -1,12 +1,12 @@
-﻿using FileFormatConverter.Core.Interfaces;
-using FileFormatConverter.Models.Input.Jsonl;
+﻿using FileFormatConverter.Core.DataStructures.FileModels;
+using FileFormatConverter.Core.Interfaces;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
-namespace FileFormatConverter.Orchestrators
+namespace FileFormatConverter.Core.Services
 {
-    internal class JsonlModelSerializerService : IModelSerializer<JsonlFileModel>
+    public class JsonlModelSerializerService : IModelSerializer<JsonlFileModel>
     {
         /// <summary>
         /// docs: https://stackoverflow.com/questions/29729063/line-delimited-json-serializing-and-de-serializing

@@ -1,6 +1,6 @@
 ﻿using FileFormatConverter.Core.Interfaces;
 
-namespace FileFormatConverter.Orchestrators
+namespace FileFormatConverter.Core
 {
     public class FileConversionOrchestrator<TSourceModel, TTargetModel> : IFileConversionOrchestrator<TSourceModel, TTargetModel>
     {

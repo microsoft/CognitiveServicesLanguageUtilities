@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>Microsoft.CognitiveSearchIntegration.Cli</RootNamespace>
+        <RootNamespace>Microsoft.FileFormatConverter.Cli</RootNamespace>
     </PropertyGroup>
 
 	<PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Models.Input.Jsonl
+namespace FileFormatConverter.Core.DataStructures.FileModels
 {
     public class JsonlFileModel
     {

@@ -1,8 +1,8 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CognitiveSearchIntegration.Cli.Commands;
+using Microsoft.FileFormatConverter.Cli.Commands;
 using System.Reflection;
 
-namespace Microsoft.CognitiveSearchIntegration.Cli
+namespace Microsoft.FileFormatConverter.Cli
 {
     [Command("")]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]

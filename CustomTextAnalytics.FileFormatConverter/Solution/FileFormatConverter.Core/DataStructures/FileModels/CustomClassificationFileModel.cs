@@ -1,7 +1,6 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Models
+namespace FileFormatConverter.Core.DataStructures.FileModels
 {
     public class CustomClassificationFileModel
     {

@@ -1,10 +1,9 @@
-﻿using FileFormatConverter.Core.Interfaces;
-using FileFormatConverter.Models;
-using FileFormatConverter.Models.Input.Jsonl;
+﻿using FileFormatConverter.Core.DataStructures.FileModels;
+using FileFormatConverter.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FileFormatConverter.Orchestrators
+namespace FileFormatConverter.Core.Services
 {
     public class JsonlModelConversionService : IModelConverter<JsonlFileModel, CustomEntitiesFileModel>
     {

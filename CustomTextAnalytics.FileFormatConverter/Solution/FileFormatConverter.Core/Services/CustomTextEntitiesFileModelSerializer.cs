@@ -1,10 +1,10 @@
-﻿using FileFormatConverter.Core.Interfaces;
-using FileFormatConverter.Models;
+﻿using FileFormatConverter.Core.DataStructures.FileModels;
+using FileFormatConverter.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace FileFormatConverter.Orchestrators
+namespace FileFormatConverter.Core.Services
 {
-    internal class CustomTextEntitiesFileModelSerializer : IModelSerializer<CustomEntitiesFileModel>
+    public class CustomTextEntitiesFileModelSerializer : IModelSerializer<CustomEntitiesFileModel>
     {
         public CustomEntitiesFileModel Deserialize(string content)
         {
