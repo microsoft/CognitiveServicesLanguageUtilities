@@ -1,8 +1,5 @@
-﻿
-using Autofac;
-using FileFormatConverter.Core;
+﻿using FileFormatConverter.Core;
 using FileFormatConverter.Core.DataStructures.FileModels;
-using FileFormatConverter.Core.Interfaces;
 using FileFormatConverter.Core.Services;
 using FileFormatConverter.Runner.DataStructures;
 using FileFormatConverter.Runner.Services;

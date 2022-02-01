@@ -18,13 +18,13 @@ namespace FileFormatConverter.Tests
                     FileType.CT_ENTITIES,
                     true
                 },
-                /*{
+                {
                     @"kkausduabsdiuaieudasdasdasd",
                     FileType.JSONL,
                     @"bakjcajc laj clajs calscjasc",
                     FileType.CT_ENTITIES,
                     false
-                }*/
+                }
             };
         }
 
