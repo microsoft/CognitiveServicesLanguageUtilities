@@ -2,7 +2,7 @@
   "profiles": {
     "CognitiveSearchIntegration.ViewLayer.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "convert --source \"asd\" --target \"asd\""
+      "commandLineArgs": "convert -sp \"source_dir\" -st \"jsonl\" -tt \"ct_entities\""
     }
   }
 }

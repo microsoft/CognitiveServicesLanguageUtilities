@@ -1,9 +1,8 @@
-﻿using FileFormatConverter.Core.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace FileFormatConverter.Models.Input.Jsonl
 {
-    public class JsonlFileModel : BaseFileModel
+    public class JsonlFileModel
     {
         public SingleLineContent[] lines;
     }

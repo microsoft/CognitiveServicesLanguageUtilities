@@ -9,7 +9,7 @@ namespace FileFormatConverter.Orchestrators
         private IModelConverter<TSourceModel, TTargetModel> _modelConverterService;
         private IModelSerializer<TTargetModel> _targetModelSerializerService;
 
-        public FileConversionOrchestrator(        
+        public FileConversionOrchestrator(
             IFileHandler fileReaderService,
             IModelSerializer<TSourceModel> sourceModelSerializerService,
             IModelConverter<TSourceModel, TTargetModel> modelConverterService,

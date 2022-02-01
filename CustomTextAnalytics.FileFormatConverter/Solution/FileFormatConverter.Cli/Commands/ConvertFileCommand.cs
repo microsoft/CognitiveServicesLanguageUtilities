@@ -1,4 +1,5 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using FileFormatConverter.Core.Models;
+using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.CognitiveSearchIntegration.Cli.Commands
@@ -6,17 +7,26 @@ namespace Microsoft.CognitiveSearchIntegration.Cli.Commands
     [Command("convert", Description = "")]
     public class ConvertFileCommand
     {
-        [Option("--source <absolute_path>", Description = "source file path")]
+        [Option("-sp", Description = "source file path")]
         [Required]
         public string SourcePath { get; }
-        [Option("--target <absolute_path>", Description = "target file path")]
+
+        [Option("-st", Description = "source file type")]
+        [Required]
+        public FileType SourceType { get; }
+
+        [Option("-tp", Description = "target file path")]
         public string TargetPath { get; }
+
+        [Option("-tt", Description = "target file type")]
+        [Required]
+        public FileType TargetType { get; }
 
         public void OnExecute(CommandLineApplication app)
         {
             var inputFilePath = @"C:\Users\mshaban\Desktop\cli tool\file samples\source-labeled_datapoints.jsonl";
             var targetFilePath = @"C:\Users\mshaban\Desktop\cli tool\file samples\test.json";
-            FileConversionOrchestrator.ConvertModelFile(inputFilePath, targetFilePath);
+            //FileConversionOrchestrator.ConvertModelFile(inputFilePath, targetFilePath);
         }
     }
 }
