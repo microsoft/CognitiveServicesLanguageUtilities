@@ -36,7 +36,7 @@ namespace FileFormatConverter.Tests
             {
                 FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
             }
-            else 
+            else
             {
                 Assert.Throws<Exception>(() => FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType));
             }

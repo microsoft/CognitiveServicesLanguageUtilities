@@ -1,7 +1,9 @@
 ﻿
 using Autofac;
+using FileFormatConverter.Core;
 using FileFormatConverter.Core.DataStructures.FileModels;
 using FileFormatConverter.Core.Interfaces;
+using FileFormatConverter.Core.Services;
 using FileFormatConverter.Runner.DataStructures;
 using FileFormatConverter.Runner.Services;
 using System;
@@ -25,15 +27,21 @@ namespace FileFormatConverter.Runner
         }
         private static void RunOperationInternal(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
         {
-            // build dependencies
-            var container = DependencyInjectionService.RegisterServices(sourceFileType, targetFileType);
+            /*var container = DependencyInjectionService.RegisterServices(sourceFileType, targetFileType);
 
-            // run
             using (var scope = container.BeginLifetimeScope())
             {
                 var orchestrator = scope.Resolve<IFileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>>();
                 orchestrator.ConvertFile(sourceFilePath, targetFilePath);
-            }
+            }*/
+
+            var orchestrator = new FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>(
+                new LocalFileHandlerService(),
+                new JsonlModelSerializerService(),
+                new JsonlModelConversionService(),
+                new CustomTextEntitiesFileModelSerializer());
+
+            orchestrator.ConvertFile(sourceFilePath, targetFilePath);
         }
     }
 }
