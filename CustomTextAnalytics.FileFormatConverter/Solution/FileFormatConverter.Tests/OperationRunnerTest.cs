@@ -17,13 +17,6 @@ namespace FileFormatConverter.Tests
                     @"C:\Users\mshaban\Desktop\cli tool\file samples\test.json",
                     FileType.CT_ENTITIES,
                     true
-                },
-                {
-                    @"kkausduabsdiuaieudasdasdasd",
-                    FileType.JSONL,
-                    @"bakjcajc laj clajs calscjasc",
-                    FileType.CT_ENTITIES,
-                    false
                 }
             };
         }

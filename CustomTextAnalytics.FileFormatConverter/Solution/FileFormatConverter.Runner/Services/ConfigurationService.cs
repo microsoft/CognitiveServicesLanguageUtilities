@@ -14,9 +14,9 @@ namespace FileFormatConverter.Runner.Services
             var builder = new ContainerBuilder();
 
             RegsiterFileHandler(builder);
-            RegisterModelSerializers(builder, sourceFileType);
-            RegisterModelConverters(builder, sourceFileType, targetFileType);
-            RegisterModelSerializers(builder, targetFileType);
+            RegisterModelSerializers(builder);
+            RegisterModelConverters(builder);
+            RegisterModelSerializers(builder);
             RegisterConversionOrchestrator(builder, sourceFileType, targetFileType);
 
             return builder.Build();
@@ -27,20 +27,23 @@ namespace FileFormatConverter.Runner.Services
             builder.RegisterType<LocalFileHandlerService>().As<IFileHandler>();
         }
 
-        private void RegisterModelSerializers(ContainerBuilder builder, FileType fileType)
+        private void RegisterModelSerializers(ContainerBuilder builder)
         {
             builder.RegisterType<JsonlModelSerializerService>().As<IModelSerializer<JsonlFileModel>>();
             builder.RegisterType<CustomTextEntitiesModelSerializerService>().As<IModelSerializer<CustomEntitiesFileModel>>();
         }
 
-        private void RegisterModelConverters(ContainerBuilder builder, FileType sourceType, FileType targetType)
+        private void RegisterModelConverters(ContainerBuilder builder)
         {
             builder.RegisterType<JsonlModelConversionService>().As<IModelConverter<JsonlFileModel, CustomEntitiesFileModel>>();
         }
 
         private void RegisterConversionOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
         {
-            builder.RegisterType<FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>>().As<IFileConversionOrchestrator>();
+            if (sourceType == FileType.JSONL && targetType == FileType.CT_ENTITIES)
+            {
+                builder.RegisterType<FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>>().As<IFileConversionOrchestrator>();
+            }
         }
     }
 }
