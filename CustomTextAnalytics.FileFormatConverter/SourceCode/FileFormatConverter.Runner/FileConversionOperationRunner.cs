@@ -8,18 +8,18 @@ namespace FileFormatConverter.Runner
 {
     public class FileConversionOperationRunner
     {
-        private static LoggingService _logger = new LoggingService();
-        private static ConfigurationService _configurationService = new ConfigurationService();
+        private static readonly LoggingService _logger = new LoggingService();
+        private static readonly ConfigurationService _configurationService = new ConfigurationService();
         public static void RunOperation(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
         {
             try
             {
                 RunOperationInternal(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
-                _logger.LogSuccessMessage("File converted successfully!");
+                _logger.LogSuccess("File converted successfully!");
             }
             catch (Exception e)
             {
-                _logger.LogUnhandledError(e);
+                _logger.LogError(e);
             }
         }
         private static void RunOperationInternal(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)

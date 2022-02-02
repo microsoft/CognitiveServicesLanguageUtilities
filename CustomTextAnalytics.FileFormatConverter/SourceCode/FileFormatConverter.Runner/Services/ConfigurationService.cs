@@ -4,6 +4,7 @@ using FileFormatConverter.Core.DataStructures.FileModels;
 using FileFormatConverter.Core.Interfaces;
 using FileFormatConverter.Core.Services;
 using FileFormatConverter.Runner.DataStructures;
+using System;
 
 namespace FileFormatConverter.Runner.Services
 {
@@ -16,7 +17,6 @@ namespace FileFormatConverter.Runner.Services
             RegsiterFileHandler(builder);
             RegisterModelSerializers(builder);
             RegisterModelConverters(builder);
-            RegisterModelSerializers(builder);
             RegisterConversionOrchestrator(builder, sourceFileType, targetFileType);
 
             return builder.Build();
@@ -43,6 +43,10 @@ namespace FileFormatConverter.Runner.Services
             if (sourceType == FileType.JSONL && targetType == FileType.CT_ENTITIES)
             {
                 builder.RegisterType<FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>>().As<IFileConversionOrchestrator>();
+            }
+            else
+            {
+                throw new Exception("Conversion not supported!");
             }
         }
     }

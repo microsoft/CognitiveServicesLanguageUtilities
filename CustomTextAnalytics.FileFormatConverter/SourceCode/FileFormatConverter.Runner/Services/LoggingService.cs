@@ -18,7 +18,7 @@ namespace FileFormatConverter.Runner.Services
             }
         }
 
-        public void LogSuccessMessage(string message)
+        public void LogSuccess(string message)
         {
             lock (_lock)
             {
@@ -29,7 +29,7 @@ namespace FileFormatConverter.Runner.Services
             }
         }
 
-        public void LogUnhandledError(Exception exception)
+        public void LogError(Exception exception)
         {
             lock (_lock)
             {
