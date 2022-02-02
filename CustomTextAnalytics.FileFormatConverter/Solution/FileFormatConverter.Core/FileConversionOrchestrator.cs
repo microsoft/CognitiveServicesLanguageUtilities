@@ -2,7 +2,7 @@
 
 namespace FileFormatConverter.Core
 {
-    public class FileConversionOrchestrator<TSourceModel, TTargetModel> : IFileConversionOrchestrator<TSourceModel, TTargetModel>
+    public class FileConversionOrchestrator<TSourceModel, TTargetModel> : IFileConversionOrchestrator
     {
         private IFileHandler _fileHandlingService;
         private IModelSerializer<TSourceModel> _sourceModelSerializerService;

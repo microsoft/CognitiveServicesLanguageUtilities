@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace FileFormatConverter.Core.Services
 {
-    public class CustomTextEntitiesFileModelSerializer : IModelSerializer<CustomEntitiesFileModel>
+    public class CustomTextEntitiesModelSerializerService : IModelSerializer<CustomEntitiesFileModel>
     {
         public CustomEntitiesFileModel Deserialize(string content)
         {
