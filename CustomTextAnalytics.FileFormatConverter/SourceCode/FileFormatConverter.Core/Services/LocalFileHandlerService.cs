@@ -25,9 +25,10 @@ namespace FileFormatConverter.Core.Services
 
         public bool WriteFileAsString(string filePath, string content)
         {
+            var targetPath = filePath ?? "./output.json";
             try
             {
-                File.WriteAllText(filePath, content);
+                File.WriteAllText(targetPath, content);
                 return true;
             }
             catch (Exception)
