@@ -4,7 +4,7 @@ This cli tool is meant to convert file formats from Azure ML labeling formats - 
 
 ##  How to use
 
-- First download the conversion cli tool [here](FileConverter.exe).
+- First download [this package](FileConverter.rar) and unzip to extract the cli tool.
 - Second, open your terminal/cmd/powershell in same dir as the exe file.
 <br>(Or add that dir to your PATH env variable to run from anywhere)
 - Then, run the following command:
