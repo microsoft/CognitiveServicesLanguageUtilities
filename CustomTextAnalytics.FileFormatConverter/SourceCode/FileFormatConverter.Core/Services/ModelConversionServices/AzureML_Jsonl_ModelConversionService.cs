@@ -1,14 +1,14 @@
 ﻿using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
-using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
+using FileFormatConverter.Core.DataStructures.FileModels.IntermediateEntitiesModel;
 using FileFormatConverter.Core.Interfaces.Services;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FileFormatConverter.Core.Services.ModelConversionServices
 {
-    public class AzureML_Jsonl_ModelConversionService : IModelConverter<AzureML_Jsonl_FileModel, CustomText_Entities_FileModel>
+    public class AzureML_Jsonl_ModelConversionService : IModelConverter<AzureML_Jsonl_FileModel, IntermediateEntitiesModel>
     {
-        public CustomText_Entities_FileModel ConvertModel(AzureML_Jsonl_FileModel jsonlContent)
+        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent)
         {
             // extract entity names (distinct)
             var allEntityNames = ExtractEntityNames(jsonlContent);
@@ -20,11 +20,16 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             var docsList = ConvertDocuments(jsonlContent, allEntitiesMap);
 
             // final result
-            return new CustomText_Entities_FileModel()
+            return new IntermediateEntitiesModel()
             {
                 EntityNames = allEntityNames.ToArray(),
                 Documents = docsList.ToArray()
             };
+        }
+
+        public AzureML_Jsonl_FileModel ConvertFromIntermediate(IntermediateEntitiesModel intermediateModel)
+        {
+            throw new System.NotImplementedException();
         }
 
         private IEnumerable<string> ExtractEntityNames(AzureML_Jsonl_FileModel jsonlContent)

@@ -1,7 +1,8 @@
 ﻿namespace FileFormatConverter.Core.Interfaces.Services
 {
-    public interface IModelConverter<TSourceModel, TTargetModel>
+    public interface IModelConverter<TModel, TIntermediateModel>
     {
-        TTargetModel ConvertModel(TSourceModel sourceModel);
+        TIntermediateModel ConvertToIntermediate(TModel sourceModel);
+        TModel ConvertFromIntermediate(TIntermediateModel intermediateModel);
     }
 }

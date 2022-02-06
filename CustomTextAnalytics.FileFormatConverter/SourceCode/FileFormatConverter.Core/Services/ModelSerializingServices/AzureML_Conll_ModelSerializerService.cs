@@ -28,14 +28,7 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
 
         public string Serialize(AzureML_Conll_FileModel model)
         {
-            try
-            {
-                return null;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Something went wrong went writing to target file!");
-            }
+            throw new NotImplementedException();
         }
 
         private AzureML_Conll_FileModel ParseFile(string content)
