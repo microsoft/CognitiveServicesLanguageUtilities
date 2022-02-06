@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FileFormatConverter.Core.Services.ModelSerializingServices
 {
-    internal class AzureML_Conll_ModelSerializerService : IModelSerializer<AzureML_Conll_FileModel>
+    public class AzureML_Conll_ModelSerializerService : IModelSerializer<AzureML_Conll_FileModel>
     {
         private readonly string NoLabelIdentifier = "O";
         private readonly string BeginLabelIdentifier = "B";

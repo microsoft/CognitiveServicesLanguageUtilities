@@ -5,7 +5,7 @@ using System;
 
 namespace FileFormatConverter.Core.Services.ModelSerializingServices
 {
-    internal class CustomText_Classifiers_ModelSerializerService
+    public class CustomText_Classifiers_ModelSerializerService
     {
         public class CustomText_Entities_ModelSerializerService : IModelSerializer<CustomText_Classification_FileModel>
         {
