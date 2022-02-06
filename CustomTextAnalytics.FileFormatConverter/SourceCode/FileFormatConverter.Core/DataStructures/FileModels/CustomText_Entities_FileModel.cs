@@ -2,7 +2,7 @@
 
 namespace FileFormatConverter.Core.DataStructures.FileModels
 {
-    public class CustomEntitiesFileModel : BaseFileModel
+    public class CustomText_Entities_FileModel : BaseFileModel
     {
         [JsonProperty("entityNames")]
         public string[] EntityNames { get; set; }

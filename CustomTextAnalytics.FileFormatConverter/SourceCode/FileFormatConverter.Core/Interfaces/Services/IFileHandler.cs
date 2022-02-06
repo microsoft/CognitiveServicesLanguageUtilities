@@ -1,4 +1,4 @@
-﻿namespace FileFormatConverter.Core.Interfaces
+﻿namespace FileFormatConverter.Core.Interfaces.Services
 {
     public interface IFileHandler
     {

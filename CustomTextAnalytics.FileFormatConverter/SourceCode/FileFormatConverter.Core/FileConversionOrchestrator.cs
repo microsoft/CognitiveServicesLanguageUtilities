@@ -1,4 +1,5 @@
 ﻿using FileFormatConverter.Core.Interfaces;
+using FileFormatConverter.Core.Interfaces.Services;
 
 namespace FileFormatConverter.Core
 {

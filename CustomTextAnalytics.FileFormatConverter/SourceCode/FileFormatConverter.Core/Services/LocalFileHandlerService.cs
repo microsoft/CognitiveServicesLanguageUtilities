@@ -1,4 +1,4 @@
-﻿using FileFormatConverter.Core.Interfaces;
+﻿using FileFormatConverter.Core.Interfaces.Services;
 using System;
 using System.IO;
 

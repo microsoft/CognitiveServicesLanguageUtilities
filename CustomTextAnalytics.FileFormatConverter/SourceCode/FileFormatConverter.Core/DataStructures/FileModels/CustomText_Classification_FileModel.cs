@@ -2,7 +2,7 @@
 
 namespace FileFormatConverter.Core.DataStructures.FileModels
 {
-    public class CustomClassificationFileModel : BaseFileModel
+    public class CustomText_Classification_FileModel : BaseFileModel
     {
         [JsonProperty("classifiers")]
         public CustomClassifier[] Classifiers { get; set; }

@@ -2,7 +2,7 @@
 
 namespace FileFormatConverter.Core.DataStructures.FileModels
 {
-    public class JsonlFileModel : BaseFileModel
+    public class AzureML_Jsonl_FileModel : BaseFileModel
     {
         public SingleLineContent[] lines;
     }

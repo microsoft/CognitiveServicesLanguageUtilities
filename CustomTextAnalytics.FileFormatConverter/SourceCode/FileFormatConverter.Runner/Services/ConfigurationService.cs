@@ -2,7 +2,10 @@
 using FileFormatConverter.Core;
 using FileFormatConverter.Core.DataStructures.FileModels;
 using FileFormatConverter.Core.Interfaces;
+using FileFormatConverter.Core.Interfaces.Services;
 using FileFormatConverter.Core.Services;
+using FileFormatConverter.Core.Services.ModelConversionServices;
+using FileFormatConverter.Core.Services.ModelSerializingServices;
 using FileFormatConverter.Runner.DataStructures;
 using System;
 
@@ -29,20 +32,20 @@ namespace FileFormatConverter.Runner.Services
 
         private void RegisterModelSerializers(ContainerBuilder builder)
         {
-            builder.RegisterType<JsonlModelSerializerService>().As<IModelSerializer<JsonlFileModel>>();
-            builder.RegisterType<CustomTextEntitiesModelSerializerService>().As<IModelSerializer<CustomEntitiesFileModel>>();
+            builder.RegisterType<AzureML_Jsonl_ModelSerializerService>().As<IModelSerializer<AzureML_Jsonl_FileModel>>();
+            builder.RegisterType<CustomText_Entities_ModelSerializerService>().As<IModelSerializer<CustomText_Entities_FileModel>>();
         }
 
         private void RegisterModelConverters(ContainerBuilder builder)
         {
-            builder.RegisterType<JsonlModelConversionService>().As<IModelConverter<JsonlFileModel, CustomEntitiesFileModel>>();
+            builder.RegisterType<AzureML_Jsonl_ModelConversionService>().As<IModelConverter<AzureML_Jsonl_FileModel, CustomText_Entities_FileModel>>();
         }
 
         private void RegisterConversionOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
         {
             if (sourceType == FileType.JSONL && targetType == FileType.CT_ENTITIES)
             {
-                builder.RegisterType<FileConversionOrchestrator<JsonlFileModel, CustomEntitiesFileModel>>().As<IFileConversionOrchestrator>();
+                builder.RegisterType<FileConversionOrchestrator<AzureML_Jsonl_FileModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
             }
             else
             {
