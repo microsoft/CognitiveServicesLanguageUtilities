@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using FileFormatConverter.Core;
+using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Conll;
 using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
 using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
 using FileFormatConverter.Core.DataStructures.FileModels.IntermediateEntitiesModel;
@@ -22,7 +23,7 @@ namespace FileFormatConverter.Runner.Services
             RegsiterFileHandler(builder);
             RegisterModelSerializers(builder);
             RegisterModelConverters(builder);
-            RegisterConversionOrchestrator(builder, sourceFileType, targetFileType);
+            RegisterOrchestrator(builder, sourceFileType, targetFileType);
 
             return builder.Build();
         }
@@ -36,19 +37,25 @@ namespace FileFormatConverter.Runner.Services
         {
             builder.RegisterType<AzureML_Jsonl_ModelSerializerService>().As<IModelSerializer<AzureML_Jsonl_FileModel>>();
             builder.RegisterType<CustomText_Entities_ModelSerializerService>().As<IModelSerializer<CustomText_Entities_FileModel>>();
+            builder.RegisterType<AzureML_Conll_ModelSerializerService>().As<IModelSerializer<AzureML_Conll_FileModel>>();
         }
 
         private void RegisterModelConverters(ContainerBuilder builder)
         {
             builder.RegisterType<AzureML_Jsonl_ModelConversionService>().As<IModelConverter<AzureML_Jsonl_FileModel, IntermediateEntitiesModel>>();
             builder.RegisterType<CustomText_Entities_ModelConversionService>().As<IModelConverter<CustomText_Entities_FileModel, IntermediateEntitiesModel>>();
+            builder.RegisterType<AzureML_Conll_ModelConversionService>().As<IModelConverter<AzureML_Conll_FileModel, IntermediateEntitiesModel>>();
         }
 
-        private void RegisterConversionOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
+        private void RegisterOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
         {
             if (sourceType == FileType.JSONL && targetType == FileType.CT_ENTITIES)
             {
                 builder.RegisterType<FileConversionOrchestrator<AzureML_Jsonl_FileModel, IntermediateEntitiesModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
+            }
+            else if (sourceType == FileType.CONLL && targetType == FileType.CT_ENTITIES)
+            {
+                builder.RegisterType<FileConversionOrchestrator<AzureML_Conll_FileModel, IntermediateEntitiesModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
             }
             else
             {

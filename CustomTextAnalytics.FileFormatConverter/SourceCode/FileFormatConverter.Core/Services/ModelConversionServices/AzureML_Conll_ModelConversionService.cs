@@ -43,7 +43,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             sourceModel.Tokens.ToList().ForEach(token =>
             {
                 if (token.Label != null)
-                { 
+                {
                     entities.Add(token.Label.Text);
                 }
             });
