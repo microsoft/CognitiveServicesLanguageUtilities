@@ -23,10 +23,10 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
         {
             try
             {
-               return JsonConvert.SerializeObject(model, Formatting.Indented);
+                return JsonConvert.SerializeObject(model, Formatting.Indented);
             }
             catch (Exception)
-            { 
+            {
                 throw new Exception("Something went wrong went writing to target file!");
             }
         }
