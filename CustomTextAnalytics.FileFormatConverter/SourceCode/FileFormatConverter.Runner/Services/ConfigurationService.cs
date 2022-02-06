@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using FileFormatConverter.Core;
 using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
 using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
+using FileFormatConverter.Core.DataStructures.FileModels.IntermediateEntitiesModel;
 using FileFormatConverter.Core.Interfaces;
 using FileFormatConverter.Core.Interfaces.Services;
 using FileFormatConverter.Core.Services;
@@ -38,14 +40,15 @@ namespace FileFormatConverter.Runner.Services
 
         private void RegisterModelConverters(ContainerBuilder builder)
         {
-            builder.RegisterType<AzureML_Jsonl_ModelConversionService>().As<IModelConverter<AzureML_Jsonl_FileModel, CustomText_Entities_FileModel>>();
+            builder.RegisterType<AzureML_Jsonl_ModelConversionService>().As<IModelConverter<AzureML_Jsonl_FileModel, IntermediateEntitiesModel>>();
+            builder.RegisterType<CustomText_Entities_ModelConversionService>().As<IModelConverter<CustomText_Entities_FileModel, IntermediateEntitiesModel>>();
         }
 
         private void RegisterConversionOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
         {
             if (sourceType == FileType.JSONL && targetType == FileType.CT_ENTITIES)
             {
-                builder.RegisterType<FileConversionOrchestrator<AzureML_Jsonl_FileModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
+                builder.RegisterType<FileConversionOrchestrator<AzureML_Jsonl_FileModel, IntermediateEntitiesModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
             }
             else
             {
