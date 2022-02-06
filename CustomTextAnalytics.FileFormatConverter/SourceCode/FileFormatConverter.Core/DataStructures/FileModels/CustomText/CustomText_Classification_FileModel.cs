@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Core.DataStructures.FileModels
+namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Classification
 {
     public class CustomText_Classification_FileModel : BaseFileModel
     {

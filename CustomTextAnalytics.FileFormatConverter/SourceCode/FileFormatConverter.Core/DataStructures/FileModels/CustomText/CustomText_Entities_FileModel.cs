@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Core.DataStructures.FileModels
+namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities
 {
     public class CustomText_Entities_FileModel : BaseFileModel
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Core.DataStructures.FileModels
+namespace FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl
 {
     public class AzureML_Jsonl_FileModel : BaseFileModel
     {

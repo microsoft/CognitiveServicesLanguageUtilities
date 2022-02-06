@@ -1,4 +1,4 @@
-﻿using FileFormatConverter.Core.DataStructures.FileModels;
+﻿using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
 using FileFormatConverter.Core.Interfaces.Services;
 using Newtonsoft.Json;
 using System;

@@ -1,4 +1,5 @@
-﻿using FileFormatConverter.Core.DataStructures.FileModels;
+﻿using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
+using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
 using FileFormatConverter.Core.Interfaces.Services;
 using System.Collections.Generic;
 using System.Linq;

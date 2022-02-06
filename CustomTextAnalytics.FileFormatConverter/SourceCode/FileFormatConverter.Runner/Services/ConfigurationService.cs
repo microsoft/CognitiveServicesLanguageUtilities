@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FileFormatConverter.Core;
-using FileFormatConverter.Core.DataStructures.FileModels;
+using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
+using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
 using FileFormatConverter.Core.Interfaces;
 using FileFormatConverter.Core.Interfaces.Services;
 using FileFormatConverter.Core.Services;

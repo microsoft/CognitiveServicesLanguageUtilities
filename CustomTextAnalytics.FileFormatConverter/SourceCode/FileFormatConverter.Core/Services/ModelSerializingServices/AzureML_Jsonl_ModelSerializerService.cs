@@ -1,4 +1,4 @@
-﻿using FileFormatConverter.Core.DataStructures.FileModels;
+﻿using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
 using FileFormatConverter.Core.Interfaces.Services;
 using Newtonsoft.Json;
 using System;
@@ -42,7 +42,7 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
 
         public string Serialize(AzureML_Jsonl_FileModel model)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
