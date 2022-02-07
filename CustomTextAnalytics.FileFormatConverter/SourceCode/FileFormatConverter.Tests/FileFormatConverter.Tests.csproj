@@ -22,4 +22,8 @@
     <ProjectReference Include="..\FileFormatConverter.Runner\FileFormatConverter.Runner.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Documents\" />
+  </ItemGroup>
+
 </Project>

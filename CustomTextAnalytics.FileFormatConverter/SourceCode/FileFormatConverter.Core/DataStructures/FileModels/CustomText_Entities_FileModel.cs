@@ -8,10 +8,10 @@ namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities
         public string[] EntityNames { get; set; }
 
         [JsonProperty("documents")]
-        public EntityDocument[] Documents { get; set; }
+        public CustomDocument[] Documents { get; set; }
     }
 
-    public class EntityDocument
+    public class CustomDocument
     {
         [JsonProperty("entities")]
         public CustomEntity[] Entities { get; set; }

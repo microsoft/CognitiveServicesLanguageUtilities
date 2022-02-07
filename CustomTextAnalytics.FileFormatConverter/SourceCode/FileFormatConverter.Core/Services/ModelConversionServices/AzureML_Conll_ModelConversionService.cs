@@ -17,24 +17,88 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
         public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Conll_FileModel sourceModel)
         {
             // extract entity names
-            var entities = ExtractEntityNames(sourceModel);
+            var allEntityNames = ExtractEntityNames(sourceModel);
+
+            // create entity names map
+            var allEntitiesMap = CreateEntitiesMap(allEntityNames);
 
             // extract documents
-            var document = new EntityDocument()
-            {
-                Culture = null,
-                Location = null,
-                Entities = null
-            };
+            var labels = ExtractLabels(sourceModel, allEntitiesMap);
 
+            // conver overall model
             return new IntermediateEntitiesModel()
             {
-                EntityNames = entities.ToArray(),
-                Documents = new EntityDocument[]
+                EntityNames = allEntityNames.ToArray(),
+                Documents = new CustomDocument[]
                 {
-                    document
+                    new CustomDocument()
+                    {
+                        Entities = new CustomEntity[]
+                        {
+                            new CustomEntity()
+                            {
+                                Labels = labels.ToArray()
+                            }
+                        }
+                    }
                 }
             };
+        }
+
+        private List<CustomLabel> ExtractLabels(AzureML_Conll_FileModel sourceModel, Dictionary<string, int> allEntitiesMap)
+        {
+            var i = 0;
+            var charIndex = 0;
+            var tokensArray = sourceModel.Tokens.ToArray();
+            var labels = new List<CustomLabel>();
+            while (i < tokensArray.Length)
+            {
+                if (tokensArray[i].Label?.TokenType == TokenType.B)
+                {
+                    // get label basic info
+                    var conllLabel = tokensArray[i].Label;
+                    var entityIndex = allEntitiesMap[conllLabel.Text];
+                    var start = charIndex;
+
+                    // get length
+                    var length = GetLabelLength(ref i, ref charIndex, tokensArray);
+
+                    // create label
+                    var label = new CustomLabel()
+                    {
+                        Entity = entityIndex,
+                        Start = start,
+                        Length = length,
+                    };
+                    labels.Add(label);
+                }
+                else
+                {
+                    charIndex += tokensArray[i].Text.Length;
+                    i++;
+                }
+            }
+
+            return labels;
+        }
+
+        private int GetLabelLength(ref int i, ref int charIndex, Token[] tokensArray)
+        {
+            var j = i + 1;
+            var length = tokensArray[i].Text.Length;
+            while (true)
+            {
+                if (j >= tokensArray.Length || tokensArray[j].Label == null || tokensArray[j].Label?.TokenType == TokenType.B)
+                {
+                    break;
+                }
+                length += tokensArray[j].Text.Length;
+                charIndex += tokensArray[j].Text.Length;
+                j++;
+                i = j;
+            }
+
+            return length;
         }
 
         private HashSet<string> ExtractEntityNames(AzureML_Conll_FileModel sourceModel)
@@ -48,6 +112,17 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 }
             });
             return entities;
+        }
+
+        private Dictionary<string, int> CreateEntitiesMap(IEnumerable<string> allEntityNames)
+        {
+            var allEntitiesMap = new Dictionary<string, int>();
+            var tmp = allEntityNames.ToArray();
+            for (var i = 0; i < tmp.Length; i++)
+            {
+                allEntitiesMap[tmp[i]] = i;
+            }
+            return allEntitiesMap;
         }
     }
 }

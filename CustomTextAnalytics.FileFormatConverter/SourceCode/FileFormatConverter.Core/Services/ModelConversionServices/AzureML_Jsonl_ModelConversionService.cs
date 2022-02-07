@@ -51,7 +51,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             return allEntitiesMap;
         }
 
-        private IEnumerable<EntityDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent, Dictionary<string, int> allEntitiesMap)
+        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent, Dictionary<string, int> allEntitiesMap)
         {
             return jsonlContent.lines.Select(inputDoc =>
             {
@@ -67,7 +67,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 }).ToArray();
 
                 // res document
-                return new EntityDocument()
+                return new CustomDocument()
                 {
                     Location = inputDoc.ImageUrl,
                     Entities = new CustomEntity[]

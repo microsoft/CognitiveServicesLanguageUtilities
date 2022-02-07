@@ -4,10 +4,10 @@
     {
         public string[] EntityNames { get; set; }
 
-        public EntityDocument[] Documents { get; set; }
+        public CustomDocument[] Documents { get; set; }
     }
 
-    public class EntityDocument
+    public class CustomDocument
     {
         public CustomEntity[] Entities { get; set; }
 
