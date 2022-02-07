@@ -1,42 +1,49 @@
 ﻿using FileFormatConverter.Core.Interfaces;
+using FileFormatConverter.Core.Interfaces.Services;
 
 namespace FileFormatConverter.Core
 {
-    public class FileConversionOrchestrator<TSourceModel, TTargetModel> : IFileConversionOrchestrator
+    public class FileConversionOrchestrator<TSourceModel, TIntermediateModel, TTargetModel> : IFileConversionOrchestrator
     {
-        private IFileHandler _fileHandlingService;
+        private IFileHandler _fileHandlerService;
         private IModelSerializer<TSourceModel> _sourceModelSerializerService;
-        private IModelConverter<TSourceModel, TTargetModel> _modelConverterService;
+        private IModelConverter<TSourceModel, TIntermediateModel> _sourceModelConverterService;
+        private IModelConverter<TTargetModel, TIntermediateModel> _targetModelConverterService;
         private IModelSerializer<TTargetModel> _targetModelSerializerService;
 
         public FileConversionOrchestrator(
-            IFileHandler fileReaderService,
+            IFileHandler fileHandlerService,
             IModelSerializer<TSourceModel> sourceModelSerializerService,
-            IModelConverter<TSourceModel, TTargetModel> modelConverterService,
+            IModelConverter<TSourceModel, TIntermediateModel> sourceModelConverterService,
+            IModelConverter<TTargetModel, TIntermediateModel> targetModelConverterService,
             IModelSerializer<TTargetModel> targetModelSerializerService)
         {
-            _fileHandlingService = fileReaderService;
+            _fileHandlerService = fileHandlerService;
             _sourceModelSerializerService = sourceModelSerializerService;
-            _modelConverterService = modelConverterService;
+            _sourceModelConverterService = sourceModelConverterService;
+            _targetModelConverterService = targetModelConverterService;
             _targetModelSerializerService = targetModelSerializerService;
         }
 
         public void ConvertFile(string inputFilePath, string targetFilePath)
         {
             // read input file
-            var fileContent = _fileHandlingService.ReadFileAsString(inputFilePath);
+            var fileContent = _fileHandlerService.ReadFileAsString(inputFilePath);
 
             // parse file
             var sourceModel = _sourceModelSerializerService.Deserialize(fileContent);
 
-            // convert model
-            var targetModel = _modelConverterService.ConvertModel(sourceModel);
+            // convert source to intermediate model
+            var intermediateModel = _sourceModelConverterService.ConvertToIntermediate(sourceModel);
+
+            // convert intermediate to target model
+            var targetModel = _targetModelConverterService.ConvertFromIntermediate(intermediateModel);
 
             // serialize model
             var serializedTargetModel = _targetModelSerializerService.Serialize(targetModel);
 
             // save output
-            _fileHandlingService.WriteFileAsString(targetFilePath, serializedTargetModel);
+            _fileHandlerService.WriteFileAsString(targetFilePath, serializedTargetModel);
         }
     }
 }

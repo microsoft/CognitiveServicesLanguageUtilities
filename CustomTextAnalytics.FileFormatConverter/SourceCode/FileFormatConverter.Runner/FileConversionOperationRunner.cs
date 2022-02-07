@@ -14,7 +14,7 @@ namespace FileFormatConverter.Runner
         {
             try
             {
-                RunOperationInternal(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
+                RunOperationpublic(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
                 _logger.LogSuccess("File converted successfully!");
             }
             catch (Exception e)
@@ -22,7 +22,7 @@ namespace FileFormatConverter.Runner
                 _logger.LogError(e);
             }
         }
-        private static void RunOperationInternal(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
+        private static void RunOperationpublic(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
         {
             var container = _configurationService.RegisterServices(sourceFileType, targetFileType);
 
