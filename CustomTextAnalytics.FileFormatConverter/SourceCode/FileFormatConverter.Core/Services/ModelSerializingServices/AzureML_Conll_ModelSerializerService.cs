@@ -22,7 +22,7 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
             }
             catch (Exception)
             {
-                throw new Exception("Invalid Json file format");
+                throw new Exception("Invalid Conll file format");
             }
         }
 
@@ -33,9 +33,8 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
 
         private AzureML_Conll_FileModel ParseFile(string content)
         {
-            var tokens = content
-                .Split(Environment.NewLine)
-                .Select(line => ParseLine(line));
+            var lines = content.Split('\n');
+            var tokens = lines.Select(line => ParseLine(line));
 
             return new AzureML_Conll_FileModel()
             {
@@ -52,7 +51,7 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
             };
 
             // case 1: space token
-            if (lineData.Length == 0)
+            if (line.Length == 0)
             {
                 token.Text = EmptyTokenText;
             }
@@ -66,9 +65,10 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
             {
                 token.Text = lineData[0]; /* ATTENTION : handle special case that text has spaces or special characters (split not working properly) */
                 var labelIdentifierIndex = lineData.Length - 2;
+                var labelTextIndex = lineData.Length - 1;
                 token.Label = new Label()
                 {
-                    Text = lineData[1],
+                    Text = lineData[labelTextIndex],
                     TokenType = GetTokenType(lineData[labelIdentifierIndex])
                 };
             }
