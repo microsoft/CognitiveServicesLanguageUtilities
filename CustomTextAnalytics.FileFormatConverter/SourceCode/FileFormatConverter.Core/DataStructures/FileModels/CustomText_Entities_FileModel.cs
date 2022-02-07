@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Core.DataStructures.FileModels
+namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities
 {
-    public class CustomEntitiesFileModel : BaseFileModel
+    public class CustomText_Entities_FileModel : BaseFileModel
     {
         [JsonProperty("entityNames")]
         public string[] EntityNames { get; set; }
 
         [JsonProperty("documents")]
-        public EntityDocument[] Documents { get; set; }
+        public CustomDocument[] Documents { get; set; }
     }
 
-    public class EntityDocument
+    public class CustomDocument
     {
         [JsonProperty("entities")]
         public CustomEntity[] Entities { get; set; }

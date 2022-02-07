@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace FileFormatConverter.Core.DataStructures.FileModels
+namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Classification
 {
-    public class CustomClassificationFileModel : BaseFileModel
+    public class CustomText_Classification_FileModel : BaseFileModel
     {
         [JsonProperty("classifiers")]
         public CustomClassifier[] Classifiers { get; set; }
