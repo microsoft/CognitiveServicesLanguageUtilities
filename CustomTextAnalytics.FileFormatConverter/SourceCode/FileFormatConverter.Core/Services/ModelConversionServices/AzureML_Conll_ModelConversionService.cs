@@ -93,10 +93,11 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                     break;
                 }
                 length += tokensArray[j].Text.Length;
-                charIndex += tokensArray[j].Text.Length;
                 j++;
-                i = j;
             }
+
+            i = j;
+            charIndex += length;
 
             return length;
         }
