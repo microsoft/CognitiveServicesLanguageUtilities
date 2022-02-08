@@ -12,8 +12,11 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
         private readonly string ContinueLabelIdentifier = "I";
 
         private readonly string EmptyTokenText = " ";
+        private readonly char NewLineWindowsChar = '\n';
+        private readonly char NewLineCharMacOs = '\r';
         private readonly char SpaceChar = ' ';
         private readonly char DashChar = '-';
+        private readonly char TabChar = '\t';
         public AzureML_Conll_FileModel Deserialize(string content)
         {
             try
@@ -33,7 +36,7 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
 
         private AzureML_Conll_FileModel ParseFile(string content)
         {
-            var lines = content.Split('\n');
+            var lines = content.Split(new char[] { NewLineWindowsChar, NewLineCharMacOs });
             var tokens = lines.Select(line => ParseLine(line));
 
             return new AzureML_Conll_FileModel()
@@ -44,35 +47,41 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
 
         private Token ParseLine(string line)
         {
-            var lineData = line.Split(new char[] { SpaceChar, DashChar });
-            var token = new Token()
+            try
             {
-                RawLine = line
-            };
-
-            // case 1: space token
-            if (line.Length == 0)
-            {
-                token.Text = EmptyTokenText;
-            }
-            // case 2: no labels
-            else if (IsLineNotLabeled(lineData))
-            {
-                token.Text = lineData[0];
-            }
-            // case 3: labeled text
-            else
-            {
-                token.Text = lineData[0]; /* ATTENTION : handle special case that text has spaces or special characters (split not working properly) */
-                var labelIdentifierIndex = lineData.Length - 2;
-                var labelTextIndex = lineData.Length - 1;
-                token.Label = new Label()
+                var lineData = line.Split(new char[] { SpaceChar, TabChar }); // split line by space/tab
+                var token = new Token()
                 {
-                    Text = lineData[labelTextIndex],
-                    TokenType = GetTokenType(lineData[labelIdentifierIndex])
+                    RawLine = line
                 };
+
+                // case 1: space token
+                if (line.Length == 0 || string.IsNullOrEmpty(lineData[0]) || string.IsNullOrWhiteSpace(lineData[0]))
+                {
+                    token.Text = EmptyTokenText;
+                }
+                // case 2: no labels
+                else if (IsLineNotLabeled(lineData))
+                {
+                    token.Text = lineData[0];
+                }
+                // case 3: labeled text
+                else
+                {
+                    token.Text = lineData[0];
+                    var labelData = lineData.Last().Split(new char[] { DashChar }); // extract label name and type removing 'dash' char
+                    token.Label = new Label()
+                    {
+                        Text = labelData[1],
+                        TokenType = GetTokenType(labelData[0])
+                    };
+                }
+                return token;
             }
-            return token;
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         private bool IsLineNotLabeled(string[] lineData)
