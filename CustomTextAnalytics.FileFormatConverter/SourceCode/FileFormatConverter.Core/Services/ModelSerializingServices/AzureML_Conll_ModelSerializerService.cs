@@ -47,41 +47,34 @@ namespace FileFormatConverter.Core.Services.ModelSerializingServices
 
         private Token ParseLine(string line)
         {
-            try
+            var lineData = line.Split(new char[] { SpaceChar, TabChar }); // split line by space/tab
+            var token = new Token()
             {
-                var lineData = line.Split(new char[] { SpaceChar, TabChar }); // split line by space/tab
-                var token = new Token()
-                {
-                    RawLine = line
-                };
+                RawLine = line
+            };
 
-                // case 1: space token
-                if (line.Length == 0 || string.IsNullOrEmpty(lineData[0]) || string.IsNullOrWhiteSpace(lineData[0]))
-                {
-                    token.Text = EmptyTokenText;
-                }
-                // case 2: no labels
-                else if (IsLineNotLabeled(lineData))
-                {
-                    token.Text = lineData[0];
-                }
-                // case 3: labeled text
-                else
-                {
-                    token.Text = lineData[0];
-                    var labelData = lineData.Last().Split(new char[] { DashChar }); // extract label name and type removing 'dash' char
-                    token.Label = new Label()
-                    {
-                        Text = labelData[1],
-                        TokenType = GetTokenType(labelData[0])
-                    };
-                }
-                return token;
-            }
-            catch (Exception ex)
+            // case 1: space token
+            if (line.Length == 0 || string.IsNullOrEmpty(lineData[0]) || string.IsNullOrWhiteSpace(lineData[0]))
             {
-                return null;
+                token.Text = EmptyTokenText;
             }
+            // case 2: no labels
+            else if (IsLineNotLabeled(lineData))
+            {
+                token.Text = lineData[0];
+            }
+            // case 3: labeled text
+            else
+            {
+                token.Text = lineData[0];
+                var labelData = lineData.Last().Split(new char[] { DashChar }); // extract label name and type removing 'dash' char
+                token.Label = new Label()
+                {
+                    Text = labelData[1],
+                    TokenType = GetTokenType(labelData[0])
+                };
+            }
+            return token;
         }
 
         private bool IsLineNotLabeled(string[] lineData)
