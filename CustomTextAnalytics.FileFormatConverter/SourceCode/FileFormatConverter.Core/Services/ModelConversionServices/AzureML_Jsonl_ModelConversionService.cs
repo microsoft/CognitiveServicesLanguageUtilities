@@ -59,6 +59,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 }).ToArray();
 
                 // res document
+                var regionLength = GetRegionOffset(resLabels);
                 return new CustomDocument()
                 {
                     Location = inputDoc.ImageUrl,
@@ -66,11 +67,20 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                     {
                         new CustomExtractor()
                         {
+                            RegionLength = regionLength,
+                            RegionOffset = 0,
                             Labels = resLabels
                         }
                     }
                 };
             });
+        }
+
+        private long GetRegionOffset(IEnumerable<CustomLabel> labels)
+        {
+            var endLabelOffset = labels.Last()?.Offset ?? 0;
+            var endLabellength = labels.Last()?.Length ?? 0;
+            return endLabelOffset + endLabellength;
         }
     }
 }
