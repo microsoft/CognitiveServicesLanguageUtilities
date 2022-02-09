@@ -31,14 +31,16 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
 
         private IEnumerable<CustomExtractorInfo> GetExtractors(AzureML_Jsonl_FileModel jsonlContent)
         {
-            return jsonlContent.lines.SelectMany(file =>
-            {
-                return file.Label.Select(label => label.Text);
-            }).Distinct()
-            .Select(e =>
-            {
-                return new CustomExtractorInfo() { Name = e };
-            });
+            return jsonlContent.lines
+                .SelectMany(file =>
+                {
+                    return file.Label.Select(label => label.Text);
+                })
+                .ToHashSet()
+                .Select(text =>
+                {
+                    return new CustomExtractorInfo() { Name = text };
+                });
         }
 
         private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent)

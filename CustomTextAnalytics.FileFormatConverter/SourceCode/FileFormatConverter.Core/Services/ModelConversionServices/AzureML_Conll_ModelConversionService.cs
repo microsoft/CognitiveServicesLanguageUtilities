@@ -102,11 +102,12 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
         {
             return sourceModel.Tokens
                 .Where(token => token.Label != null)
-                .Select(token =>
+                .Select(token => token.Label.Text)
+                .ToHashSet()
+                .Select(text =>
                 {
-                    return new CustomExtractorInfo() { Name = token.Label.Text };
-                })
-                .Distinct();
+                    return new CustomExtractorInfo() { Name = text };
+                });
         }
     }
 }
