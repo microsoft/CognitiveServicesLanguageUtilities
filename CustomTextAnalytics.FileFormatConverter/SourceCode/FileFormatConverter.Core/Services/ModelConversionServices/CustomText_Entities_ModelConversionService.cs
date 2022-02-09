@@ -10,24 +10,48 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
     {
         public IntermediateEntitiesModel ConvertToIntermediate(CustomText_Entities_FileModel sourceModel)
         {
-            var entityNames = sourceModel.EntityNames;
+            var entityNames = GetExtractors(sourceModel);
             var documents = ConvertDocuments(sourceModel);
             return new IntermediateEntitiesModel()
             {
-                EntityNames = entityNames,
+                Extractors = entityNames.ToArray(),
                 Documents = documents.ToArray(),
             };
         }
 
         public CustomText_Entities_FileModel ConvertFromIntermediate(IntermediateEntitiesModel intermediateModel)
         {
-            var entityNames = intermediateModel.EntityNames;
+            var entityNames = GetExtractors(intermediateModel);
             var documents = ConvertDocuments(intermediateModel);
             return new CustomText_Entities_FileModel()
             {
-                EntityNames = entityNames,
+                Extractors = entityNames.ToArray(),
                 Documents = documents.ToArray(),
             };
+        }
+
+        private IEnumerable<DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractorInfo> GetExtractors(CustomText_Entities_FileModel sourceModel)
+        {
+            return sourceModel.Extractors
+                            .Select(e =>
+                            {
+                                return new DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractorInfo()
+                                {
+                                    Name = e.Name,
+                                };
+                            });
+        }
+
+        private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomExtractorInfo> GetExtractors(IntermediateEntitiesModel sourceModel)
+        {
+            return sourceModel.Extractors
+                            .Select(e =>
+                            {
+                                return new DataStructures.FileModels.CustomText.Entities.CustomExtractorInfo()
+                                {
+                                    Name = e.Name,
+                                };
+                            });
         }
 
         private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomDocument> ConvertDocuments(IntermediateEntitiesModel intermediateModel)
@@ -38,8 +62,8 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 return new DataStructures.FileModels.CustomText.Entities.CustomDocument()
                 {
                     Location = document.Location,
-                    Culture = document.Culture,
-                    Entities = entities.ToArray()
+                    Language = document.Language,
+                    Extractors = entities.ToArray()
                 };
             });
         }
@@ -52,61 +76,61 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 return new DataStructures.FileModels.IntermediateEntitiesModel.CustomDocument()
                 {
                     Location = document.Location,
-                    Culture = document.Culture,
-                    Entities = entities.ToArray()
+                    Language = document.Language,
+                    Extractors = entities.ToArray()
                 };
             });
         }
 
-        private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomEntity> ConvertEntities(DataStructures.FileModels.IntermediateEntitiesModel.CustomDocument document)
+        private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomExtractor> ConvertEntities(DataStructures.FileModels.IntermediateEntitiesModel.CustomDocument document)
         {
-            return document.Entities.Select(entity =>
+            return document.Extractors.Select(entity =>
             {
                 var labels = ConvertLabels(entity);
-                return new DataStructures.FileModels.CustomText.Entities.CustomEntity()
+                return new DataStructures.FileModels.CustomText.Entities.CustomExtractor()
                 {
-                    RegionStart = entity.RegionStart,
+                    RegionOffset = entity.RegionOffset,
                     RegionLength = entity.RegionLength,
                     Labels = labels.ToArray()
                 };
             });
         }
 
-        private IEnumerable<DataStructures.FileModels.IntermediateEntitiesModel.CustomEntity> ConvertEntities(DataStructures.FileModels.CustomText.Entities.CustomDocument document)
+        private IEnumerable<DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractor> ConvertEntities(DataStructures.FileModels.CustomText.Entities.CustomDocument document)
         {
-            return document.Entities.Select(entity =>
+            return document.Extractors.Select(entity =>
             {
                 var labels = ConvertLabels(entity);
-                return new DataStructures.FileModels.IntermediateEntitiesModel.CustomEntity()
+                return new DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractor()
                 {
-                    RegionStart = entity.RegionStart,
+                    RegionOffset = entity.RegionOffset,
                     RegionLength = entity.RegionLength,
                     Labels = labels.ToArray()
                 };
             });
         }
 
-        private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomLabel> ConvertLabels(DataStructures.FileModels.IntermediateEntitiesModel.CustomEntity entity)
+        private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomLabel> ConvertLabels(DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractor entity)
         {
             return entity.Labels.Select(label =>
             {
                 return new DataStructures.FileModels.CustomText.Entities.CustomLabel()
                 {
-                    Entity = label.Entity,
-                    Start = label.Start,
+                    ExtractorName = label.ExtractorName,
+                    Offset = label.Offset,
                     Length = label.Length
                 };
             });
         }
 
-        private IEnumerable<DataStructures.FileModels.IntermediateEntitiesModel.CustomLabel> ConvertLabels(DataStructures.FileModels.CustomText.Entities.CustomEntity entity)
+        private IEnumerable<DataStructures.FileModels.IntermediateEntitiesModel.CustomLabel> ConvertLabels(DataStructures.FileModels.CustomText.Entities.CustomExtractor entity)
         {
             return entity.Labels.Select(label =>
             {
                 return new DataStructures.FileModels.IntermediateEntitiesModel.CustomLabel()
                 {
-                    Entity = label.Entity,
-                    Start = label.Start,
+                    ExtractorName = label.ExtractorName,
+                    Offset = label.Offset,
                     Length = label.Length
                 };
             });

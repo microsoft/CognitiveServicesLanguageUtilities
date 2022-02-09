@@ -2,23 +2,28 @@
 {
     public class IntermediateEntitiesModel : BaseFileModel
     {
-        public string[] EntityNames { get; set; }
+        public CustomExtractorInfo[] Extractors { get; set; }
 
         public CustomDocument[] Documents { get; set; }
     }
 
+    public class CustomExtractorInfo
+    {
+        public string Name { get; set; }
+    }
+
     public class CustomDocument
     {
-        public CustomEntity[] Entities { get; set; }
+        public CustomExtractor[] Extractors { get; set; }
 
-        public string Culture { get; set; } = "en-US";
+        public string Language { get; set; } = "en-US";
 
         public string Location { get; set; }
     }
 
-    public class CustomEntity
+    public class CustomExtractor
     {
-        public long RegionStart { get; set; }
+        public long RegionOffset { get; set; }
 
         public long RegionLength { get; set; }
 
@@ -27,9 +32,9 @@
 
     public class CustomLabel
     {
-        public long Entity { get; set; }
+        public string ExtractorName { get; set; }
 
-        public long Start { get; set; }
+        public long Offset { get; set; }
 
         public long Length { get; set; }
     }

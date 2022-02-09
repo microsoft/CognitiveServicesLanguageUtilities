@@ -11,18 +11,15 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
         public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent)
         {
             // extract entity names (distinct)
-            var allEntityNames = ExtractEntityNames(jsonlContent);
-
-            // create entity names map
-            var allEntitiesMap = CreateEntitiesMap(allEntityNames);
+            var allEntityNames = GetExtractors(jsonlContent);
 
             // each file
-            var docsList = ConvertDocuments(jsonlContent, allEntitiesMap);
+            var docsList = ConvertDocuments(jsonlContent);
 
             // final result
             return new IntermediateEntitiesModel()
             {
-                EntityNames = allEntityNames.ToArray(),
+                Extractors = allEntityNames.ToArray(),
                 Documents = docsList.ToArray()
             };
         }
@@ -32,26 +29,21 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             throw new System.NotImplementedException();
         }
 
-        private IEnumerable<string> ExtractEntityNames(AzureML_Jsonl_FileModel jsonlContent)
+        private IEnumerable<CustomExtractorInfo> GetExtractors(AzureML_Jsonl_FileModel jsonlContent)
         {
-            return jsonlContent.lines.SelectMany(file =>
-            {
-                return file.Label.Select(label => label.Text);
-            }).Distinct();
+            return jsonlContent.lines
+                .SelectMany(file =>
+                {
+                    return file.Label.Select(label => label.Text);
+                })
+                .ToHashSet()
+                .Select(text =>
+                {
+                    return new CustomExtractorInfo() { Name = text };
+                });
         }
 
-        private Dictionary<string, int> CreateEntitiesMap(IEnumerable<string> allEntityNames)
-        {
-            var allEntitiesMap = new Dictionary<string, int>();
-            var tmp = allEntityNames.ToArray();
-            for (var i = 0; i < tmp.Length; i++)
-            {
-                allEntitiesMap[tmp[i]] = i;
-            }
-            return allEntitiesMap;
-        }
-
-        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent, Dictionary<string, int> allEntitiesMap)
+        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent)
         {
             return jsonlContent.lines.Select(inputDoc =>
             {
@@ -60,8 +52,8 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 {
                     return new CustomLabel()
                     {
-                        Entity = allEntitiesMap[label.Text],
-                        Start = label.OffsetStart,
+                        ExtractorName = label.Text,
+                        Offset = label.OffsetStart,
                         Length = label.OffsetEnd - label.OffsetStart
                     };
                 }).ToArray();
@@ -70,9 +62,9 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 return new CustomDocument()
                 {
                     Location = inputDoc.ImageUrl,
-                    Entities = new CustomEntity[]
+                    Extractors = new CustomExtractor[]
                     {
-                        new CustomEntity()
+                        new CustomExtractor()
                         {
                             Labels = resLabels
                         }
