@@ -23,6 +23,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             var labels = ExtractLabels(sourceModel);
 
             // conver overall model
+            var regionLength = GetRegionOffset(labels);
             return new IntermediateEntitiesModel()
             {
                 Extractors = allEntityNames.ToArray(),
@@ -34,12 +35,21 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                         {
                             new CustomExtractor()
                             {
+                                RegionOffset = 0,
+                                RegionLength = regionLength,
                                 Labels = labels.ToArray()
                             }
                         }
                     }
                 }
             };
+        }
+
+        private long GetRegionOffset(List<CustomLabel> labels)
+        {
+            var endLabelOffset = labels.Last()?.Offset ?? 0;
+            var endLabellength = labels.Last()?.Length ?? 0;
+            return endLabelOffset + endLabellength;
         }
 
         private List<CustomLabel> ExtractLabels(AzureML_Conll_FileModel sourceModel)
