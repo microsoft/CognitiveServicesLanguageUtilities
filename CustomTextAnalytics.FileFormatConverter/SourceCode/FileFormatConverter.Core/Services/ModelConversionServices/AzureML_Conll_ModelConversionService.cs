@@ -17,13 +17,10 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
         public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Conll_FileModel sourceModel)
         {
             // extract entity names
-            var allEntityNames = ExtractEntityNames(sourceModel);
-
-            // create entity names map
-            var allEntitiesMap = CreateEntitiesMap(allEntityNames);
+            var allEntityNames = GetExtractors(sourceModel);
 
             // extract documents
-            var labels = ExtractLabels(sourceModel, allEntitiesMap);
+            var labels = ExtractLabels(sourceModel);
 
             // conver overall model
             return new IntermediateEntitiesModel()
@@ -45,7 +42,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             };
         }
 
-        private List<CustomLabel> ExtractLabels(AzureML_Conll_FileModel sourceModel, Dictionary<string, int> allEntitiesMap)
+        private List<CustomLabel> ExtractLabels(AzureML_Conll_FileModel sourceModel)
         {
             var i = 0;
             var charIndex = 0;
@@ -57,7 +54,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 {
                     // get label basic info
                     var conllLabel = tokensArray[i].Label;
-                    var entityIndex = allEntitiesMap[conllLabel.Text];
+                    var entityIndex = conllLabel.Text;
                     var start = charIndex;
 
                     // get length
@@ -78,7 +75,6 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                     i++;
                 }
             }
-
             return labels;
         }
 
@@ -102,28 +98,15 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             return length;
         }
 
-        private HashSet<string> ExtractEntityNames(AzureML_Conll_FileModel sourceModel)
+        private IEnumerable<CustomExtractorInfo> GetExtractors(AzureML_Conll_FileModel sourceModel)
         {
-            var entities = new HashSet<string>();
-            sourceModel.Tokens.ToList().ForEach(token =>
-            {
-                if (token.Label != null)
+            return sourceModel.Tokens
+                .Where(token => token.Label != null)
+                .Select(token =>
                 {
-                    entities.Add(token.Label.Text);
-                }
-            });
-            return entities;
-        }
-
-        private Dictionary<string, int> CreateEntitiesMap(IEnumerable<string> allEntityNames)
-        {
-            var allEntitiesMap = new Dictionary<string, int>();
-            var tmp = allEntityNames.ToArray();
-            for (var i = 0; i < tmp.Length; i++)
-            {
-                allEntitiesMap[tmp[i]] = i;
-            }
-            return allEntitiesMap;
+                    return new CustomExtractorInfo() { Name = token.Label.Text };
+                })
+                .Distinct();
         }
     }
 }

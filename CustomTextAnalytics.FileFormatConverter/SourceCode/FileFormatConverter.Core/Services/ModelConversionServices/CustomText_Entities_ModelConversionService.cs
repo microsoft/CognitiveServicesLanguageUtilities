@@ -10,24 +10,48 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
     {
         public IntermediateEntitiesModel ConvertToIntermediate(CustomText_Entities_FileModel sourceModel)
         {
-            var entityNames = sourceModel.Extractors;
+            var entityNames = GetExtractors(sourceModel);
             var documents = ConvertDocuments(sourceModel);
             return new IntermediateEntitiesModel()
             {
-                Extractors = entityNames,
+                Extractors = entityNames.ToArray(),
                 Documents = documents.ToArray(),
             };
         }
 
         public CustomText_Entities_FileModel ConvertFromIntermediate(IntermediateEntitiesModel intermediateModel)
         {
-            var entityNames = intermediateModel.Extractors;
+            var entityNames = GetExtractors(intermediateModel);
             var documents = ConvertDocuments(intermediateModel);
             return new CustomText_Entities_FileModel()
             {
-                Extractors = entityNames,
+                Extractors = entityNames.ToArray(),
                 Documents = documents.ToArray(),
             };
+        }
+
+        private IEnumerable<DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractorInfo> GetExtractors(CustomText_Entities_FileModel sourceModel)
+        {
+            return sourceModel.Extractors
+                            .Select(e =>
+                            {
+                                return new DataStructures.FileModels.IntermediateEntitiesModel.CustomExtractorInfo()
+                                {
+                                    Name = e.Name,
+                                };
+                            });
+        }
+
+        private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomExtractorInfo> GetExtractors(IntermediateEntitiesModel sourceModel)
+        {
+            return sourceModel.Extractors
+                            .Select(e =>
+                            {
+                                return new DataStructures.FileModels.CustomText.Entities.CustomExtractorInfo()
+                                {
+                                    Name = e.Name,
+                                };
+                            });
         }
 
         private IEnumerable<DataStructures.FileModels.CustomText.Entities.CustomDocument> ConvertDocuments(IntermediateEntitiesModel intermediateModel)

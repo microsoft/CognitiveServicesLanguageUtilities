@@ -11,13 +11,10 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
         public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent)
         {
             // extract entity names (distinct)
-            var allEntityNames = ExtractEntityNames(jsonlContent);
-
-            // create entity names map
-            var allEntitiesMap = CreateEntitiesMap(allEntityNames);
+            var allEntityNames = GetExtractors(jsonlContent);
 
             // each file
-            var docsList = ConvertDocuments(jsonlContent, allEntitiesMap);
+            var docsList = ConvertDocuments(jsonlContent);
 
             // final result
             return new IntermediateEntitiesModel()
@@ -32,26 +29,19 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             throw new System.NotImplementedException();
         }
 
-        private IEnumerable<string> ExtractEntityNames(AzureML_Jsonl_FileModel jsonlContent)
+        private IEnumerable<CustomExtractorInfo> GetExtractors(AzureML_Jsonl_FileModel jsonlContent)
         {
             return jsonlContent.lines.SelectMany(file =>
             {
                 return file.Label.Select(label => label.Text);
-            }).Distinct();
-        }
-
-        private Dictionary<string, int> CreateEntitiesMap(IEnumerable<string> allEntityNames)
-        {
-            var allEntitiesMap = new Dictionary<string, int>();
-            var tmp = allEntityNames.ToArray();
-            for (var i = 0; i < tmp.Length; i++)
+            }).Distinct()
+            .Select(e =>
             {
-                allEntitiesMap[tmp[i]] = i;
-            }
-            return allEntitiesMap;
+                return new CustomExtractorInfo() { Name = e };
+            });
         }
 
-        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent, Dictionary<string, int> allEntitiesMap)
+        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent)
         {
             return jsonlContent.lines.Select(inputDoc =>
             {
@@ -60,7 +50,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 {
                     return new CustomLabel()
                     {
-                        ExtractorName = allEntitiesMap[label.Text],
+                        ExtractorName = label.Text,
                         Offset = label.OffsetStart,
                         Length = label.OffsetEnd - label.OffsetStart
                     };
