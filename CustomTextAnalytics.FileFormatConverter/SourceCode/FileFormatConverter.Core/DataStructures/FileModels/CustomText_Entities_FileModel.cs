@@ -4,29 +4,35 @@ namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities
 {
     public class CustomText_Entities_FileModel : BaseFileModel
     {
-        [JsonProperty("entityNames")]
-        public string[] EntityNames { get; set; }
+        [JsonProperty("extractors")]
+        public CustomExtractorInfo[] Extractors { get; set; }
 
         [JsonProperty("documents")]
         public CustomDocument[] Documents { get; set; }
     }
 
+    public class CustomExtractorInfo
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+    }
+
     public class CustomDocument
     {
-        [JsonProperty("entities")]
-        public CustomEntity[] Entities { get; set; }
+        [JsonProperty("extractors")]
+        public CustomExtractor[] Extractors { get; set; }
 
-        [JsonProperty("culture")]
-        public string Culture { get; set; } = "en-US";
+        [JsonProperty("language")]
+        public string Language { get; set; } = "en-US";
 
         [JsonProperty("location")]
         public string Location { get; set; }
     }
 
-    public class CustomEntity
+    public class CustomExtractor
     {
-        [JsonProperty("regionStart")]
-        public long RegionStart { get; set; }
+        [JsonProperty("regionOffset")]
+        public long RegionOffset { get; set; }
 
         [JsonProperty("regionLength")]
         public long RegionLength { get; set; }
@@ -37,11 +43,11 @@ namespace FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities
 
     public class CustomLabel
     {
-        [JsonProperty("entity")]
-        public long Entity { get; set; }
+        [JsonProperty("extractorName")]
+        public string ExtractorName { get; set; }
 
-        [JsonProperty("start")]
-        public long Start { get; set; }
+        [JsonProperty("offset")]
+        public long Offset { get; set; }
 
         [JsonProperty("length")]
         public long Length { get; set; }
