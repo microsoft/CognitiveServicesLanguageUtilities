@@ -28,14 +28,14 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             // conver overall model
             return new IntermediateEntitiesModel()
             {
-                EntityNames = allEntityNames.ToArray(),
+                Extractors = allEntityNames.ToArray(),
                 Documents = new CustomDocument[]
                 {
                     new CustomDocument()
                     {
-                        Entities = new CustomEntity[]
+                        Extractors = new CustomExtractor[]
                         {
-                            new CustomEntity()
+                            new CustomExtractor()
                             {
                                 Labels = labels.ToArray()
                             }
@@ -66,8 +66,8 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                     // create label
                     var label = new CustomLabel()
                     {
-                        Entity = entityIndex,
-                        Start = start,
+                        ExtractorName = entityIndex,
+                        Offset = start,
                         Length = length,
                     };
                     labels.Add(label);

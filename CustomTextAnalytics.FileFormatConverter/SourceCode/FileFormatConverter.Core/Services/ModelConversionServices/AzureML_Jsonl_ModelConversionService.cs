@@ -22,7 +22,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             // final result
             return new IntermediateEntitiesModel()
             {
-                EntityNames = allEntityNames.ToArray(),
+                Extractors = allEntityNames.ToArray(),
                 Documents = docsList.ToArray()
             };
         }
@@ -60,8 +60,8 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 {
                     return new CustomLabel()
                     {
-                        Entity = allEntitiesMap[label.Text],
-                        Start = label.OffsetStart,
+                        ExtractorName = allEntitiesMap[label.Text],
+                        Offset = label.OffsetStart,
                         Length = label.OffsetEnd - label.OffsetStart
                     };
                 }).ToArray();
@@ -70,9 +70,9 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 return new CustomDocument()
                 {
                     Location = inputDoc.ImageUrl,
-                    Entities = new CustomEntity[]
+                    Extractors = new CustomExtractor[]
                     {
-                        new CustomEntity()
+                        new CustomExtractor()
                         {
                             Labels = resLabels
                         }
