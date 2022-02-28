@@ -2,7 +2,7 @@
 {
     public interface IModelConverter<TModel, TIntermediateModel>
     {
-        TIntermediateModel ConvertToIntermediate(TModel sourceModel);
+        TIntermediateModel ConvertToIntermediate(TModel sourceModel, string language);
         TModel ConvertFromIntermediate(TIntermediateModel intermediateModel);
     }
 }

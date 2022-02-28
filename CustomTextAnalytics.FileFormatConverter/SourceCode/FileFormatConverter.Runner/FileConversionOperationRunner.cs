@@ -10,11 +10,11 @@ namespace FileFormatConverter.Runner
     {
         private static readonly LoggingService _logger = new LoggingService();
         private static readonly ConfigurationService _configurationService = new ConfigurationService();
-        public static void RunOperation(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
+        public static void RunOperation(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType, string language)
         {
             try
             {
-                RunOperationpublic(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
+                RunOperationInternal(sourceFilePath, sourceFileType, targetFilePath, targetFileType, language);
                 _logger.LogSuccess("File converted successfully!");
             }
             catch (Exception e)
@@ -22,14 +22,14 @@ namespace FileFormatConverter.Runner
                 _logger.LogError(e);
             }
         }
-        private static void RunOperationpublic(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType)
+        private static void RunOperationInternal(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType, string language)
         {
             var container = _configurationService.RegisterServices(sourceFileType, targetFileType);
 
             using (var scope = container.BeginLifetimeScope())
             {
                 var orchestrator = scope.Resolve<IFileConversionOrchestrator>();
-                orchestrator.ConvertFile(sourceFilePath, targetFilePath);
+                orchestrator.ConvertFile(sourceFilePath, targetFilePath, language);
             }
         }
     }

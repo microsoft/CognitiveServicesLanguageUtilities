@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using FileFormatConverter.Core;
-using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Conll;
 using FileFormatConverter.Core.DataStructures.FileModels.AzureML.Jsonl;
 using FileFormatConverter.Core.DataStructures.FileModels.CustomText.Entities;
 using FileFormatConverter.Core.DataStructures.FileModels.IntermediateEntitiesModel;
@@ -37,14 +36,14 @@ namespace FileFormatConverter.Runner.Services
         {
             builder.RegisterType<AzureML_Jsonl_ModelSerializerService>().As<IModelSerializer<AzureML_Jsonl_FileModel>>();
             builder.RegisterType<CustomText_Entities_ModelSerializerService>().As<IModelSerializer<CustomText_Entities_FileModel>>();
-            builder.RegisterType<AzureML_Conll_ModelSerializerService>().As<IModelSerializer<AzureML_Conll_FileModel>>();
+            //builder.RegisterType<AzureML_Conll_ModelSerializerService>().As<IModelSerializer<AzureML_Conll_FileModel>>();
         }
 
         private void RegisterModelConverters(ContainerBuilder builder)
         {
             builder.RegisterType<AzureML_Jsonl_ModelConversionService>().As<IModelConverter<AzureML_Jsonl_FileModel, IntermediateEntitiesModel>>();
             builder.RegisterType<CustomText_Entities_ModelConversionService>().As<IModelConverter<CustomText_Entities_FileModel, IntermediateEntitiesModel>>();
-            builder.RegisterType<AzureML_Conll_ModelConversionService>().As<IModelConverter<AzureML_Conll_FileModel, IntermediateEntitiesModel>>();
+            //builder.RegisterType<AzureML_Conll_ModelConversionService>().As<IModelConverter<AzureML_Conll_FileModel, IntermediateEntitiesModel>>();
         }
 
         private void RegisterOrchestrator(ContainerBuilder builder, FileType sourceType, FileType targetType)
@@ -53,13 +52,13 @@ namespace FileFormatConverter.Runner.Services
             {
                 builder.RegisterType<FileConversionOrchestrator<AzureML_Jsonl_FileModel, IntermediateEntitiesModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
             }
-            else if (sourceType == FileType.CONLL && targetType == FileType.CT_ENTITIES)
+            /*else if (sourceType == FileType.CONLL && targetType == FileType.CT_ENTITIES)
             {
                 builder.RegisterType<FileConversionOrchestrator<AzureML_Conll_FileModel, IntermediateEntitiesModel, CustomText_Entities_FileModel>>().As<IFileConversionOrchestrator>();
-            }
+            }*/
             else
             {
-                throw new Exception("Conversion not supported!");
+                throw new Exception("Conversion not supported yet! \nWork in progress");
             }
         }
     }
