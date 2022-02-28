@@ -2,7 +2,7 @@
   "profiles": {
     "CognitiveSearchIntegration.ViewLayer.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "convert -sp \"C:\\Users\\mshaban\\Desktop\\cli tool\\file samples\\AzureML_Entities.conll\" -st \"conll\" -tt \"ct_entities\" -tp \"C:\\Users\\mshaban\\Desktop\\cli tool\\file samples\\test_files\\output.json\""
+      "commandLineArgs": "convert -sp \"C:\\Users\\mshaban\\Desktop\\tooling - stuff\\file converter\\file samples\\AzureML_Entities.jsonl\" -st \"jsonl\" -tt \"ct_entities\" -tp \"C:\\Users\\mshaban\\Desktop\\tooling - stuff\\file converter\\file samples\\test_files\\output.json\""
     }
   }
 }

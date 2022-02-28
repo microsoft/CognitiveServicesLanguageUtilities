@@ -14,7 +14,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
             throw new NotImplementedException();
         }
 
-        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Conll_FileModel sourceModel)
+        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Conll_FileModel sourceModel, string language)
         {
             // extract entity names
             var allEntityNames = GetExtractors(sourceModel);

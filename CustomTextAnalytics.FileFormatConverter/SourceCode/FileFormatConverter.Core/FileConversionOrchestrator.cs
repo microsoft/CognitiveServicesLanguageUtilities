@@ -25,7 +25,7 @@ namespace FileFormatConverter.Core
             _targetModelSerializerService = targetModelSerializerService;
         }
 
-        public void ConvertFile(string inputFilePath, string targetFilePath)
+        public void ConvertFile(string inputFilePath, string targetFilePath, string language)
         {
             // read input file
             var fileContent = _fileHandlerService.ReadFileAsString(inputFilePath);
@@ -34,7 +34,7 @@ namespace FileFormatConverter.Core
             var sourceModel = _sourceModelSerializerService.Deserialize(fileContent);
 
             // convert source to intermediate model
-            var intermediateModel = _sourceModelConverterService.ConvertToIntermediate(sourceModel);
+            var intermediateModel = _sourceModelConverterService.ConvertToIntermediate(sourceModel, language);
 
             // convert intermediate to target model
             var targetModel = _targetModelConverterService.ConvertFromIntermediate(intermediateModel);

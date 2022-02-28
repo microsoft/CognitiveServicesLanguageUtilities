@@ -8,7 +8,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
 {
     public class CustomText_Entities_ModelConversionService : IModelConverter<CustomText_Entities_FileModel, IntermediateEntitiesModel>
     {
-        public IntermediateEntitiesModel ConvertToIntermediate(CustomText_Entities_FileModel sourceModel)
+        public IntermediateEntitiesModel ConvertToIntermediate(CustomText_Entities_FileModel sourceModel, string language)
         {
             var entityNames = GetExtractors(sourceModel);
             var documents = ConvertDocuments(sourceModel);

@@ -2,19 +2,20 @@
 using FileFormatConverter.Core.DataStructures.FileModels.IntermediateEntitiesModel;
 using FileFormatConverter.Core.Interfaces.Services;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace FileFormatConverter.Core.Services.ModelConversionServices
 {
     public class AzureML_Jsonl_ModelConversionService : IModelConverter<AzureML_Jsonl_FileModel, IntermediateEntitiesModel>
     {
-        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent)
+        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent, string language)
         {
             // extract entity names (distinct)
             var allEntityNames = GetExtractors(jsonlContent);
 
             // each file
-            var docsList = ConvertDocuments(jsonlContent);
+            var docsList = ConvertDocuments(jsonlContent, language);
 
             // final result
             return new IntermediateEntitiesModel()
@@ -43,7 +44,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 });
         }
 
-        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent)
+        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent, string language)
         {
             return jsonlContent.lines.Select(inputDoc =>
             {
@@ -60,9 +61,11 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
 
                 // res document
                 var regionLength = GetRegionOffset(resLabels);
+                var location = Path.GetFileName(inputDoc.ImageUrl);
                 return new CustomDocument()
                 {
-                    Location = inputDoc.ImageUrl,
+                    Language = language,
+                    Location = location,
                     Extractors = new CustomExtractor[]
                     {
                         new CustomExtractor()
