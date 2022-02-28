@@ -58,7 +58,7 @@ namespace FileFormatConverter.Runner.Services
             }*/
             else
             {
-                throw new Exception("Conversion not supported!");
+                throw new Exception("Conversion not supported yet! \nWork in progress");
             }
         }
     }
