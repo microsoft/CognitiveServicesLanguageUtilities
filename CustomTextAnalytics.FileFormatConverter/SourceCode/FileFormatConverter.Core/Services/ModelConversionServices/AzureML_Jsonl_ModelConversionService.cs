@@ -2,6 +2,7 @@
 using FileFormatConverter.Core.DataStructures.FileModels.IntermediateEntitiesModel;
 using FileFormatConverter.Core.Interfaces.Services;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace FileFormatConverter.Core.Services.ModelConversionServices
@@ -60,10 +61,11 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
 
                 // res document
                 var regionLength = GetRegionOffset(resLabels);
+                var location = Path.GetFileName(inputDoc.ImageUrl);
                 return new CustomDocument()
                 {
                     Language = language,
-                    Location = inputDoc.ImageUrl,
+                    Location = location,
                     Extractors = new CustomExtractor[]
                     {
                         new CustomExtractor()
