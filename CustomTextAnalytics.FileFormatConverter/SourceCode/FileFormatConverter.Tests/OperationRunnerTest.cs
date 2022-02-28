@@ -25,13 +25,14 @@ namespace FileFormatConverter.Tests
         [MemberData(nameof(BlobValidationServiceAsyncTestData))]
         public void TestOperationRunner(string sourceFilePath, FileType sourceFileType, string targetFilePath, FileType targetFileType, bool isValid)
         {
+            var language = "en-US";
             if (isValid)
             {
-                FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType);
+                FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType, language);
             }
             else
             {
-                Assert.Throws<Exception>(() => FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType));
+                Assert.Throws<Exception>(() => FileConversionOperationRunner.RunOperation(sourceFilePath, sourceFileType, targetFilePath, targetFileType, language));
             }
         }
     }

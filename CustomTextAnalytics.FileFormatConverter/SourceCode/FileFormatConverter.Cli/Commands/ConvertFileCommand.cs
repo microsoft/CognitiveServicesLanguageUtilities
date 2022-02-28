@@ -23,9 +23,12 @@ namespace Microsoft.FileFormatConverter.Cli.Commands
         [Required]
         public FileType TargetType { get; }
 
+        [Option("-l", Description = "language")]
+        public string Language { get; } = "en-US";
+
         public void OnExecute(CommandLineApplication app)
         {
-            FileConversionOperationRunner.RunOperation(SourcePath, SourceType, TargetPath, TargetType);
+            FileConversionOperationRunner.RunOperation(SourcePath, SourceType, TargetPath, TargetType, Language);
         }
     }
 }

@@ -8,13 +8,13 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
 {
     public class AzureML_Jsonl_ModelConversionService : IModelConverter<AzureML_Jsonl_FileModel, IntermediateEntitiesModel>
     {
-        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent)
+        public IntermediateEntitiesModel ConvertToIntermediate(AzureML_Jsonl_FileModel jsonlContent, string language)
         {
             // extract entity names (distinct)
             var allEntityNames = GetExtractors(jsonlContent);
 
             // each file
-            var docsList = ConvertDocuments(jsonlContent);
+            var docsList = ConvertDocuments(jsonlContent, language);
 
             // final result
             return new IntermediateEntitiesModel()
@@ -43,7 +43,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 });
         }
 
-        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent)
+        private IEnumerable<CustomDocument> ConvertDocuments(AzureML_Jsonl_FileModel jsonlContent, string language)
         {
             return jsonlContent.lines.Select(inputDoc =>
             {
@@ -62,6 +62,7 @@ namespace FileFormatConverter.Core.Services.ModelConversionServices
                 var regionLength = GetRegionOffset(resLabels);
                 return new CustomDocument()
                 {
+                    Language = language,
                     Location = inputDoc.ImageUrl,
                     Extractors = new CustomExtractor[]
                     {

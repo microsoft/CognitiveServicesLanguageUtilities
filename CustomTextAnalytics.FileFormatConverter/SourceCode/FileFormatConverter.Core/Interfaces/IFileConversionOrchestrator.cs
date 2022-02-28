@@ -2,6 +2,6 @@
 {
     public interface IFileConversionOrchestrator
     {
-        void ConvertFile(string inputFilePath, string targetFilePath);
+        void ConvertFile(string inputFilePath, string targetFilePath, string language);
     }
 }
