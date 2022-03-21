@@ -69,8 +69,8 @@ The tool supports different types of chunking. All chunking methods respect para
 
 
 
-[1]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ParseCommand/README.md
-[2]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/PredictCommand/README.md
-[3]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/EvaluateCommand/README.md
-[4]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ChunkCommand/README.md
-[5]: ./CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ConfigCommand/README.md
+[1]: ./Solution/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ParseCommand/README.md
+[2]: ./Solution/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/PredictCommand/README.md
+[3]: ./Solution/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/EvaluateCommand/README.md
+[4]: ./Solution/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ChunkCommand/README.md
+[5]: ./Solution/CogSLanguageUtilities.ViewLayer.CliCommands/Commands/ConfigCommand/README.md
